@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:task_tech/constants/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingWidget extends StatelessWidget {
   const OnboardingWidget(
@@ -17,28 +14,30 @@ class OnboardingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.asset(img!),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 15,
         ),
         Text(
           title!,
-          style: const TextStyle(
+          style: GoogleFonts.poppins(
               color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
-        Text(
-          subtitle!,
-          softWrap: true,
-          style: const TextStyle(
-              color: Color(0xff95969D),
-              fontSize: 18,
-              fontWeight: FontWeight.w400),
-        )
+        Container(
+          margin: const EdgeInsets.only(left: 40, right: 40),
+          child: Text(
+            subtitle!,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(
+                color: const Color(0xff95969D),
+                fontSize: 19,
+                fontWeight: FontWeight.w400),
+          ),
+        ),
       ],
     );
   }

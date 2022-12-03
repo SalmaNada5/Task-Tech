@@ -34,6 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset('images/logo.png'),
+              const SizedBox(
+                height: 10,
+              ),
               Text(
                 'TASK-TECH',
                 style: GoogleFonts.redRose(
