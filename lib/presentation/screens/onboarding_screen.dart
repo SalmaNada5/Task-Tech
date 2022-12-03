@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:task_tech/constants/colors.dart';
 
@@ -13,6 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
+  bool isLastPage = false;
   @override
   void dispose() {
     _pageController.dispose();
@@ -25,6 +27,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
+        onPageChanged: (value) {
+          setState(() {
+            isLastPage = value == 1;
+          });
+        },
         children: const [
           FirstOnBoarding(),
           SecondOnBoarding(),
@@ -32,19 +39,47 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: Container(
         color: Colors.white,
-        padding: const EdgeInsets.all(10.0),
-        child: Row(children: [
-          SmoothPageIndicator(
-            controller: _pageController,
-            count: 2,
-            effect: ExpandingDotsEffect(
-              activeDotColor: primaryLightColor,
-              dotColor: const Color(0xffD9D9D9),
-              dotHeight: 10,
-              dotWidth: 12,
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SmoothPageIndicator(
+              controller: _pageController,
+              count: 2,
+              effect: ExpandingDotsEffect(
+                activeDotColor: primaryLightColor,
+                dotColor: const Color(0xffD9D9D9),
+                dotHeight: 10,
+                dotWidth: 12,
+              ),
             ),
-          )
-        ]),
+            ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(primaryLightColor),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)))),
+                onPressed: isLastPage
+                    ? () {}
+                    : () => _pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut),
+                child: isLastPage
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Get Started',
+                            style: GoogleFonts.poppins(
+                              color: white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      )
+                    : const Icon(
+                        Icons.arrow_forward,
+                        size: 22,
+                      ))
+          ],
+        ),
       ),
     );
   }
