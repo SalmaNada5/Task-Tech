@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:task_tech/presentation/screens/createProfile.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/splash_screen.dart';
 
@@ -13,11 +16,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
+
+      home: CreateProfile(),
+      /*routes: {
         '/splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),
-      },
-      initialRoute: '/splash',
+      },*/
+      
+      //initialRoute: '/splash',
     );
   }
 }

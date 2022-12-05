@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   smooth_page_indicator: ^1.0.0+2
+  flutter_rounded_progress_bar: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +30,4 @@ flutter:
 
   assets:
     - images/
+    - icons/ 
