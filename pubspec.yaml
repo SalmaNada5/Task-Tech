@@ -16,6 +16,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   smooth_page_indicator: ^1.0.0+2
+  flutter_rounded_progress_bar: ^0.2.0
+  intl: ^0.17.0
+  dotted_border: ^2.0.0+3
+  file_picker: ^5.2.4
+  simple_gradient_text: ^1.2.4
+  smooth_star_rating_null_safety: ^1.0.4+2
+
+
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +37,4 @@ flutter:
 
   assets:
     - images/
+    - icons/
