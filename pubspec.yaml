@@ -17,6 +17,7 @@ dependencies:
   google_fonts: ^3.0.1
   smooth_page_indicator: ^1.0.0+2
   flutter_rounded_progress_bar: ^0.2.0
+<<<<<<< HEAD
   intl: ^0.17.0
   dotted_border: ^2.0.0+3
   file_picker: ^5.2.4
@@ -24,6 +25,8 @@ dependencies:
   smooth_star_rating_null_safety: ^1.0.4+2
 
 
+=======
+>>>>>>> 63030a3b91b0a55e435ea07eb3523e1620afeabb
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +40,8 @@ flutter:
 
   assets:
     - images/
+<<<<<<< HEAD
     - icons/
+=======
+    - icons/ 
+>>>>>>> 63030a3b91b0a55e435ea07eb3523e1620afeabb

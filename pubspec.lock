@@ -97,6 +97,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+<<<<<<< HEAD
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -104,6 +105,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.7"
+=======
+>>>>>>> 63030a3b91b0a55e435ea07eb3523e1620afeabb
   flutter_rounded_progress_bar:
     dependency: "direct main"
     description:
