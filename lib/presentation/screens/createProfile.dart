@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,19 +5,16 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/skills_screen.dart';
 
 import 'appBarWidget.dart';
-=======
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:task_tech/constants/colors.dart';
 //import 'package:flutter/src/widgets/container.dart';
 //import 'package:flutter/src/widgets/framework.dart';
->>>>>>> 63030a3b91b0a55e435ea07eb3523e1620afeabb
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
 
-<<<<<<< HEAD
   @override
   State<CreateProfile> createState() => _CreateProfileState();
 }
@@ -361,14 +357,13 @@ backgroundColor: Color.fromARGB(217, 217, 217, 1),
 minHeight: 10,
 valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
 )*/
-=======
 
   @override
   State<CreateProfile> createState() => _CreateProfileState();
   
-}
 
-class _CreateProfileState extends State<CreateProfile> {
+
+/*class _CreateProfileState extends State<CreateProfile> {
 
 late AnimationController controller;
   @override
@@ -423,4 +418,4 @@ late AnimationController controller;
     );
   }
 }
->>>>>>> 63030a3b91b0a55e435ea07eb3523e1620afeabb
+*/
