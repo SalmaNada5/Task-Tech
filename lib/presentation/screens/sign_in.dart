@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/widgets/sign_with.dart';
+import 'package:task_tech/constants/themes.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
-import '../../constants/themes.dart';
+import '../../constants/colors.dart';
+import '../widgets/sign_with.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-  TextEditingController confirmPassController = TextEditingController();
-  bool _passwordVisible = false;
-  bool _confirmpasswordVisible = false;
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool _isVisible = false;
+  bool _value = false;
+  TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
+          padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(
+                  height: 20,
+                ),
                 Text(
-                  'Create an account,',
+                  'Welcome back,',
                   style: titleTheme,
                 ),
                 Text(
-                  'Let\'s create an acount together',
+                  'Sign in your account',
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -46,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 30,
                 ),
                 Form(
                   key: _formKey,
@@ -54,47 +56,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Full Name',
-                        style: labelTextFormStyle,
-                      ),
-                      CustomTextFormField(
-                        controller: fullNameController,
-                        obscure: false,
-                        keyboardType: TextInputType.name,
-                        validator: (value) {
-                          value = fullNameController.text;
-                          if (value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return '';
-                        },
-                        onChange: (value) {
-                          fullNameController.text = value.toString();
-                        },
-                        hintText: 'Enter your name',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
                         'Email',
                         style: labelTextFormStyle,
                       ),
                       CustomTextFormField(
                         controller: emailController,
                         obscure: false,
+                        hintText: 'Enter your mail',
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           value = emailController.text;
                           if (value.isEmpty) {
-                            return 'Please enter your email';
+                            return 'Please enter your email address';
+                          } else {
+                            return '';
                           }
-                          return '';
                         },
                         onChange: (value) {
                           emailController.text = value.toString();
                         },
-                        hintText: 'Enter your email',
                       ),
                       const SizedBox(
                         height: 10,
@@ -107,8 +87,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: passController,
                         validator: (value) {
                           value = passController.text;
-                          if (value.length < 6) {
-                            return 'password is too short';
+                          if (value.isEmpty) {
+                            return 'Please enter your password';
                           }
                           return '';
                         },
@@ -117,56 +97,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         icon: IconButton(
                           icon: Icon(
-                            _passwordVisible
+                            _isVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             size: 20,
                           ),
                           onPressed: () {
                             setState(() {
-                              _passwordVisible = !_passwordVisible;
+                              _isVisible = !_isVisible;
                             });
                           },
                         ),
-                        obscure: _passwordVisible ? false : true,
+                        obscure: _isVisible ? false : true,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'Confirm Password',
-                        style: labelTextFormStyle,
-                      ),
-                      CustomTextFormField(
-                        controller: confirmPassController,
-                        validator: (value) {
-                          value = confirmPassController.text;
-                          if (value != passController.text) {
-                            return 'Wrong password';
-                          }
-                          return '';
-                        },
-                        onChange: (value) {
-                          confirmPassController.text = value.toString();
-                        },
-                        icon: IconButton(
-                          icon: Icon(
-                            _confirmpasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            size: 20,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _value,
+                                checkColor: primaryLightColor,
+                                fillColor:
+                                    MaterialStateProperty.all(Colors.white),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _value = value!;
+                                  });
+                                },
+                                side:
+                                    const BorderSide(color: Color(0xffB1B1B1)),
+                              ),
+                              Text(
+                                'Remember me',
+                                style: GoogleFonts.poppins(
+                                  color: const Color(0xffB1B1B1),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _confirmpasswordVisible =
-                                  !_confirmpasswordVisible;
-                            });
-                          },
-                        ),
-                        obscure: _confirmpasswordVisible ? false : true,
+                          GestureDetector(
+                            onTap: () =>
+                                Navigator.pushNamed(context, 'forgotPassword'),
+                            child: Text(
+                              'Forgot password?',
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xffB1B1B1),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: screenHeight / 16,
+                      const SizedBox(
+                        height: 30,
                       ),
                       SizedBox(
                         width: double.infinity,
@@ -187,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           child: Text(
-                            'Sign up',
+                            'Sign in',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 17,
@@ -195,6 +187,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 8,
                       ),
                     ],
                   ),
@@ -213,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     const Text(
-                      '  Or SignUp With  ',
+                      '  Or Signip With  ',
                       style: TextStyle(
                         color: Color(0xffB1B1B1),
                         fontSize: 12,
@@ -262,7 +257,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already have an account? ',
+                      'Don\'t have an account? ',
                       style: GoogleFonts.poppins(
                         color: const Color(0xff7C7C7C),
                         fontSize: 14,
@@ -270,16 +265,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     GestureDetector(
                       child: Text(
-                        'Login',
+                        'Signup',
                         style: GoogleFonts.poppins(
                             color: primaryLightColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
-                      onTap: () => Navigator.pushNamed(context, 'signIn'),
+                      onTap: () => Navigator.pushNamed(context, 'signUp'),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
