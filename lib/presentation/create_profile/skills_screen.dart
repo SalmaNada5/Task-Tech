@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/screens/bio_screen.dart';
+import 'package:task_tech/presentation/create_profile/bio_screen.dart';
 
 import 'appBarWidget.dart';
 

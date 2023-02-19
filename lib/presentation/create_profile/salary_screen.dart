@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/screens/education_screen.dart';
+import 'package:task_tech/presentation/create_profile/education_screen.dart';
 
 import 'appBarWidget.dart';
 

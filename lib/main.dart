@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/screens/createProfile.dart';
-import 'package:task_tech/presentation/screens/appBarWidget.dart';
+import 'package:task_tech/presentation/create_profile/appBarWidget.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
-import 'package:task_tech/presentation/screens/profile_screen.dart';
+import 'package:task_tech/presentation/create_profile/profile_screen.dart';
 import 'package:task_tech/presentation/screens/splash_screen.dart';
 
 void main() {
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       },
       initialRoute: '/splash',*/
 
-      home: CreateProfile(),
+      home: ProfileScreen(),
       /*routes: {
         '/splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),

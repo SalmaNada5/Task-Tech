@@ -1,8 +1,14 @@
+import 'package:another_xlider/another_xlider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/presentation/create_profile/portfolioPage.dart';
+import 'package:task_tech/presentation/create_profile/reviewPage.dart';
+
+import 'aboutmePage.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -11,8 +17,20 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-var rating = 0.0;
+class _ProfileScreenState extends State<ProfileScreen>
+with SingleTickerProviderStateMixin{
+
+  var rating = 0.0;
+   TabController? _tabController;
+
+
+  @override
+  void initState() {
+     _tabController = new TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(length: 3,
@@ -36,6 +54,7 @@ var rating = 0.0;
                     bottom: 20
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     CircleAvatar(
 
@@ -149,34 +168,54 @@ var rating = 0.0;
                       ],
                     ),
                     SizedBox(height: 30,),
-                    TabBar(
-                        tabs:[
-                          Text('About me',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                              color: Colors.black
 
-                          ),),
-                          Text('Reviews',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black
+                         TabBar(
+                             tabs:[
+                               Text('About me',
+                                 style: TextStyle(
+                                     fontSize: 18,
+                                     fontWeight: FontWeight.w500,
+                                     color: Colors.black
 
-                            ),),
-                          Text('Portfolio',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              color: Colors.black
-                            ),),
-                        ] ,
-                    indicatorColor: Color.fromRGBO(22, 80, 105, 1),
-                      indicatorWeight: 5,
-                      labelPadding: EdgeInsetsDirectional.only(bottom: 5),
+                                 ),),
+                               Text('Reviews',
+                                 style: TextStyle(
+                                     fontSize: 18,
+                                     fontWeight: FontWeight.w500,
+                                     color: Colors.black
 
-                    )
+                                 ),),
+                               Text('Portfolio',
+                                 style: TextStyle(
+                                     fontSize: 18,
+                                     fontWeight: FontWeight.w500,
+                                     color: Colors.black
+                                 ),),
+                             ] ,
+                             indicatorColor: Color.fromRGBO(22, 80, 105, 1),
+                             indicatorWeight: 5,
+                             labelPadding: EdgeInsetsDirectional.only(bottom: 10),
+                           controller:_tabController ,
+
+
+                           ),
+                         SizedBox(height: 9,),
+                         Expanded(
+                           child: TabBarView(
+
+                             controller: _tabController,
+                             children: [
+                               AboutmePage(),
+                               ReviewPage(),
+                               //Test()
+                               PortfolioPage()
+
+
+
+                             ],
+                           ),
+                         )
+
 
                   ],
                 )
@@ -185,3 +224,11 @@ var rating = 0.0;
         ));
   }
 }
+
+
+
+
+
+
+
+
