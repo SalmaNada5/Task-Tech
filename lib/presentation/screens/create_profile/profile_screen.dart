@@ -5,8 +5,9 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/create_profile/portfolioPage.dart';
-import 'package:task_tech/presentation/create_profile/reviewPage.dart';
+import 'package:task_tech/presentation/screens/create_profile/portfolioPage.dart';
+import 'package:task_tech/presentation/screens/create_profile/reviewPage.dart';
+
 
 import 'aboutmePage.dart';
 

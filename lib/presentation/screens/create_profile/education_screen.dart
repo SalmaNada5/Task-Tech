@@ -4,9 +4,11 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/create_profile/appBarWidget.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_screen.dart';
 
-import '../../constants/colors.dart';
+import '../../../constants/colors.dart';
+import 'appBarWidget.dart';
+
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({Key? key}) : super(key: key);
@@ -144,6 +146,10 @@ class _EducationScreenState extends State<EducationScreen> {
                     ),
                     child: MaterialButton(
                         onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context)=> const ProfileScreen()));
                         },
                         child:const Text('Next',
                           style: TextStyle(

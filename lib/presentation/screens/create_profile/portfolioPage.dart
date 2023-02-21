@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../../constants/colors.dart';
 
 class PortfolioPage extends StatelessWidget {
   const PortfolioPage({Key? key}) : super(key: key);

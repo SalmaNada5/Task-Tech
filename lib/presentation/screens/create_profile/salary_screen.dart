@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/create_profile/education_screen.dart';
 
 import 'appBarWidget.dart';
+import 'education_screen.dart';
 
 class SalaryScreen extends StatefulWidget {
   const SalaryScreen({Key? key}) : super(key: key);

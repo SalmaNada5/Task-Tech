@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/create_profile/skills_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 
 import 'appBarWidget.dart';
 import 'package:flutter/material.dart';

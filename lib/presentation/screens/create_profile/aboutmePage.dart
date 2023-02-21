@@ -1,10 +1,11 @@
 
 import 'package:another_xlider/another_xlider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../../constants/colors.dart';
+import '../../../constants/colors.dart';
+
 
 class AboutmePage extends StatefulWidget {
   const AboutmePage({Key? key}) : super(key: key);
@@ -14,10 +15,54 @@ class AboutmePage extends StatefulWidget {
 }
 
 class _AboutmePageState extends State<AboutmePage> {
-  SfRangeValues _values = SfRangeValues(2000, 5000);
+  SfRangeValues values = const SfRangeValues(2000, 5000);
   RangeValues currentSliderValue = const RangeValues(2000, 5000);
-  double _uppervalue = 10000;
-  double _lowervalue = 500;
+  final double _uppervalue = 10000;
+  final double _lowervalue = 500;
+  late SfRangeValues _values;
+  late NumberFormat _numberFormat;
+  late TextEditingController _rangeStartController = TextEditingController();
+  late TextEditingController _rangeEndController= TextEditingController();
+
+  Widget _buildThumbIcon(TextEditingController controller) {
+    return Transform.translate(
+      // Here 20 is thumb diameter and 5 is spacing between thumb and text.
+      offset: const Offset(0, 25),
+      child: OverflowBox(
+        maxWidth: 150,
+        child: TextField(
+          textAlign: TextAlign.center,
+
+          decoration:
+          const InputDecoration(border: InputBorder.none,
+
+              suffixText: '\$'),
+          controller: controller,
+        ),
+      ),
+    );
+  }
+
+  String _getFormattedText(dynamic value) {
+    return _numberFormat.format(value);
+  }
+
+  @override
+  void initState() {
+    _values = const SfRangeValues(1000, 10000);
+    _numberFormat = NumberFormat('#.### \$');
+    _rangeStartController = TextEditingController();
+    _rangeEndController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _rangeStartController.dispose();
+    _rangeEndController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -27,7 +72,7 @@ class _AboutmePageState extends State<AboutmePage> {
 
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Lorem ipsum dolor sit amet, consectetur elit adipiscing'
+            const Text('Lorem ipsum dolor sit amet, consectetur elit adipiscing'
                 ' elit. Dolor fermentum libero velit quis in fermentum justo, '
                 'velit quis non.',
               style: TextStyle(
@@ -35,18 +80,18 @@ class _AboutmePageState extends State<AboutmePage> {
                   fontWeight: FontWeight.w400,
                   color: Color.fromRGBO(124, 124, 124, 1)
               ),),
-            SizedBox(height: 19,),
+            const SizedBox(height: 19,),
             Row(
               children: [
-                Text('Education',style: TextStyle(
+                const Text('Education',style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                     color: Color.fromRGBO(13, 13, 38, 1)
                 ),),
-                SizedBox(width: 240,),
+                const SizedBox(width: 240,),
                 TextButton(
                   onPressed: () {  },
-                  child: Text('See all',
+                  child: const Text('See all',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 13,
@@ -55,7 +100,7 @@ class _AboutmePageState extends State<AboutmePage> {
                 )
               ],
             ),
-            SizedBox(height: 16,),
+            const SizedBox(height: 16,),
             Center(
               child: Container(
                 height: 78,
@@ -64,8 +109,8 @@ class _AboutmePageState extends State<AboutmePage> {
                 decoration: BoxDecoration(
 
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    boxShadow: [
+                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    boxShadow: const [
                       BoxShadow(
                           color: Color.fromRGBO(224, 224, 224, 0.9),
                           spreadRadius:3,
@@ -76,20 +121,20 @@ class _AboutmePageState extends State<AboutmePage> {
 
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.only(start: 10, end: 10),
+                  padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
                   child: Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                           radius: 23,
                           backgroundImage: AssetImage(
                               'images/suez canal.png'
                           )
                       ),
-                      SizedBox(width: 14,),
+                      const SizedBox(width: 14,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text('Computer Science',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -104,11 +149,11 @@ class _AboutmePageState extends State<AboutmePage> {
                             ),)
                         ],
                       ),
-                      SizedBox(width: 36,),
+                      const SizedBox(width: 36,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text('Suez canal university',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -129,14 +174,51 @@ class _AboutmePageState extends State<AboutmePage> {
                 ),
               ),
             ),
-            SizedBox(height: 22,),
-            Text('Salary',
+            const SizedBox(height: 22,),
+            const Text('Salary',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: Color.fromRGBO(13, 13, 38, 1)
               ),),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
+
+        SfRangeSlider(
+          inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
+          activeColor: white,
+          min: 1000,
+          max: 10000,
+          enableTooltip: true,
+          shouldAlwaysShowTooltip: true,
+          //labelPlacement: LabelPlacement.betweenTicks,
+          values: _values,
+          minorTicksPerInterval: 500,
+          stepSize: 500,
+          /*endThumbIcon: Icon(Icons.radio_button_checked,
+            color: Color.fromRGBO(22, 80, 105, 1),
+          ),
+          startThumbIcon: Icon(Icons.radio_button_checked,
+            color: Color.fromRGBO(22, 80, 105, 1),
+          ),*/
+           startThumbIcon: _buildThumbIcon(_rangeStartController),
+          endThumbIcon: _buildThumbIcon(_rangeEndController),
+          onChangeStart: (SfRangeValues newValues) {
+            _rangeStartController.text = _getFormattedText(newValues.start);
+            _rangeEndController.text = _getFormattedText(newValues.end);
+          },
+          onChanged: (SfRangeValues newValues) {
+            setState(() {
+              _rangeStartController.text = _getFormattedText(newValues.start);
+              _rangeEndController.text = _getFormattedText(newValues.end);
+              _values = newValues;
+            });
+          },
+          onChangeEnd: (SfRangeValues newValues) {
+            _rangeStartController.text = "";
+            _rangeEndController.text = "";
+          },
+        ),
+
             /*SliderTheme(
                                          data: SliderThemeData(
                                            activeTrackColor: Color.fromRGBO(22, 80, 105, 1),
@@ -159,7 +241,7 @@ class _AboutmePageState extends State<AboutmePage> {
                                                });
                                              }),
                                        ),*/
-            SfRangeSlider(
+           /* SfRangeSlider(
               inactiveColor: Color.fromRGBO(217, 217, 217, 1),
               activeColor: white,
                min: 1000,
@@ -182,7 +264,7 @@ class _AboutmePageState extends State<AboutmePage> {
                   _values =values;
                 });
                 },
-                                       )
+                                       )*/
 
             /*FlutterSlider(
               values: [500,1500,2000, 10000],
@@ -250,15 +332,15 @@ class _AboutmePageState extends State<AboutmePage> {
 
                 });
               },
-            )*/,
-            SizedBox(height: 30,),
-            Text('Skills',
+            )*/
+            const SizedBox(height: 30,),
+            const Text('Skills',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: Color.fromRGBO(13, 13, 38, 1)
               ),),
-            SizedBox(height: 16,),
+            const SizedBox(height: 16,),
             Row(
               children: [
                 Container(
@@ -270,7 +352,6 @@ class _AboutmePageState extends State<AboutmePage> {
                   ),
                   child: MaterialButton(
                       onPressed: () {
-                        print('click');
                       },
                       child:Text(
                         'UI/ UX Design',
@@ -280,7 +361,7 @@ class _AboutmePageState extends State<AboutmePage> {
                       )
                   ),
                 ),
-                SizedBox(width: 17,),
+                const SizedBox(width: 17,),
                 Container(
                   height: 32,
                   width: 103,
@@ -298,7 +379,7 @@ class _AboutmePageState extends State<AboutmePage> {
                       )
                   ),
                 ),
-                SizedBox(width: 17,),
+                const SizedBox(width: 17,),
                 Container(
                   height: 32,
                   width: 103,

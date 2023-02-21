@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/create_profile/bio_screen.dart';
 
 import 'appBarWidget.dart';
+import 'bio_screen.dart';
 
 class Skills_Screen extends StatefulWidget {
   const Skills_Screen({Key? key}) : super(key: key);

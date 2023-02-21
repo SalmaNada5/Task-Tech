@@ -25,29 +25,30 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: primaryLightColor,
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset('images/logo.png'),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'TASK-TECH',
-                style: GoogleFonts.redRose(
+      backgroundColor: primaryLightColor,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('images/logo.png'),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'TASK-TECH',
+              style: GoogleFonts.redRose(
                   textStyle: TextStyle(
                     color: white,
                     fontSize: 30,
                   ),
-                ),
-              ),
-            ],
-          )),
+                  shadows: [
+                    Shadow(
+                        color: Colors.white.withOpacity(0.15),
+                        offset: const Offset(3, 4))
+                  ]),
+            ),
+          ],
         ),
       ),
     );

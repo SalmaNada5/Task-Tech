@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
-import 'package:task_tech/presentation/create_profile/bio_screen.dart';
-import 'package:task_tech/presentation/create_profile/createProfile.dart';
-import 'package:task_tech/presentation/create_profile/education_screen.dart';
-import 'package:task_tech/presentation/create_profile/salary_screen.dart';
-import 'package:task_tech/presentation/create_profile/skills_screen.dart';
 
-import '../../constants/colors.dart';
+import '../../../constants/colors.dart';
+
 
 
 AppBar MyAppbar({required double percent}){
