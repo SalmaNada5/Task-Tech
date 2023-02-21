@@ -60,7 +60,6 @@ class _ServicesItemState extends State<ServicesItem> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
-                          //TODO add the item to the favorits list.
                           isFavorite = !isFavorite;
                         });
                       },

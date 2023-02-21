@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class PortfolioPage extends StatelessWidget {
   const PortfolioPage({Key? key}) : super(key: key);
@@ -11,33 +9,55 @@ class PortfolioPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-
           children: [
             TextButton(
-              onPressed: () {  },
-              child: Text('See all',
+              onPressed: () {},
+              child: const Text(
+                'See all',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 13,
-                    color: Color.fromRGBO(175, 176, 182, 1)
-                ), ),
+                    color: Color.fromRGBO(175, 176, 182, 1)),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image(image: AssetImage('images/image 18.png',),width: 118.35,height: 118.35,),
-                Image(image: AssetImage('images/image 13.png'),width: 118.35,height: 118.35),
-                Image(image: AssetImage('images/image 14.png'),width: 118.35,height: 118.35),
-
-              ],),
-            SizedBox(height: 19.5,),
+              children: const [
+                Image(
+                  image: AssetImage(
+                    'images/image 18.png',
+                  ),
+                  width: 118.35,
+                  height: 118.35,
+                ),
+                Image(
+                    image: AssetImage('images/image 13.png'),
+                    width: 118.35,
+                    height: 118.35),
+                Image(
+                    image: AssetImage('images/image 14.png'),
+                    width: 118.35,
+                    height: 118.35),
+              ],
+            ),
+            const SizedBox(
+              height: 19.5,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-              children: [
-                Image(image: AssetImage('images/image 15.png'),width: 118.35,height: 118.35),
-                Image(image: AssetImage('images/image 16.png'),width: 118.35,height: 118.35),
-                Image(image: AssetImage('images/image 17.png'),width: 118.35,height: 118.35)
+              children: const [
+                Image(
+                    image: AssetImage('images/image 15.png'),
+                    width: 118.35,
+                    height: 118.35),
+                Image(
+                    image: AssetImage('images/image 16.png'),
+                    width: 118.35,
+                    height: 118.35),
+                Image(
+                    image: AssetImage('images/image 17.png'),
+                    width: 118.35,
+                    height: 118.35)
               ],
             )
           ],

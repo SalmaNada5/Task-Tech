@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 
-import 'appBarWidget.dart';
+import 'app_bar_widget.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -276,7 +276,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const Skills_Screen()));
+                                              const SkillsScreen()));
                                 },
                                 child: const Text(
                                   'Next',

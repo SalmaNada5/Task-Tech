@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/screens/create_profile/createProfile.dart';
+import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/home/create_post_screen.dart';

@@ -25,6 +25,7 @@ dependencies:
   smooth_star_rating_null_safety: ^1.0.4+2
   syncfusion_flutter_sliders: ^20.4.49
   another_xlider: ^1.1.2
+  syncfusion_flutter_core:
 
 
 

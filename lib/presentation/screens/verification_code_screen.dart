@@ -65,7 +65,6 @@ class VerificationScreen extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                //TODO send code
                 onPressed: () {},
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(EdgeInsets.symmetric(
@@ -97,7 +96,6 @@ class VerificationScreen extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    //TODO resend code
                     onTap: () {},
                     child: Text(
                       'Resend',

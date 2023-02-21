@@ -4,11 +4,9 @@ import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 
 import '../../../constants/colors.dart';
 
-
-
-AppBar MyAppbar({required double percent}){
+// ignore: non_constant_identifier_names
+AppBar MyAppbar({required double percent}) {
   return AppBar(
-
     toolbarHeight: 70,
     backgroundColor: white,
     elevation: 0,
@@ -16,14 +14,16 @@ AppBar MyAppbar({required double percent}){
       builder: (BuildContext context) {
         return Center(
           child: IconButton(
-
               iconSize: 50,
-              onPressed: () {}, icon: Image.asset('icons/profile.png',)),
+              onPressed: () {},
+              icon: Image.asset(
+                'icons/profile.png',
+              )),
         );
       },
     ),
     centerTitle: true,
-    title:  const Padding(
+    title: const Padding(
       padding: EdgeInsetsDirectional.only(
         start: 55,
       ),
@@ -35,7 +35,7 @@ AppBar MyAppbar({required double percent}){
     bottom: PreferredSize(
         preferredSize: const Size.fromHeight(0),
         child: RoundedProgressBar(
-          percent: percent ,
+          percent: percent,
           height: 9,
           borderRadius: BorderRadius.circular(12),
           style: RoundedProgressBarStyle(
@@ -46,6 +46,3 @@ AppBar MyAppbar({required double percent}){
         )),
   );
 }
-
-
-

@@ -1,30 +1,27 @@
-import 'package:another_xlider/another_xlider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/screens/create_profile/portfolioPage.dart';
-import 'package:task_tech/presentation/screens/create_profile/reviewPage.dart';
+import 'package:task_tech/presentation/screens/create_profile/portfolio_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/review_page.dart';
 
-import 'aboutmePage.dart';
+import 'about_me_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
+class ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   var rating = 0.0;
   TabController? _tabController;
 
   @override
   void initState() {
-    _tabController = new TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -47,28 +44,28 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
             body: Center(
               child: Padding(
-                  padding: EdgeInsetsDirectional.only(
+                  padding: const EdgeInsetsDirectional.only(
                       start: 15, end: 15, bottom: 20),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 65,
                         backgroundImage: AssetImage('images/picture.png'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 21,
                       ),
-                      Text(
+                      const Text(
                         'Eman Elsayed',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       GradientText('UI/UX Designer',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -79,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             Color.fromRGBO(124, 124, 124, 1),
                             Color.fromRGBO(22, 80, 105, 1)
                           ]),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -93,28 +90,28 @@ class _ProfileScreenState extends State<ProfileScreen>
                             halfFilledIconData: Icons.star_half,
                             starCount: 5,
                             spacing: 2,
-                            color: Color.fromRGBO(255, 193, 7, 1),
-                            borderColor: Color.fromRGBO(218, 218, 218, 1),
+                            color: const Color.fromRGBO(255, 193, 7, 1),
+                            borderColor: const Color.fromRGBO(218, 218, 218, 1),
                             onRatingChanged: (value) {
                               setState(() {
                                 rating = value;
-                                print(rating);
+                                debugPrint(rating.toString());
                               });
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
                             '$rating',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(218, 218, 218, 1)),
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 19,
                       ),
                       Row(
@@ -127,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 color: white,
                                 borderRadius: BorderRadius.circular(6),
                                 border: Border.all(
-                                  color: Color.fromRGBO(22, 80, 105, 1),
+                                  color: primaryLightColor,
                                 )),
                             child: MaterialButton(
                                 onPressed: () {},
@@ -138,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       color: Color.fromRGBO(22, 80, 105, 1)),
                                 )),
                           ),
-                          SizedBox(width: 30),
+                          const SizedBox(width: 30),
                           Container(
                             width: 160,
                             height: 50,
@@ -156,11 +153,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       TabBar(
-                        tabs: [
+                        tabs: const [
                           Text(
                             'About me',
                             style: TextStyle(
@@ -183,18 +180,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 color: Colors.black),
                           ),
                         ],
-                        indicatorColor: Color.fromRGBO(22, 80, 105, 1),
+                        indicatorColor: primaryLightColor,
                         indicatorWeight: 5,
-                        labelPadding: EdgeInsetsDirectional.only(bottom: 10),
+                        labelPadding:
+                            const EdgeInsetsDirectional.only(bottom: 10),
                         controller: _tabController,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 9,
                       ),
                       Expanded(
                         child: TabBarView(
                           controller: _tabController,
-                          children: [
+                          children: const [
                             AboutmePage(),
                             ReviewPage(),
                             //Test()

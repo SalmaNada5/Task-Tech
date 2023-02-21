@@ -8,7 +8,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -37,7 +37,7 @@ class ForgotPasswordScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -65,7 +65,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (formKey.currentState!.validate()) {
                     debugPrint('valid');
                     Navigator.pushNamed(context, 'verification');
                   }

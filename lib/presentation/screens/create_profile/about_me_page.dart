@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../../constants/colors.dart';
 
@@ -21,22 +21,6 @@ class _AboutmePageState extends State<AboutmePage> {
   late NumberFormat _numberFormat;
   late TextEditingController _rangeStartController = TextEditingController();
   late TextEditingController _rangeEndController = TextEditingController();
-
-  Widget _buildThumbIcon(TextEditingController controller) {
-    return Transform.translate(
-      // Here 20 is thumb diameter and 5 is spacing between thumb and text.
-      offset: const Offset(0, 25),
-      child: OverflowBox(
-        maxWidth: 150,
-        child: TextField(
-          textAlign: TextAlign.center,
-          decoration:
-              const InputDecoration(border: InputBorder.none, suffixText: '\$'),
-          controller: controller,
-        ),
-      ),
-    );
-  }
 
   String _getFormattedText(dynamic value) {
     return _numberFormat.format(value);
