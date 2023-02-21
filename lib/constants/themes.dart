@@ -13,3 +13,14 @@ TextStyle labelTextFormStyle = GoogleFonts.poppins(
   fontSize: 14,
   fontWeight: FontWeight.w400,
 );
+TextStyle labelStyle = GoogleFonts.poppins(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  color: Colors.black,
+);
+
+TextStyle fieldTextStyle = GoogleFonts.poppins(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  color: Colors.black,
+);

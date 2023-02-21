@@ -72,9 +72,6 @@ class _SignInScreenState extends State<SignInScreen> {
                             return '';
                           }
                         },
-                        onChange: (value) {
-                          emailController.text = value.toString();
-                        },
                       ),
                       const SizedBox(
                         height: 10,
@@ -91,9 +88,6 @@ class _SignInScreenState extends State<SignInScreen> {
                             return 'Please enter your password';
                           }
                           return '';
-                        },
-                        onChange: (value) {
-                          passController.text = value.toString();
                         },
                         icon: IconButton(
                           icon: Icon(

@@ -69,9 +69,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                           return '';
                         },
-                        onChange: (value) {
-                          fullNameController.text = value.toString();
-                        },
                         hintText: 'Enter your name',
                       ),
                       const SizedBox(
@@ -92,9 +89,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                           return '';
                         },
-                        onChange: (value) {
-                          emailController.text = value.toString();
-                        },
                         hintText: 'Enter your email',
                       ),
                       const SizedBox(
@@ -112,9 +106,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             return 'password is too short';
                           }
                           return '';
-                        },
-                        onChange: (value) {
-                          passController.text = value.toString();
                         },
                         icon: IconButton(
                           icon: Icon(
@@ -146,9 +137,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             return 'Wrong password';
                           }
                           return '';
-                        },
-                        onChange: (value) {
-                          confirmPassController.text = value.toString();
                         },
                         icon: IconButton(
                           icon: Icon(
