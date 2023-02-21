@@ -1,16 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 
 import 'appBarWidget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
-import 'package:task_tech/constants/colors.dart';
-//import 'package:flutter/src/widgets/container.dart';
-//import 'package:flutter/src/widgets/framework.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -25,9 +18,8 @@ class _CreateProfileState extends State<CreateProfile> {
   void initState() {
     super.initState();
   }
-  String? dropDownValue ;
 
-
+  String? dropDownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +31,12 @@ class _CreateProfileState extends State<CreateProfile> {
     final formKey = GlobalKey<FormState>();
     List<String> list = <String>['Male', 'Female'];
 
-
-
     return Scaffold(
-       appBar: MyAppbar(percent: 20),
+      backgroundColor: Colors.white,
+      appBar: MyAppbar(percent: 20),
       body: Center(
-
-
         child: Padding(
-          padding: const EdgeInsets.only(
-              right:15,
-              left: 15,
-              bottom: 20
-          ),
+          padding: const EdgeInsets.only(right: 15, left: 15, bottom: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -60,7 +45,6 @@ class _CreateProfileState extends State<CreateProfile> {
                 ),
                 const Center(
                   child: CircleAvatar(
-
                     radius: 65,
                     backgroundImage: AssetImage('images/picture.png'),
                   ),
@@ -90,7 +74,9 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         Text(
                           'Upload photo',
-                          style: TextStyle(fontSize: 20, color: primaryLightColor,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: primaryLightColor,
                               fontWeight: FontWeight.w500),
                         )
                       ],
@@ -108,8 +94,8 @@ class _CreateProfileState extends State<CreateProfile> {
                       children: [
                         const Text(
                           'Name *',
-                          style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
                           height: 10,
@@ -128,8 +114,8 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         const Text(
                           'Birth Date',
-                          style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
                           height: 10,
@@ -143,10 +129,10 @@ class _CreateProfileState extends State<CreateProfile> {
                         }*/
                             onTap: () {
                               showDatePicker(
-                                  context: context,
-                                  initialDate:  DateTime.now(),
-                                  firstDate:  DateTime.now(),
-                                  lastDate: DateTime.parse('2022-12-12'))
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime.parse('2022-12-12'))
                                   .then((value) {
                                 dateController.text =
                                     DateFormat.yMMMd().format(value!);
@@ -157,10 +143,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.min,
-
                           children: [
-
-
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,57 +151,62 @@ class _CreateProfileState extends State<CreateProfile> {
                                 children: [
                                   const Text(
                                     'Gender',
-                                    style:
-                                    TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Container(
-                                    padding: const EdgeInsetsDirectional.only(start: 12, end: 12),
+                                    padding: const EdgeInsetsDirectional.only(
+                                        start: 12, end: 12),
                                     height: 40,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8.6),
                                       border: Border.all(
-                                          color: const Color.fromRGBO(227, 227, 227, 1),
+                                          color: const Color.fromRGBO(
+                                              227, 227, 227, 1),
                                           style: BorderStyle.solid),
                                     ),
                                     child: DropdownButton<String>(
-
-
-                                        underline: Container(), //remove underline
-                                        borderRadius: BorderRadius.circular(8.6),
+                                        underline:
+                                            Container(), //remove underline
+                                        borderRadius:
+                                            BorderRadius.circular(8.6),
                                         alignment: AlignmentDirectional.center,
                                         isExpanded: true,
-                                        items: list.map<DropdownMenuItem<String>>(
+                                        items: list
+                                            .map<DropdownMenuItem<String>>(
                                                 (String value) {
-                                              return DropdownMenuItem<String>(
-
-                                                child: Text(
-                                                  value,
-                                                ),
-                                                value: value,
-                                              );
-                                            }).toList(),
-                                        icon: const Icon(Icons.keyboard_arrow_down_outlined,
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                            ),
+                                          );
+                                        }).toList(),
+                                        icon: const Icon(
+                                          Icons.keyboard_arrow_down_outlined,
                                           size: 20,
-
-                                          color: Color.fromRGBO(197, 197, 197, 1),),
+                                          color:
+                                              Color.fromRGBO(197, 197, 197, 1),
+                                        ),
                                         value: dropDownValue,
                                         onChanged: (String? value) {
-
-
                                           setState(() {
                                             dropDownValue = value!;
                                             //dropDownValue;
-                                            print(dropDownValue);
+                                            debugPrint(dropDownValue);
                                           });
                                         }),
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 15,),
+                            const SizedBox(
+                              width: 15,
+                            ),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,8 +214,9 @@ class _CreateProfileState extends State<CreateProfile> {
                                 children: [
                                   const Text(
                                     'Age',
-                                    style:
-                                    TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -238,14 +227,15 @@ class _CreateProfileState extends State<CreateProfile> {
                                 ],
                               ),
                             ),
-
                           ],
                         ),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         const Text(
                           'Location',
-                          style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
                           height: 10,
@@ -254,12 +244,13 @@ class _CreateProfileState extends State<CreateProfile> {
                             controller: locationController,
                             type: TextInputType.text,
                             suffix: Icons.location_on_outlined),
-                        const SizedBox(height: 10,),
-
+                        const SizedBox(
+                          height: 10,
+                        ),
                         const Text(
                           'Phone Number',
-                          style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
                           height: 10,
@@ -284,14 +275,14 @@ class _CreateProfileState extends State<CreateProfile> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context)=> const Skills_Screen()));
+                                          builder: (context) =>
+                                              const Skills_Screen()));
                                 },
-                                child:const Text('Next',
+                                child: const Text(
+                                  'Next',
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white
-                                  ),)
-                            ),
+                                      fontSize: 20, color: Colors.white),
+                                )),
                           ),
                         ),
                       ],
@@ -332,8 +323,12 @@ Widget defaultFormField({
           borderRadius: BorderRadius.all(Radius.circular(8.6)),
         ),
         labelText: label,
-        suffixIcon: suffix != null ? Icon(suffix,color: const Color.fromRGBO(
-            197, 197, 197, 1),) : null,
+        suffixIcon: suffix != null
+            ? Icon(
+                suffix,
+                color: const Color.fromRGBO(197, 197, 197, 1),
+              )
+            : null,
       ),
       /*validator: (s){
         validate(s);
@@ -358,8 +353,8 @@ minHeight: 10,
 valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
 )*/
 
-  @override
-  State<CreateProfile> createState() => _CreateProfileState();
+@override
+State<CreateProfile> createState() => _CreateProfileState();
   
 
 
