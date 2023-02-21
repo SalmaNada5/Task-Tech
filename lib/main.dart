@@ -1,4 +1,8 @@
+
 import 'package:flutter/material.dart';
+import 'package:task_tech/presentation/screens/create_profile/createProfile.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_screen.dart';
+import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/reset_password_screen.dart';
@@ -19,6 +23,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      /*routes: {
+        '/splash': (context) => const SplashScreen(),
       routes: {
         'splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),
@@ -29,6 +35,15 @@ class MyApp extends StatelessWidget {
         'resetPassword': (context) => const ResetPassword(),
         'unexpectedError': (context) => const UnexpectedErrorScreen(),
       },
+      initialRoute: '/splash',*/
+
+      home: CreateProfile(),
+      /*routes: {
+        '/splash': (context) => const SplashScreen(),
+        'onboarding': (context) => const OnboardingScreen(),
+      },*/
+      
+      //initialRoute: '/splash',
       initialRoute: 'splash',
     );
   }
