@@ -60,7 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6)))),
                 onPressed: isLastPage
-                    ? () {}
+                    ? () => Navigator.pushReplacementNamed(context, 'signUp')
                     : () => _pageController.nextPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut),
@@ -74,9 +74,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               fontWeight: FontWeight.w500,
                             )),
                       )
-                    : const Icon(
-                        Icons.arrow_forward,
-                        size: 22,
+                    : const Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 4,
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          size: 22,
+                        ),
                       ))
           ],
         ),
@@ -90,7 +95,8 @@ class FirstOnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Padding(
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -103,7 +109,7 @@ class FirstOnBoarding extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            onPressed: () {},
+            onPressed: () => Navigator.pushReplacementNamed(context, 'signUp'),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height / 9,
