@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
+import 'package:task_tech/presentation/screens/home/create_post_screen.dart';
+import 'package:task_tech/presentation/screens/home/categories_screen.dart';
+import 'package:task_tech/presentation/screens/home/home_screen.dart';
+import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/home/profile_screen.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/reset_password_screen.dart';
 import 'package:task_tech/presentation/screens/sign_in.dart';
@@ -28,8 +33,13 @@ class MyApp extends StatelessWidget {
         'verification': (context) => const VerificationScreen(),
         'resetPassword': (context) => const ResetPassword(),
         'unexpectedError': (context) => const UnexpectedErrorScreen(),
+        'home': (context) => const HomeScreen(),
+        'addPost': (context) => const AddPostScreen(),
+        'notifications': (context) => const NotificationsScreen(),
+        'profile': (context) => const ProfileScreen(),
+        'categories': (context) => const CategoriesScreen(),
       },
-      initialRoute: 'splash',
+      initialRoute: 'home',
     );
   }
 }

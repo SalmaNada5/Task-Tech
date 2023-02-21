@@ -82,9 +82,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                   return '';
                 }
               },
-              onChange: (newPass) {
-                newPassController.text = newPass.toString();
-              },
             ),
             CustomTextFormField(
               hintText: 'Confirm password',
@@ -110,9 +107,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                 } else {
                   return '';
                 }
-              },
-              onChange: (newPass) {
-                confirmPassController.text = newPass.toString();
               },
             ),
             ElevatedButton(

@@ -61,9 +61,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                     return null;
                   }
                 },
-                onChange: (val) {
-                  forgotPassEmailController.text = val;
-                },
                 hintText: 'Email',
               ),
               ElevatedButton(
