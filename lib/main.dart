@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/presentation/screens/create_profile/createProfile.dart';
+import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/home/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/home/categories_screen.dart';
 import 'package:task_tech/presentation/screens/home/home_screen.dart';
 import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
 import 'package:task_tech/presentation/screens/home/profile_screen.dart';
-import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/reset_password_screen.dart';
 import 'package:task_tech/presentation/screens/sign_in.dart';
 import 'package:task_tech/presentation/screens/sign_up_screen.dart';
@@ -36,10 +37,11 @@ class MyApp extends StatelessWidget {
         'home': (context) => const HomeScreen(),
         'addPost': (context) => const AddPostScreen(),
         'notifications': (context) => const NotificationsScreen(),
-        'profile': (context) => const ProfileScreen(),
+        'profile': (context) => const ProfilePage(),
         'categories': (context) => const CategoriesScreen(),
+        'createProfile': (context) => const CreateProfile(),
       },
-      initialRoute: 'home',
+      initialRoute: 'splash',
     );
   }
 }

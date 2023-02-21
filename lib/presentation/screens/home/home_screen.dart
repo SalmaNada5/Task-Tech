@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ChatsScreen(),
     const AddPostScreen(),
     const NotificationsScreen(),
-    const ProfileScreen(),
+    const ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
