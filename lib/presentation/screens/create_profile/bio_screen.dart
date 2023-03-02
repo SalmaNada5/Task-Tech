@@ -53,8 +53,8 @@ class BioScreenState extends State<BioScreen> {
                 height: 1,
                 color: const Color.fromRGBO(218, 218, 218, 1),
               ),
-              const SizedBox(
-                height: 50,
+               SizedBox(
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
               SizedBox(
                 width: double.infinity,
@@ -90,8 +90,8 @@ class BioScreenState extends State<BioScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
               ),
-              const SizedBox(
-                height: 112,
+               SizedBox(
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
               Center(
                 child: Container(

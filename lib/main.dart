@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
+import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/home/create_post_screen.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
+      home: SkillsScreen(),
+     /*  routes: {
         'splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),
         'signUp': (context) => const SignUpScreen(),
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
         'categories': (context) => const CategoriesScreen(),
         'createProfile': (context) => const CreateProfile(),
       },
-      initialRoute: 'splash',
+      initialRoute: 'splash', */
     );
   }
 }

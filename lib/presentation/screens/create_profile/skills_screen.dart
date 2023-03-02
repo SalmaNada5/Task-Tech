@@ -42,8 +42,9 @@ class SkillsScreenState extends State<SkillsScreen> {
                   height: 12,
                 ),
                 Wrap(
+                  
                   //crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 3,
+                  spacing: 10,
                   children: const <Widget>[
                     FilterChipWidget(chipName: 'UI/UX'),
                     FilterChipWidget(chipName: 'Technology'),
@@ -132,12 +133,13 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
+      padding: const EdgeInsetsDirectional.only(top:3,bottom: 3,start: 3,end: 3),
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.chipName),
-          const SizedBox(
-            width: 3,
+           SizedBox(
+            width:MediaQuery.of(context).size.width * 0.01,
           ),
           icon = _isSelected
               ? Icon(Icons.check, color: white, size: 22, weight: 400)
@@ -147,6 +149,7 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
                   weight: 400)
         ],
       ),
+      
       selected: _isSelected,
       onSelected: (isSelected) {
         setState(() {
@@ -160,12 +163,7 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           width: 1,
           color: Color.fromRGBO(217, 217, 217, 1),
           style: BorderStyle.solid),
-      /*avatar: Icon(
-        Icons.add,
-        size: 22,
-        color: Color.fromRGBO(166,166,166,0.8),
-        textDirection: TextDirection.rtl,
-      ),*/
+     
 
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),

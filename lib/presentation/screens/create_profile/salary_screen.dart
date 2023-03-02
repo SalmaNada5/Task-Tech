@@ -228,8 +228,8 @@ class SalaryScreenState extends State<SalaryScreen> {
                         color: Color.fromRGBO(124, 124, 124, 1)),
                   ),
                 ),
-                const SizedBox(
-                  height: 132,
+                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 Center(
                   child: Container(

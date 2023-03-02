@@ -76,8 +76,8 @@ class EducationScreenState extends State<EducationScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 66,
+                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 const Text(
                   'Upload cv/ resume .',
@@ -134,8 +134,8 @@ class EducationScreenState extends State<EducationScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 122,
+                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Center(
                   child: Container(
@@ -153,7 +153,7 @@ class EducationScreenState extends State<EducationScreen> {
                                   builder: (context) => const ProfileScreen()));
                         },
                         child: const Text(
-                          'Next',
+                          'Save',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         )),
                   ),
