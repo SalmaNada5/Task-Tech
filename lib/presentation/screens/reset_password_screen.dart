@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/themes.dart';
+import '../../constants/text_styles.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -18,6 +18,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController confirmPassController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,7 +27,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         centerTitle: true,
         title: Text(
           'Reset Password',
-          style: titleTheme,
+          style: titleStyle,
         ),
         leading: Container(
           margin: const EdgeInsets.all(10),
@@ -113,8 +114,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               onPressed: () {},
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: MediaQuery.of(context).size.width * 0.35)),
+                    vertical: 20, horizontal: 0.35 * screenW)),
                 backgroundColor: MaterialStateProperty.all(primaryLightColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(

@@ -16,8 +16,9 @@ class HighestRatedFreelancer extends StatelessWidget {
   final Function()? onPress;
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.3,
+      width: 0.3 * screenW,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

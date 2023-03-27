@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/constants/themes.dart';
+import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    double screenH = MediaQuery.of(context).size.height;
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
@@ -18,7 +19,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           centerTitle: true,
           title: Text(
             'Forgot Password',
-            style: titleTheme,
+            style: titleStyle,
           ),
           leading: Container(
             margin: const EdgeInsets.all(10),
@@ -71,9 +72,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                   }
                 },
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                  padding: MaterialStateProperty.all(
+                    EdgeInsets.symmetric(
                       vertical: 20,
-                      horizontal: MediaQuery.of(context).size.width * 0.35)),
+                      horizontal: 0.35 * screenH,
+                    ),
+                  ),
                   backgroundColor: MaterialStateProperty.all(primaryLightColor),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(

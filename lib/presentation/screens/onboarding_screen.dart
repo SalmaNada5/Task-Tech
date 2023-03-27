@@ -95,6 +95,7 @@ class FirstOnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenH = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -112,7 +113,7 @@ class FirstOnBoarding extends StatelessWidget {
             onPressed: () => Navigator.pushReplacementNamed(context, 'signUp'),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 9,
+            height: screenH / 9,
           ),
           const OnboardingWidget(
               img: 'images/onboarding1.png',
