@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/constants/themes.dart';
-import 'package:task_tech/presentation/screens/home/create_post_screen.dart';
+import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
-import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
 import 'package:task_tech/presentation/screens/home/profile_screen.dart';
+import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import '../../widgets/home_widgets/category_item.dart';
 import '../../widgets/home_widgets/service_widget.dart';
@@ -28,11 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeScreen(),
     const ChatsScreen(),
     const AddPostScreen(),
-    const NotificationsScreen(),
+    const PostsScreen(),
     const ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
+    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: _currentIndex == 0
@@ -70,32 +71,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   userName,
-                                  style: titleTheme.copyWith(fontSize: 24),
+                                  style: titleStyle.copyWith(fontSize: 24),
                                 ),
                               ],
                             ),
                             const Spacer(),
-                            Material(
-                              type: MaterialType.transparency,
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    width: 1,
-                                    color: const Color(0xffDADADA),
-                                  ),
-                                ),
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Icon(
-                                      Icons.notifications_outlined,
-                                      color: primaryLightColor,
-                                      size: 30,
-                                    ),
-                                  ),
-                                ),
+                            InkWell(
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Image.asset('images/notifications.png'),
                               ),
                             ),
                           ],
@@ -140,6 +125,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     offset: _searchController.text.length);
                           },
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         GestureDetector(
                           onTap: () =>
                               Navigator.pushNamed(context, 'categories'),
@@ -169,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
+                          height: screenH * .2,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -182,14 +170,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          'Trending services',
+                          'Recently posts',
                           style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.3,
+                          height: 0.3 * screenH,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -198,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: ServicesItem(
                                 description:
-                                    'fkes tjhyh uogfil kjhl iuhiu huhioiu77u7hidrpfghpisghip',
+                                    'fkes tjhxhfgfuhioiu77u7hidrpfghpisghip',
                                 numOfReviews: 170,
                                 profileImgUrl: url,
                                 rate: 5.4,
@@ -220,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
+                          height: 0.2 * screenH,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
@@ -258,8 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Image.asset('images/add_post_not_active.png'),
           ),
           CustomNavigationBarItem(
-              selectedIcon: Image.asset('images/notification_active.png'),
-              icon: Image.asset('images/notification_not_active.png')),
+              selectedIcon: Image.asset('images/posts_active.png'),
+              icon: Image.asset('images/posts_not_active.png')),
           CustomNavigationBarItem(
             selectedIcon: Image.asset('images/profile_active.png'),
             icon: Image.asset('images/profile_not_active.png'),

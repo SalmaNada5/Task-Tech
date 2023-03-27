@@ -4,7 +4,7 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
-import '../../constants/themes.dart';
+import '../../constants/text_styles.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -24,7 +24,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenH = MediaQuery.of(context).size.height;
+    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -35,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 Text(
                   'Create an account,',
-                  style: titleTheme,
+                  style: titleStyle,
                 ),
                 Text(
                   'Let\'s create an acount together',
@@ -154,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obscure: _confirmpasswordVisible ? false : true,
                       ),
                       SizedBox(
-                        height: screenHeight / 16,
+                        height: screenH / 16,
                       ),
                       SizedBox(
                         width: double.infinity,
@@ -188,14 +189,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: screenHeight / 20,
+                  height: screenH / 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 1,
-                      width: MediaQuery.of(context).size.width * 0.2,
+                      width: 0.2 * screenW,
                       child: Container(
                         color: const Color(0xffB1B1B1),
                       ),
@@ -209,7 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(
                       height: 1,
-                      width: MediaQuery.of(context).size.width * 0.25,
+                      width: 0.25 * screenW,
                       child: Container(
                         color: const Color(0xffB1B1B1),
                       ),
@@ -217,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: screenHeight / 22,
+                  height: screenH / 22,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -244,7 +245,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: screenHeight / 18,
+                  height: screenH / 18,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

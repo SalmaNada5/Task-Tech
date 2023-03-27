@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/themes.dart';
+import '../../constants/text_styles.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -18,7 +19,7 @@ class VerificationScreen extends StatelessWidget {
           centerTitle: true,
           title: Text(
             'Verification code',
-            style: titleTheme,
+            style: titleStyle,
           ),
           leading: Container(
             margin: const EdgeInsets.all(10),
@@ -51,7 +52,8 @@ class VerificationScreen extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.15),
+                  horizontal: 0.15 * screenW,
+                ),
                 child: Form(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,9 +69,12 @@ class VerificationScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {},
                 style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                  padding: MaterialStateProperty.all(
+                    EdgeInsets.symmetric(
                       vertical: 20,
-                      horizontal: MediaQuery.of(context).size.width * 0.35)),
+                      horizontal: 0.35 * screenW,
+                    ),
+                  ),
                   backgroundColor: MaterialStateProperty.all(primaryLightColor),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -99,7 +104,7 @@ class VerificationScreen extends StatelessWidget {
                     onTap: () {},
                     child: Text(
                       'Resend',
-                      style: titleTheme.copyWith(fontSize: 14),
+                      style: titleStyle.copyWith(fontSize: 14),
                     ),
                   ),
                 ],

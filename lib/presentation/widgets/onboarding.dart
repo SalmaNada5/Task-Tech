@@ -12,12 +12,13 @@ class OnboardingWidget extends StatelessWidget {
   final String? subtitle;
   @override
   Widget build(BuildContext context) {
+    double screenH = MediaQuery.of(context).size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(img!),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 15,
+          height: 1 / 15 * screenH,
         ),
         Text(
           title!,

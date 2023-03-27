@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/themes.dart';
+import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 import '../../constants/colors.dart';
@@ -22,8 +22,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
+    double screenH = MediaQuery.of(context).size.height;
+    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -37,7 +37,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 Text(
                   'Welcome back,',
-                  style: titleTheme,
+                  style: titleStyle,
                 ),
                 Text(
                   'Sign in your account',
@@ -189,14 +189,14 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: screenHeight / 20,
+                  height: screenH / 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 1,
-                      width: MediaQuery.of(context).size.width * 0.2,
+                      width: 0.2 * screenW,
                       child: Container(
                         color: const Color(0xffB1B1B1),
                       ),
@@ -210,7 +210,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     SizedBox(
                       height: 1,
-                      width: MediaQuery.of(context).size.width * 0.25,
+                      width: 0.25 * screenW,
                       child: Container(
                         color: const Color(0xffB1B1B1),
                       ),
@@ -218,7 +218,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: screenHeight / 22,
+                  height: screenH / 22,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -245,7 +245,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: screenHeight / 18,
+                  height: screenH / 18,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
