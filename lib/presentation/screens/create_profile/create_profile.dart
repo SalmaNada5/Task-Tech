@@ -175,7 +175,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime.now(),
-                                        lastDate: DateTime.parse('2023-12-12'))
+                                        lastDate: DateTime.parse('2029-12-12'))
                                     .then((value) {
                                   dateController.text =
                                       DateFormat.yMMMd().format(value!);
@@ -373,8 +373,8 @@ class _CreateProfileState extends State<CreateProfile> {
                             type: TextInputType.text,
                             validate: (value) {
                               value = phoneController.text;
-                              if (value.isEmpty) {
-                                return 'Phone must not be empty';
+                              if (value.isEmpty && value.length < 11) {
+                                return 'Phone is too short ';
                               } else {
                                 return null;
                               }

@@ -27,6 +27,7 @@ dependencies:
   another_xlider: ^1.1.2
   syncfusion_flutter_core:
   google_maps_flutter: ^2.2.4
+  flutter_switch: ^0.3.2
 
 
 

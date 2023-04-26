@@ -38,6 +38,7 @@ class SalaryScreenState extends State<SalaryScreen> {
               child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(

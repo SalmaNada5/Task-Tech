@@ -5,7 +5,7 @@ import 'package:task_tech/constants/themes.dart';
 import 'package:task_tech/presentation/screens/home/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
 import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
-import 'package:task_tech/presentation/screens/home/profile_screen.dart';
+import 'package:task_tech/presentation/screens/home/profile_page.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import '../../widgets/home_widgets/category_item.dart';
 import '../../widgets/home_widgets/service_widget.dart';
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeScreen(),
     const ChatsScreen(),
     const AddPostScreen(),
-    const NotificationsScreen(),
+     const NotificationsScreen(),
     const ProfilePage(),
   ];
   @override
