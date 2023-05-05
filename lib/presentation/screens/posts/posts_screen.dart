@@ -19,7 +19,7 @@ class _PostsScreenState extends State<PostsScreen> {
 
   final String _accountName = 'salma nada';
   final String _postTime = '1 Hr ago';
-  final String _postDescription = 'sdkhdoguh\nliudifgpu\nddop\n;fhkgip\niot';
+  final String _postDescription = 'sdkhdoguhliudifgpuddop;fhkgipiot';
   @override
   Widget build(BuildContext context) {
     return Container(

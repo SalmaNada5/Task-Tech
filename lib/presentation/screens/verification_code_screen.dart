@@ -38,81 +38,86 @@ class VerificationScreen extends StatelessWidget {
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset('images/authentication.png'),
-              Text(
-                'Enter the verification code we just sent you\non your e-mail address',
-                textAlign: TextAlign.center,
-                style: labelTextFormStyle.copyWith(
-                  color: const Color(0xff3E4446),
-                  fontSize: 16,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 0.15 * screenW,
-                ),
-                child: Form(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      CustomOneDigitField(),
-                      CustomOneDigitField(),
-                      CustomOneDigitField(),
-                      CustomOneDigitField(),
-                    ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('images/authentication.png'),
+                Text(
+                  'Enter the verification code we just sent you\non your e-mail address',
+                  textAlign: TextAlign.center,
+                  style: labelTextFormStyle.copyWith(
+                    color: const Color(0xff3E4446),
+                    fontSize: 16,
                   ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 0.35 * screenW,
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 0.15 * screenW,
+                  ),
+                  child: Form(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        CustomOneDigitField(),
+                        CustomOneDigitField(),
+                        CustomOneDigitField(),
+                        CustomOneDigitField(),
+                      ],
                     ),
                   ),
-                  backgroundColor: MaterialStateProperty.all(primaryLightColor),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
                 ),
-                child: Text(
-                  'Verify',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'home');
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(
+                        vertical: 20,
+                        horizontal: 0.35 * screenW,
+                      ),
+                    ),
+                    backgroundColor:
+                        MaterialStateProperty.all(primaryLightColor),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
                   ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Don\'t recieve a code?',
+                  child: Text(
+                    'Verify',
                     style: GoogleFonts.poppins(
-                      color: const Color(0xff8C8C8C),
-                      fontSize: 14,
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'Resend',
-                      style: titleStyle.copyWith(fontSize: 14),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Don\'t recieve a code?',
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xff8C8C8C),
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        'Resend',
+                        style: titleStyle.copyWith(fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           ),
         ),
       ),

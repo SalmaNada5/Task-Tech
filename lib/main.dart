@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         'addCard': (context) => const AddCardScreen(),
         'success': (context) => const CongratesScreen(),
       },
-      initialRoute: 'success',
+      initialRoute: 'home',
     );
   }
 }

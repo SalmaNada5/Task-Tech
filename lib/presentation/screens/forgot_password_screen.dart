@@ -8,7 +8,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    double screenH = MediaQuery.of(context).size.height;
+    // double screenH = MediaQuery.of(context).size.height;
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
@@ -39,64 +39,70 @@ class ForgotPasswordScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Form(
           key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset('images/Forgot password-amico 1.png'),
-              Text(
-                'The verification code will be sent to your\nE-mail, please check it.',
-                textAlign: TextAlign.center,
-                style: labelTextFormStyle.copyWith(
-                  color: const Color(0xff3E4446),
-                  fontSize: 16,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('images/Forgot password-amico 1.png'),
+                Text(
+                  'The verification code will be sent to your\nE-mail, please check it.',
+                  textAlign: TextAlign.center,
+                  style: labelTextFormStyle.copyWith(
+                    color: const Color(0xff3E4446),
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              CustomTextFormField(
-                controller: forgotPassEmailController,
-                obscure: false,
-                validator: (email) {
-                  email = forgotPassEmailController.text.toString();
-                  if (email.isEmpty) {
-                    return 'Enter your email!';
-                  } else {
-                    return null;
-                  }
-                },
-                hintText: 'Email',
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    debugPrint('valid');
-                    Navigator.pushNamed(context, 'verification');
-                  }
-                },
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 0.35 * screenH,
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomTextFormField(
+                  controller: forgotPassEmailController,
+                  obscure: false,
+                  validator: (email) {
+                    email = forgotPassEmailController.text.toString();
+                    if (email.isEmpty) {
+                      return 'Enter your email!';
+                    } else {
+                      return null;
+                    }
+                  },
+                  hintText: 'Email',
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      debugPrint('valid');
+                      Navigator.pushNamed(context, 'verification');
+                    }
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 7, horizontal: 40),
+                    ),
+                    backgroundColor:
+                        MaterialStateProperty.all(primaryLightColor),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
-                  backgroundColor: MaterialStateProperty.all(primaryLightColor),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                  child: Text(
+                    'Send code',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-                child: Text(
-                  'Send code',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400,
-                  ),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

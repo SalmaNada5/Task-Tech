@@ -19,7 +19,7 @@ class ReusablePostWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.3,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: const Color(0xffF5F5F5),
@@ -57,7 +57,7 @@ class ReusablePostWidget extends StatelessWidget {
             height: 15,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.11,
             child: Text(
               postDescription,
               softWrap: true,
