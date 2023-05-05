@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
@@ -63,6 +64,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     if (email.isEmpty) {
                       return 'Enter your email!';
                     } else {
+                      Constants.unFocusFunc();
                       return null;
                     }
                   },

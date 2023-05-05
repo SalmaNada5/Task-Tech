@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: Constants.navigatorKey,
       debugShowCheckedModeBanner: false,
       routes: {
         'splash': (context) => const SplashScreen(),
@@ -81,7 +83,7 @@ class MyApp extends StatelessWidget {
         'addCard': (context) => const AddCardScreen(),
         'success': (context) => const CongratesScreen(),
       },
-      initialRoute: 'home',
+      initialRoute: 'splash',
     );
   }
 }

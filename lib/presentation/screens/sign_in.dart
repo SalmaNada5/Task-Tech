@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/auth/auth_controller.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 import '../../constants/colors.dart';
@@ -157,10 +158,12 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              debugPrint('correct');
-                            }
+                          onPressed: () async {
+                            // if (_formKey.currentState!.validate()) {
+                            debugPrint('correct');
+                            await AuthController.loginFunc(
+                                emailController.text, passController.text);
+                            // }
                           },
                           style: ButtonStyle(
                             padding: MaterialStateProperty.all(
