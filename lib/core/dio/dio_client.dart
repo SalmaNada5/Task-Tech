@@ -9,11 +9,12 @@ class DioClient {
   final InternetInfo _internetInfo = InternetInfoImpl();
   final String _devBaseURL = "https://task-teck.onrender.com/";
 
-  final Dio _dio = Dio(BaseOptions(
-    connectTimeout: const Duration(seconds: 10), // 10 seconds
-    receiveTimeout: const Duration(seconds: 10), // 10 seconds
-  ))
-    ..interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+  final Dio _dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 10), // 10 seconds
+      receiveTimeout: const Duration(seconds: 10), // 10 seconds
+    ),
+  )..interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       logInfo(options.uri.toString());
       logInfo(options.headers.toString());
       logInfo(options.data.toString()); // BODY

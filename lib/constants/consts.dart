@@ -16,6 +16,7 @@ mixin Constants {
   }
 
   static void unFocusFunc() {
+    //close keyboard with a random tap on screen
     FocusScope.of(navigatorKey.currentContext!).unfocus();
   }
 

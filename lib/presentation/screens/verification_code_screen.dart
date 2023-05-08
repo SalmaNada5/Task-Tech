@@ -51,21 +51,24 @@ class VerificationScreen extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 0.15 * screenW,
                   ),
                   child: Form(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        CustomOneDigitField(),
-                        CustomOneDigitField(),
-                        CustomOneDigitField(),
-                        CustomOneDigitField(),
-                      ],
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(
+                          4,
+                          (index) => const CustomOneDigitField(),
+                        )),
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -74,7 +77,7 @@ class VerificationScreen extends StatelessWidget {
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(
-                        vertical: 20,
+                        vertical: 10,
                         horizontal: 0.35 * screenW,
                       ),
                     ),
@@ -94,6 +97,9 @@ class VerificationScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -112,9 +118,6 @@ class VerificationScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
               ],
             ),

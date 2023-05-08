@@ -20,7 +20,7 @@ dependencies:
   flutter_rounded_progress_bar: ^0.2.0
   intl: ^0.17.0
   dotted_border: ^2.0.0+3
-  file_picker: ^5.2.4
+  file_picker: ^5.3.0
   simple_gradient_text: ^1.2.4
   smooth_star_rating_null_safety: ^1.0.4+2
   syncfusion_flutter_sliders: ^20.4.49
@@ -30,6 +30,8 @@ dependencies:
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
   internet_connection_checker: ^1.0.0+1
+  open_file: ^3.3.1
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:

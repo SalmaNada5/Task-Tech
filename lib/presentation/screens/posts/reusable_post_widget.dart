@@ -17,9 +17,9 @@ class ReusablePostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
       padding: const EdgeInsets.all(10),
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.29,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: const Color(0xffF5F5F5),
@@ -47,14 +47,14 @@ class ReusablePostWidget extends StatelessWidget {
               Text(
                 postTime,
                 style: GoogleFonts.poppins(
-                  fontSize: 10,
+                  fontSize: 12,
                   color: const Color(0xff1B2936),
                 ),
               )
             ],
           ),
           const SizedBox(
-            height: 15,
+            height: 8,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.11,
