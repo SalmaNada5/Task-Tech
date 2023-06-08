@@ -37,7 +37,7 @@ class DioClient {
     return err.message;
   }
 
-  Future<dynamic> get(
+  Future<Object?> get(
     String api,
     String? token, {
     String? fullURL,
@@ -60,7 +60,7 @@ class DioClient {
           Constants.hideLoadingOrNavBack();
         }
         //response.data = response.body
-        return response.data;
+        return response;
       } on DioError catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
@@ -76,10 +76,10 @@ class DioClient {
     }
   }
 
-  Future<dynamic> post(
+  Future<Object?> post(
     String api,
     String? token, {
-    required var postMap,
+    required var body,
     String? fullURL,
     bool isLoading = true,
   }) async {
@@ -94,12 +94,12 @@ class DioClient {
     _dio.options.headers['content-Type'] = Headers.jsonContentType;
     if (interNetaAvailale) {
       try {
-        Response response = await _dio.post(fullURL ?? url, data: postMap);
+        Response response = await _dio.post(fullURL ?? url, data: body);
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
 
-        return response.data;
+        return response;
       } on DioError catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();

@@ -1,116 +1,127 @@
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str));
+AuthModel loginModelFromJson(String str) =>
+    AuthModel.fromJson(json.decode(str));
 
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+String loginModelToJson(AuthModel data) => json.encode(data.toJson());
 
-class LoginModel {
-    final String? status;
-    final String? token;
-    final Data? data;
+class AuthModel {
+  final String? status;
+  final String? token;
+  final Data? data;
 
-    LoginModel({
-        this.status,
-        this.token,
-        this.data,
-    });
+  AuthModel({
+    this.status,
+    this.token,
+    this.data,
+  });
 
-    factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+  factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
         status: json["status"],
         token: json["token"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "token": token,
         "data": data?.toJson(),
-    };
+      };
 }
 
 class Data {
-    final User? user;
+  final User? user;
 
-    Data({
-        this.user,
-    });
+  Data({
+    this.user,
+  });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         user: json["user"] == null ? null : User.fromJson(json["user"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "user": user?.toJson(),
-    };
+      };
 }
 
 class User {
-    final List<String>? skills;
-    final String? photo;
-    final List<String>? images;
-    final String? role;
-    final int? ratingsQuantity;
-    final List<dynamic>? followers;
-    final List<String>? followings;
-    final bool? isOnline;
-    final String? id;
-    final String? name;
-    final String? email;
-    final int? v;
-    final String? cv;
-    final String? education;
-    final int? age;
-    final DateTime? birthDate;
-    final String? gender;
-    final String? location;
-    final String? phoneNumber;
-    final String? about;
-    final String? catogery;
-    final String? currency;
-    final String? ferquency;
-    final int? maximum;
-    final int? minimum;
-    final DateTime? createdAt;
-    final String? userId;
+  final List<String>? skills;
+  final String? photo;
+  final List<String>? images;
+  final String? role;
+  final int? ratingsQuantity;
+  final List<dynamic>? followers;
+  final List<String>? followings;
+  final bool? isOnline, active;
+  final String? id;
+  final String? name;
+  final String? email;
+  final int? v;
+  final String? cv;
+  final String? education;
+  final int? age;
+  final DateTime? birthDate;
+  final String? gender;
+  final String? location;
+  final String? phoneNumber;
+  final String? about;
+  final String? catogery;
+  final String? currency;
+  final String? ferquency;
+  final int? maximum;
+  final int? minimum;
+  final DateTime? createdAt;
+  final String? userId;
 
-    User({
-        this.skills,
-        this.photo,
-        this.images,
-        this.role,
-        this.ratingsQuantity,
-        this.followers,
-        this.followings,
-        this.isOnline,
-        this.id,
-        this.name,
-        this.email,
-        this.v,
-        this.cv,
-        this.education,
-        this.age,
-        this.birthDate,
-        this.gender,
-        this.location,
-        this.phoneNumber,
-        this.about,
-        this.catogery,
-        this.currency,
-        this.ferquency,
-        this.maximum,
-        this.minimum,
-        this.createdAt,
-        this.userId,
-    });
+  User({
+    this.skills,
+    this.photo,
+    this.images,
+    this.role,
+    this.ratingsQuantity,
+    this.followers,
+    this.followings,
+    this.isOnline,
+    this.id,
+    this.name,
+    this.email,
+    this.v,
+    this.cv,
+    this.education,
+    this.age,
+    this.birthDate,
+    this.gender,
+    this.location,
+    this.phoneNumber,
+    this.about,
+    this.catogery,
+    this.currency,
+    this.ferquency,
+    this.maximum,
+    this.minimum,
+    this.createdAt,
+    this.userId,
+    this.active,
+  });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
-        skills: json["skills"] == null ? [] : List<String>.from(json["skills"]!.map((x) => x)),
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        active: json['active'],
+        skills: json["skills"] == null
+            ? []
+            : List<String>.from(json["skills"]!.map((x) => x)),
         photo: json["photo"],
-        images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
+        images: json["images"] == null
+            ? []
+            : List<String>.from(json["images"]!.map((x) => x)),
         role: json["role"],
         ratingsQuantity: json["ratingsQuantity"],
-        followers: json["followers"] == null ? [] : List<dynamic>.from(json["followers"]!.map((x) => x)),
-        followings: json["followings"] == null ? [] : List<String>.from(json["followings"]!.map((x) => x)),
+        followers: json["followers"] == null
+            ? []
+            : List<dynamic>.from(json["followers"]!.map((x) => x)),
+        followings: json["followings"] == null
+            ? []
+            : List<String>.from(json["followings"]!.map((x) => x)),
         isOnline: json["isOnline"],
         id: json["_id"],
         name: json["name"],
@@ -119,7 +130,9 @@ class User {
         cv: json["cv"],
         education: json["education"],
         age: json["age"],
-        birthDate: json["birthDate"] == null ? null : DateTime.parse(json["birthDate"]),
+        birthDate: json["birthDate"] == null
+            ? null
+            : DateTime.parse(json["birthDate"]),
         gender: json["gender"],
         location: json["location"],
         phoneNumber: json["phoneNumber"],
@@ -129,18 +142,27 @@ class User {
         ferquency: json["ferquency"],
         maximum: json["maximum"],
         minimum: json["minimum"],
-        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
         userId: json["id"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
-        "skills": skills == null ? [] : List<dynamic>.from(skills!.map((x) => x)),
+  Map<String, dynamic> toJson() => {
+        'active': active,
+        "skills":
+            skills == null ? [] : List<dynamic>.from(skills!.map((x) => x)),
         "photo": photo,
-        "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+        "images":
+            images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
         "role": role,
         "ratingsQuantity": ratingsQuantity,
-        "followers": followers == null ? [] : List<dynamic>.from(followers!.map((x) => x)),
-        "followings": followings == null ? [] : List<dynamic>.from(followings!.map((x) => x)),
+        "followers": followers == null
+            ? []
+            : List<dynamic>.from(followers!.map((x) => x)),
+        "followings": followings == null
+            ? []
+            : List<dynamic>.from(followings!.map((x) => x)),
         "isOnline": isOnline,
         "_id": id,
         "name": name,
@@ -161,5 +183,5 @@ class User {
         "minimum": minimum,
         "createdAt": createdAt?.toIso8601String(),
         "id": userId,
-    };
+      };
 }

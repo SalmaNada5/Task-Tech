@@ -1,12 +1,8 @@
 import 'package:dio/dio.dart';
-
 import 'package:task_tech/core/dio/dio_client.dart';
-
 import 'package:task_tech/core/errors/logger.dart';
-
 import 'package:task_tech/presentation/screens/auth/models/login_model.dart';
-
-import 'controller/auth_body.dart';
+import 'auth_body.dart';
 
 class AuthController {
   static final DioClient _dioClient = DioClient();
@@ -18,16 +14,12 @@ class AuthController {
         '',
         body: AuthBody.loginMap(email, password),
       ) as Response;
-
       AuthModel loginModel = AuthModel.fromJson(res.data);
-
       logSuccess('loginModel token : ${loginModel.token}');
-
       return loginModel;
     } catch (e) {
       logError('error in loginFunc ${e.toString()}');
     }
-
     return null;
   }
 
@@ -45,14 +37,11 @@ class AuthController {
               confirmPassword: confirmPassword)) as Response;
 
       AuthModel signupModel = AuthModel.fromJson(res.data);
-
       logSuccess('signupModel token : ${signupModel.token}');
-
       return signupModel;
     } catch (e) {
       logError('error in signUpFunc ${e.toString()}');
     }
-
     return null;
   }
 }
