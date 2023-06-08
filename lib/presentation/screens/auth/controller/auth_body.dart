@@ -13,4 +13,8 @@ mixin AuthBody {
         "password": password,
         "confirmPassword": confirmPassword
       };
+
+  static Map<String, dynamic> forgetPasswordMap(String email) => {
+        'email': email,
+      };
 }

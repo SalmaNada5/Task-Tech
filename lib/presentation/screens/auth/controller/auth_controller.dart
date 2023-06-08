@@ -44,4 +44,21 @@ class AuthController {
     }
     return null;
   }
+
+  static Future<bool> forgetPassword(String email) async {
+    try {
+      Response res = await _dioClient.post(
+        'api/v1/users/forgetpassword',
+        '',
+        body: AuthBody.forgetPasswordMap(email),
+      ) as Response;
+      if (res.statusCode != 200) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      logError('error in loginFunc ${e.toString()}');
+      return false;
+    }
+  }
 }
