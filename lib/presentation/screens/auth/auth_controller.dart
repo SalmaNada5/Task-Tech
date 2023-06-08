@@ -17,4 +17,15 @@ class AuthController {
     }
     return null;
   }
+
+  static Future<bool?> forgotPassFunc(String email) async {
+    try {
+      var res = await _dioClient
+          .post('api/v1/users/forgetpassword', '', postMap: {"email": email});
+      return true;
+    } catch (e) {
+      logError('error in forgotPassFunc ${e.toString()}');
+      return false;
+    }
+  }
 }

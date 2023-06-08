@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
+import 'package:task_tech/presentation/widgets/unfocus.dart';
 
 import '../../constants/text_styles.dart';
 
@@ -274,6 +275,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-    );
+    ).withUnfocus(context);
   }
 }

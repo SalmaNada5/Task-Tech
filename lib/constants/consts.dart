@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  static bool demoLogin = false;
+  //static bool demoLogin = false;
 
   static void closeAppFunction() {
     if (Platform.isAndroid) {
