@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:task_tech/constants/colors.dart';
 
-import '../widgets/onboarding.dart';
+import '../../../../widgets/onboarding.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../constants/colors.dart';
-import '../../constants/text_styles.dart';
+import '../../../../../constants/colors.dart';
+import '../../../../../constants/text_styles.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});

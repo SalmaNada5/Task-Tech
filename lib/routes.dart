@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/forgot_password_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/reset_password_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/sign_in.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/splash_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
-import 'package:task_tech/presentation/screens/onboarding_screen.dart';
-import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/home/categories_screen.dart';
 import 'package:task_tech/presentation/screens/home/home_screen.dart';
@@ -12,12 +15,9 @@ import 'package:task_tech/presentation/screens/payment/success_payment_screen.da
 import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
 import 'package:task_tech/presentation/screens/posts/service_details.dart';
 import 'package:task_tech/presentation/screens/posts/task_details.dart';
-import 'package:task_tech/presentation/screens/reset_password_screen.dart';
-import 'package:task_tech/presentation/screens/sign_in.dart';
-import 'package:task_tech/presentation/screens/sign_up_screen.dart';
-import 'package:task_tech/presentation/screens/splash_screen.dart';
-import 'package:task_tech/presentation/screens/unexpected_error_screen.dart';
-import 'package:task_tech/presentation/screens/verification_code_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/unexpected_error_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/verification_code_screen.dart';
+import 'presentation/screens/auth/view/screens/sign_up_screen.dart';
 
 class Routing {
   static Map<String, Widget Function(BuildContext)> routes = {
