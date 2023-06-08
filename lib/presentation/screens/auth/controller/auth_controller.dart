@@ -6,6 +6,7 @@ import 'auth_body.dart';
 
 class AuthController {
   static final DioClient _dioClient = DioClient();
+  static AuthModel authModel = AuthModel();
 
   static Future<AuthModel?> loginFunc(String email, String password) async {
     try {
@@ -14,9 +15,9 @@ class AuthController {
         '',
         body: AuthBody.loginMap(email, password),
       ) as Response;
-      AuthModel loginModel = AuthModel.fromJson(res.data);
-      logSuccess('loginModel token : ${loginModel.token}');
-      return loginModel;
+      authModel = AuthModel.fromJson(res.data);
+      logSuccess('loginModel token : ${authModel.token}');
+      return authModel;
     } catch (e) {
       logError('error in loginFunc ${e.toString()}');
     }
@@ -36,9 +37,9 @@ class AuthController {
               name: name,
               confirmPassword: confirmPassword)) as Response;
 
-      AuthModel signupModel = AuthModel.fromJson(res.data);
-      logSuccess('signupModel token : ${signupModel.token}');
-      return signupModel;
+      authModel = AuthModel.fromJson(res.data);
+      logSuccess('signupModel token : ${authModel.token}');
+      return authModel;
     } catch (e) {
       logError('error in signUpFunc ${e.toString()}');
     }
