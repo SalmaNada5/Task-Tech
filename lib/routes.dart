@@ -26,7 +26,9 @@ class Routing {
     'signUp': (context) => const SignUpScreen(),
     'signIn': (context) => const SignInScreen(),
     'forgotPassword': (context) => const ForgotPasswordScreen(),
-    'verification': (context) => const VerificationScreen(),
+    'verification': (context) => const VerificationScreen(
+          fromSignup: true,
+        ),
     'resetPassword': (context) => const ResetPassword(),
     'unexpectedError': (context) => const UnexpectedErrorScreen(),
     'home': (context) => const HomeScreen(),

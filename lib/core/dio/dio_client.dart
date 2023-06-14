@@ -114,4 +114,82 @@ class DioClient {
       return "No internet connection";
     }
   }
+
+  Future<Object?> patch(
+    String api,
+    String? token, {
+    required var body,
+    String? fullURL,
+    bool isLoading = true,
+  }) async {
+    var url = _devBaseURL + api;
+    bool interNetaAvailale = await _internetInfo.isConnected;
+    if (isLoading) {
+      Constants.showLoading();
+    }
+    if (token != "" && token != null) {
+      _dio.options.headers["Authorization"] = "Bearer $token";
+    }
+    _dio.options.headers['content-Type'] = Headers.jsonContentType;
+    if (interNetaAvailale) {
+      try {
+        Response response = await _dio.patch(fullURL ?? url, data: body);
+        if (isLoading) {
+          Constants.hideLoadingOrNavBack();
+        }
+
+        return response;
+      } on DioError catch (error) {
+        if (isLoading) {
+          Constants.hideLoadingOrNavBack();
+        }
+        return _errorFunc(error);
+      }
+    } else {
+      if (isLoading) {
+        Constants.hideLoadingOrNavBack();
+      }
+      Constants.errorMessage(description: "No internet connection");
+      return "No internet connection";
+    }
+  }
+
+  Future<Object?> put(
+    String api,
+    String? token, {
+    required var body,
+    String? fullURL,
+    bool isLoading = true,
+  }) async {
+    var url = _devBaseURL + api;
+    bool interNetaAvailale = await _internetInfo.isConnected;
+    if (isLoading) {
+      Constants.showLoading();
+    }
+    if (token != "" && token != null) {
+      _dio.options.headers["Authorization"] = "Bearer $token";
+    }
+    _dio.options.headers['content-Type'] = Headers.jsonContentType;
+    if (interNetaAvailale) {
+      try {
+        Response response = await _dio.put(fullURL ?? url, data: body);
+        if (isLoading) {
+          Constants.hideLoadingOrNavBack();
+        }
+
+        return response;
+      } on DioError catch (error) {
+        if (isLoading) {
+          Constants.hideLoadingOrNavBack();
+        }
+        return _errorFunc(error);
+      }
+    } else {
+      if (isLoading) {
+        Constants.hideLoadingOrNavBack();
+      }
+      Constants.errorMessage(description: "No internet connection");
+      return "No internet connection";
+    }
+  }
 }

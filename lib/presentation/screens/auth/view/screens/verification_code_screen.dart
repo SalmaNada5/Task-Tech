@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
+import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/text_styles.dart';
 
 class VerificationScreen extends StatelessWidget {
-  const VerificationScreen({super.key});
-
+  const VerificationScreen({super.key, required this.fromSignup});
+  final bool fromSignup;
   @override
   Widget build(BuildContext context) {
+    String? d1, d2, d3, d4, code;
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -63,7 +66,25 @@ class VerificationScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(
                           4,
-                          (index) => const CustomOneDigitField(),
+                          (index) => CustomOneDigitField(
+                            onChange: (String value) {
+                              if (index == 0) {
+                                d1 = value;
+                              }
+                              if (index == 1) {
+                                d2 = value;
+                              }
+                              if (index == 2) {
+                                d2 = value;
+                              }
+                              if (index == 3) {
+                                d3 = value;
+                              }
+                              if (value.length == 1) {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                          ),
                         )),
                   ),
                 ),
@@ -72,7 +93,10 @@ class VerificationScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'home');
+                    code = d1! + d2! + d3! + d4!;
+                    // AuthController.verifyResetCodeFunc(code!),
+                    // Navigator.pushNamed(context, 'home');
+                    debugPrint('code: $code');
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
@@ -129,19 +153,20 @@ class VerificationScreen extends StatelessWidget {
 }
 
 class CustomOneDigitField extends StatelessWidget {
-  const CustomOneDigitField({super.key});
-
+  const CustomOneDigitField({super.key, required this.onChange});
+  final Function(String)? onChange;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 58,
       width: 54,
       child: TextField(
-        onChanged: (value) {
-          if (value.length == 1) {
-            FocusScope.of(context).nextFocus();
-          }
-        },
+        onChanged: onChange,
+        // (value) {
+        //   if (value.length == 1) {
+        //     FocusScope.of(context).nextFocus();
+        //   }
+        //},
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         inputFormatters: [
