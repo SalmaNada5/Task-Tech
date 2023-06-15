@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
             bottom: MediaQuery.of(context).size.height * 0.03,
             top: MediaQuery.of(context).size.height * 0.03),
         child: SafeArea(
-          child: Expanded(
+          child: SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(

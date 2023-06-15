@@ -153,28 +153,30 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   ],
                 ),
               ),
-              ListView.separated(
-                physics: const AlwaysScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return notificationList[index].isRequestNotification
-                      ? RequestNotification(
-                          name: notificationList[index].name,
-                          imageURL: notificationList[index].imageURL,
-                          time: notificationList[index].time,
-                          notificationMessage:
-                              notificationList[index].notificationMessage)
-                      : NormalNotification(
-                          name: notificationList[index].name,
-                          imageURL: notificationList[index].imageURL,
-                          time: notificationList[index].time,
-                          notificationMessage:
-                              notificationList[index].notificationMessage);
-                },
-                itemCount: notificationList.length,
-                separatorBuilder: (BuildContext context, int index) => SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
+              SingleChildScrollView(
+                child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return notificationList[index].isRequestNotification
+                        ? RequestNotification(
+                            name: notificationList[index].name,
+                            imageURL: notificationList[index].imageURL,
+                            time: notificationList[index].time,
+                            notificationMessage:
+                                notificationList[index].notificationMessage)
+                        : NormalNotification(
+                            name: notificationList[index].name,
+                            imageURL: notificationList[index].imageURL,
+                            time: notificationList[index].time,
+                            notificationMessage:
+                                notificationList[index].notificationMessage);
+                  },
+                  itemCount: notificationList.length,
+                  separatorBuilder: (BuildContext context, int index) => SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
                 ),
               )
             ],
@@ -214,8 +216,8 @@ class _RequestNotificationState extends State<RequestNotification> {
           boxShadow: const [
             BoxShadow(
                 color: Color.fromRGBO(224, 224, 224, 0.9),
-                spreadRadius: 3,
-                blurRadius: 7,
+                spreadRadius: 2,
+                blurRadius: 5,
                 offset: Offset(0, 2))
           ]),
       child: Padding(
@@ -243,7 +245,8 @@ class _RequestNotificationState extends State<RequestNotification> {
                       color: const Color.fromRGBO(
                           22, 80, 105, 1)), // default text style
                 ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.25),
+                const Spacer(),
+               // SizedBox(width: MediaQuery.of(context).size.width * 0.25),
                 Text(
                   textScaleFactor: 0.9,
                   widget.time,
@@ -350,8 +353,8 @@ class _NormalNotificationState extends State<NormalNotification> {
           boxShadow: const [
             BoxShadow(
                 color: Color.fromRGBO(224, 224, 224, 0.9),
-                spreadRadius: 3,
-                blurRadius: 7,
+                spreadRadius: 2,
+                blurRadius: 5,
                 offset: Offset(0, 2))
           ]),
       child: Padding(

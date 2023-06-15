@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/screens/chats_screen.dart';
-import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
+
+import 'presentation/screens/create_profile/chat_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NotificationsScreen(),
+      home: ChatDetailScreen(),
      /*  routes: {
         'splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),

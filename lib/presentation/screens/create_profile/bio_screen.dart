@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/salary_screen.dart';
 
@@ -17,33 +18,36 @@ class BioScreenState extends State<BioScreen> {
     return Scaffold(
       appBar: MyAppbar(percent: 60),
       body: Padding(
-        padding: const EdgeInsetsDirectional.only(
-            top: 30, start: 15, end: 15, bottom: 20),
+        padding: EdgeInsetsDirectional.only(
+            start: MediaQuery.of(context).size.width * 0.03,
+            end: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height * 0.03),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
+               Text(
                 'Write a bio to tell the world \n'
                 'about yourself .',
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
-                    color: Color.fromRGBO(0, 0, 0, 1)),
+                    color: const Color.fromRGBO(0, 0, 0, 1)),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text(
+               Text(
                 'Help people get to know you at a glance .\n'
                 'what work are you best at ? Tell them clearly, using paragraphs or bullet points.\n'
                 'you can always edit later !',
                 maxLines: 4,
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
-                    color: Color.fromRGBO(58, 51, 53, 1)),
+                    color: const Color.fromRGBO(58, 51, 53, 1)),
               ),
               const SizedBox(
                 height: 30,
@@ -53,44 +57,49 @@ class BioScreenState extends State<BioScreen> {
                 height: 1,
                 color: const Color.fromRGBO(218, 218, 218, 1),
               ),
-               SizedBox(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.06,
               ),
               SizedBox(
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.width * 0.4,
                 child: TextFormField(
                   maxLines: null,
+                  expands: true,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     hintText: 'Describe your top skills, experiences, and\n'
-                        'interests. This is one of the first things clients\n'
-                        'will see on your profile.',
-                    hintStyle: const TextStyle(
+                    'interests. This is one of the first things clients\n '
+                    'will see on your profile.',
+                    hintStyle: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(124, 124, 124, 1)),
+                        color: const Color.fromRGBO(124, 124, 124, 1)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(
                           color: Color.fromRGBO(218, 218, 218, 1),
                           width: 1,
                         )),
-                    contentPadding: const EdgeInsetsDirectional.only(
-                        start: 25, end: 25, top: 26, bottom: 26),
+                    contentPadding: EdgeInsetsDirectional.only(
+                        start: MediaQuery.of(context).size.width * 0.025,
+                        end: MediaQuery.of(context).size.width * 0.025,
+                        top: MediaQuery.of(context).size.width * 0.025,
+                        bottom: MediaQuery.of(context).size.width * 0.025),
                   ),
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Text(
+               Text(
                 'At least 100 characters',
-                style: TextStyle(
-                    color: Color.fromRGBO(124, 124, 124, 1),
+                style: GoogleFonts.poppins(
+                    color: const Color.fromRGBO(124, 124, 124, 1),
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
               ),
-               SizedBox(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.06,
               ),
               Center(
@@ -108,9 +117,9 @@ class BioScreenState extends State<BioScreen> {
                             MaterialPageRoute(
                                 builder: (context) => const SalaryScreen()));
                       },
-                      child: const Text(
+                      child:  Text(
                         'Next',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
                       )),
                 ),
               ),
@@ -134,11 +143,11 @@ class BioScreenState extends State<BioScreen> {
                             MaterialPageRoute(
                                 builder: (context) => const SalaryScreen()));
                       },
-                      child: const Text(
+                      child:  Text(
                         'Skip',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 20,
-                            color: Color.fromRGBO(22, 80, 105, 1)),
+                            color: const Color.fromRGBO(22, 80, 105, 1)),
                       )),
                 ),
               ),

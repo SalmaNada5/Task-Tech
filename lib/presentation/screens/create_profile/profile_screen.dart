@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/constants/colors.dart';
@@ -32,13 +33,16 @@ class ProfileScreenState extends State<ProfileScreen>
         child: Scaffold(
             backgroundColor: Colors.white,
             body: Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    start: 15, end: 15, bottom: 20),
+                padding: EdgeInsetsDirectional.only(
+            start: MediaQuery.of(context).size.width * 0.03,
+            end: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height * 0.03),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
+                   // SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
                     IconButton(
                       
                       icon:
@@ -57,10 +61,10 @@ class ProfileScreenState extends State<ProfileScreen>
                     const SizedBox(
                       height: 21,
                     ),
-                    const Center(
+                     Center(
                       child:  Text(
                         'Eman Elsayed',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -69,7 +73,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     ),
                     Center(
                       child: GradientText('UI/UX Designer',
-                          style: const TextStyle(
+                          style:  GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -119,67 +123,73 @@ class ProfileScreenState extends State<ProfileScreen>
                     const SizedBox(
                       height: 19,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 160,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                color: primaryLightColor,
-                              )),
-                          child: MaterialButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Message',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromRGBO(22, 80, 105, 1)),
-                              )),
-                        ),
-                        const SizedBox(width: 30),
-                        Container(
-                          width: 160,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(22, 80, 105, 1),
-                            borderRadius: BorderRadius.circular(6),
+                    Padding(
+                      padding:  EdgeInsetsDirectional.only(
+                        start:MediaQuery.of(context).size.width * 0.03,
+                        end: MediaQuery.of(context).size.width * 0.03 ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            decoration: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                  color: primaryLightColor,
+                                )),
+                            child: MaterialButton(
+                                onPressed: () {},
+                                child:  Text(
+                                  'Message',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      // ignore: prefer_const_constructors
+                                      color: Color.fromRGBO(22, 80, 105, 1)),
+                                )),
                           ),
-                          child: MaterialButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Hire Me',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              )),
-                        ),
-                      ],
+                          const Spacer(),
+                          Container(
+                           width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(22, 80, 105, 1),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: MaterialButton(
+                                onPressed: () {},
+                                child:  Text(
+                                  'Hire Me',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20, color: Colors.white),
+                                )),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
                     TabBar(
-                      tabs: const [
+                      tabs:  [
                         Text(
                           'About me',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                               color: Colors.black),
                         ),
                         Text(
                           'Reviews',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                               color: Colors.black),
                         ),
                         Text(
                           'Portfolio',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                               color: Colors.black),

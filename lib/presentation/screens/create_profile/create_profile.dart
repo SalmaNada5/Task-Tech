@@ -1,17 +1,35 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:async';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets.dart';
 
 import 'app_bar_widget.dart';
+
+/* selectFile() async {
+  FilePickerResult? file = await FilePicker.platform.pickFiles();
+  if (file?.files.single.path == null) return;
+  uploadFile(File(file!.files.single.path!));
+}
+
+uploadFile(File file) async {
+  var multipartRequest = http.MultipartRequest('POST', Uri.parse('url'));
+  var length = await file.length();
+  var stream = http.ByteStream(file.openRead());
+  var multipartFile =
+      http.MultipartFile('name', stream, length, filename: basename(file.path));
+  multipartRequest.files.add(multipartFile);
+  var response = await multipartRequest.send();
+  if (response.statusCode == 200) {
+  }
+} */
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -21,13 +39,59 @@ class CreateProfile extends StatefulWidget {
 }
 
 class _CreateProfileState extends State<CreateProfile> {
+  File? _image;
+  AssetImage image = const AssetImage('images/picture.png');
+  String? dropDownValue;
+  String imagepath = "";
+  late File imagefile;
+  final _picker = ImagePicker();
+
+  Future<void> _openImagePicker() async {
+    final XFile? pickedImage =
+        await _picker.pickImage(source: ImageSource.gallery);
+       // final String path = await getApplicationDocumentsDirectory().path;
+
+// copy the file to a new path
+//final File newImage = await image.copy('$path/image1.png');
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
+   Future cropImage() async {
+    // ignore: unused_local_variable
+    CroppedFile? croppedfile = await ImageCropper().cropImage(
+        sourcePath: imagepath,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+        uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+       
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+     
+      );}
+
+   
+
   late AnimationController controller;
   @override
   void initState() {
     super.initState();
   }
-
-  String? dropDownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +102,8 @@ class _CreateProfileState extends State<CreateProfile> {
     var phoneController = TextEditingController();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     List<String> list = <String>['Male', 'Female'];
-    FilePickerResult? result;
-    String? outputFile;
-    var image = const AssetImage('images/picture.png');
-  /*   final Completer<GoogleMapController> mapcontroller =
+
+    /*   final Completer<GoogleMapController> mapcontroller =
         Completer<GoogleMapController>();
 
     const CameraPosition kGooglePlex = CameraPosition(
@@ -51,18 +113,22 @@ class _CreateProfileState extends State<CreateProfile> {
 
     Completer<GoogleMapController> mapcontroller = Completer();
 
-   const LatLng center =  LatLng(45.521563, -122.677433);
+    const LatLng center = LatLng(45.521563, -122.677433);
 
-  void onMapCreated(GoogleMapController controller) {
-    mapcontroller.complete(controller);
-  }
+    void onMapCreated(GoogleMapController controller) {
+      mapcontroller.complete(controller);
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: MyAppbar(percent: 20),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(right: 15, left: 15, bottom: 20),
+          padding: EdgeInsetsDirectional.only(
+            start: MediaQuery.of(context).size.width * 0.03,
+            end: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height * 0.03),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -72,7 +138,11 @@ class _CreateProfileState extends State<CreateProfile> {
                 Center(
                   child: CircleAvatar(
                     radius: 65,
-                    backgroundImage: image,
+                    backgroundColor: Colors.grey[600],
+                    backgroundImage:
+                        _image != null ? FileImage(_image!, scale: 0.5) : null,
+
+                    //image,
                   ),
                 ),
                 const SizedBox(
@@ -85,25 +155,9 @@ class _CreateProfileState extends State<CreateProfile> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: MaterialButton(
-                    onPressed: () async {
-                      result = await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowMultiple: false,
-                          allowedExtensions: ['jpg', 'png']);
-                      if (result != null) {
-                        List<File> files =
-                            result!.paths.map((path) => File(path!)).toList();
-                      } else {
-                        // User canceled the picker
-                      }
-                      setState(() {
-                        image = result as AssetImage;
-                      });
-                      /* outputFile = await FilePicker.platform.saveFile(
-                        dialogTitle: 'Please select an output file:',
-                        fileName: 'output-file.pdf',);
-                       */
-                    },
+                    onPressed: _openImagePicker
+                    //selectFile();
+                    ,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -118,7 +172,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         Text(
                           'Upload photo',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 20,
                               color: primaryLightColor,
                               fontWeight: FontWeight.w500),
@@ -136,9 +190,9 @@ class _CreateProfileState extends State<CreateProfile> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                         Text(
                           'Name *',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
@@ -147,7 +201,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         DefaultFormField(
                             controller: nameController,
                             type: TextInputType.text,
-                            validate: ( value) {
+                            validate: (value) {
                               value = nameController.text;
                               if (value.isEmpty) {
                                 return 'Name must not be empty';
@@ -158,9 +212,9 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           'Birth Date',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
@@ -174,16 +228,16 @@ class _CreateProfileState extends State<CreateProfile> {
                                 showDatePicker(
                                         context: context,
                                         initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
-                                        lastDate: DateTime.parse('2029-12-12'))
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime.parse('2030-12-12'))
                                     .then((value) {
                                   dateController.text =
                                       DateFormat.yMMMd().format(value!);
                                 });
                               },
                               icon: const Icon(Icons.calendar_today_outlined)),
-                          validate: ( value) {
-                            value =dateController.text;
+                          validate: (value) {
+                            value = dateController.text;
                             if (value.isEmpty) {
                               return 'Birth date must not be empty';
                             } else {
@@ -202,9 +256,9 @@ class _CreateProfileState extends State<CreateProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text(
+                                   Text(
                                     'Gender',
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -265,9 +319,9 @@ class _CreateProfileState extends State<CreateProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text(
+                                   Text(
                                     'Age',
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -293,9 +347,9 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           'Location',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
@@ -313,15 +367,16 @@ class _CreateProfileState extends State<CreateProfile> {
                                             content: Stack(
                                               children: [
                                                 Positioned.fill(
-                                                  child:   GoogleMap(
-                                                  onMapCreated: onMapCreated,
-                                                  initialCameraPosition:
-                                                      const CameraPosition(
-                                                    target: center,
-                                                    zoom: 11.0,
+                                                  child: GoogleMap(
+                                                    onMapCreated: onMapCreated,
+                                                    initialCameraPosition:
+                                                        const CameraPosition(
+                                                      target: center,
+                                                      zoom: 11.0,
+                                                    ),
                                                   ),
-                                                ),)
-                                              
+                                                )
+
                                                 /*       Positioned(
                                                     right: -40.0,
                                                     top: -40,
@@ -348,7 +403,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                           ));
                                 },
                                 icon: const Icon(Icons.location_on_outlined)),
-                            validate: ( value) {
+                            validate: (value) {
                               value = locationController.text;
 
                               if (value.isEmpty) {
@@ -360,9 +415,9 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           'Phone Number',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
@@ -392,17 +447,17 @@ class _CreateProfileState extends State<CreateProfile> {
                             ),
                             child: MaterialButton(
                                 onPressed: () {
-                                  if(formKey.currentState!.validate()){
+                                  if (formKey.currentState!.validate()) {
                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SkillsScreen()));
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SkillsScreen()));
                                   }
                                 },
-                                child: const Text(
+                                child:  Text(
                                   'Next',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                       fontSize: 20, color: Colors.white),
                                 )),
                           ),
@@ -417,5 +472,3 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 }
-
-

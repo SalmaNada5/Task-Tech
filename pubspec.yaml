@@ -28,6 +28,10 @@ dependencies:
   syncfusion_flutter_core:
   google_maps_flutter: ^2.2.4
   flutter_switch: ^0.3.2
+  http: ^0.13.5
+  path: ^1.8.2
+  image_picker: ^0.8.7+4
+  image_cropper: ^3.0.3
 
 
 
