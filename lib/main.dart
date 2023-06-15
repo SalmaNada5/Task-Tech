@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: Constants.navigatorKey,
       debugShowCheckedModeBanner: false,
       routes: Routing.routes,
-      initialRoute: 'verification',
+      initialRoute: 'splash',
     );
   }
 }

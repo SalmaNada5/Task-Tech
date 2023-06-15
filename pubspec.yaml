@@ -24,7 +24,6 @@ dependencies:
   simple_gradient_text: ^1.2.4
   smooth_star_rating_null_safety: ^1.0.4+2
   syncfusion_flutter_sliders: ^20.4.49
-  another_xlider: ^1.1.2
   syncfusion_flutter_core:
   dio: ^5.1.1
   flutter_bloc: ^8.1.2

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
+import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/verification_code_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
@@ -26,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AuthModel? authModel;
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -69,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value.isEmpty) {
                             return 'Please enter your name';
                           }
-                          return '';
+                          return null;
                         },
                         hintText: 'Enter your name',
                       ),
@@ -89,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value.isEmpty) {
                             return 'Please enter your email';
                           }
-                          return '';
+                          return null;
                         },
                         hintText: 'Enter your email',
                       ),
@@ -107,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value.length < 6) {
                             return 'password is too short';
                           }
-                          return '';
+                          return null;
                         },
                         icon: IconButton(
                           icon: Icon(
@@ -138,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value != passController.text) {
                             return 'Wrong password';
                           }
-                          return '';
+                          return null;
                         },
                         icon: IconButton(
                           icon: Icon(
@@ -164,12 +167,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Constants.navigateTo(
-                                const VerificationScreen(
-                                  fromSignup: true,
-                                ),
-                                pushReplacment: true,
-                              );
+                              authModel = await AuthController.signUpFunc(
+                                  email: emailController.text,
+                                  password: passController.text,
+                                  name: fullNameController.text,
+                                  confirmPassword: confirmPassController.text);
+                              if (authModel == null) {
+                                return Constants.errorMessage();
+                              } else {
+                                Constants.navigateTo(
+                                  const VerificationScreen(
+                                    fromSignup: true,
+                                  ),
+                                );
+                              }
                             }
                           },
                           style: ButtonStyle(

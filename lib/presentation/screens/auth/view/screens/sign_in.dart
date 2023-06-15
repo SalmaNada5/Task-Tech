@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
+import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
+import 'package:task_tech/presentation/screens/home/home_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 import 'package:task_tech/presentation/widgets/unfocus.dart';
-
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -71,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           if (value.isEmpty) {
                             return 'Please enter your email address';
                           } else {
-                            return '';
+                            return null;
                           }
                         },
                       ),
@@ -89,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           if (value.isEmpty) {
                             return 'Please enter your password';
                           }
-                          return '';
+                          return null;
                         },
                         icon: IconButton(
                           icon: Icon(
@@ -160,11 +162,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            // if (_formKey.currentState!.validate()) {
-                            debugPrint('correct');
-                            await AuthController.loginFunc(
-                                emailController.text, passController.text);
-                            // }
+                            if (_formKey.currentState!.validate()) {
+                              AuthModel? authModel;
+                              authModel = await AuthController.loginFunc(
+                                  emailController.text, passController.text);
+                              if (authModel == null) {
+                                return Constants.errorMessage(
+                                    description: 'Invalid email or password!');
+                              } else {
+                                return Constants.navigateTo(const HomeScreen(),
+                                    pushAndRemoveUntil: true);
+                              }
+                            }
                           },
                           style: ButtonStyle(
                             padding: MaterialStateProperty.all(

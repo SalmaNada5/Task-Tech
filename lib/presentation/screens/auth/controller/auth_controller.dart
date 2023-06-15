@@ -63,7 +63,7 @@ class AuthController {
     }
   }
 
-  static Future<bool> forgetPassword(String email) async {
+  static Future<bool?> forgetPassword(String email) async {
     try {
       Response res = await _dioClient.post(
         'api/v1/users/forgetpassword',

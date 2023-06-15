@@ -3,13 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/verification_code_screen.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    // double screenH = MediaQuery.of(context).size.height;
+    bool correctEmail = false;
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
@@ -48,6 +50,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 Text(
                   'The verification code will be sent to your\nE-mail, please check it.',
                   textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                   style: labelTextFormStyle.copyWith(
                     color: const Color(0xff3E4446),
                     fontSize: 16,
@@ -74,10 +77,18 @@ class ForgotPasswordScreen extends StatelessWidget {
                   height: 30,
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      debugPrint('valid');
-                      Navigator.pushNamed(context, 'verification');
+                      correctEmail = await AuthController.forgetPassword(
+                              forgotPassEmailController.text) ??
+                          false;
+                    }
+                    if (correctEmail) {
+                      Constants.navigateTo(
+                          const VerificationScreen(fromSignup: false));
+                    } else {
+                      //TODO wrong email message
+                      Constants.errorMessage();
                     }
                   },
                   style: ButtonStyle(

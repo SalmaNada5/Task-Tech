@@ -102,20 +102,20 @@ class _AboutmePageState extends State<AboutmePage> {
                           blurRadius: 7,
                           offset: Offset(0, 2))
                     ]),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
+                child: const Padding(
+                  padding: EdgeInsetsDirectional.only(start: 10, end: 10),
                   child: Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                           radius: 23,
                           backgroundImage: AssetImage('images/suez canal.png')),
-                      const SizedBox(
+                      SizedBox(
                         width: 14,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             'Computer Science',
                             style: TextStyle(
@@ -132,13 +132,13 @@ class _AboutmePageState extends State<AboutmePage> {
                           )
                         ],
                       ),
-                      const SizedBox(
+                      SizedBox(
                         width: 36,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             'Suez canal university',
                             style: TextStyle(

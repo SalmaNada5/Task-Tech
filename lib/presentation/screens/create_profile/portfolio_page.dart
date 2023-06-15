@@ -20,9 +20,9 @@ class PortfolioPage extends StatelessWidget {
                     color: Color.fromRGBO(175, 176, 182, 1)),
               ),
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Image(
                   image: AssetImage(
                     'images/image 18.png',
@@ -43,9 +43,9 @@ class PortfolioPage extends StatelessWidget {
             const SizedBox(
               height: 19.5,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Image(
                     image: AssetImage('images/image 15.png'),
                     width: 118.35,

@@ -31,7 +31,7 @@ class DioClient {
       return handler.next(response);
     }));
 
-  String? _errorFunc(DioError error) {
+  String? _errorFunc(error) {
     ErrorModel err = ErrorModel.fromJson(error.response?.data);
     Constants.errorMessage(description: err.message);
     return err.message;
@@ -61,7 +61,7 @@ class DioClient {
         }
         //response.data = response.body
         return response;
-      } on DioError catch (error) {
+      } on Error catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -100,7 +100,7 @@ class DioClient {
         }
 
         return response;
-      } on DioError catch (error) {
+      } on Error catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -139,7 +139,7 @@ class DioClient {
         }
 
         return response;
-      } on DioError catch (error) {
+      } on Error catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -178,7 +178,7 @@ class DioClient {
         }
 
         return response;
-      } on DioError catch (error) {
+      } on Error catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
