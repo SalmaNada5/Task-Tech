@@ -57,7 +57,22 @@ class EducationScreenState extends State<EducationScreen> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles();
+
+                            if (result != null) {
+                              PlatformFile file = result.files.first;
+
+                              debugPrint(file.name);
+                              debugPrint(file.bytes.toString());
+                              debugPrint(file.size.toString());
+                              debugPrint(file.extension);
+                              debugPrint(file.path);
+                            } else {
+                              // User canceled the picker
+                            }
+                          },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

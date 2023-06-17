@@ -15,6 +15,7 @@ class SkillsScreen extends StatefulWidget {
 class SkillsScreenState extends State<SkillsScreen> {
   @override
   Widget build(BuildContext context) {
+    String? chiptext;
     var skillController = TextEditingController();
     return Scaffold(
       appBar: MyAppbar(percent: 40),
@@ -83,6 +84,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(8.6)),
                         ),
+                        labelText: chiptext,
                         hintText: 'Type a skill..',
                         hintStyle: GoogleFonts.poppins(
                             fontSize: 14,

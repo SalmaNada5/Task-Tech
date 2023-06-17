@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
+import 'package:task_tech/presentation/screens/create_profile/education_screen.dart';
 
 import 'presentation/screens/create_profile/chat_detail_screen.dart';
+import 'presentation/screens/create_profile/skills_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ChatDetailScreen(),
+      home: CreateProfile(),
      /*  routes: {
         'splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),
