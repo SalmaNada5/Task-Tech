@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
+import 'package:task_tech/presentation/screens/create_profile/education_screen.dart';
+
+import 'presentation/screens/create_profile/chat_detail_screen.dart';
+import 'presentation/screens/create_profile/skills_screen.dart';
+
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/home/categories_screen.dart';
 import 'package:task_tech/presentation/screens/home/home_screen.dart';
-import 'package:task_tech/presentation/screens/home/profile_screen.dart';
 import 'package:task_tech/presentation/screens/payment/add_card_screen.dart';
 import 'package:task_tech/presentation/screens/payment/order_review_screen.dart';
 import 'package:task_tech/presentation/screens/payment/success_payment_screen.dart';
@@ -19,6 +23,8 @@ import 'package:task_tech/presentation/screens/splash_screen.dart';
 import 'package:task_tech/presentation/screens/unexpected_error_screen.dart';
 import 'package:task_tech/presentation/screens/verification_code_screen.dart';
 
+import 'presentation/screens/home/profile_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,9 +34,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return   MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
+      //home: CreateProfile(),
+       routes: {
         'splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),
         'signUp': (context) => const SignUpScreen(),
@@ -81,7 +88,8 @@ class MyApp extends StatelessWidget {
         'addCard': (context) => const AddCardScreen(),
         'success': (context) => const CongratesScreen(),
       },
-      initialRoute: 'success',
+      initialRoute: 'splash', 
+      //initialRoute: 'success',
     );
   }
 }

@@ -44,7 +44,7 @@ class _AddPostScreenState extends State<AddPostScreen>
               indicatorColor: primaryLightColor,
               indicatorWeight: 7,
               indicator: UnderlineTabIndicator(
-                borderRadius: BorderRadius.circular(4),
+                //borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(
                   color: primaryLightColor,
                   width: 5,

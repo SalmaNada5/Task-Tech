@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/create_profile/profile_screen.dart';
 
 import '../../../constants/colors.dart';
@@ -22,25 +23,29 @@ class EducationScreenState extends State<EducationScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.only(right: 15, left: 15, bottom: 20, top: 34),
+                 EdgeInsetsDirectional.only(
+            start: MediaQuery.of(context).size.width * 0.03,
+            end: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height * 0.03),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Add your education here',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   height: 19,
                 ),
-                const Text(
+                 Text(
                   'if you don’t have a degree, adding any\n'
                   'relevant education helps make your profile'
                   ' visible.',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(58, 51, 53, 1)),
+                      color: const Color.fromRGBO(58, 51, 53, 1)),
                 ),
                 const SizedBox(
                   height: 34,
@@ -52,7 +57,22 @@ class EducationScreenState extends State<EducationScreen> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles();
+
+                            if (result != null) {
+                              PlatformFile file = result.files.first;
+
+                              debugPrint(file.name);
+                              debugPrint(file.bytes.toString());
+                              debugPrint(file.size.toString());
+                              debugPrint(file.extension);
+                              debugPrint(file.path);
+                            } else {
+                              // User canceled the picker
+                            }
+                          },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -67,7 +87,7 @@ class EducationScreenState extends State<EducationScreen> {
                         ),
                         Text(
                           'Add Education',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               fontSize: 20,
                               color: primaryLightColor,
                               fontWeight: FontWeight.w500),
@@ -76,12 +96,12 @@ class EducationScreenState extends State<EducationScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 66,
+                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
-                const Text(
+                 Text(
                   'Upload cv/ resume .',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   height: 27,
@@ -123,10 +143,10 @@ class EducationScreenState extends State<EducationScreen> {
                             }
                           },
                         ),
-                        const Text(
+                         Text(
                           'Browse file',
-                          style: TextStyle(
-                              color: Color.fromRGBO(124, 124, 124, 1),
+                          style: GoogleFonts.poppins(
+                              color: const Color.fromRGBO(124, 124, 124, 1),
                               fontSize: 18,
                               fontWeight: FontWeight.w400),
                         )
@@ -134,8 +154,8 @@ class EducationScreenState extends State<EducationScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 122,
+                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Center(
                   child: Container(
@@ -152,9 +172,9 @@ class EducationScreenState extends State<EducationScreen> {
                               MaterialPageRoute(
                                   builder: (context) => const ProfileScreen()));
                         },
-                        child: const Text(
-                          'Next',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        child:  Text(
+                          'Save',
+                          style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
                         )),
                   ),
                 ),
