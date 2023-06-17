@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 
-TextStyle titleTheme = GoogleFonts.poppins(
+TextStyle titleStyle = GoogleFonts.poppins(
   fontSize: 22,
   fontWeight: FontWeight.w500,
   color: primaryLightColor,
@@ -13,8 +13,8 @@ TextStyle labelTextFormStyle = GoogleFonts.poppins(
   fontSize: 14,
   fontWeight: FontWeight.w400,
 );
-TextStyle labelStyle = GoogleFonts.poppins(
-  fontSize: 18,
+TextStyle headStyle = GoogleFonts.poppins(
+  fontSize: 20,
   fontWeight: FontWeight.w500,
   color: Colors.black,
 );
@@ -23,4 +23,15 @@ TextStyle fieldTextStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
   color: Colors.black,
+);
+
+TextStyle postNameStyle = GoogleFonts.poppins(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  color: primaryLightColor,
+);
+TextStyle postDescriptionStyle = GoogleFonts.poppins(
+  fontSize: 13,
+  fontWeight: FontWeight.w400,
+  color: const Color(0xff7C7C7C),
 );

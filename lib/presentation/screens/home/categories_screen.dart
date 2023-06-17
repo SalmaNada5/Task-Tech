@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/themes.dart';
+import '../../../constants/text_styles.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -17,7 +18,7 @@ class CategoriesScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Categories',
-          style: titleTheme,
+          style: titleStyle,
         ),
         leading: Container(
           margin: const EdgeInsets.all(10),
@@ -42,7 +43,7 @@ class CategoriesScreen extends StatelessWidget {
             children: [
               Text(
                 'Popular',
-                style: titleTheme.copyWith(
+                style: titleStyle.copyWith(
                   color: Colors.black,
                 ),
               ),
@@ -51,7 +52,7 @@ class CategoriesScreen extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: 0.4 * screenH,
                 child: GridView.count(
                   crossAxisCount: 2,
                   mainAxisSpacing: 18,
@@ -70,7 +71,7 @@ class CategoriesScreen extends StatelessWidget {
               ),
               Text(
                 'Trending',
-                style: titleTheme.copyWith(
+                style: titleStyle.copyWith(
                   color: Colors.black,
                 ),
               ),
@@ -79,7 +80,7 @@ class CategoriesScreen extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: 0.5 * screenH,
                 child: GridView.count(
                   crossAxisCount: 2,
                   mainAxisSpacing: 18,
