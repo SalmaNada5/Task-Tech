@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class ReviewPage extends StatelessWidget {
   const ReviewPage({Key? key}) : super(key: key);
@@ -6,6 +8,7 @@ class ReviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
+      
       reviewCard(
           name: 'Emily',
           review: 'Nice work and user friendly communication.',
@@ -45,10 +48,10 @@ Widget reviewCard(
         ),
         Text(
           '$rate',
-          style: const TextStyle(
+          style:  GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.w500,
-            color: Color.fromRGBO(255, 193, 7, 1),
+            color: const Color.fromRGBO(255, 193, 7, 1),
           ),
         )
       ],
@@ -57,7 +60,7 @@ Widget reviewCard(
       padding: const EdgeInsetsDirectional.only(top: 20.0),
       child: Text(
         name,
-        style: const TextStyle(
+        style: GoogleFonts.poppins(
             fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
       ),
     ),
@@ -66,10 +69,10 @@ Widget reviewCard(
       padding: const EdgeInsetsDirectional.only(top: 10.0),
       child: Text(
         review,
-        style: const TextStyle(
+        style: GoogleFonts.poppins(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: Color.fromRGBO(124, 124, 124, 1)),
+            color: const Color.fromRGBO(124, 124, 124, 1)),
       ),
     ),
   );

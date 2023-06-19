@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_bar_widget.dart';
 import 'education_screen.dart';
@@ -32,17 +33,21 @@ class SalaryScreenState extends State<SalaryScreen> {
       appBar: MyAppbar(percent: 80),
       body: Center(
         child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-              start: 15, end: 15, bottom: 20, top: 34),
+          padding: EdgeInsetsDirectional.only(
+            start: MediaQuery.of(context).size.width * 0.03,
+            end: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height * 0.03),
           child: Center(
               child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Expected Salary',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                   ),
@@ -50,12 +55,12 @@ class SalaryScreenState extends State<SalaryScreen> {
                 const SizedBox(
                   height: 44,
                 ),
-                const Text(
+                 Text(
                   'Minimum',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(90, 80, 80, 1)),
+                      color: const Color.fromRGBO(90, 80, 80, 1)),
                 ),
                 const SizedBox(
                   height: 9,
@@ -69,32 +74,32 @@ class SalaryScreenState extends State<SalaryScreen> {
                     color: const Color.fromRGBO(245, 245, 245, 1),
                   ),
                   child: TextFormField(
-                    style: const TextStyle(
+                    style:  GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(124, 124, 124, 1)),
+                        color: const Color.fromRGBO(124, 124, 124, 1)),
                     keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(
+                    decoration:  InputDecoration(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(8.6)),
                         ),
                         hintText: '2.000',
-                        hintStyle: TextStyle(
+                        hintStyle: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(124, 124, 124, 1))),
+                            color: const Color.fromRGBO(124, 124, 124, 1))),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                 Text(
                   'Maximum',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(90, 80, 80, 1)),
+                      color: const Color.fromRGBO(90, 80, 80, 1)),
                 ),
                 const SizedBox(
                   height: 9,
@@ -113,28 +118,28 @@ class SalaryScreenState extends State<SalaryScreen> {
                         fontWeight: FontWeight.w400,
                         color: Color.fromRGBO(124, 124, 124, 1)),
                     keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
+                    decoration:  InputDecoration(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(8.6)),
                       ),
                       hintText: '5.000',
-                      hintStyle: TextStyle(
+                      hintStyle: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(124, 124, 124, 1)),
+                          color: const Color.fromRGBO(124, 124, 124, 1)),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                 Text(
                   'Currency',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(90, 80, 80, 1)),
+                      color: const Color.fromRGBO(90, 80, 80, 1)),
                 ),
                 const SizedBox(
                   height: 9,
@@ -171,21 +176,21 @@ class SalaryScreenState extends State<SalaryScreen> {
                         debugPrint(value);
                       });
                     },
-                    style: const TextStyle(
+                    style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(124, 124, 124, 1)),
+                        color: const Color.fromRGBO(124, 124, 124, 1)),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                 Text(
                   'Frequency',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: Color.fromRGBO(90, 80, 80, 1)),
+                      color: const Color.fromRGBO(90, 80, 80, 1)),
                 ),
                 const SizedBox(
                   height: 9,
@@ -222,14 +227,14 @@ class SalaryScreenState extends State<SalaryScreen> {
                         debugPrint(value);
                       });
                     },
-                    style: const TextStyle(
+                    style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(124, 124, 124, 1)),
+                        color: const Color.fromRGBO(124, 124, 124, 1)),
                   ),
                 ),
-                const SizedBox(
-                  height: 132,
+                 SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 Center(
                   child: Container(
@@ -247,9 +252,9 @@ class SalaryScreenState extends State<SalaryScreen> {
                                   builder: (context) =>
                                       const EducationScreen()));
                         },
-                        child: const Text(
+                        child:  Text(
                           'Next',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
                         )),
                   ),
                 ),

@@ -4,7 +4,8 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
-import 'package:task_tech/presentation/screens/home/profile_screen.dart';
+import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/home/profile_page.dart';
 import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
@@ -28,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeScreen(),
     const ChatsScreen(),
     const AddPostScreen(),
+     const NotificationsScreen(),
+
     const PostsScreen(),
     const ProfilePage(),
   ];

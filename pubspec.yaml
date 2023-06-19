@@ -25,13 +25,9 @@ dependencies:
   smooth_star_rating_null_safety: ^1.0.4+2
   syncfusion_flutter_sliders: ^20.4.49
   syncfusion_flutter_core:
-  dio: ^5.1.1
-  flutter_bloc: ^8.1.2
-  equatable: ^2.0.5
-  internet_connection_checker: ^1.0.0+1
-  open_file: ^3.3.1
-  path_provider: ^2.0.15
-  shared_preferences: ^2.1.2
+
+
+
 
 dev_dependencies:
   flutter_test:

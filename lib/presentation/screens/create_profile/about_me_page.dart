@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -49,38 +50,36 @@ class _AboutmePageState extends State<AboutmePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+             Text(
               'Lorem ipsum dolor sit amet, consectetur elit adipiscing'
               ' elit. Dolor fermentum libero velit quis in fermentum justo, '
               'velit quis non.',
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: Color.fromRGBO(124, 124, 124, 1)),
+                  color: const Color.fromRGBO(124, 124, 124, 1)),
             ),
             const SizedBox(
               height: 19,
             ),
             Row(
               children: [
-                const Text(
+                 Text(
                   'Education',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: Color.fromRGBO(13, 13, 38, 1)),
+                      color: const Color.fromRGBO(13, 13, 38, 1)),
                 ),
-                const SizedBox(
-                  width: 240,
-                ),
+                const Spacer(),
                 TextButton(
                   onPressed: () {},
-                  child: const Text(
+                  child:  Text(
                     'See all',
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
                         fontSize: 13,
-                        color: Color.fromRGBO(175, 176, 182, 1)),
+                        color: const Color.fromRGBO(175, 176, 182, 1)),
                   ),
                 )
               ],
@@ -106,10 +105,10 @@ class _AboutmePageState extends State<AboutmePage> {
                   padding: EdgeInsetsDirectional.only(start: 10, end: 10),
                   child: Row(
                     children: [
-                      CircleAvatar(
+                       CircleAvatar(
                           radius: 23,
                           backgroundImage: AssetImage('images/suez canal.png')),
-                      SizedBox(
+                       SizedBox(
                         width: 14,
                       ),
                       Column(
@@ -132,13 +131,13 @@ class _AboutmePageState extends State<AboutmePage> {
                           )
                         ],
                       ),
-                      SizedBox(
+                       SizedBox(
                         width: 36,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children:  [
                           Text(
                             'Suez canal university',
                             style: TextStyle(
@@ -163,12 +162,12 @@ class _AboutmePageState extends State<AboutmePage> {
             const SizedBox(
               height: 22,
             ),
-            const Text(
+             Text(
               'Salary',
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
-                  color: Color.fromRGBO(13, 13, 38, 1)),
+                  color: const Color.fromRGBO(13, 13, 38, 1)),
             ),
             const SizedBox(
               height: 50,
@@ -217,12 +216,12 @@ class _AboutmePageState extends State<AboutmePage> {
             const SizedBox(
               height: 30,
             ),
-            const Text(
+             Text(
               'Skills',
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
-                  color: Color.fromRGBO(13, 13, 38, 1)),
+                  color: const Color.fromRGBO(13, 13, 38, 1)),
             ),
             const SizedBox(
               height: 16,
@@ -231,7 +230,7 @@ class _AboutmePageState extends State<AboutmePage> {
               children: [
                 Container(
                   height: 32,
-                  width: 103,
+                  width: MediaQuery.of(context).size.width*0.3,
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(206, 218, 223, 1),
                     borderRadius: BorderRadius.circular(8),
@@ -240,18 +239,16 @@ class _AboutmePageState extends State<AboutmePage> {
                       onPressed: () {},
                       child: Text(
                         'UI/ UX Design',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 11.5,
                             color: primaryLightColor,
                             fontWeight: FontWeight.w400),
                       )),
                 ),
-                const SizedBox(
-                  width: 17,
-                ),
+                const Spacer(),
                 Container(
                   height: 32,
-                  width: 103,
+                  width: MediaQuery.of(context).size.width*0.3,
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(206, 218, 223, 1),
                     borderRadius: BorderRadius.circular(8),
@@ -260,18 +257,16 @@ class _AboutmePageState extends State<AboutmePage> {
                       onPressed: () {},
                       child: Text(
                         'Interfaces',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 11.5,
                             color: primaryLightColor,
                             fontWeight: FontWeight.w400),
                       )),
                 ),
-                const SizedBox(
-                  width: 17,
-                ),
+                const Spacer(),
                 Container(
                   height: 32,
-                  width: 103,
+                  width: MediaQuery.of(context).size.width*0.3,
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(206, 218, 223, 1),
                     borderRadius: BorderRadius.circular(8),
@@ -280,7 +275,7 @@ class _AboutmePageState extends State<AboutmePage> {
                       onPressed: () {},
                       child: Text(
                         'Web Design',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 11.5,
                             color: primaryLightColor,
                             fontWeight: FontWeight.w400),
