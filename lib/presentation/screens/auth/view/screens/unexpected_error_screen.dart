@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
 import '../../../../../constants/colors.dart';
@@ -9,12 +10,13 @@ class UnexpectedErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               'An unexpected error\noccurred!',
@@ -40,8 +42,8 @@ class UnexpectedErrorScreen extends StatelessWidget {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                   EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 0.35 * screenW,
+                    vertical: 10,
+                    horizontal: 0.35 * Constants.screenWidth,
                   ),
                 ),
                 backgroundColor: MaterialStateProperty.all(primaryLightColor),

@@ -4,7 +4,7 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/sign_in.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/sign_in_screen.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -22,7 +22,6 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     bool? resetPassword = false;
-    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -49,12 +48,15 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset('images/Reset password-pana 1.png'),
+              Image.asset(
+                'images/Reset password-pana 1.png',
+                height: Constants.screenHeight * 0.45,
+              ),
               Text(
                 'Your new password must be different from\nthe passwird you used previously',
                 textAlign: TextAlign.center,
@@ -62,6 +64,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                   fontSize: 16,
                   color: const Color(0xff3E4446),
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               CustomTextFormField(
                 controller: emailController,
@@ -76,6 +81,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                     return '';
                   }
                 },
+              ),
+              const SizedBox(
+                height: 10,
               ),
               CustomTextFormField(
                 hintText: 'New password',
@@ -103,6 +111,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                   }
                 },
               ),
+              const SizedBox(
+                height: 10,
+              ),
               CustomTextFormField(
                 hintText: 'Confirm password',
                 icon: IconButton(
@@ -129,6 +140,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                   }
                 },
               ),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () async {
                   resetPassword = await AuthController.resetPasswordFunc(
@@ -144,7 +158,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 },
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                      vertical: 10, horizontal: 0.35 * screenW)),
+                      vertical: 10, horizontal: 0.35 * Constants.screenWidth)),
                   backgroundColor: MaterialStateProperty.all(primaryLightColor),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -159,9 +173,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
             ],
           ),

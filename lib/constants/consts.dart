@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
-
-  //static bool demoLogin = false;
+  static final screenHeight =
+      MediaQuery.of(navigatorKey.currentContext!).size.height;
+  static final screenWidth =
+      MediaQuery.of(navigatorKey.currentContext!).size.width;
 
   static void closeAppFunction() {
     if (Platform.isAndroid) {

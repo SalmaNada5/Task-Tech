@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
@@ -72,8 +73,10 @@ class AuthController {
       ) as Response;
       if (res.statusCode == 201 || res.statusCode == 200) {
         return true;
+      } else {
+        debugPrint('error ${res.statusCode}');
+        return false;
       }
-      return false;
     } catch (e) {
       logError('error in loginFunc ${e.toString()}');
       return false;

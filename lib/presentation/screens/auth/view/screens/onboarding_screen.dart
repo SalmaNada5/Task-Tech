@@ -39,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: Container(
         color: Colors.white,
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -101,6 +101,9 @@ class FirstOnBoarding extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           TextButton(
             child: Text(
               'Skip',
@@ -113,7 +116,7 @@ class FirstOnBoarding extends StatelessWidget {
             onPressed: () => Navigator.pushReplacementNamed(context, 'signUp'),
           ),
           SizedBox(
-            height: screenH / 9,
+            height: screenH / 12,
           ),
           const OnboardingWidget(
               img: 'images/onboarding1.png',
@@ -131,15 +134,13 @@ class SecondOnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        OnboardingWidget(
-            img: 'images/onboarding2.png',
-            title: 'Browse Service List',
-            subtitle:
-                'Our service list include several fields, so you can find the best job for you.')
-      ],
+    return const Center(
+      child: OnboardingWidget(
+        img: 'images/onboarding2.png',
+        title: 'Browse Service List',
+        subtitle:
+            'Our service list include several fields, so you can find the best job for you.',
+      ),
     );
   }
 }

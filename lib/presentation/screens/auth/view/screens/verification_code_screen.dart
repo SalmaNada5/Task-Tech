@@ -19,7 +19,6 @@ class VerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool? correctCode = false;
     String d1 = '', d2 = '', d3 = '', d4 = '';
-    double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -65,7 +64,7 @@ class VerificationScreen extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 0.15 * screenW,
+                    horizontal: 0.15 * Constants.screenWidth,
                   ),
                   child: Form(
                     child: Row(
@@ -126,7 +125,7 @@ class VerificationScreen extends StatelessWidget {
                     padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(
                         vertical: 10,
-                        horizontal: 0.35 * screenW,
+                        horizontal: 0.35 * Constants.screenWidth,
                       ),
                     ),
                     backgroundColor:

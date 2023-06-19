@@ -206,8 +206,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: screenH / 20,
+                const SizedBox(
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -235,8 +235,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: screenH / 22,
+                const SizedBox(
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -286,7 +286,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onTap: () => Navigator.pushNamed(context, 'signIn'),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

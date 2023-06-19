@@ -39,12 +39,12 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
           )),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Form(
           key: formKey,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset('images/Forgot password-amico 1.png'),
                 Text(
@@ -93,7 +93,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 7, horizontal: 40),
+                      EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 0.35 * Constants.screenWidth,
+                      ),
                     ),
                     backgroundColor:
                         MaterialStateProperty.all(primaryLightColor),
@@ -110,9 +113,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
               ],
             ),
