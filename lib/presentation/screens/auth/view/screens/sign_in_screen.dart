@@ -175,7 +175,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     description: 'Invalid email or password!');
                               } else {
                                  SharedPreferences pref =await SharedPreferences.getInstance();
-                                 pref.setString("email", emailController.text);
+                                 pref.setString("token", authModel.token!);
                                 return Constants.navigateTo(const HomeScreen(),
                                     pushAndRemoveUntil: true);
                               }

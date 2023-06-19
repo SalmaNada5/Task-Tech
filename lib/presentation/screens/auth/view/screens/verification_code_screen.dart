@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/reset_password_screen.dart';
-import 'package:task_tech/presentation/screens/home/home_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/text_styles.dart';
-
-String code = '';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key, required this.fromSignup});
   final bool fromSignup;
 
+  getCode(String d1, String d2, String d3, String d4) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("code", d1 + d2 + d3 + d4);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool? correctCode = false;
-    String d1 = '', d2 = '', d3 = '', d4 = '';
+    String d1 = '', d2 = '', d3 = '', d4 = '', code = '';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -85,7 +89,7 @@ class VerificationScreen extends StatelessWidget {
                             if (index == 3) {
                               d4 = value;
                             }
-                            code = d1 + d2 + d3 + d4;
+                            getCode(d1, d2, d3, d4);
                             if (value.length == 1 && index != 3) {
                               FocusScope.of(context).nextFocus();
                             }
@@ -100,10 +104,13 @@ class VerificationScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    code = prefs.getString("code")!;
                     if (fromSignup) {
                       correctCode = await AuthController.verifySignupFunc(code);
                       if (correctCode!) {
-                        Constants.navigateTo(const HomeScreen(),
+                        Constants.navigateTo(const CreateProfile(),
                             pushAndRemoveUntil: true);
                       } else {
                         //TODO -- handle error message

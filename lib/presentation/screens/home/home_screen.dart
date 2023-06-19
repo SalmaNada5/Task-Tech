@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
@@ -29,8 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeScreen(),
     const ChatsScreen(),
     const AddPostScreen(),
-     const NotificationsScreen(),
-
     const PostsScreen(),
     const ProfilePage(),
   ];
@@ -80,7 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const Spacer(),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Constants.navigateTo(const NotificationsScreen());
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(6.0),
                                 child: Image.asset('images/notifications.png'),
