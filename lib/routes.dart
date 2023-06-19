@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/reset_password_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/sign_in_screen.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/splash_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/home/categories_screen.dart';
 import 'package:task_tech/presentation/screens/home/home_screen.dart';
-import 'package:task_tech/presentation/screens/home/profile_screen.dart';
 import 'package:task_tech/presentation/screens/payment/add_card_screen.dart';
 import 'package:task_tech/presentation/screens/payment/order_review_screen.dart';
 import 'package:task_tech/presentation/screens/payment/success_payment_screen.dart';
@@ -33,7 +31,6 @@ class Routing {
     'home': (context) => const HomeScreen(),
     'addPost': (context) => const AddPostScreen(),
     'posts': (context) => const PostsScreen(),
-    'profile': (context) => const ProfilePage(),
     'categories': (context) => const CategoriesScreen(),
     'createProfile': (context) => const CreateProfile(),
     'taskDetails': (context) => const TaskDetailsPage(

@@ -51,7 +51,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                   
                   //crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 10,
-                  children: <Widget>[
+                  children:  <Widget>[
                     FilterChipWidget(chipName: 'UI/UX'),
                     FilterChipWidget(chipName: 'Technology'),
                     FilterChipWidget(chipName: 'Strategy'),
