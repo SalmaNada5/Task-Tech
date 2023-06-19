@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/onboarding_screen.dart';
+import 'package:task_tech/presentation/screens/home/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, this.email});
+  final String? email;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -19,7 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
-    Navigator.pushReplacementNamed(context, 'onboarding');
+    Constants.navigateTo(
+      widget.email == null ? const OnboardingScreen() : const HomeScreen(),
+      pushReplacment: true,
+    );
   }
 
   @override

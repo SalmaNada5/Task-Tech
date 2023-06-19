@@ -72,7 +72,7 @@ class AddCardScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Expiration Date',
-                      style: fieldTextStyle,
+                      style: headStyle,
                     ),
                     const SizedBox(
                       height: 10,
@@ -92,7 +92,7 @@ class AddCardScreen extends StatelessWidget {
                   children: [
                     Text(
                       'CVV',
-                      style: fieldTextStyle,
+                      style: headStyle,
                     ),
                     const SizedBox(
                       height: 10,

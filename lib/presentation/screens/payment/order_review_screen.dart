@@ -155,7 +155,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 children: [
                   Text(
                     'Add payment method',
-                    style: fieldTextStyle,
+                    style: headStyle,
                   ),
                   CheckBoxlistTile(
                     isChecked: creditChecked,
@@ -188,7 +188,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                   ),
                   Text(
                     'Order Details',
-                    style: fieldTextStyle,
+                    style: headStyle,
                   ),
                   const SizedBox(
                     height: 20,

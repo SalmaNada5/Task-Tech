@@ -47,11 +47,11 @@ class SkillsScreenState extends State<SkillsScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                Wrap(
+                const Wrap(
                   
                   //crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 10,
-                  children: const <Widget>[
+                  children:  <Widget>[
                     FilterChipWidget(chipName: 'UI/UX'),
                     FilterChipWidget(chipName: 'Technology'),
                     FilterChipWidget(chipName: 'Strategy'),

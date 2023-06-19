@@ -34,14 +34,14 @@ class _PostTaskState extends State<PostTask> {
           Text(
             'Tell us about your Task',
             textAlign: TextAlign.center,
-            style: fieldTextStyle,
+            style: headStyle,
           ),
           const SizedBox(
             height: 10,
           ),
           TextFormField(
             controller: _descriptionController,
-            style: fieldTextStyle,
+            style: headStyle,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(

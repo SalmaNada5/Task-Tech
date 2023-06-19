@@ -8,6 +8,7 @@ import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
 import 'package:task_tech/presentation/screens/home/profile_page.dart';
 import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
+import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
 import '../../widgets/home_widgets/category_item.dart';
 import '../../widgets/home_widgets/service_widget.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
@@ -21,7 +22,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  final TextEditingController _searchController = TextEditingController();
   String userName = 'salma nada';
   String url =
       'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: _currentIndex == 0
           ? Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -95,39 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
-                          controller: _searchController,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10),
-                            prefixIcon: Image.asset('images/search.png'),
-                            suffixIcon: Image.asset('images/filter.png'),
-                            hintText: 'what are you looking for?',
-                            hintStyle: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffC0C0C0),
-                            ),
-                            fillColor: const Color(0xffF5F5F5),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0xffB8B8B8)),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0xffB8B8B8)),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          onChanged: (value) {
-                            _searchController.text = value.toString();
-                            _searchController.selection =
-                                TextSelection.collapsed(
-                                    offset: _searchController.text.length);
-                          },
-                        ),
+                        SearchWidget(),
                         const SizedBox(
                           height: 20,
                         ),
@@ -211,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 0.2 * screenH,
+                          height: screenH * 0.27,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
