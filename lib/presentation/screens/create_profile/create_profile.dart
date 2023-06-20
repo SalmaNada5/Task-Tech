@@ -9,27 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/default_form_field.dart';
 
-import 'app_bar_widget.dart';
 
-/* selectFile() async {
-  FilePickerResult? file = await FilePicker.platform.pickFiles();
-  if (file?.files.single.path == null) return;
-  uploadFile(File(file!.files.single.path!));
-}
 
-uploadFile(File file) async {
-  var multipartRequest = http.MultipartRequest('POST', Uri.parse('url'));
-  var length = await file.length();
-  var stream = http.ByteStream(file.openRead());
-  var multipartFile =
-      http.MultipartFile('name', stream, length, filename: basename(file.path));
-  multipartRequest.files.add(multipartFile);
-  var response = await multipartRequest.send();
-  if (response.statusCode == 200) {
-  }
-} */
+
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -48,8 +33,10 @@ class _CreateProfileState extends State<CreateProfile> {
 
   late GoogleMapController mapController;
 
+  // ignore: unused_field
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
+  // ignore: unused_element
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }

@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
-import 'package:task_tech/presentation/screens/chats_screen.dart';
 import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
 import 'package:task_tech/presentation/screens/home/profile_page.dart';
 import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
@@ -11,6 +10,8 @@ import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freela
 import '../../widgets/home_widgets/category_item.dart';
 import '../../widgets/home_widgets/service_widget.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+
+import '../chat_screens/chats_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

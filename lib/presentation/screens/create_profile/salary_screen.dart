@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 
-import 'app_bar_widget.dart';
 import 'education_screen.dart';
 
 class SalaryScreen extends StatefulWidget {
@@ -30,6 +30,8 @@ class SalaryScreenState extends State<SalaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
+
       appBar: MyAppbar(percent: 80),
       body: Center(
         child: Padding(

@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/screens/create_profile/portfolio_page.dart';
-import 'package:task_tech/presentation/screens/create_profile/review_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_pages/portfolio_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_pages/review_page.dart';
 
 import 'about_me_page.dart';
 
@@ -160,7 +160,7 @@ class ProfileScreenState extends State<ProfileScreen>
                             child: MaterialButton(
                                 onPressed: () {},
                                 child:  Text(
-                                  'Hire Me',
+                                  'Follow',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20, color: Colors.white),
                                 )),

@@ -2,10 +2,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/create_profile/profile_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_pages/profile_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 
 import '../../../constants/colors.dart';
-import 'app_bar_widget.dart';
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({Key? key}) : super(key: key);
@@ -18,6 +18,8 @@ class EducationScreenState extends State<EducationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
+
       appBar: MyAppbar(percent: 100),
       body: Center(
         child: SingleChildScrollView(

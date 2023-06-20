@@ -13,6 +13,8 @@ class _EmptyChatScreenState extends State<EmptyChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
+
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset('icons/bi_arrow-left-circle-fill.png'),

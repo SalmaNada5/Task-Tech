@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../../../constants/colors.dart';
+import '../../../../constants/colors.dart';
+
 
 class AboutmePage extends StatefulWidget {
   const AboutmePage({Key? key}) : super(key: key);

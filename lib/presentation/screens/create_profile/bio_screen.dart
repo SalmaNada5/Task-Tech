@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/salary_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 
-import 'app_bar_widget.dart';
+
 
 class BioScreen extends StatefulWidget {
   const BioScreen({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class BioScreenState extends State<BioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Colors.white,
+
       appBar: MyAppbar(percent: 60),
       body: Padding(
         padding: EdgeInsetsDirectional.only(
@@ -60,32 +63,37 @@ class BioScreenState extends State<BioScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.06,
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.width * 0.4,
-                child: TextFormField(
-                  maxLines: null,
-                  expands: true,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    hintText: 'Describe your top skills, experiences, and\n'
-                    'interests. This is one of the first things clients\n '
-                    'will see on your profile.',
-                    hintStyle: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: const Color.fromRGBO(124, 124, 124, 1)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(218, 218, 218, 1),
-                          width: 1,
-                        )),
-                    contentPadding: EdgeInsetsDirectional.only(
-                        start: MediaQuery.of(context).size.width * 0.025,
-                        end: MediaQuery.of(context).size.width * 0.025,
-                        top: MediaQuery.of(context).size.width * 0.025,
-                        bottom: MediaQuery.of(context).size.width * 0.025),
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.width * 0.4,
+                  child: TextFormField(
+                    
+                    maxLines: null,
+                    expands: true,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintMaxLines: 3,
+                      
+                      hintText: 'Describe your top skills, experiences, and interests. This is one of the first things clients will see on your profile.',
+                      hintStyle: GoogleFonts.poppins(
+                        
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: const Color.fromRGBO(124, 124, 124, 1)),
+                      border: OutlineInputBorder(
+                  
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Color.fromRGBO(218, 218, 218, 1),
+                            width: 1,
+                          )),
+                      contentPadding: EdgeInsetsDirectional.only(
+                          start: MediaQuery.of(context).size.width * 0.027,
+                          end: MediaQuery.of(context).size.width * 0.027,
+                          top: MediaQuery.of(context).size.width * 0.027,
+                          bottom: MediaQuery.of(context).size.width * 0.027),
+                    ),
                   ),
                 ),
               ),

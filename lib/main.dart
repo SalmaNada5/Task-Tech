@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/presentation/screens/create_profile/bio_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
 import 'package:task_tech/presentation/screens/create_profile/education_screen.dart';
 
-import 'presentation/screens/create_profile/chat_detail_screen.dart';
 import 'presentation/screens/create_profile/skills_screen.dart';
 
 import 'package:task_tech/presentation/screens/onboarding_screen.dart';
@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return   MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: CreateProfile(),
-       routes: {
+      home: BioScreen(),
+      /* routes: {
         'splash': (context) => const SplashScreen(),
         'onboarding': (context) => const OnboardingScreen(),
         'signUp': (context) => const SignUpScreen(),
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
         'success': (context) => const CongratesScreen(),
       },
       initialRoute: 'splash', 
-      //initialRoute: 'success',
+      //initialRoute: 'success',*/
     );
   }
 }
