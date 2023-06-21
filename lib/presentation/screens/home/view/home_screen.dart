@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
 import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
@@ -26,10 +27,46 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TopUserModel? topUserModel;
   @override
-  void initState() async{
-    topUserModel = await TopUserController.getTopUsersFunc();
+  void initState() {
+    setupScrollController();
+    getAllTopUsers();
     super.initState();
   }
+
+  void getAllTopUsers() async {
+    try {
+      await TopUserController.getTopUsersFunc();
+      setState(() {});
+    } catch (e) {
+      logError('$e in getAllTopUsers');
+    }
+  }
+
+  bool isLoading = false;
+
+  void setupScrollController() async {
+    TopUserController.scrollController.addListener(() async {
+      if (TopUserController.scrollController.position.atEdge &&
+          TopUserController.scrollController.position.pixels != 0) {
+        if (TopUserController.page >
+            (TopUserController.topUserModel.paginationResult?.numberOfPages ??
+                1)) {
+          return;
+        }
+        if (isLoading) {
+          return;
+        }
+        setState(() {
+          isLoading = true;
+        });
+        await TopUserController.getTopUsersFunc(dioLoading: false);
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+  }
+
   int _currentIndex = 0;
   String userName = 'salma nada';
   String url =
@@ -60,11 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 28,
-                              backgroundImage: NetworkImage(
-                                'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                              ),
+                              backgroundImage: NetworkImage(url),
                             ),
                             const SizedBox(
                               width: 15,
@@ -88,7 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             InkWell(
                               onTap: () {
-                                Constants.navigateTo(const NotificationsScreen());
+                                Constants.navigateTo(
+                                    const NotificationsScreen());
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(6.0),
@@ -189,16 +225,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(
                           height: screenH * 0.27,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: 4,
-                              itemBuilder: (ctx, n) =>  HighestRatedFreelancer(
-                                  userImgUrl: url,
-                                  userName: 'userName',
-                                  job: 'job',
-                                  rate: 4.9,
-                                  onPress: () {})),
+                          child: SingleChildScrollView(
+                            controller: TopUserController.scrollController,
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: TopUserController.users.length,
+                                    itemBuilder: (ctx, i) =>
+                                        HighestRatedFreelancer(
+                                            userImgUrl: TopUserController
+                                                .users[i].photo,
+                                            userName: TopUserController
+                                                .users[i].name,
+                                            job: 'skill',
+                                            rate: TopUserController
+                                                .users[i].ratingsQuantity
+                                                .toDouble(),
+                                            onPress: () {})),
+                                isLoading
+                                    ? const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 4),
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : const SizedBox.shrink()
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),

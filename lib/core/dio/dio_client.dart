@@ -10,13 +10,13 @@ class DioClient {
 
   final Dio _dio = Dio(
     BaseOptions(
-      connectTimeout: const Duration(seconds: 10), 
+      connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
   )..interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       logInfo(options.uri.toString());
       logInfo(options.headers.toString());
-      logInfo(options.data.toString()); 
+      logInfo(options.data.toString());
       return handler.next(options);
     }, onResponse: (response, handler) {
       logSuccess("RESPONSE_CODE ${response.statusCode}");
@@ -59,7 +59,7 @@ class DioClient {
           Constants.hideLoadingOrNavBack();
         }
         return response;
-      } on Error catch (error) {
+      } on DioException  catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -98,7 +98,7 @@ class DioClient {
         }
 
         return response;
-      } on Error catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -137,7 +137,7 @@ class DioClient {
         }
 
         return response;
-      } on Error catch (error) {
+      } on DioException  catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -176,7 +176,7 @@ class DioClient {
         }
 
         return response;
-      } on Error catch (error) {
+      } on DioException  catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
