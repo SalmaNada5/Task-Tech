@@ -5,13 +5,15 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
-import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
-import 'package:task_tech/presentation/screens/home/profile_page.dart';
+import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
+import 'package:task_tech/presentation/screens/home/models/top_user_model.dart';
+import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/profile_page.dart';
 import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
-import '../../widgets/home_widgets/category_item.dart';
-import '../../widgets/home_widgets/service_widget.dart';
+import '../../../widgets/home_widgets/category_item.dart';
+import '../../../widgets/home_widgets/service_widget.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,6 +24,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TopUserModel? topUserModel;
+  @override
+  void initState() async{
+    topUserModel = await TopUserController.getTopUsersFunc();
+    super.initState();
+  }
   int _currentIndex = 0;
   String userName = 'salma nada';
   String url =
@@ -185,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
                               itemCount: 4,
-                              itemBuilder: (ctx, n) => HighestRatedFreelancer(
+                              itemBuilder: (ctx, n) =>  HighestRatedFreelancer(
                                   userImgUrl: url,
                                   userName: 'userName',
                                   job: 'job',

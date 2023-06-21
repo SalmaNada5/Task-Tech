@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,11 +10,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-        bool status = false;
+  bool status = false;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsetsDirectional.only(
@@ -44,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontWeight: FontWeight.w500,
                         fontSize: MediaQuery.of(context).size.width * 0.05,
                         color: const Color.fromRGBO(22, 80, 105, 1)),
-                  )
+                  ),
                 ],
               ),
               SizedBox(
@@ -83,9 +81,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   color: const Color.fromRGBO(38, 50, 56, 1)),
                             ),
                             const Spacer(),
-                           /* SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.27,
-                            ),*/
                             Icon(
                               Icons.arrow_forward_ios,
                               color: const Color.fromRGBO(38, 50, 56, 1),
@@ -178,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: const Color.fromRGBO(38, 50, 56, 1)),
                 ),
               ),
-               Divider(
+              Divider(
                 height: MediaQuery.of(context).size.height * 0.043,
                 thickness: 1,
                 color: const Color.fromRGBO(224, 224, 224, 1),
@@ -198,23 +193,24 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: const Color.fromRGBO(38, 50, 56, 1)),
                     ),
                     const Spacer(),
-FlutterSwitch(
-            width: 50.0,
-            height: 25.0,
-            toggleSize: 18.0,
-            value: status,
-            inactiveColor : const Color.fromRGBO(224, 224, 224, 1),
-            activeColor: const Color.fromRGBO(22, 80, 105, 1),
-            borderRadius: 20.0,
-            onToggle: (val) {
-              setState(() {
-                status = val;
-              });
-            },
-          ),                  ],
+                    FlutterSwitch(
+                      width: 50.0,
+                      height: 25.0,
+                      toggleSize: 18.0,
+                      value: status,
+                      inactiveColor: const Color.fromRGBO(224, 224, 224, 1),
+                      activeColor: const Color.fromRGBO(22, 80, 105, 1),
+                      borderRadius: 20.0,
+                      onToggle: (val) {
+                        setState(() {
+                          status = val;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
-               Divider(
+              Divider(
                 height: MediaQuery.of(context).size.height * 0.043,
                 thickness: 1,
                 color: const Color.fromRGBO(224, 224, 224, 1),
@@ -246,8 +242,6 @@ FlutterSwitch(
                       color: const Color.fromRGBO(38, 50, 56, 1)),
                 ),
               ),
-
-              
             ]),
           ),
         ),

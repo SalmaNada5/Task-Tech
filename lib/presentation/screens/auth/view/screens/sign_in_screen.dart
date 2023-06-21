@@ -5,7 +5,7 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
-import 'package:task_tech/presentation/screens/home/home_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 import 'package:task_tech/presentation/widgets/unfocus.dart';

@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 ErrorModel errorModelFromJson(String str) => ErrorModel.fromJson(json.decode(str));
-
 String errorModelToJson(ErrorModel data) => json.encode(data.toJson());
 
 class ErrorModel {
