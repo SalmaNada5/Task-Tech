@@ -87,8 +87,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       Constants.navigateTo(
                           const VerificationScreen(fromSignup: false));
                     } else {
-                      //TODO wrong email message
-                      Constants.errorMessage();
+                      Constants.errorMessage(description: 'Wrong email address');
                     }
                   },
                   style: ButtonStyle(
