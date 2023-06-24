@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static final screenHeight =
-      MediaQuery.of(navigatorKey.currentContext!).size.height;
+      MediaQuery.sizeOf(navigatorKey.currentContext!).height;
   static final screenWidth =
-      MediaQuery.of(navigatorKey.currentContext!).size.width;
+      MediaQuery.sizeOf(navigatorKey.currentContext!).width;
 
   static void closeAppFunction() {
     if (Platform.isAndroid) {

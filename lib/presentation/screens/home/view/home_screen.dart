@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/add_post/create_post_screen.dart';
+import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/add_post/view/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
-import 'package:task_tech/presentation/screens/home/notifications_screen.dart';
-import 'package:task_tech/presentation/screens/home/profile_page.dart';
-import 'package:task_tech/presentation/screens/posts/posts_screen.dart';
+import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
+import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
+import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/profile_page.dart';
+import 'package:task_tech/presentation/screens/posts/view/posts_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
-import '../../widgets/home_widgets/category_item.dart';
-import '../../widgets/home_widgets/service_widget.dart';
+import '../../../widgets/home_widgets/category_item.dart';
+import '../../../widgets/home_widgets/service_widget.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +25,82 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    setupScrollController();
+    categoriesScrollController();
+    getAllTopUsers();
+    getPopularCateogries();
+    super.initState();
+  }
+
+  void getAllTopUsers() async {
+    try {
+      await TopUserController.getTopUsersFunc();
+      setState(() {});
+    } catch (e) {
+      logError('$e in getAllTopUsers');
+    }
+  }
+
+  void getPopularCateogries() async {
+    try {
+      await CategoryController.getPopularCategoriesFunc();
+      setState(() {});
+    } catch (e) {
+      logError('$e in getPopularCategoriesFunc');
+    }
+  }
+
+  bool isCatLoading = false;
+  bool isLoading = false;
+  bool photoReturned = false;
+  void setupScrollController() async {
+    TopUserController.scrollController.addListener(() async {
+      if (TopUserController.scrollController.position.atEdge &&
+          TopUserController.scrollController.position.pixels != 0) {
+        if (TopUserController.page >
+            (TopUserController.topUserModel.paginationResult?.numberOfPages ??
+                1)) {
+          return;
+        }
+        if (isLoading) {
+          return;
+        }
+        setState(() {
+          isLoading = true;
+        });
+        await TopUserController.getTopUsersFunc(dioLoading: false);
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+  }
+
+  void categoriesScrollController() async {
+    CategoryController.scrollController.addListener(() async {
+      if (CategoryController.scrollController.position.atEdge &&
+          CategoryController.scrollController.position.pixels != 0) {
+        if (CategoryController.page >
+            (CategoryController.categoryModel.paginationResult?.numberOfPages ??
+                1)) {
+          return;
+        }
+        if (isCatLoading) {
+          return;
+        }
+        setState(() {
+          isCatLoading = true;
+        });
+        await CategoryController.getPopularCategoriesFunc(dioLoading: false);
+        setState(() {
+          isCatLoading = false;
+        });
+      }
+    });
+  }
+
   int _currentIndex = 0;
   String userName = 'salma nada';
   String url =
@@ -29,14 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeScreen(),
     const ChatsScreen(),
     const AddPostScreen(),
-     const NotificationsScreen(),
-
     const PostsScreen(),
     const ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
-    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: _currentIndex == 0
@@ -53,11 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 28,
-                              backgroundImage: NetworkImage(
-                                'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                              ),
+                              backgroundImage: NetworkImage(url),
                             ),
                             const SizedBox(
                               width: 15,
@@ -80,7 +155,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const Spacer(),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Constants.navigateTo(
+                                    const NotificationsScreen());
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(6.0),
                                 child: Image.asset('images/notifications.png'),
@@ -105,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               Text(
-                                'Categories',
+                                'Popular Categories',
                                 style: GoogleFonts.poppins(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
@@ -128,15 +206,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: screenH * .2,
-                          child: ListView.builder(
+                          height: Constants.screenHeight * 0.2,
+                          child: SingleChildScrollView(
+                            controller: TopUserController.scrollController,
                             scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: 4,
-                            itemBuilder: (ctx, n) => CategoryItem(
-                              catName: 'Ui/UX Designer',
-                              imgUrl: url,
-                              numOfSkills: 1500,
+                            child: Row(
+                              children: [
+                                ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      CategoryController.categories.length,
+                                  itemBuilder: (ctx, i) => CategoryItem(
+                                    catName:
+                                        CategoryController.categories[i].name,
+                                    imgUrl:
+                                        CategoryController.categories[i].photo,
+                                    numOfSkills: CategoryController
+                                        .categories[i].nSkills,
+                                  ),
+                                ),
+                                isLoading
+                                    ? const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 4),
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ],
                             ),
                           ),
                         ),
@@ -148,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 0.3 * screenH,
+                          height: 0.3 * Constants.screenHeight,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -179,17 +277,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: screenH * 0.27,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: 4,
-                              itemBuilder: (ctx, n) => HighestRatedFreelancer(
-                                  userImgUrl: url,
-                                  userName: 'userName',
-                                  job: 'job',
-                                  rate: 4.9,
-                                  onPress: () {})),
+                          height: Constants.screenHeight * 0.27,
+                          child: SingleChildScrollView(
+                            controller: TopUserController.scrollController,
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: TopUserController.users.length,
+                                  itemBuilder: (ctx, i) {
+                                    return HighestRatedFreelancer(
+                                      userImgUrl:
+                                          TopUserController.users[i].photo,
+                                      userName: TopUserController.users[i].name,
+                                      job: TopUserController.users[i].job,
+                                      rate: TopUserController
+                                          .users[i].ratingsAverage
+                                          .toDouble(),
+                                      onPress: () {},
+                                    );
+                                  },
+                                ),
+                                isLoading
+                                    ? const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 4),
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : const SizedBox.shrink()
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),

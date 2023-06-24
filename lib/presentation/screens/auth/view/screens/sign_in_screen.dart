@@ -5,7 +5,7 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
-import 'package:task_tech/presentation/screens/home/home_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 import 'package:task_tech/presentation/widgets/unfocus.dart';
@@ -128,7 +128,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                   setState(() {
                                     _value = value!;
                                   });
-                                  
                                 },
                                 side:
                                     const BorderSide(color: Color(0xffB1B1B1)),
@@ -163,9 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          
                           onPressed: () async {
-                           
                             if (_formKey.currentState!.validate()) {
                               AuthModel? authModel;
                               authModel = await AuthController.loginFunc(
@@ -174,8 +171,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                 return Constants.errorMessage(
                                     description: 'Invalid email or password!');
                               } else {
-                                 SharedPreferences pref =await SharedPreferences.getInstance();
-                                 pref.setString("email", emailController.text);
+                                SharedPreferences pref =
+                                    await SharedPreferences.getInstance();
+                                pref.setString("token", authModel.token!);
                                 return Constants.navigateTo(const HomeScreen(),
                                     pushAndRemoveUntil: true);
                               }

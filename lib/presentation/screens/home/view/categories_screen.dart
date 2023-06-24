@@ -1,15 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
 
-import '../../../constants/colors.dart';
-import '../../../constants/text_styles.dart';
+import '../../../../constants/colors.dart';
+import '../../../../constants/text_styles.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenH = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -41,18 +43,9 @@ class CategoriesScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Popular',
-                style: titleStyle.copyWith(
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
                 padding: const EdgeInsets.all(10),
-                height: 0.4 * screenH,
+                height: 0.4 * Constants.screenHeight,
                 child: GridView.count(
                   crossAxisCount: 2,
                   mainAxisSpacing: 18,
@@ -60,39 +53,10 @@ class CategoriesScreen extends StatelessWidget {
                   childAspectRatio: 1.3,
                   shrinkWrap: true,
                   children: List.generate(
-                    4,
-                    (index) => const ReusableCategoryItem(
-                      url:
-                          'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                      categoryName: 'Software Engineer',
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                'Trending',
-                style: titleStyle.copyWith(
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                height: 0.5 * screenH,
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 18,
-                  crossAxisSpacing: 28,
-                  childAspectRatio: 1.2,
-                  shrinkWrap: true,
-                  children: List.generate(
-                    4,
-                    (index) => const ReusableCategoryItem(
-                      url:
-                          'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                      categoryName: 'Software Engineer',
+                    CategoryController.categories.length,
+                    (index) => ReusableCategoryItem(
+                      url: CategoryController.categories[index].photo,
+                      categoryName: CategoryController.categories[index].name,
                     ),
                   ),
                 ),
@@ -128,8 +92,17 @@ class ReusableCategoryItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 20,
-            backgroundImage: NetworkImage(url),
+            radius: 30,
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: url,
+                errorWidget: (context, url, error) {
+                  return Image.asset(
+                    'images/placeholder.jpg',
+                  );
+                },
+              ),
+            ),
           ),
           const SizedBox(
             height: 10,

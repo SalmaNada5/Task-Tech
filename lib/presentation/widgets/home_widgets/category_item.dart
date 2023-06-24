@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,8 +19,17 @@ class CategoryItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(imgUrl),
             radius: 28,
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: imgUrl,
+                errorWidget: (context, url, error) {
+                  return Image.asset(
+                    'images/placeholder.jpg',
+                  );
+                },
+              ),
+            ),
           ),
           Text(
             catName,
