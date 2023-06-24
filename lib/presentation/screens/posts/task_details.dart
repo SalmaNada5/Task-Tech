@@ -114,7 +114,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               Text(
                 'Dlivery Time',
-                style: fieldTextStyle,
+                style: headStyle,
               ),
               Text(
                 widget.deliveryTime,
@@ -129,7 +129,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               Text(
                 'Comments',
-                style: fieldTextStyle,
+                style: headStyle,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.4,
@@ -215,7 +215,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         padding: const EdgeInsets.all(8.0),
         color: Colors.white,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircleAvatar(
               backgroundImage: NetworkImage(
@@ -227,13 +228,13 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               width: 10,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.75,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: TextFormField(
                 minLines: 1,
                 maxLines: 5,
                 controller: _commentController,
                 style: GoogleFonts.poppins(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: Colors.black,
                 ),
                 decoration: InputDecoration(
@@ -242,6 +243,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     fontSize: 12,
                     color: const Color(0xff7C7C7C),
                   ),
+                  contentPadding: const EdgeInsets.all(8),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
@@ -271,30 +273,26 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   _commentController.text = value.toString();
                   _commentController.selection = TextSelection.collapsed(
                       offset: _commentController.text.length);
-                  if (value.isNotEmpty) {
-                    setState(() {
-                      showIcon = true;
-                    });
-                  } else {
-                    setState(() {
-                      showIcon = false;
-                    });
-                  }
+
+                  setState(() {
+                    value.isNotEmpty ? showIcon = true : showIcon = false;
+                  });
                 },
               ),
             ),
+            const SizedBox(
+              width: 10,
+            ),
             showIcon
-                ? IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.arrow_right,
+                ? Text(
+                    'Post',
+                    style: TextStyle(
                       color: primaryLightColor,
-                      size: 40,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   )
-                : const SizedBox(
-                    width: 10,
-                  ),
+                : const SizedBox.shrink(),
           ],
         ),
       ),

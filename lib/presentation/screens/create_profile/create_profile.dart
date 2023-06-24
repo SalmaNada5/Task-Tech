@@ -2,19 +2,25 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_model.dart';
 import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/default_form_field.dart';
 
+import 'package:geolocator/geolocator.dart';
 
+import '../../../constants/consts.dart';
 
-
+///////////////
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -26,7 +32,7 @@ class CreateProfile extends StatefulWidget {
 class _CreateProfileState extends State<CreateProfile> {
   File? _image;
   AssetImage image = const AssetImage('images/picture.png');
-  String? dropDownValue;
+  String? gender
   String imagepath = "";
   late File imagefile;
   final _picker = ImagePicker();
@@ -34,55 +40,101 @@ class _CreateProfileState extends State<CreateProfile> {
   late GoogleMapController mapController;
 
   // ignore: unused_field
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  String? _currentAddress;
+  Position? _currentPosition;
+   late AnimationController controller;
 
-  // ignore: unused_element
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState(() {
+        _currentAddress =
+            '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
   }
 
   Future<void> _openImagePicker() async {
     final XFile? pickedImage =
         await _picker.pickImage(source: ImageSource.gallery);
-       // final String path = await getApplicationDocumentsDirectory().path;
 
-// copy the file to a new path
-//final File newImage = await image.copy('$path/image1.png');
     if (pickedImage != null) {
       setState(() {
         _image = File(pickedImage.path);
       });
     }
   }
-   Future cropImage() async {
-    // ignore: unused_local_variable
+
+  Future cropImage() async {
     CroppedFile? croppedfile = await ImageCropper().cropImage(
-        sourcePath: imagepath,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        uiSettings: [
+      sourcePath: imagepath,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Cropper',
             toolbarColor: Colors.deepOrange,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false),
-       
         WebUiSettings(
           context: context,
         ),
       ],
-     
-      );}
+    );
+  }
 
-   
-
-  late AnimationController controller;
   @override
   void initState() {
     super.initState();
@@ -95,24 +147,13 @@ class _CreateProfileState extends State<CreateProfile> {
     var ageController = TextEditingController();
     var locationController = TextEditingController();
     var phoneController = TextEditingController();
+    var genderController = TextEditingController();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     List<String> list = <String>['Male', 'Female'];
 
-    /*   final Completer<GoogleMapController> mapcontroller =
-        Completer<GoogleMapController>();
+  
 
-    const CameraPosition kGooglePlex = CameraPosition(
-      target: LatLng(37.42796133580664, -122.085749655962),
-      zoom: 14.4746,
-    ); */
-
-    Completer<GoogleMapController> mapcontroller = Completer();
-
-    const LatLng center = LatLng(45.521563, -122.677433);
-
-    void onMapCreated(GoogleMapController controller) {
-      mapcontroller.complete(controller);
-    }
+    
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -120,10 +161,10 @@ class _CreateProfileState extends State<CreateProfile> {
       body: Center(
         child: Padding(
           padding: EdgeInsetsDirectional.only(
-            start: MediaQuery.of(context).size.width * 0.03,
-            end: MediaQuery.of(context).size.width * 0.03,
-            bottom: MediaQuery.of(context).size.height * 0.03,
-            top: MediaQuery.of(context).size.height * 0.03),
+              start: MediaQuery.of(context).size.width * 0.03,
+              end: MediaQuery.of(context).size.width * 0.03,
+              bottom: MediaQuery.of(context).size.height * 0.03,
+              top: MediaQuery.of(context).size.height * 0.03),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -136,7 +177,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     backgroundColor: Colors.grey[600],
                     backgroundImage:
                         _image != null ? FileImage(_image!, scale: 0.5) : null,
-
+      
                     //image,
                   ),
                 ),
@@ -185,7 +226,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Text(
+                        Text(
                           'Name *',
                           style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -207,7 +248,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                         Text(
+                        Text(
                           'Birth Date',
                           style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -251,7 +292,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                   Text(
+                                  Text(
                                     'Gender',
                                     style: GoogleFonts.poppins(
                                         fontSize: 16,
@@ -260,8 +301,9 @@ class _CreateProfileState extends State<CreateProfile> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    padding: const EdgeInsetsDirectional.only(
+                                Container(
+                                  width: Constants.screenWidth * 0.5,
+                                  padding: const EdgeInsetsDirectional.only(
                                         start: 12, end: 12),
                                     height: 40,
                                     decoration: BoxDecoration(
@@ -271,38 +313,44 @@ class _CreateProfileState extends State<CreateProfile> {
                                               227, 227, 227, 1),
                                           style: BorderStyle.solid),
                                     ),
-                                    child: DropdownButton<String>(
+                                  child:
+                                          DropdownButton<String>(
                                         underline:
                                             Container(), //remove underline
                                         borderRadius:
                                             BorderRadius.circular(8.6),
                                         alignment: AlignmentDirectional.center,
                                         isExpanded: true,
-                                        items: list
-                                            .map<DropdownMenuItem<String>>(
-                                                (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                            ),
-                                          );
-                                        }).toList(),
-                                        icon: const Icon(
+                                        icon:   const Icon(
                                           Icons.keyboard_arrow_down_outlined,
                                           size: 20,
                                           color:
                                               Color.fromRGBO(197, 197, 197, 1),
                                         ),
-                                        value: dropDownValue,
+                                        items: list
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                           
+                                            child: Text(
+                                              value,
+                                            ),
+                                          );
+                                        }).toList(),
+                                       
+                                        value: gender,
                                         onChanged: (String? value) {
                                           setState(() {
-                                            dropDownValue = value!;
+                                            gender = value!;
                                             //dropDownValue;
-                                            debugPrint(dropDownValue);
+                                            debugPrint(gender);
                                           });
-                                        }),
-                                  ),
+                                        })
+                                        ,) ,
+                                   
+                                     
+                                  
                                 ],
                               ),
                             ),
@@ -314,7 +362,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                   Text(
+                                  Text(
                                     'Age',
                                     style: GoogleFonts.poppins(
                                         fontSize: 16,
@@ -342,7 +390,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                         Text(
+                        Text(
                           'Location',
                           style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -354,53 +402,11 @@ class _CreateProfileState extends State<CreateProfile> {
                             controller: locationController,
                             type: TextInputType.text,
                             suffix: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                            content: Stack(
-                                              children: [
-                                                Positioned.fill(
-                                                  child: GoogleMap(
-                                                    onMapCreated: onMapCreated,
-                                                    initialCameraPosition:
-                                                        const CameraPosition(
-                                                      target: center,
-                                                      zoom: 11.0,
-                                                    ),
-                                                  ),
-                                                )
-
-                                                /*       Positioned(
-                                                    right: -40.0,
-                                                    top: -40,
-                                                    child: InkResponse(
-                                                      onTap: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: GoogleMap(
-                                                        mapType: MapType.hybrid,
-                                                        initialCameraPosition:
-                                                            kGooglePlex,
-                                                        onMapCreated:
-                                                            (GoogleMapController
-                                                                controller) {
-                                                          mapcontroller
-                                                              .complete(
-                                                                  controller);
-                                                        },
-                                                      ),
-                                                    )) */
-                                              ],
-                                            ),
-                                          ));
-                                },
+                                onPressed: _getCurrentPosition,
                                 icon: const Icon(Icons.location_on_outlined)),
                             validate: (value) {
                               value = locationController.text;
-
+      
                               if (value.isEmpty) {
                                 return 'Location must not be empty';
                               } else {
@@ -410,7 +416,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                         Text(
+                        Text(
                           'Phone Number',
                           style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -441,16 +447,30 @@ class _CreateProfileState extends State<CreateProfile> {
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: MaterialButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (formKey.currentState!.validate()) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SkillsScreen()));
+                                    CreateProfileModel? profileModel;
+                                    profileModel = await ProfileController.createProfileFunc(
+                                      birthDate: dateController.text,
+                                      age: ageController.text,
+                                      gender: gender,
+                                      location: locationController.text,
+                                      phoneNumber: phoneController.text
+
+                                    );
+                                   /* if (profileModel == null) {
+                                return Constants.errorMessage(
+                                    description: 'Invalid email or password!');
+                              } else {
+                                 SharedPreferences pref =await SharedPreferences.getInstance();
+                                 pref.setString("email", emailController.text);
+                                return Constants.navigateTo(const SkillsScreen(),
+                                    pushAndRemoveUntil: true);
+                              }*/
+                                 
                                   }
                                 },
-                                child:  Text(
+                                child: Text(
                                   'Next',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20, color: Colors.white),

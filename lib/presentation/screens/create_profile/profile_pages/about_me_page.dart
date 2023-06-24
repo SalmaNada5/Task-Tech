@@ -89,78 +89,73 @@ class _AboutmePageState extends State<AboutmePage> {
               height: 16,
             ),
             Center(
-              child: Padding(
-                padding:  EdgeInsetsDirectional.only(
-                  start:MediaQuery.of(context).size.width * 0.03,
-                        end: MediaQuery.of(context).size.width * 0.03),
-                child: Container(
-                  height: 78,
-                  width: MediaQuery.of(context).size.width*0.9,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color.fromRGBO(255, 255, 255, 1),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Color.fromRGBO(224, 224, 224, 0.9),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 2))
-                      ]),
-                  child: Padding(
-                    padding:  EdgeInsetsDirectional.only(
-                      start: MediaQuery.of(context).size.width*0.02,
-                       end:MediaQuery.of(context).size.width*0.02),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                            radius: 23,
-                            backgroundImage: AssetImage('images/suez canal.png')),
-                         SizedBox(
-                          width: MediaQuery.of(context).size.width*0.02,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  [
-                            Text(
-                              'Computer Science',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                  color: const Color.fromRGBO(13, 13, 38, 1)),
-                            ),
-                            Text(
-                              'Bachelor',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 13,
-                                  color: const Color.fromRGBO(13, 13, 38, 1)),
-                            )
-                          ],
-                        ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  [
-                            Text(
-                              'Suez canal university',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  color: const Color.fromRGBO(13, 13, 38, 1)),
-                            ),
-                            Text(
-                              '2019 - 2023',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 13,
-                                  color: const Color.fromRGBO(13, 13, 38, 1)),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+              child: Container(
+                height: 78,
+                width: 371,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Color.fromRGBO(224, 224, 224, 0.9),
+                          spreadRadius: 3,
+                          blurRadius: 7,
+                          offset: Offset(0, 2))
+                    ]),
+                child: const Padding(
+                  padding: EdgeInsetsDirectional.only(start: 10, end: 10),
+                  child: Row(
+                    children: [
+                       CircleAvatar(
+                          radius: 23,
+                          backgroundImage: AssetImage('images/suez canal.png')),
+                       SizedBox(
+                        width: 14,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Computer Science',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: Color.fromRGBO(13, 13, 38, 1)),
+                          ),
+                          Text(
+                            'Bachelor',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                                color: Color.fromRGBO(13, 13, 38, 1)),
+                          )
+                        ],
+                      ),
+                       SizedBox(
+                        width: 36,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:  [
+                          Text(
+                            'Suez canal university',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: Color.fromRGBO(13, 13, 38, 1)),
+                          ),
+                          Text(
+                            '2019 - 2023',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                                color: Color.fromRGBO(13, 13, 38, 1)),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),

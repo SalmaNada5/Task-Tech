@@ -42,16 +42,8 @@ class ProfileScreenState extends State<ProfileScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                   // SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
-                    IconButton(
-                      
-                      icon:
-                          Image.asset('icons/bi_arrow-left-circle-fill.png'),
-                      iconSize: 40,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
+                    
                    const Center(
                       child:  CircleAvatar(
                         radius: 65,

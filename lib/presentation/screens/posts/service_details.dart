@@ -98,7 +98,7 @@ class ServiceDetailsPage extends StatelessWidget {
                     ),
                     Text(
                       serviceName,
-                      style: fieldTextStyle,
+                      style: headStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),
