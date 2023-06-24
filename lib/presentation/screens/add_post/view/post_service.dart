@@ -4,9 +4,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:task_tech/presentation/screens/add_post/reusable_form.dart';
+import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
 
-import '../../../constants/text_styles.dart';
+import '../../../../constants/text_styles.dart';
 
 class PostService extends StatefulWidget {
   const PostService({super.key});
@@ -29,6 +29,7 @@ class _PostServiceState extends State<PostService> {
   @override
   Widget build(BuildContext context) {
     return ReusablePostForm(
+      
       taskNameController: _taskNameController,
       descriptionController: _descriptionController,
       deliveryDaysController: _deliveryDaysController,

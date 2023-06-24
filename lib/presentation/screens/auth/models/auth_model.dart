@@ -1,49 +1,36 @@
 import 'dart:convert';
-
 AuthModel authModelFromJson(String str) => AuthModel.fromJson(json.decode(str));
-
 String authModelToJson(AuthModel data) => json.encode(data.toJson());
-
 class AuthModel {
   final String? status;
   final String? token;
   final Data? data;
-
   AuthModel({
     this.status,
     this.token,
     this.data,
   });
-
   factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
         status: json["status"],
         token: json["token"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
-
   Map<String, dynamic> toJson() => {
         "status": status,
         "token": token,
         "data": data?.toJson(),
       };
 }
-
 class Data {
   final User? user;
-
   Data({
     this.user,
   });
-
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         user: json["user"] == null ? null : User.fromJson(json["user"]),
       );
-
   Map<String, dynamic> toJson() => {
-        "user": user?.toJson(),
-      };
-}
-
+        "user": user?.toJson(),};}
 class User {
   final List<String>? skills;
   final String? photo;
@@ -72,7 +59,6 @@ class User {
   final int? minimum;
   final DateTime? createdAt;
   final String? userId;
-
   User({
     this.skills,
     this.photo,

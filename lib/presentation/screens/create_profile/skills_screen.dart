@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/filter_chip_widget.dart';
+import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 
-import '../../../constants/colors.dart';
 import 'bio_screen.dart';
 
 class SkillsScreen extends StatefulWidget {
@@ -14,6 +14,40 @@ class SkillsScreen extends StatefulWidget {
 }
 
 class SkillsScreenState extends State<SkillsScreen> {
+  List<Widget> chipList = [
+    const FilterChipWidget(
+      chipName: 'UI/UX',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Technology',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Strategy',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Interfaces',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Programming',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Writing',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Web design',
+      isSelected: false,
+    ),
+    const FilterChipWidget(
+      chipName: 'Art & illustration',
+      isSelected: false,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
      //String chiptext ='';
@@ -25,21 +59,27 @@ class SkillsScreenState extends State<SkillsScreen> {
       appBar: MyAppbar(percent: 40),
       body: Center(
         child: Padding(
-          padding:  EdgeInsetsDirectional.only(
-            start: MediaQuery.of(context).size.width * 0.03,
-            end: MediaQuery.of(context).size.width * 0.03,
-            bottom: MediaQuery.of(context).size.height * 0.03,
-            top: MediaQuery.of(context).size.height * 0.03),
+          padding: EdgeInsetsDirectional.only(
+              start: Constants.screenWidth * 0.03,
+              end: Constants.screenWidth * 0.03,
+              bottom: Constants.screenHeight * 0.03,
+              top: Constants.screenHeight * 0.03),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Image(
-                    image: AssetImage('images/Career progress-amico 1.png')),
-                 Text(
+                Center(
+                  child: Image(
+                    image:
+                        const AssetImage('images/Career progress-amico 1.png'),
+                    height: Constants.screenHeight * 0.4,
+                  ),
+                ),
+                Text(
                   'Interest & Skills',
                   style: GoogleFonts.poppins(
-                      fontSize: 20, color: const Color.fromRGBO(124, 124, 124, 1)),
+                      fontSize: 20,
+                      color: const Color.fromRGBO(124, 124, 124, 1)),
                 ),
                 const SizedBox(
                   height: 10,
@@ -51,22 +91,10 @@ class SkillsScreenState extends State<SkillsScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                const Wrap(
-                  
-                  //crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 10,
-                  children:  <Widget>[
-                    FilterChipWidget(chipName: 'UI/UX'),
-                    FilterChipWidget(chipName: 'Technology'),
-                    FilterChipWidget(chipName: 'Strategy'),
-                    FilterChipWidget(chipName: 'Interfaces'),
-                    FilterChipWidget(chipName: 'Programming'),
-                    FilterChipWidget(chipName: 'Writing'),
-                    FilterChipWidget(chipName: 'Web design'),
-                    FilterChipWidget(chipName: 'Art & illustration'),
-                    //addchip==true? FilterChipWidget(chipName: chiptext):Container(),
-                      
-                  ],
+                
+                Wrap(
+                  spacing: 8,
+                  children: chipList,
                 ),
                 const SizedBox(
                   height: 20,
@@ -105,7 +133,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                     },*/
                     controller: skillController,
                     keyboardType: TextInputType.text,
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                         border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(8.6)),
@@ -116,6 +144,17 @@ class SkillsScreenState extends State<SkillsScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                             color: const Color.fromRGBO(184, 184, 184, 1))),
+                    onFieldSubmitted: (value) => {
+                      if (value != '')
+                        {
+                          setState(() {
+                            chipList.add(FilterChipWidget(
+                              chipName: value,
+                              isSelected: true,
+                            ));
+                          }),
+                        }
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -123,8 +162,8 @@ class SkillsScreenState extends State<SkillsScreen> {
                 ),
                 Center(
                   child: Container(
-                    width: 345,
-                    height: 55,
+                    padding: EdgeInsets.symmetric(
+                        vertical: 2, horizontal: Constants.screenWidth * 0.3),
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(22, 80, 105, 1),
                       borderRadius: BorderRadius.circular(7.7),
@@ -136,9 +175,10 @@ class SkillsScreenState extends State<SkillsScreen> {
                               MaterialPageRoute(
                                   builder: (context) => const BioScreen()));
                         },
-                        child:  Text(
+                        child: Text(
                           'Next',
-                          style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
+                          style: GoogleFonts.poppins(
+                              fontSize: 20, color: Colors.white),
                         )),
                   ),
                 ),
@@ -153,28 +193,33 @@ class SkillsScreenState extends State<SkillsScreen> {
 
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
-  const FilterChipWidget({Key? key, required this.chipName}) : super(key: key);
+  final bool isSelected;
+  const FilterChipWidget(
+      {Key? key, required this.chipName, required this.isSelected})
+      : super(key: key);
 
   @override
-  FilterChipWidgetState createState() => FilterChipWidgetState();
+  FilterChipWidgetState createState() =>
+      FilterChipWidgetState(isSelected: isSelected);
 }
 
 class FilterChipWidgetState extends State<FilterChipWidget> {
-  var _isSelected = false;
   late Icon icon;
-
+  bool isSelected = false;
+  FilterChipWidgetState({required isSelected});
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-      padding: const EdgeInsetsDirectional.only(top:3,bottom: 3,start: 3,end: 3),
+      padding:
+          const EdgeInsetsDirectional.only(top: 3, bottom: 3, start: 3, end: 3),
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.chipName),
-           SizedBox(
-            width:MediaQuery.of(context).size.width * 0.01,
+          SizedBox(
+            width: Constants.screenWidth * 0.01,
           ),
-          icon = _isSelected
+          icon = isSelected
               ? Icon(Icons.check, color: white, size: 22, weight: 400)
               : const Icon(Icons.add,
                   color: Color.fromRGBO(166, 166, 166, 0.8),
@@ -182,11 +227,10 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
                   weight: 400)
         ],
       ),
-      
-      selected: _isSelected,
-      onSelected: (isSelected) {
+      selected: isSelected,
+      onSelected: (selected) {
         setState(() {
-          _isSelected = isSelected;
+          isSelected = selected;
         });
       },
       backgroundColor: white,
@@ -196,14 +240,12 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           width: 1,
           color: Color.fromRGBO(217, 217, 217, 1),
           style: BorderStyle.solid),
-     
-
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       selectedColor: primaryLightColor,
       labelStyle: GoogleFonts.poppins(
-        color: _isSelected ? white : const Color.fromRGBO(166, 166, 166, 0.8),
+        color: isSelected ? white : const Color.fromRGBO(166, 166, 166, 0.8),
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),

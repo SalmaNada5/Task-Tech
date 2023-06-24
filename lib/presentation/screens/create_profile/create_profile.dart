@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,11 +8,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_model.dart';
-import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/default_form_field.dart';
 
@@ -32,7 +30,7 @@ class CreateProfile extends StatefulWidget {
 class _CreateProfileState extends State<CreateProfile> {
   File? _image;
   AssetImage image = const AssetImage('images/picture.png');
-  String? gender
+  String? gender;
   String imagepath = "";
   late File imagefile;
   final _picker = ImagePicker();
@@ -99,6 +97,8 @@ class _CreateProfileState extends State<CreateProfile> {
       debugPrint(e);
     });
   }
+ // final LatLng _center = const LatLng(45.521563, -122.677433);
+
 
   Future<void> _openImagePicker() async {
     final XFile? pickedImage =

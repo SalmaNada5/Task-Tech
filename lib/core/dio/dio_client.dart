@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/dio/error_model.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/core/internet/internet_info.dart';
-
-import '../errors/logger.dart';
 
 class DioClient {
   final InternetInfo _internetInfo = InternetInfoImpl();
@@ -11,13 +10,13 @@ class DioClient {
 
   final Dio _dio = Dio(
     BaseOptions(
-      connectTimeout: const Duration(seconds: 10), // 10 seconds
-      receiveTimeout: const Duration(seconds: 10), // 10 seconds
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
     ),
   )..interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       logInfo(options.uri.toString());
       logInfo(options.headers.toString());
-      logInfo(options.data.toString()); // BODY
+      logInfo(options.data.toString());
       return handler.next(options);
     }, onResponse: (response, handler) {
       logSuccess("RESPONSE_CODE ${response.statusCode}");
@@ -59,9 +58,8 @@ class DioClient {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
-        //response.data = response.body
         return response;
-      } on Error catch (error) {
+      } on DioException  catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -100,7 +98,7 @@ class DioClient {
         }
 
         return response;
-      } on Error catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -139,7 +137,7 @@ class DioClient {
         }
 
         return response;
-      } on Error catch (error) {
+      } on DioException  catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -178,7 +176,7 @@ class DioClient {
         }
 
         return response;
-      } on Error catch (error) {
+      } on DioException  catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }

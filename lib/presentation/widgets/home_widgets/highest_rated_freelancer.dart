@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HighestRatedFreelancer extends StatelessWidget {
   const HighestRatedFreelancer(
@@ -16,15 +18,17 @@ class HighestRatedFreelancer extends StatelessWidget {
   final Function()? onPress;
   @override
   Widget build(BuildContext context) {
-    double screenW = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: 0.3 * screenW,
+      width: 0.3 * Constants.screenWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(userImgUrl),
-            radius: 20,
+            child: CachedNetworkImage(
+                imageUrl: userImgUrl,
+                errorWidget: (context, url, error) {
+                  return Image.asset('images/default person.png');
+                }),
           ),
           const SizedBox(
             height: 5,
