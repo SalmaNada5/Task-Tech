@@ -16,6 +16,7 @@ class ReusablePostForm extends StatefulWidget {
     required this.stController,
     required this.difFields,
     required this.firstLabel,
+    this.onPressed,
   });
   final TextEditingController taskNameController;
   final TextEditingController descriptionController;
@@ -25,6 +26,7 @@ class ReusablePostForm extends StatefulWidget {
   final TextEditingController stController;
   final Widget difFields;
   final String firstLabel;
+  final void Function()? onPressed;
 
   @override
   State<ReusablePostForm> createState() => _ReusablePostFormState();
@@ -314,6 +316,9 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       debugPrint('correct');
+                    }
+                    if (widget.onPressed != null) {
+                      widget.onPressed!();
                     }
                   },
                   style: ButtonStyle(

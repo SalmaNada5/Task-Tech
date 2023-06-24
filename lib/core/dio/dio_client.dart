@@ -59,7 +59,7 @@ class DioClient {
           Constants.hideLoadingOrNavBack();
         }
         return response;
-      } on DioException  catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -137,7 +137,7 @@ class DioClient {
         }
 
         return response;
-      } on DioException  catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -176,7 +176,7 @@ class DioClient {
         }
 
         return response;
-      } on DioException  catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -190,4 +190,22 @@ class DioClient {
       return "No internet connection";
     }
   }
+  //? Data will be sent to the server
+  FormData formDataFunc(Map<String, dynamic> map) => FormData.fromMap(map);
+
+  //? The file will be sent to the server inside the form data
+  Future<MultipartFile> fileToUploadFunc(String path, String filename) async =>
+      await MultipartFile.fromFile(path, filename: filename);
 }
+
+
+// final formData = FormData.fromMap({
+//   'name': 'dio',
+//   'date': DateTime.now().toIso8601String(),
+//   'file': await MultipartFile.fromFile('./text.txt', filename: 'upload.txt'),
+//   'files': [
+//     await MultipartFile.fromFile('./text1.txt', filename: 'text1.txt'),
+//     await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+//   ]
+// });
+// final response = await dio.post('/info', data: formData);

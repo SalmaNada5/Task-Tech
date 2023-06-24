@@ -56,9 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   bool photoReturned = false;
   void setupScrollController() async {
-    TopUserController.scrollController.addListener(() async {
-      if (TopUserController.scrollController.position.atEdge &&
-          TopUserController.scrollController.position.pixels != 0) {
+    TopUserController.highestRatedScrollController.addListener(() async {
+      if (TopUserController.highestRatedScrollController.position.atEdge &&
+          TopUserController.highestRatedScrollController.position.pixels != 0) {
         if (TopUserController.page >
             (TopUserController.topUserModel.paginationResult?.numberOfPages ??
                 1)) {
@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: Constants.screenHeight * 0.2,
                           child: SingleChildScrollView(
-                            controller: TopUserController.scrollController,
+                            controller: CategoryController.scrollController,
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
@@ -279,7 +279,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: Constants.screenHeight * 0.27,
                           child: SingleChildScrollView(
-                            controller: TopUserController.scrollController,
+                            controller:
+                                TopUserController.highestRatedScrollController,
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
