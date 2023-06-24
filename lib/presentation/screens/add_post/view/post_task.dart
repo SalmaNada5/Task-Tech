@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/add_post/reusable_form.dart';
+import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
 
-import '../../../constants/text_styles.dart';
+import '../../../../constants/text_styles.dart';
 
 class PostTask extends StatefulWidget {
   const PostTask({super.key});

@@ -50,9 +50,6 @@ class _CreateProfileState extends State<CreateProfile> {
 
  // final LatLng _center = const LatLng(45.521563, -122.677433);
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
 
   Future<void> _openImagePicker() async {
     final XFile? pickedImage =

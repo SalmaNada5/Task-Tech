@@ -1,23 +1,24 @@
+
 import 'dart:convert';
 
-TopUserModel topUserFromJson(String str) => TopUserModel.fromJson(json.decode(str));
+RecentlyPostsModel recentlyPostsModelFromJson(String str) => RecentlyPostsModel.fromJson(json.decode(str));
 
-String topUserToJson(TopUserModel data) => json.encode(data.toJson());
+String recentlyPostsModelToJson(RecentlyPostsModel data) => json.encode(data.toJson());
 
-class TopUserModel {
+class RecentlyPostsModel {
     String? status;
     int? results;
     PaginationResult? paginationResult;
     Data? data;
 
-    TopUserModel({
+    RecentlyPostsModel({
          this.status,
          this.results,
          this.paginationResult,
          this.data,
     });
 
-    factory TopUserModel.fromJson(Map<String, dynamic> json) => TopUserModel(
+    factory RecentlyPostsModel.fromJson(Map<String, dynamic> json) => RecentlyPostsModel(
         status: json["status"],
         results: json["results"],
         paginationResult: PaginationResult.fromJson(json["paginationResult"]),
@@ -33,62 +34,46 @@ class TopUserModel {
 }
 
 class Data {
-    List<User> users;
+    List<Post> posts;
 
     Data({
-        required this.users,
+        required this.posts,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+        posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "users": List<dynamic>.from(users.map((x) => x.toJson())),
+        "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
     };
 }
 
-class User {
-    List<dynamic> skills;
-    String photo;
-    String job;
-    double ratingsAverage;
-    int ratingsQuantity;
+class Post {
     String id;
-    String name;
-    String userId;
+    String description;
+    dynamic user;
+    String postId;
 
-    User({
-        required this.skills,
-        required this.photo,
-        required this.job,
-        required this.ratingsAverage,
-        required this.ratingsQuantity,
+    Post({
         required this.id,
-        required this.name,
-        required this.userId,
+        required this.description,
+        this.user,
+        required this.postId,
     });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
-        skills: List<dynamic>.from(json["skills"].map((x) => x)),
-        photo: json["photo"],
-        job: json["job"],
-        ratingsAverage: json["ratingsAverage"]?.toDouble(),
-        ratingsQuantity: json["ratingsQuantity"],
+    factory Post.fromJson(Map<String, dynamic> json) => Post(
         id: json["_id"],
-        name: json["name"],
-        userId: json["id"],
+        description: json["description"],
+        user: json["user"],
+        postId: json["id"],
     );
 
     Map<String, dynamic> toJson() => {
-        "skills": List<dynamic>.from(skills.map((x) => x)),
-        "photo": photo,
-        "job": job,
-        "ratingsAverage": ratingsAverage,
-        "ratingsQuantity": ratingsQuantity,
         "_id": id,
-        "name": name,
-        "id": userId,
+        "description": description,
+        "user": user,
+        "id": postId,
     };
 }
 
@@ -96,22 +81,26 @@ class PaginationResult {
     int currentPage;
     int limit;
     int numberOfPages;
+    int next;
 
     PaginationResult({
         required this.currentPage,
         required this.limit,
         required this.numberOfPages,
+        required this.next,
     });
 
     factory PaginationResult.fromJson(Map<String, dynamic> json) => PaginationResult(
         currentPage: json["currentPage"],
         limit: json["limit"],
         numberOfPages: json["numberOfPages"],
+        next: json["next"],
     );
 
     Map<String, dynamic> toJson() => {
         "currentPage": currentPage,
         "limit": limit,
         "numberOfPages": numberOfPages,
+        "next": next,
     };
 }

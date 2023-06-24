@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/posts/view/service_details.dart';
 
 class ReusablePostWidget extends StatelessWidget {
   const ReusablePostWidget(
@@ -9,11 +12,13 @@ class ReusablePostWidget extends StatelessWidget {
       required this.profileImgUrl,
       required this.accountName,
       required this.postDescription,
-      required this.postTime});
+      required this.postTime,
+      required this.dropDownVal});
   final String profileImgUrl;
   final String accountName;
   final String postDescription;
   final String postTime;
+  final String dropDownVal;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,8 +34,14 @@ class ReusablePostWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(profileImgUrl),
+              ClipOval(
+                child: CircleAvatar(
+                  child: CachedNetworkImage(
+                      imageUrl: profileImgUrl,
+                      errorWidget: (context, url, error) {
+                        return Image.asset('images/placeholder.jpg');
+                      }),
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -38,7 +49,7 @@ class ReusablePostWidget extends StatelessWidget {
               Text(
                 accountName,
                 style: GoogleFonts.poppins(
-                  fontSize: 12,
+                  fontSize: 14,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                 ),
@@ -71,7 +82,13 @@ class ReusablePostWidget extends StatelessWidget {
             children: [
               const Spacer(),
               ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, 'taskDetails'),
+                onPressed: () {
+                  if (dropDownVal == 'Tasks') {
+                    Navigator.pushNamed(context, 'taskDetails');
+                  } else {
+                    Constants.navigateTo(const ServiceDetailsPage());
+                  }
+                },
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(primaryLightColor),
@@ -80,7 +97,7 @@ class ReusablePostWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(6.0),
                   child: Text(
-                    'View Task',
+                    dropDownVal == "Tasks" ? 'View Task' : 'View Service',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,

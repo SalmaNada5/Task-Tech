@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/posts/comment.dart';
+import 'package:task_tech/presentation/screens/posts/view/comment.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   const TaskDetailsPage(

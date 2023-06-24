@@ -26,7 +26,7 @@ TextStyle postNameStyle = GoogleFonts.poppins(
   color: primaryLightColor,
 );
 TextStyle postDescriptionStyle = GoogleFonts.poppins(
-  fontSize: 13,
+  fontSize: 14,
   fontWeight: FontWeight.w400,
   color: const Color(0xff7C7C7C),
 );

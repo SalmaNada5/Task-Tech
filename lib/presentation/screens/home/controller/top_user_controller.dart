@@ -15,11 +15,10 @@ class TopUserController {
     try {
       Response res = await _dioClient.get('api/v1/users/topuser?page=$page', '',
           isLoading: dioLoading) as Response;
+
       topUserModel = TopUserModel.fromJson(res.data);
       users.addAll(topUserModel.data!.users);
-      //if(topUserModel.paginationResult?.numberOfPages != page){
       page = page + 1;
-      //}
       logSuccess('top users returned successfully: ${topUserModel.status}');
       return users;
     } catch (e) {

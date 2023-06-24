@@ -1,23 +1,24 @@
+
 import 'dart:convert';
 
-TopUserModel topUserFromJson(String str) => TopUserModel.fromJson(json.decode(str));
+CategoryModel categoryFromJson(String str) => CategoryModel.fromJson(json.decode(str));
 
-String topUserToJson(TopUserModel data) => json.encode(data.toJson());
+String categoryToJson(CategoryModel data) => json.encode(data.toJson());
 
-class TopUserModel {
+class CategoryModel {
     String? status;
     int? results;
     PaginationResult? paginationResult;
     Data? data;
 
-    TopUserModel({
+    CategoryModel({
          this.status,
          this.results,
          this.paginationResult,
          this.data,
     });
 
-    factory TopUserModel.fromJson(Map<String, dynamic> json) => TopUserModel(
+    factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         status: json["status"],
         results: json["results"],
         paginationResult: PaginationResult.fromJson(json["paginationResult"]),
@@ -33,62 +34,62 @@ class TopUserModel {
 }
 
 class Data {
-    List<User> users;
+    List<CategoryElement> category;
 
     Data({
-        required this.users,
+        required this.category,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+        category: List<CategoryElement>.from(json["category"].map((x) => CategoryElement.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "users": List<dynamic>.from(users.map((x) => x.toJson())),
+        "category": List<dynamic>.from(category.map((x) => x.toJson())),
     };
 }
 
-class User {
-    List<dynamic> skills;
-    String photo;
-    String job;
-    double ratingsAverage;
-    int ratingsQuantity;
+class CategoryElement {
     String id;
     String name;
-    String userId;
+    String type;
+    int nSkills;
+    String photo;
+    DateTime createdAt;
+    DateTime updatedAt;
+    String slug;
 
-    User({
-        required this.skills,
-        required this.photo,
-        required this.job,
-        required this.ratingsAverage,
-        required this.ratingsQuantity,
+    CategoryElement({
         required this.id,
         required this.name,
-        required this.userId,
+        required this.type,
+        required this.nSkills,
+        required this.photo,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.slug,
     });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
-        skills: List<dynamic>.from(json["skills"].map((x) => x)),
-        photo: json["photo"],
-        job: json["job"],
-        ratingsAverage: json["ratingsAverage"]?.toDouble(),
-        ratingsQuantity: json["ratingsQuantity"],
+    factory CategoryElement.fromJson(Map<String, dynamic> json) => CategoryElement(
         id: json["_id"],
         name: json["name"],
-        userId: json["id"],
+        type: json["type"],
+        nSkills: json["nSkills"],
+        photo: json["photo"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        slug: json["slug"],
     );
 
     Map<String, dynamic> toJson() => {
-        "skills": List<dynamic>.from(skills.map((x) => x)),
-        "photo": photo,
-        "job": job,
-        "ratingsAverage": ratingsAverage,
-        "ratingsQuantity": ratingsQuantity,
         "_id": id,
         "name": name,
-        "id": userId,
+        "type": type,
+        "nSkills": nSkills,
+        "photo": photo,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+        "slug": slug,
     };
 }
 

@@ -128,7 +128,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                   setState(() {
                                     _value = value!;
                                   });
-                                  
                                 },
                                 side:
                                     const BorderSide(color: Color(0xffB1B1B1)),
@@ -163,9 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          
                           onPressed: () async {
-                           
                             if (_formKey.currentState!.validate()) {
                               AuthModel? authModel;
                               authModel = await AuthController.loginFunc(
@@ -174,8 +171,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                 return Constants.errorMessage(
                                     description: 'Invalid email or password!');
                               } else {
-                                 SharedPreferences pref =await SharedPreferences.getInstance();
-                                 pref.setString("token", authModel.token!);
+                                SharedPreferences pref =
+                                    await SharedPreferences.getInstance();
+                                pref.setString("token", authModel.token!);
                                 return Constants.navigateTo(const HomeScreen(),
                                     pushAndRemoveUntil: true);
                               }
