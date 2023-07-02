@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
 
 import 'education_screen.dart';
 
@@ -239,27 +241,18 @@ class SalaryScreenState extends State<SalaryScreen> {
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 Center(
-                  child: Container(
-                    width: 345,
-                    height: 55,
-                    decoration: BoxDecoration(
+                  child:CustomButtonWidget(
+                    width: Constants.screenWidth * 0.7,
+                     height: Constants.screenHeight * 0.075,
                       color: const Color.fromRGBO(22, 80, 105, 1),
-                      borderRadius: BorderRadius.circular(7.7),
-                    ),
-                    child: MaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const EducationScreen()));
-                        },
-                        child:  Text(
+                       onpressed: (){
+                        Constants.navigateTo(const EducationScreen());
+                       }, childWidget: Text(
                           'Next',
                           style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
-                        )),
-                  ),
-                ),
+                        )),)
+              
+                
               ],
             ),
           )),

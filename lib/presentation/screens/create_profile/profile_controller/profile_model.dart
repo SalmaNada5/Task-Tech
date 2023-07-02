@@ -9,13 +9,11 @@ class CreateProfileModel {
          this.data,
 });
 
-    factory CreateProfileModel.fromRawJson(String str) => CreateProfileModel.fromJson(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
 
     factory CreateProfileModel.fromJson(Map<String, dynamic> json) => CreateProfileModel(
         status: json["status"],
-        data: CreateProfileData.fromJson(json["data"]),
+        data: json["data"]== null ? null : CreateProfileData.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -31,9 +29,7 @@ class CreateProfileData {
         required this.data,
     });
 
-    factory CreateProfileData.fromRawJson(String str) => CreateProfileData.fromJson(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
 
     factory CreateProfileData.fromJson(Map<String, dynamic> json) => CreateProfileData(
         data: ProfileData.fromJson(json["data"]),

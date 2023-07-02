@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-ProfilePhoto welcomeFromJson(String str) => ProfilePhoto.fromJson(json.decode(str));
+ProfilePhotoModel welcomeFromJson(String str) => ProfilePhotoModel.fromJson(json.decode(str));
 
-String welcomeToJson(ProfilePhoto data) => json.encode(data.toJson());
+String welcomeToJson(ProfilePhotoModel data) => json.encode(data.toJson());
 
-class ProfilePhoto {
+class ProfilePhotoModel{
     String? status;
     ProfilePhotoData? data;
 
-    ProfilePhoto({
+    ProfilePhotoModel({
         this.status,
         this.data,
     });
 
-    factory ProfilePhoto.fromJson(Map<String, dynamic> json) => ProfilePhoto(
+    factory ProfilePhotoModel.fromJson(Map<String, dynamic> json) => ProfilePhotoModel(
         status: json["status"],
         data: ProfilePhotoData.fromJson(json["data"]),
     );

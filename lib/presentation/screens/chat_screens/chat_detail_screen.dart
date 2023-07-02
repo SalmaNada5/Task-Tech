@@ -12,6 +12,8 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   bool isOnline = true;
+    var messageController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +223,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         height: 35,
                         width: double.infinity * 0.5,
                         child: TextField(
+                          controller:messageController ,
                           style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,

@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/models/message_model.dart';
 import 'package:task_tech/presentation/screens/chat_screens/chat_detail_screen.dart';
 
-class ChatUsers {
-  String name;
-  String messageText;
-  String imageURL;
-  String time;
 
-  ChatUsers(
-      {required this.name,
-      required this.messageText,
-      required this.imageURL,
-      required this.time});
-}
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -25,64 +15,12 @@ class ChatsScreen extends StatefulWidget {
 class _ChatsScreenState extends State<ChatsScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  List<ChatUsers> chatUsers = [
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-        ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30'),
-    ChatUsers(
-        name: 'Kristin Waston',
-        messageText: 'Yes, the work is all done',
-        imageURL: 'images/person 2.png',
-        time: '12:30')
-  ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Colors.white,
-
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
@@ -151,17 +89,19 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
               ),
               ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(top: 16),
-                  itemCount: chatUsers.length,
+                  itemCount: chatsList.length,
                   itemBuilder: (context, index) {
                     return ConversationList(
-                        name: chatUsers[index].name,
-                        messageText: chatUsers[index].messageText,
-                        imageURL: chatUsers[index].imageURL,
-                        time: chatUsers[index].time,
-                        isMessaged: (index == 1 || index == 4) ? true : false,
-                        numMessage: (index == 1 || index == 4) ? null : 1,);
+                      name: chatsList[index].name,
+                      messageText: chatsList[index].messageText,
+                      imageURL: chatsList[index].image,
+                      time: chatsList[index].time,
+                      isRead: chatsList[index].isRead,
+                      unreadCount: chatsList[index].unreadCount,
+                    );
                   })
             ],
           ),
@@ -171,23 +111,22 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 }
 
-// ignore: must_be_immutable
 class ConversationList extends StatefulWidget {
-  String name;
-  String messageText;
-  String imageURL;
-  String time;
-  bool isMessaged;
-  int? numMessage;
+  final String name;
+  final String messageText;
+  final String imageURL;
+  final String time;
+  final bool isRead;
+  final int? unreadCount;
 
-  ConversationList(
+  const ConversationList(
       {super.key,
       required this.name,
       required this.messageText,
       required this.imageURL,
       required this.time,
-      required this.isMessaged,
-      required this.numMessage});
+      required this.isRead,
+      required this.unreadCount});
 
   @override
   State<ConversationList> createState() => _ConversationListState();
@@ -198,7 +137,7 @@ class _ConversationListState extends State<ConversationList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context){
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
           return const ChatDetailScreen();
         }));
       },
@@ -238,7 +177,7 @@ class _ConversationListState extends State<ConversationList> {
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
-                            color: widget.isMessaged
+                            color: widget.isRead
                                 ? const Color.fromRGBO(124, 124, 124, 0.81)
                                 : const Color.fromRGBO(39, 102, 207, 1)),
                       )
@@ -247,6 +186,7 @@ class _ConversationListState extends State<ConversationList> {
                 ))
               ],
             )),
+            const Spacer(),
             Column(
               children: [
                 Text(
@@ -256,22 +196,26 @@ class _ConversationListState extends State<ConversationList> {
                       fontWeight: FontWeight.w500,
                       color: const Color.fromRGBO(124, 124, 124, 0.81)),
                 ),
-                const SizedBox(height: 5,),
-                (widget.numMessage==1)?
-                 CircleAvatar(
-                            radius: 9,
-                            backgroundColor:const Color.fromRGBO(39, 102, 207, 1),
-                            child: Text(widget.numMessage.toString(),
-                            style: GoogleFonts.poppins(
+                const SizedBox(
+                  height: 5,
+                ),
+                (widget.unreadCount == 1)
+                    ? CircleAvatar(
+                        radius: 9,
+                        backgroundColor: const Color.fromRGBO(39, 102, 207, 1),
+                        child: Text(
+                          widget.unreadCount.toString(),
+                          style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 10.2,
-                              fontWeight: FontWeight.w500
-                            ),),
-                          ):
-                          const Icon(Icons.done_all,
-                          color: Color.fromRGBO(149, 149, 149, 1),
-                          size: 18,
-                          )
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : const Icon(
+                        Icons.done_all,
+                        color: Color.fromRGBO(149, 149, 149, 1),
+                        size: 18,
+                      )
               ],
             )
           ],

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/profile_pages/profile_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
 
 import '../../../constants/colors.dart';
 
@@ -80,10 +81,10 @@ class EducationScreenState extends State<EducationScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsetsDirectional.only(
-                start: MediaQuery.of(context).size.width * 0.03,
-                end: MediaQuery.of(context).size.width * 0.03,
-                bottom: MediaQuery.of(context).size.height * 0.03,
-                top: MediaQuery.of(context).size.height * 0.03),
+                start:Constants.screenWidth * 0.03,
+                end: Constants.screenWidth * 0.03,
+                bottom: Constants.screenHeight * 0.03,
+                top: Constants.screenHeight * 0.03),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,14 +108,11 @@ class EducationScreenState extends State<EducationScreen> {
                 const SizedBox(
                   height: 34,
                 ),
-                Container(
-                  height: 55,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
+                CustomButtonWidget(
+                  width: Constants.screenWidth*0.9,
+                   height: Constants.screenHeight*0.075,
                     color: const Color.fromRGBO(22, 80, 105, 0.21),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: DropdownButton(
+                      childWidget: DropdownButton(
                     padding: EdgeInsetsDirectional.only(
                       start: MediaQuery.of(context).size.width * 0.09,
                       end: MediaQuery.of(context).size.width *0.09
@@ -162,9 +160,8 @@ class EducationScreenState extends State<EducationScreen> {
                         dropdownValue = newvalue!;
                       });
                     },
-                  ),
-                ),
-                SizedBox(
+                  ),)
+              ,SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Text(
@@ -227,27 +224,20 @@ class EducationScreenState extends State<EducationScreen> {
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Center(
-                  child: Container(
-                    width: 345,
-                    height: 55,
-                    decoration: BoxDecoration(
+                  child: CustomButtonWidget(
+                    width: Constants.screenWidth*0.7,
+                     height: Constants.screenHeight*0.075,
                       color: const Color.fromRGBO(22, 80, 105, 1),
-                      borderRadius: BorderRadius.circular(7.7),
-                    ),
-                    child: MaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProfileScreen()));
-                        },
-                        child: Text(
+                      onpressed: (){
+                        Constants.navigateTo(const ProfileScreen());
+                      },
+                       childWidget:  Text(
                           'Save',
                           style: GoogleFonts.poppins(
                               fontSize: 20, color: Colors.white),
                         )),
-                  ),
                 ),
+     
               ],
             ),
           ),

@@ -10,7 +10,7 @@ class DefaultFormField extends StatelessWidget {
     required this.validate,
   }) : super(key: key);
   final TextEditingController? controller;
-  final IconButton? suffix;
+  final Widget? suffix;
   final TextInputType? type;
   final String? Function(String?)? validate;
   @override
