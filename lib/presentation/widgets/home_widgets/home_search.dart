@@ -12,7 +12,12 @@ class SearchWidget extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(10),
         prefixIcon: Image.asset('images/search.png'),
-        suffixIcon: Image.asset('images/filter.png'),
+        suffixIcon: GestureDetector(
+          child: Image.asset('images/filter.png'),
+          onTap: () {
+            
+          },
+        ),
         hintText: 'what are you looking for?',
         hintStyle: GoogleFonts.poppins(
           fontSize: 16,
@@ -36,6 +41,44 @@ class SearchWidget extends StatelessWidget {
         _searchController.selection =
             TextSelection.collapsed(offset: _searchController.text.length);
       },
+      onTap: () {
+        showSearch(context: context, delegate: HomeSearchDelegate());
+      },
     );
+  }
+}
+
+class HomeSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          if (query.isEmpty) {
+            close(context, null);
+          } else {
+            query = '';
+          }
+        },
+        icon: const Icon(Icons.close),
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () => close(context, null),
+        icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container();
   }
 }

@@ -148,7 +148,7 @@ class _PostServiceState extends State<PostService> {
                   size: 20,
                 )),
             onChanged: (value) {
-              // AddPostsController.attachFileController.text = value.toString();
+               //AddPostsController.attachFileController.text = value.toString();
               // AddPostsController.attachFileController.selection =
               //     TextSelection.fromPosition(TextPosition(
               //         offset:

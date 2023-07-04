@@ -53,7 +53,7 @@ class User {
     String photo;
     String job;
     double ratingsAverage;
-    int ratingsQuantity;
+    double ratingsQuantity;
     String id;
     String name;
     String userId;

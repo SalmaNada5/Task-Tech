@@ -5,6 +5,8 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/forgot_password_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/sign_up_screen.dart';
 import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
@@ -143,8 +145,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             ],
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                Navigator.pushNamed(context, 'forgotPassword'),
+                            onTap: () => Constants.navigateTo(
+                                const ForgotPasswordScreen()),
                             child: Text(
                               'Forgot password?',
                               style: GoogleFonts.poppins(
@@ -174,6 +176,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 SharedPreferences pref =
                                     await SharedPreferences.getInstance();
                                 pref.setString("token", authModel.token!);
+                                pref.setString("id",
+                                    AuthController.authModel.data!.user!.id!);
+                                pref.setString("name",
+                                    AuthController.authModel.data!.user!.name!);
                                 return Constants.navigateTo(const HomeScreen(),
                                     pushAndRemoveUntil: true);
                               }
@@ -282,7 +288,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
-                      onTap: () => Navigator.pushNamed(context, 'signUp'),
+                      onTap: () => Constants.navigateTo(const SignUpScreen()),
                     ),
                   ],
                 ),

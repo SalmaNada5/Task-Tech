@@ -80,7 +80,7 @@ class _ServicesItemState extends State<ServicesItem> {
               child: Text(
                 widget.description,
                 softWrap: true,
-                maxLines: 3,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: GoogleFonts.poppins(

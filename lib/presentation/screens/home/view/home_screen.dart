@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
@@ -5,17 +6,20 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/view/create_post_screen.dart';
+import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/chats_screen.dart';
 import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
+import 'package:task_tech/presentation/screens/home/controller/related_posts_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
+import 'package:task_tech/presentation/screens/home/view/categories_screen.dart';
 import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
 import 'package:task_tech/presentation/screens/home/view/profile_page.dart';
 import 'package:task_tech/presentation/screens/posts/view/posts_screen.dart';
+import 'package:task_tech/presentation/widgets/home_widgets/category_item.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
-import '../../../widgets/home_widgets/category_item.dart';
-import '../../../widgets/home_widgets/service_widget.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:task_tech/presentation/widgets/home_widgets/service_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,10 +31,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    setupScrollController();
+    highestRatedScrollController();
     categoriesScrollController();
+    relatedPostsScrollController();
     getAllTopUsers();
     getPopularCateogries();
+    getRelatedPosts();
     super.initState();
   }
 
@@ -52,10 +58,21 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void getRelatedPosts() async {
+    try {
+      await RelatedPostscontroller.getRelatedPostsFunc();
+      setState(() {});
+    } catch (e) {
+      logError('$e in getRelatedPosts');
+    }
+  }
+
   bool isCatLoading = false;
   bool isLoading = false;
+  bool relatedPostsLoading = false;
   bool photoReturned = false;
-  void setupScrollController() async {
+
+  void highestRatedScrollController() async {
     TopUserController.highestRatedScrollController.addListener(() async {
       if (TopUserController.highestRatedScrollController.position.atEdge &&
           TopUserController.highestRatedScrollController.position.pixels != 0) {
@@ -101,8 +118,31 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void relatedPostsScrollController() async {
+    RelatedPostscontroller.scrollController.addListener(() async {
+      if (RelatedPostscontroller.scrollController.position.atEdge &&
+          RelatedPostscontroller.scrollController.position.pixels != 0) {
+        if (RelatedPostscontroller.page >
+            (RelatedPostscontroller
+                    .relatedPostModel.paginationResult?.numberOfPages ??
+                1)) {
+          return;
+        }
+        if (relatedPostsLoading) {
+          return;
+        }
+        setState(() {
+          relatedPostsLoading = true;
+        });
+        await RelatedPostscontroller.getRelatedPostsFunc(dioLoading: false);
+        setState(() {
+          relatedPostsLoading = false;
+        });
+      }
+    });
+  }
+
   int _currentIndex = 0;
-  String userName = 'salma nada';
   String url =
       'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
   final screens = [
@@ -112,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const PostsScreen(),
     const ProfilePage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,7 +173,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             CircleAvatar(
                               radius: 28,
-                              backgroundImage: NetworkImage(url),
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: AuthController
+                                      .authModel.data!.user!.photo!,
+                                  errorWidget: (context, url, error) {
+                                    return Image.asset(
+                                      'images/placeholder.jpg',
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                             const SizedBox(
                               width: 15,
@@ -148,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Text(
-                                  userName,
+                                  AuthController.authModel.data!.user!.name!,
                                   style: titleStyle.copyWith(fontSize: 24),
                                 ),
                               ],
@@ -179,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: () =>
-                              Navigator.pushNamed(context, 'categories'),
+                              Constants.navigateTo(const CategoriesScreen()),
                           child: Row(
                             children: [
                               Text(
@@ -239,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          'Recently posts',
+                          'Related posts',
                           style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -247,22 +298,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(
                           height: 0.3 * Constants.screenHeight,
-                          child: ListView.builder(
+                          child: SingleChildScrollView(
+                            //controller: RelatedPostscontroller.scrollController,
                             scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: 4,
-                            itemBuilder: (ctx, n) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ServicesItem(
-                                description:
-                                    'fkes tjhxhfgfuhioiu77u7hidrpfghpisghip',
-                                numOfReviews: 170,
-                                profileImgUrl: url,
-                                rate: 5.4,
-                                salary: 50,
-                                serviceImgUrl: url,
-                                userName: 'salma nada',
-                              ),
+                            child: Row(
+                              children: [
+                                ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: 4,
+                                  itemBuilder: (ctx, n) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ServicesItem(
+                                      description:
+                                          'fkes tjhxhfgfuhioiu77u7hidrpfghpisghip',
+                                      numOfReviews: 170,
+                                      profileImgUrl: url,
+                                      rate: 5.4,
+                                      salary: 50,
+                                      serviceImgUrl: url,
+                                      userName: 'salma nada',
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

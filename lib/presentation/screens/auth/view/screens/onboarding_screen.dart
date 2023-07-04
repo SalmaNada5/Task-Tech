@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/sign_up_screen.dart';
 
 import '../../../../widgets/onboarding.dart';
 
@@ -60,7 +62,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6)))),
                 onPressed: isLastPage
-                    ? () => Navigator.pushReplacementNamed(context, 'signUp')
+                    ? () => Constants.navigateTo(const SignUpScreen(),
+                        pushReplacment: true)
                     : () => _pageController.nextPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut),
@@ -113,7 +116,7 @@ class FirstOnBoarding extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            onPressed: () => Navigator.pushReplacementNamed(context, 'signUp'),
+            onPressed: () => Constants.navigateTo(const SignUpScreen(),pushReplacment: true)
           ),
           SizedBox(
             height: screenH / 12,

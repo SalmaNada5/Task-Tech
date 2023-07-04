@@ -120,4 +120,11 @@ class AuthController {
       return false;
     }
   }
+
+// static Future<String> getName() async {
+//     String? name;
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     name = prefs.getString("name") ?? '';
+//     return name;
+//   }
 }

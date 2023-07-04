@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
 
 class ReusablePostForm extends StatefulWidget {
   const ReusablePostForm({
@@ -84,7 +85,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
-                    return '';
+                    return null;
                   }
                 },
                 maxLines: 1,
@@ -205,7 +206,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                             if (value.isEmpty) {
                               return 'Please fill this field';
                             } else {
-                              return '';
+                              return null;
                             }
                           },
                           maxLines: 1,
@@ -256,7 +257,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                             if (value.isEmpty) {
                               return 'Please fill this field';
                             } else {
-                              return '';
+                              return null;
                             }
                           },
                           maxLines: 1,
@@ -304,7 +305,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
-                    return '';
+                    return null;
                   }
                 },
               ),
@@ -314,12 +315,14 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      debugPrint('correct');
-                    }
+                    //TODO make validation work and there is a problem with apload image
+                    //if (_formKey.currentState!.validate()) {
+                    debugPrint('correct');
                     if (widget.onPressed != null) {
                       widget.onPressed!();
+                      Constants.navigateTo(const HomeScreen(),pushAndRemoveUntil: true,);
                     }
+                    //}
                   },
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(

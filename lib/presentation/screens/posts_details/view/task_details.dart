@@ -5,17 +5,23 @@ import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/posts/view/comment.dart';
 
 class TaskDetailsPage extends StatefulWidget {
-  const TaskDetailsPage(
-      {super.key,
-      required this.name,
-      required this.description,
-      required this.price,
-      required this.deliveryTime});
+  const TaskDetailsPage({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.deliveryTime,
+    required this.postTime,
+    required this.taskName,
+    required this.userImg,
+  });
+  final String userImg;
   final String name;
+  final String taskName;
   final String description;
-  final String price;
+  final int price;
   final String deliveryTime;
-
+  final DateTime postTime;
   @override
   State<TaskDetailsPage> createState() => _TaskDetailsPageState();
 }
@@ -24,8 +30,25 @@ TextEditingController _commentController = TextEditingController();
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
   bool showIcon = false;
+
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String timeAgo;
+    debugPrint('${now.month - widget.postTime.month} month ago');
+    if (now.month - widget.postTime.month > 0) {
+      timeAgo = '${now.month - widget.postTime.month} m';
+    } else if (now.day - widget.postTime.day > 0) {
+      if (now.day - widget.postTime.day == 1) {
+        timeAgo = '${now.day - widget.postTime.day} day';
+      } else {
+        timeAgo = '${now.day - widget.postTime.day} days';
+      }
+    } else if (now.hour - widget.postTime.hour > 0) {
+      timeAgo = '${now.hour - widget.postTime.hour} hr';
+    } else {
+      timeAgo = '${now.minute - widget.postTime.minute} hr';
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -60,32 +83,32 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 16,
-                    backgroundImage: NetworkImage(
-                      'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                    ),
+                    backgroundImage: NetworkImage(widget.userImg),
                   ),
                   const SizedBox(
-                    width: 5,
+                    width: 8,
                   ),
                   Text(
-                    'Aya Mohamed',
+                    widget.name,
                     style: labelTextFormStyle,
                   ),
                   const Spacer(),
                   Text(
-                    '1 Hr ago',
+                    '$timeAgo ago',
                     style: labelTextFormStyle,
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
                     child: Text(
-                      widget.name,
+                      widget.taskName,
                       softWrap: true,
                       textAlign: TextAlign.left,
                       overflow: TextOverflow.visible,
@@ -113,11 +136,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 height: 20,
               ),
               Text(
-                'Dlivery Time',
+                'Delivery Time',
                 style: headStyle,
               ),
               Text(
-                widget.deliveryTime,
+                '${widget.deliveryTime} Days',
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,

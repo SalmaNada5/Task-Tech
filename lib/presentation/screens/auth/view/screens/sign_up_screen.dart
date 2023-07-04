@@ -4,6 +4,7 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
+import 'package:task_tech/presentation/screens/auth/view/screens/sign_in_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/verification_code_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
@@ -283,7 +284,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       ),
-                      onTap: () => Navigator.pushNamed(context, 'signIn'),
+                      onTap: () => Constants.navigateTo(const SignInScreen()),
                     ),
                   ],
                 ),

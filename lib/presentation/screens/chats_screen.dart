@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/chat_detail_screen.dart';
 
 class ChatUsers {
@@ -51,7 +52,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         messageText: 'Yes, the work is all done',
         imageURL: 'images/person 2.png',
         time: '12:30'),
-        ChatUsers(
+    ChatUsers(
         name: 'Kristin Waston',
         messageText: 'Yes, the work is all done',
         imageURL: 'images/person 2.png',
@@ -154,12 +155,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   itemCount: chatUsers.length,
                   itemBuilder: (context, index) {
                     return ConversationList(
-                        name: chatUsers[index].name,
-                        messageText: chatUsers[index].messageText,
-                        imageURL: chatUsers[index].imageURL,
-                        time: chatUsers[index].time,
-                        isMessaged: (index == 1 || index == 4) ? true : false,
-                        numMessage: (index == 1 || index == 4) ? null : 1,);
+                      name: chatUsers[index].name,
+                      messageText: chatUsers[index].messageText,
+                      imageURL: chatUsers[index].imageURL,
+                      time: chatUsers[index].time,
+                      isMessaged: (index == 1 || index == 4) ? true : false,
+                      numMessage: (index == 1 || index == 4) ? null : 1,
+                    );
                   })
             ],
           ),
@@ -196,9 +198,10 @@ class _ConversationListState extends State<ConversationList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context){
-          return const ChatDetailScreen();
-        }));
+        Constants.navigateTo(const ChatDetailScreen());
+        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //   return const ChatDetailScreen();
+        // }));
       },
       child: Container(
         padding: const EdgeInsetsDirectional.only(
@@ -254,22 +257,26 @@ class _ConversationListState extends State<ConversationList> {
                       fontWeight: FontWeight.w500,
                       color: const Color.fromRGBO(124, 124, 124, 0.81)),
                 ),
-                const SizedBox(height: 5,),
-                (widget.numMessage==1)?
-                 CircleAvatar(
-                            radius: 9,
-                            backgroundColor:const Color.fromRGBO(39, 102, 207, 1),
-                            child: Text(widget.numMessage.toString(),
-                            style: GoogleFonts.poppins(
+                const SizedBox(
+                  height: 5,
+                ),
+                (widget.numMessage == 1)
+                    ? CircleAvatar(
+                        radius: 9,
+                        backgroundColor: const Color.fromRGBO(39, 102, 207, 1),
+                        child: Text(
+                          widget.numMessage.toString(),
+                          style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 10.2,
-                              fontWeight: FontWeight.w500
-                            ),),
-                          ):
-                          const Icon(Icons.done_all,
-                          color: Color.fromRGBO(149, 149, 149, 1),
-                          size: 18,
-                          )
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : const Icon(
+                        Icons.done_all,
+                        color: Color.fromRGBO(149, 149, 149, 1),
+                        size: 18,
+                      )
               ],
             )
           ],
