@@ -22,7 +22,7 @@ class PostController {
     token = prefs.getString("token");
     try {
       Response res = await _dioClient.get(
-        'api/v1/posts?sort=-createdAt&fields=user,description&page=$taskPage',
+        'api/v1/posts?sort=-createdAt&fields=user,description,createdAt&page=$taskPage',
         token,
         isLoading: dioLoading,
       ) as Response;

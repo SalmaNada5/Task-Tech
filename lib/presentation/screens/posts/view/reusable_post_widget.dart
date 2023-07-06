@@ -5,7 +5,6 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
-import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
 import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
 
@@ -17,16 +16,16 @@ class ReusablePostWidget extends StatelessWidget {
     required this.postDescription,
     required this.postTime,
     required this.dropDownVal,
-    required this.taskId,
-    required this.serviceId,
+    this.taskId,
+    this.serviceId,
   });
   final String profileImgUrl;
   final String accountName;
   final String postDescription;
-  final DateTime postTime;
+  final String postTime;
   final String dropDownVal;
-  final String taskId;
-  final String serviceId;
+  final String? taskId;
+  final String? serviceId;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +63,7 @@ class ReusablePostWidget extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '$postTime',
+                postTime,
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: const Color(0xff1B2936),
@@ -90,33 +89,33 @@ class ReusablePostWidget extends StatelessWidget {
             children: [
               const Spacer(),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (dropDownVal == 'Tasks') {
-                    TaskController.getTaskFunc(taskId);
+                    //TaskController.getTaskFunc(taskId ?? "");
                     Constants.navigateTo(TaskDetailsPage(
-                        postId:
-                            TaskController.taskDetailsModel.data?.post.id ?? '',
-                        userImg: TaskController
-                                .taskDetailsModel.data?.post.user.photo ??
-                            '',
-                        name:
-                            TaskController.taskDetailsModel.data?.post.user.name ??
-                                '',
-                        taskName:
-                            TaskController.taskDetailsModel.data?.post.name ??
-                                '',
-                        description: TaskController
-                                .taskDetailsModel.data?.post.description ??
-                            '',
-                        price:
-                            TaskController.taskDetailsModel.data?.post.salary ??
-                                0,
-                        deliveryTime: TaskController
-                                .taskDetailsModel.data?.post.delieveryDate ??
-                            '',
-                        postTime: postTime));
+                      postId: taskId!,
+                      // userImg: TaskController
+                      //         .taskDetailsModel.data?.post.user.photo ??
+                      //     '',
+                      // name:
+                      //     TaskController.taskDetailsModel.data?.post.user.name ??
+                      //         '',
+                      // taskName:
+                      //     TaskController.taskDetailsModel.data?.post.name ??
+                      //         '',
+                      // description: TaskController
+                      //         .taskDetailsModel.data?.post.description ??
+                      //     '',
+                      // price:
+                      //     TaskController.taskDetailsModel.data?.post.salary ??
+                      //         0,
+                      // deliveryTime: TaskController
+                      //         .taskDetailsModel.data?.post.delieveryDate ??
+                      //     '',
+                      // postTime: postTime
+                    ));
                   } else {
-                    ServiceController.getServiceFunc(serviceId);
+                    await ServiceController.getServiceFunc(serviceId ?? "");
                     Constants.navigateTo(const ServiceDetailsPage());
                   }
                 },

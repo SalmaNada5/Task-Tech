@@ -25,6 +25,8 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -36,6 +38,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
               width: 10,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

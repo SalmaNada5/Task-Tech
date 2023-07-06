@@ -13,8 +13,8 @@ class CommentsController {
       String? token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString("token");
-      Response res =
-          _dioClient.get('api/v1/posts/$postId/comments', token) as Response;
+      Response res = await _dioClient.get(
+          'api/v1/posts/$postId/comments', token) as Response;
       commentsModel = CommentsModel.fromJson(res.data);
       comments.addAll(commentsModel.data!.comments);
       logSuccess('all comments returned successfuly: $commentsModel');

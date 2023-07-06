@@ -55,12 +55,14 @@ class Service {
   String description;
   User? user;
   String postId;
-
+  final DateTime? createdAt;
+  
   Service({
     required this.id,
     required this.description,
     this.user,
     required this.postId,
+    this.createdAt,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
@@ -68,6 +70,9 @@ class Service {
         description: json["description"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
         postId: json["id"],
+          createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,6 +80,7 @@ class Service {
         "description": description,
         "user": user?.toJson(),
         "id": postId,
+        "createdAt": createdAt?.toIso8601String(),
       };
 }
 

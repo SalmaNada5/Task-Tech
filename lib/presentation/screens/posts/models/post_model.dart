@@ -53,12 +53,14 @@ class Post {
   String description;
   User? user;
   String postId;
+  final DateTime? createdAt;
 
   Post({
     required this.id,
     required this.description,
     this.user,
     required this.postId,
+    this.createdAt,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
@@ -66,6 +68,9 @@ class Post {
         description: json["description"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
         postId: json["id"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +78,7 @@ class Post {
         "description": description,
         "user": user?.toJson(),
         "id": postId,
+        "createdAt": createdAt?.toIso8601String(),
       };
 }
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
@@ -167,22 +168,10 @@ mixin Constants {
           );
   }
 
-  static String convertToTimeAgo(DateTime time) {
-    DateTime now = DateTime.now();
-    String timeAgo;
-    if (now.month - time.month > 0) {
-      timeAgo = '${now.month - time.month} m';
-    } else if (now.day - time.day > 0) {
-      if (now.day - time.day == 1) {
-        timeAgo = '${now.day - time.day} day';
-      } else {
-        timeAgo = '${now.day - time.day} days';
-      }
-    } else if (now.hour - time.hour > 0) {
-      timeAgo = '${now.hour - time.hour} hr';
-    } else {
-      timeAgo = '${now.minute - time.minute} min';
+  static String convertToTimeAgo(DateTime? time) {
+    if (time == null) {
+      return '';
     }
-    return timeAgo;
+    return timeago.format(time, locale: 'en_short');
   }
 }

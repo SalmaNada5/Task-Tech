@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/payment/order_review_screen.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import '../../../../constants/colors.dart';
@@ -12,6 +14,11 @@ class ServiceDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logInfo(
+        "ServiCE ID ${ServiceController.serviceDetailsModel.data?.service.id}");
+    SharedPreferences.getInstance().then((value) {
+      logWarning("Token : ${value.getString('token')}");
+    });
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -46,12 +53,16 @@ class ServiceDetailsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              ServiceController.serviceDetailsModel.data!.service.attachFile,
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: double.infinity,
-              fit: BoxFit.fill,
-            ),
+            ServiceController.serviceDetailsModel.data == null
+                ? const SizedBox.shrink()
+                : Image.network(
+                    ServiceController
+                            .serviceDetailsModel.data?.service.attachFile ??
+                        "",
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -61,15 +72,21 @@ class ServiceDetailsPage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           backgroundImage: NetworkImage(ServiceController
-                              .serviceDetailsModel.data!.service.user.photo),
+                                  .serviceDetailsModel
+                                  .data
+                                  ?.service
+                                  .user
+                                  .photo ??
+                              ""),
                           radius: 20,
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          ServiceController
-                              .serviceDetailsModel.data!.service.user.name,
+                          ServiceController.serviceDetailsModel.data?.service
+                                  .user.name ??
+                              "",
                           style: headStyle.copyWith(fontSize: 15),
                         ),
                       ],
@@ -78,7 +95,9 @@ class ServiceDetailsPage extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      ServiceController.serviceDetailsModel.data!.service.name,
+                      ServiceController
+                              .serviceDetailsModel.data?.service.name ??
+                          "",
                       style: headStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
@@ -88,7 +107,8 @@ class ServiceDetailsPage extends StatelessWidget {
                     ),
                     Text(
                       ServiceController
-                          .serviceDetailsModel.data!.service.description,
+                              .serviceDetailsModel.data?.service.description ??
+                          "",
                       style: postDescriptionStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
@@ -104,8 +124,9 @@ class ServiceDetailsPage extends StatelessWidget {
                             )),
                         const Spacer(),
                         Text(
-                          ServiceController
-                              .serviceDetailsModel.data!.service.delieveryDate,
+                          ServiceController.serviceDetailsModel.data?.service
+                                  .delieveryDate ??
+                              "",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -125,7 +146,8 @@ class ServiceDetailsPage extends StatelessWidget {
                     ),
                     Text(
                       ServiceController
-                          .serviceDetailsModel.data!.service.category,
+                              .serviceDetailsModel.data?.service.category ??
+                          "",
                       style: postDescriptionStyle.copyWith(fontSize: 15),
                     ),
                     const SizedBox(
@@ -138,7 +160,7 @@ class ServiceDetailsPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${ServiceController.serviceDetailsModel.data!.service.softwareTool}',
+                      '${ServiceController.serviceDetailsModel.data?.service.softwareTool}',
                       style: postDescriptionStyle.copyWith(fontSize: 15),
                     ),
                   ]),
@@ -148,13 +170,16 @@ class ServiceDetailsPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (ctx) => OrderReviewScreen(
-                          imgUrl: ServiceController
-                              .serviceDetailsModel.data!.service.attachFile,
+                          imgUrl: ServiceController.serviceDetailsModel.data
+                                  ?.service.attachFile ??
+                              "",
                           serviceName: ServiceController
-                              .serviceDetailsModel.data!.service.name,
+                                  .serviceDetailsModel.data?.service.name ??
+                              "",
                           rate: 2.4,
-                          deliveryDate: ServiceController
-                              .serviceDetailsModel.data!.service.delieveryDate,
+                          deliveryDate: ServiceController.serviceDetailsModel
+                                  .data?.service.delieveryDate ??
+                              "",
                           price: 50))),
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
@@ -167,7 +192,7 @@ class ServiceDetailsPage extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Continue (\$${ServiceController.serviceDetailsModel.data!.service.salary})',
+                'Continue (\$${ServiceController.serviceDetailsModel.data?.service.salary})',
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize: 16,

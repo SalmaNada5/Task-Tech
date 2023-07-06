@@ -17,7 +17,7 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
 
-  final screens = [
+  List<Widget> screens = [
     const HomeScreen(),
     const ChatsScreen(),
     const AddPostScreen(),
@@ -29,7 +29,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: screens[_currentIndex],
+      body: IndexedStack(index: _currentIndex, children: screens),
       bottomNavigationBar: CustomNavigationBar(
         elevation: 20,
         iconSize: 30,

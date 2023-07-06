@@ -8,26 +8,27 @@ import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/posts/view/comment.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/comments_controller.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   const TaskDetailsPage({
     super.key,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.deliveryTime,
-    required this.postTime,
-    required this.taskName,
-    required this.userImg,
+    // required this.name,
+    // required this.description,
+    // required this.price,
+    // required this.deliveryTime,
+    // required this.postTime,
+    // required this.taskName,
+    // required this.userImg,
     required this.postId,
   });
-  final String userImg;
-  final String name;
-  final String taskName;
-  final String description;
-  final int price;
-  final String deliveryTime;
-  final DateTime postTime;
+  // final String userImg;
+  // final String name;
+  // final String taskName;
+  // final String description;
+  // final int price;
+  // final String deliveryTime;
+  // final DateTime postTime;
   final String postId;
   @override
   State<TaskDetailsPage> createState() => _TaskDetailsPageState();
@@ -45,6 +46,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   void getAllComments() async {
     try {
       await CommentsController.getAllComments(widget.postId);
+      await TaskController.getTaskFunc(widget.postId);
       setState(() {});
     } catch (e) {
       logError('$e in getAllTasks');
@@ -55,7 +57,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    String timeAgo = Constants.convertToTimeAgo(widget.postTime);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -92,18 +93,20 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 children: [
                   CircleAvatar(
                     radius: 16,
-                    backgroundImage: NetworkImage(widget.userImg),
+                    backgroundImage: NetworkImage(
+                        TaskController.taskDetailsModel.data?.post.user.photo ??
+                            ""),
                   ),
                   const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    widget.name,
+                    TaskController.taskDetailsModel.data?.post.name ?? "",
                     style: labelTextFormStyle,
                   ),
                   const Spacer(),
                   Text(
-                    '$timeAgo ago',
+                    '${Constants.convertToTimeAgo(TaskController.taskDetailsModel.data?.post.createdAt)} ago',
                     style: labelTextFormStyle,
                   ),
                 ],
@@ -115,7 +118,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 children: [
                   SizedBox(
                     child: Text(
-                      widget.taskName,
+                      TaskController.taskDetailsModel.data?.post.name ?? "",
                       softWrap: true,
                       textAlign: TextAlign.left,
                       overflow: TextOverflow.visible,
@@ -124,7 +127,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                   const Spacer(),
                   Text(
-                    '\$${widget.price}',
+                    '\$${TaskController.taskDetailsModel.data?.post.salary}',
                     style: postNameStyle,
                   ),
                 ],
@@ -133,7 +136,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 height: 10,
               ),
               Text(
-                widget.description,
+                TaskController.taskDetailsModel.data?.post.description ?? "",
                 softWrap: true,
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.visible,
@@ -147,7 +150,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 style: headStyle,
               ),
               Text(
-                '${widget.deliveryTime} Days',
+                '${TaskController.taskDetailsModel.data?.post.delieveryDate} Days',
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -187,7 +190,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     return ReusableCommentWidget(
                       userName: CommentsController.comments[i].user.name,
                       rate: CommentsController.comments[i].user.ratingsAverage,
-                      date: DateFormat.yMMM(
+                      date: Constants.convertToTimeAgo(
                               CommentsController.comments[i].createdAt)
                           .toString(),
                       imgUrl: CommentsController.comments[i].user.photo,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
@@ -140,8 +141,8 @@ class _PostsScreenState extends State<PostsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, i) => ReusablePostWidget(
                             taskId: PostController.postModel.data!.posts[i].id,
-                            serviceId: PostController
-                                .serviceModel.data!.services[i].id,
+                            // serviceId: PostController
+                            //     .serviceModel.data!.services[i].id,
                             dropDownVal: _dropdownValue,
                             profileImgUrl:
                                 PostController.tasks[i].user?.photo ?? '',
@@ -149,7 +150,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                 PostController.tasks[i].user?.name ?? '',
                             postDescription:
                                 PostController.tasks[i].description,
-                            postTime: DateTime.now(),
+                            postTime: Constants.convertToTimeAgo(PostController.postModel.data!.posts[i].createdAt),
                             // _dropdownValue == 'Tasks'
                             //     ? PostController.postModel.data!.posts[i].createdAt
                             //     : PostController
@@ -172,7 +173,7 @@ class _PostsScreenState extends State<PostsScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, i) => ReusablePostWidget(
-                            taskId: PostController.postModel.data!.posts[i].id,
+                            //taskId: PostController.postModel.data!.posts[i].id,
                             serviceId: PostController
                                 .serviceModel.data!.services[i].id,
                             dropDownVal: _dropdownValue,
@@ -182,7 +183,8 @@ class _PostsScreenState extends State<PostsScreen> {
                                 PostController.services[i].user?.name ?? '',
                             postDescription:
                                 PostController.services[i].description,
-                            postTime: DateTime.now(),
+                            postTime:Constants.convertToTimeAgo(PostController.serviceModel.data!.services[i].createdAt),
+                          //   DateTime.now(),
                             // _dropdownValue == 'Tasks'
                             //     ? PostController.postModel.data!.posts[i].createdAt
                             //     : PostController

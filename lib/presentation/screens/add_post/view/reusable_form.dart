@@ -320,10 +320,10 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                     debugPrint('correct');
                     if (widget.onPressed != null) {
                       widget.onPressed!();
-                      Constants.navigateTo(
-                        const BottomNavBarScreen(),
-                        pushAndRemoveUntil: true,
-                      );
+                      // Constants.navigateTo(
+                      //   const BottomNavBarScreen(),
+                      //   pushAndRemoveUntil: true,
+                      // );
                     }
                     //}
                   },
