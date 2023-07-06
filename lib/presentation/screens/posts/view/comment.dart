@@ -12,7 +12,7 @@ class ReusableCommentWidget extends StatefulWidget {
       required this.date,
       required this.text});
   final String userName;
-  final double rate;
+  final num rate;
   final String imgUrl;
   final String date;
   final String text;
@@ -45,7 +45,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
                   ),
                 ),
                 SmoothStarRating(
-                  rating: widget.rate,
+                  rating: widget.rate.toDouble(),
                   size: 15,
                   filledIconData: Icons.star,
                   defaultIconData: Icons.star_border,

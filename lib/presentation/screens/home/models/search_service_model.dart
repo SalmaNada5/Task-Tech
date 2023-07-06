@@ -1,124 +1,108 @@
-// To parse this JSON data, do
-//
-//     final relatedPostModel = relatedPostModelFromJson(jsonString);
-
 import 'dart:convert';
 
-RelatedPostModel relatedPostModelFromJson(String str) => RelatedPostModel.fromJson(json.decode(str));
+SearchServiceModel searchServiceModelFromJson(String str) => SearchServiceModel.fromJson(json.decode(str));
 
-String relatedPostModelToJson(RelatedPostModel data) => json.encode(data.toJson());
+String searchServiceModelToJson(SearchServiceModel data) => json.encode(data.toJson());
 
-class RelatedPostModel {
+class SearchServiceModel {
     String? status;
-    PaginationResult? paginationResult;
+    String? message;
     int? results;
-    Data? data;
+    List<Service>? services;
 
-    RelatedPostModel({
+    SearchServiceModel({
          this.status,
-         this.paginationResult,
+         this.message,
          this.results,
-         this.data,
+         this.services,
     });
 
-    factory RelatedPostModel.fromJson(Map<String, dynamic> json) => RelatedPostModel(
+    factory SearchServiceModel.fromJson(Map<String, dynamic> json) => SearchServiceModel(
         status: json["status"],
-        paginationResult: PaginationResult.fromJson(json["paginationResult"]),
+        message: json["message"],
         results: json["results"],
-        data: Data.fromJson(json["data"]),
+        services: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
-        "paginationResult": paginationResult?.toJson(),
+        "message": message,
         "results": results,
-        "data": data?.toJson(),
+        "services": List<dynamic>.from(services?.map((x) => x.toJson()) ?? []),
     };
 }
 
-class Data {
-    List<Post> posts;
-
-    Data({
-        required this.posts,
-    });
-
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
-        posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
-    };
-}
-
-class Post {
+class Service {
     List<String> softwareTool;
-    List<dynamic> saved;
     String id;
     String name;
     String description;
     String delieveryDate;
     int salary;
-    String catogery;
+    String category;
     User user;
     String attachFile;
     DateTime createdAt;
     DateTime updatedAt;
-    String postId;
+    String slug;
+    int v;
+    String serviceId;
 
-    Post({
+    Service({
         required this.softwareTool,
-        required this.saved,
         required this.id,
         required this.name,
         required this.description,
         required this.delieveryDate,
         required this.salary,
-        required this.catogery,
+        required this.category,
         required this.user,
         required this.attachFile,
         required this.createdAt,
         required this.updatedAt,
-        required this.postId,
+        required this.slug,
+        required this.v,
+        required this.serviceId,
     });
 
-    factory Post.fromJson(Map<String, dynamic> json) => Post(
+    factory Service.fromJson(Map<String, dynamic> json) => Service(
         softwareTool: List<String>.from(json["softwareTool"].map((x) => x)),
-        saved: List<dynamic>.from(json["saved"].map((x) => x)),
         id: json["_id"],
         name: json["name"],
         description: json["description"],
         delieveryDate: json["delieveryDate"],
         salary: json["salary"],
-        catogery: json["catogery"],
+        category: json["category"],
         user: User.fromJson(json["user"]),
         attachFile: json["attachFile"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        postId: json["id"],
+        slug: json["slug"],
+        v: json["__v"],
+        serviceId: json["id"],
     );
 
     Map<String, dynamic> toJson() => {
         "softwareTool": List<dynamic>.from(softwareTool.map((x) => x)),
-        "saved": List<dynamic>.from(saved.map((x) => x)),
         "_id": id,
         "name": name,
         "description": description,
         "delieveryDate": delieveryDate,
         "salary": salary,
-        "catogery": catogery,
+        "category": category,
         "user": user.toJson(),
         "attachFile": attachFile,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "id": postId,
+        "slug": slug,
+        "__v": v,
+        "id": serviceId,
     };
 }
 
 class User {
     String photo;
-    int ratingsAverage;
+    num ratingsAverage;
     int ratingsQuantity;
     bool isOnline;
     String id;
@@ -153,29 +137,5 @@ class User {
         "_id": id,
         "name": name,
         "id": userId,
-    };
-}
-
-class PaginationResult {
-    int currentPage;
-    int limit;
-    int numberOfPages;
-
-    PaginationResult({
-        required this.currentPage,
-        required this.limit,
-        required this.numberOfPages,
-    });
-
-    factory PaginationResult.fromJson(Map<String, dynamic> json) => PaginationResult(
-        currentPage: json["currentPage"],
-        limit: json["limit"],
-        numberOfPages: json["numberOfPages"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "currentPage": currentPage,
-        "limit": limit,
-        "numberOfPages": numberOfPages,
     };
 }

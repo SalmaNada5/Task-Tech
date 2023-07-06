@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/posts/view/posts_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,9 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       navigatorKey: Constants.navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: const PostsScreen(),
+      home: const SplashScreen(),
     );
   }
 }
+

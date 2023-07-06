@@ -162,7 +162,7 @@ class Comment {
 
 class User {
   String photo;
-  double ratingsAverage;
+  num ratingsAverage;
   bool isOnline;
   String id;
   String name;

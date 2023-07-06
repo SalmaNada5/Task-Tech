@@ -20,7 +20,7 @@ class RelatedPostscontroller {
     id = prefs.getString("id");
     try {
       Response res = await _dioClient.get(
-          'api/v1/users/$id/relatedPosts&page=$page', token,
+          'api/v1/users/$id/relatedPosts?page=$page', token,
           isLoading: dioLoading) as Response;
 
       relatedPostModel = RelatedPostModel.fromJson(res.data);

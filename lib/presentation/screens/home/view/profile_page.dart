@@ -3,7 +3,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/sign_in_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
 
 class CongratesScreen extends StatelessWidget {
   const CongratesScreen({super.key});
@@ -232,7 +232,8 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                Constants.navigateTo(const HomeScreen(), pushReplacment: true);
+                Constants.navigateTo(const BottomNavBarScreen(),
+                    pushReplacment: true);
               },
               style: ButtonStyle(
                 side: MaterialStateProperty.all(BorderSide(

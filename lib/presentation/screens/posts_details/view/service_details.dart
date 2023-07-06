@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/payment/order_review_screen.dart';
-
+import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import '../../../../constants/colors.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
@@ -47,7 +47,7 @@ class ServiceDetailsPage extends StatelessWidget {
         child: Column(
           children: [
             Image.network(
-              '',
+              ServiceController.serviceDetailsModel.data!.service.attachFile,
               height: MediaQuery.of(context).size.height * 0.3,
               width: double.infinity,
               fit: BoxFit.fill,
@@ -59,15 +59,17 @@ class ServiceDetailsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const CircleAvatar(
-                          backgroundImage: NetworkImage(''),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(ServiceController
+                              .serviceDetailsModel.data!.service.user.photo),
                           radius: 20,
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          'userName',
+                          ServiceController
+                              .serviceDetailsModel.data!.service.user.name,
                           style: headStyle.copyWith(fontSize: 15),
                         ),
                       ],
@@ -76,7 +78,7 @@ class ServiceDetailsPage extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      'serviceName',
+                      ServiceController.serviceDetailsModel.data!.service.name,
                       style: headStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
@@ -85,7 +87,8 @@ class ServiceDetailsPage extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      'description',
+                      ServiceController
+                          .serviceDetailsModel.data!.service.description,
                       style: postDescriptionStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
@@ -101,7 +104,8 @@ class ServiceDetailsPage extends StatelessWidget {
                             )),
                         const Spacer(),
                         Text(
-                          'deliveryDays',
+                          ServiceController
+                              .serviceDetailsModel.data!.service.delieveryDate,
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -120,7 +124,8 @@ class ServiceDetailsPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'category',
+                      ServiceController
+                          .serviceDetailsModel.data!.service.category,
                       style: postDescriptionStyle.copyWith(fontSize: 15),
                     ),
                     const SizedBox(
@@ -133,7 +138,7 @@ class ServiceDetailsPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'softwareTools',
+                      '${ServiceController.serviceDetailsModel.data!.service.softwareTool}',
                       style: postDescriptionStyle.copyWith(fontSize: 15),
                     ),
                   ]),
@@ -142,16 +147,18 @@ class ServiceDetailsPage extends StatelessWidget {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => const OrderReviewScreen(
-                          imgUrl: 'imgUrl',
-                          serviceName: 'serviceName',
-                          rate: 2,
-                          deliveryDays: 'deliveryDays',
-                          deliveryDate: 'deliveryDate',
+                      builder: (ctx) => OrderReviewScreen(
+                          imgUrl: ServiceController
+                              .serviceDetailsModel.data!.service.attachFile,
+                          serviceName: ServiceController
+                              .serviceDetailsModel.data!.service.name,
+                          rate: 2.4,
+                          deliveryDate: ServiceController
+                              .serviceDetailsModel.data!.service.delieveryDate,
                           price: 50))),
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 20)),
+                    const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
                 backgroundColor: MaterialStateProperty.all(primaryLightColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
@@ -160,7 +167,7 @@ class ServiceDetailsPage extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Continue (\$10)',
+                'Continue (\$${ServiceController.serviceDetailsModel.data!.service.salary})',
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize: 16,

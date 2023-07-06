@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
 
 class ReusablePostForm extends StatefulWidget {
   const ReusablePostForm({
@@ -320,7 +320,10 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                     debugPrint('correct');
                     if (widget.onPressed != null) {
                       widget.onPressed!();
-                      Constants.navigateTo(const HomeScreen(),pushAndRemoveUntil: true,);
+                      Constants.navigateTo(
+                        const BottomNavBarScreen(),
+                        pushAndRemoveUntil: true,
+                      );
                     }
                     //}
                   },

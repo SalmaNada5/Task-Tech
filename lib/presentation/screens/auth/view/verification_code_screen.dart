@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/reset_password_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/reset_password_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
 
-import '../../../../../constants/colors.dart';
-import '../../../../../constants/text_styles.dart';
+import '../../../../constants/colors.dart';
+import '../../../../constants/text_styles.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key, required this.fromSignup});

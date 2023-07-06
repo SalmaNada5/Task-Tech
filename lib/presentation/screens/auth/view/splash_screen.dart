@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/onboarding_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/onboarding_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
     Constants.navigateTo(
-      token == null ? const OnboardingScreen() : const HomeScreen(),
+      token == null ? const OnboardingScreen() : const BottomNavBarScreen(),
       pushReplacment: true,
     );
   }

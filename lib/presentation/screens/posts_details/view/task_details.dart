@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/posts/view/comment.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/comments_controller.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   const TaskDetailsPage({
@@ -14,6 +19,7 @@ class TaskDetailsPage extends StatefulWidget {
     required this.postTime,
     required this.taskName,
     required this.userImg,
+    required this.postId,
   });
   final String userImg;
   final String name;
@@ -22,6 +28,7 @@ class TaskDetailsPage extends StatefulWidget {
   final int price;
   final String deliveryTime;
   final DateTime postTime;
+  final String postId;
   @override
   State<TaskDetailsPage> createState() => _TaskDetailsPageState();
 }
@@ -29,26 +36,26 @@ class TaskDetailsPage extends StatefulWidget {
 TextEditingController _commentController = TextEditingController();
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
+  @override
+  void initState() {
+    getAllComments();
+    super.initState();
+  }
+
+  void getAllComments() async {
+    try {
+      await CommentsController.getAllComments(widget.postId);
+      setState(() {});
+    } catch (e) {
+      logError('$e in getAllTasks');
+    }
+  }
+
   bool showIcon = false;
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    String timeAgo;
-    debugPrint('${now.month - widget.postTime.month} month ago');
-    if (now.month - widget.postTime.month > 0) {
-      timeAgo = '${now.month - widget.postTime.month} m';
-    } else if (now.day - widget.postTime.day > 0) {
-      if (now.day - widget.postTime.day == 1) {
-        timeAgo = '${now.day - widget.postTime.day} day';
-      } else {
-        timeAgo = '${now.day - widget.postTime.day} days';
-      }
-    } else if (now.hour - widget.postTime.hour > 0) {
-      timeAgo = '${now.hour - widget.postTime.hour} hr';
-    } else {
-      timeAgo = '${now.minute - widget.postTime.minute} hr';
-    }
+    String timeAgo = Constants.convertToTimeAgo(widget.postTime);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -169,22 +176,24 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: ListView.separated(
-                  itemCount: 4,
+                  itemCount: CommentsController.comments.length,
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(
                     color: Color(0xffE0E0E0),
                     indent: 10,
                     endIndent: 10,
                   ),
-                  itemBuilder: (BuildContext context, int index) =>
-                      const ReusableCommentWidget(
-                    userName: 'Eman Elsayed',
-                    rate: 3,
-                    date: 'june 15, 11:30 AM',
-                    imgUrl:
-                        'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                    text: 'I will design a beautiful website for your business',
-                  ),
+                  itemBuilder: (BuildContext context, int i) {
+                    return ReusableCommentWidget(
+                      userName: CommentsController.comments[i].user.name,
+                      rate: CommentsController.comments[i].user.ratingsAverage,
+                      date: DateFormat.yMMM(
+                              CommentsController.comments[i].createdAt)
+                          .toString(),
+                      imgUrl: CommentsController.comments[i].user.photo,
+                      text: CommentsController.comments[i].text,
+                    );
+                  },
                 ),
               ),
               // Row(
@@ -241,10 +250,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               backgroundImage: NetworkImage(
-                'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-              ),
+                  CurrentUserInfoController.userInfoModel.data?.user.photo ??
+                      ''),
               radius: 18,
             ),
             const SizedBox(

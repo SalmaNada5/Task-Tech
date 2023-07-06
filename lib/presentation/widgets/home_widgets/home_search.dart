@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/presentation/screens/home/controller/search_service_controller.dart';
+import 'package:task_tech/presentation/screens/home/view/search_post_result.dart';
 
-class SearchWidget extends StatelessWidget {
-  SearchWidget({super.key});
+class SearchWidget extends StatefulWidget {
+  const SearchWidget({super.key});
+
+  @override
+  State<SearchWidget> createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -14,9 +22,7 @@ class SearchWidget extends StatelessWidget {
         prefixIcon: Image.asset('images/search.png'),
         suffixIcon: GestureDetector(
           child: Image.asset('images/filter.png'),
-          onTap: () {
-            
-          },
+          onTap: () {},
         ),
         hintText: 'what are you looking for?',
         hintStyle: GoogleFonts.poppins(
@@ -74,7 +80,24 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    SearchServiceController.searchServiceFunc(query);
+    return ListView.builder(
+      itemCount:
+          SearchServiceController.searchServiceModel.services?.length ?? 0,
+      itemBuilder: (BuildContext context, int i) => SearchPostResult(
+          serviceAttachFile: SearchServiceController
+                  .searchServiceModel.services?[i].attachFile ??
+              '',
+          userImg: SearchServiceController
+                  .searchServiceModel.services?[i].user.photo ??
+              '',
+          userName: SearchServiceController
+                  .searchServiceModel.services?[i].user.name ??
+              '',
+          serviceName:
+              SearchServiceController.searchServiceModel.services?[i].name ??
+                  ''),
+    );
   }
 
   @override

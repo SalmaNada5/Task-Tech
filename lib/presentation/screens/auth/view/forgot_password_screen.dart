@@ -4,7 +4,7 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/verification_code_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/verification_code_screen.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {

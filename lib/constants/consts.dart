@@ -128,8 +128,7 @@ mixin Constants {
                             }
                           },
                           child: const Text("Open Camera")),
-
-                          TextButton(
+                      TextButton(
                           onPressed: () {
                             if (secondChoiceFunction != null) {
                               secondChoiceFunction();
@@ -166,5 +165,24 @@ mixin Constants {
               );
             },
           );
+  }
+
+  static String convertToTimeAgo(DateTime time) {
+    DateTime now = DateTime.now();
+    String timeAgo;
+    if (now.month - time.month > 0) {
+      timeAgo = '${now.month - time.month} m';
+    } else if (now.day - time.day > 0) {
+      if (now.day - time.day == 1) {
+        timeAgo = '${now.day - time.day} day';
+      } else {
+        timeAgo = '${now.day - time.day} days';
+      }
+    } else if (now.hour - time.hour > 0) {
+      timeAgo = '${now.hour - time.hour} hr';
+    } else {
+      timeAgo = '${now.minute - time.minute} min';
+    }
+    return timeAgo;
   }
 }

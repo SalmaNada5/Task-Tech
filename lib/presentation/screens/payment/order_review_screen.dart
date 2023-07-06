@@ -11,15 +11,13 @@ class OrderReviewScreen extends StatefulWidget {
       required this.imgUrl,
       required this.serviceName,
       required this.rate,
-      required this.deliveryDays,
       required this.deliveryDate,
       required this.price});
   final String imgUrl;
   final String serviceName;
-  final double rate;
-  final String deliveryDays;
+  final num rate;
   final String deliveryDate;
-  final double price;
+  final int price;
 
   @override
   State<OrderReviewScreen> createState() => _OrderReviewScreenState();
@@ -112,7 +110,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                     Row(
                       children: [
                         SmoothStarRating(
-                          rating: widget.rate,
+                          rating: widget.rate.toDouble(),
                           size: 30,
                           filledIconData: Icons.star,
                           defaultIconData: Icons.star_border,
@@ -193,28 +191,28 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Delivery Days',
-                        style: GoogleFonts.poppins(
-                          color: const Color(0xff7C7C7C),
-                          fontSize: 16,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        widget.deliveryDays,
-                        style: GoogleFonts.poppins(
-                          fontSize: 15,
-                          color: const Color(0xff7C7C7C),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Text(
+                  //       'Delivery Days',
+                  //       style: GoogleFonts.poppins(
+                  //         color: const Color(0xff7C7C7C),
+                  //         fontSize: 16,
+                  //       ),
+                  //     ),
+                  //     const Spacer(),
+                  //     Text(
+                  //       widget.deliveryDays,
+                  //       style: GoogleFonts.poppins(
+                  //         fontSize: 15,
+                  //         color: const Color(0xff7C7C7C),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 30,
+                  // ),
                   const Divider(
                     color: Color(0xffDADADA),
                   ),

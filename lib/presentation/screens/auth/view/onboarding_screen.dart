@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/auth/view/screens/sign_up_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/sign_up_screen.dart';
 
-import '../../../../widgets/onboarding.dart';
+import '../../../widgets/onboarding.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
-import '../../../../../constants/colors.dart';
+import '../../../../constants/colors.dart';
 
 class UnexpectedErrorScreen extends StatelessWidget {
   const UnexpectedErrorScreen({super.key});

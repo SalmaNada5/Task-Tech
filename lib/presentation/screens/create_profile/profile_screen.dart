@@ -17,7 +17,7 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
-  var rating = 0.0;
+  num rating = 0.0;
   TabController? _tabController;
 
   @override
@@ -34,26 +34,24 @@ class ProfileScreenState extends State<ProfileScreen>
             backgroundColor: Colors.white,
             body: Padding(
                 padding: EdgeInsetsDirectional.only(
-            start: MediaQuery.of(context).size.width * 0.03,
-            end: MediaQuery.of(context).size.width * 0.03,
-            bottom: MediaQuery.of(context).size.height * 0.03,
-            top: MediaQuery.of(context).size.height * 0.03),
+                    start: MediaQuery.of(context).size.width * 0.03,
+                    end: MediaQuery.of(context).size.width * 0.03,
+                    bottom: MediaQuery.of(context).size.height * 0.03,
+                    top: MediaQuery.of(context).size.height * 0.03),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                   // SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
+                    // SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
                     IconButton(
-                      
-                      icon:
-                          Image.asset('icons/bi_arrow-left-circle-fill.png'),
+                      icon: Image.asset('icons/bi_arrow-left-circle-fill.png'),
                       iconSize: 40,
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     ),
-                   const Center(
-                      child:  CircleAvatar(
+                    const Center(
+                      child: CircleAvatar(
                         radius: 65,
                         backgroundImage: AssetImage('images/picture.png'),
                       ),
@@ -61,8 +59,8 @@ class ProfileScreenState extends State<ProfileScreen>
                     const SizedBox(
                       height: 21,
                     ),
-                     Center(
-                      child:  Text(
+                    Center(
+                      child: Text(
                         'Eman Elsayed',
                         style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w500),
@@ -73,7 +71,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     ),
                     Center(
                       child: GradientText('UI/UX Designer',
-                          style:  GoogleFonts.poppins(
+                          style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -92,7 +90,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SmoothStarRating(
-                          rating: rating,
+                          rating: rating.toDouble(),
                           size: 25,
                           filledIconData: Icons.star,
                           defaultIconData: Icons.star_border,
@@ -124,9 +122,9 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 19,
                     ),
                     Padding(
-                      padding:  EdgeInsetsDirectional.only(
-                        start:MediaQuery.of(context).size.width * 0.03,
-                        end: MediaQuery.of(context).size.width * 0.03 ),
+                      padding: EdgeInsetsDirectional.only(
+                          start: MediaQuery.of(context).size.width * 0.03,
+                          end: MediaQuery.of(context).size.width * 0.03),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -141,7 +139,7 @@ class ProfileScreenState extends State<ProfileScreen>
                                 )),
                             child: MaterialButton(
                                 onPressed: () {},
-                                child:  Text(
+                                child: Text(
                                   'Message',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20,
@@ -151,7 +149,7 @@ class ProfileScreenState extends State<ProfileScreen>
                           ),
                           const Spacer(),
                           Container(
-                           width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             height: MediaQuery.of(context).size.height * 0.06,
                             decoration: BoxDecoration(
                               color: const Color.fromRGBO(22, 80, 105, 1),
@@ -159,7 +157,7 @@ class ProfileScreenState extends State<ProfileScreen>
                             ),
                             child: MaterialButton(
                                 onPressed: () {},
-                                child:  Text(
+                                child: Text(
                                   'Hire Me',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20, color: Colors.white),
@@ -172,7 +170,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 30,
                     ),
                     TabBar(
-                      tabs:  [
+                      tabs: [
                         Text(
                           'About me',
                           style: GoogleFonts.poppins(
@@ -217,7 +215,5 @@ class ProfileScreenState extends State<ProfileScreen>
                     )
                   ],
                 ))));
-   
-    
   }
 }
