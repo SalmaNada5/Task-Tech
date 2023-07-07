@@ -7,6 +7,7 @@ class Messages {
   String time;
   final bool isRead;
   final int unreadCount;
+  final bool isReceiveMess;
 
   Messages(
       {required this.name,
@@ -14,7 +15,8 @@ class Messages {
       required this.image,
       required this.isRead,
       required this.unreadCount,
-      required this.time});
+      required this.time,
+      required this.isReceiveMess});
 }
 
   List<Messages> chatsList = [
@@ -24,6 +26,7 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 1,
+        isReceiveMess: false,
         isRead: false),
     Messages(
         name: 'Kristin Waston',
@@ -31,6 +34,7 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 0,
+        isReceiveMess: true,
         isRead: true),
     Messages(
         name: 'Kristin Waston',
@@ -38,6 +42,7 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 0,
+        isReceiveMess: true,
         isRead: true),
     Messages(
         name: 'Kristin Waston',
@@ -45,6 +50,7 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 3,
+        isReceiveMess: false,
         isRead: false),
     Messages(
         name: 'Kristin Waston',
@@ -52,6 +58,8 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 5,
+                isReceiveMess: false,
+
         isRead: false),
     Messages(
         name: 'Kristin Waston',
@@ -59,6 +67,8 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 0,
+                isReceiveMess: false,
+
         isRead: true),
     Messages(
         name: 'Kristin Waston',
@@ -66,6 +76,8 @@ class Messages {
         image: 'images/person 2.png',
         time: '01:25',
         unreadCount: 0,
+                isReceiveMess: false,
+
         isRead: true),
     
   ];

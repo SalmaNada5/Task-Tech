@@ -52,10 +52,10 @@ class _AboutmePageState extends State<AboutmePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
              Text(
-              'Lorem ipsum dolor sit amet, consectetur elit adipiscing'
-              ' elit. Dolor fermentum libero velit quis in fermentum justo, '
-              'velit quis non.',
+              maxLines: 5,
+              "This Web Developer job description sample template is optimized for advertising for a  website developer on online job boards or careers",
               style: GoogleFonts.poppins(
+                
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(124, 124, 124, 1)),
@@ -186,11 +186,12 @@ class _AboutmePageState extends State<AboutmePage> {
               child: SfRangeSlider(
                 inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
                 activeColor: primaryLightColor,
-                min: 1000,
+                min: 100,
                 max: 10000,
                 enableTooltip: true,
                 shouldAlwaysShowTooltip: true,
-                values: value,
+                values:const SfRangeValues(150, 500), 
+                //value,
                 minorTicksPerInterval: 500,
                 stepSize: 500,
                 startThumbIcon: Image.asset('images/thumbIcon.png'),
@@ -239,7 +240,7 @@ class _AboutmePageState extends State<AboutmePage> {
                   child: MaterialButton(
                       onPressed: () {},
                       child: Text(
-                        'UI/ UX Design',
+                        'C',
                         style: GoogleFonts.poppins(
                             fontSize: 11.5,
                             color: primaryLightColor,
@@ -257,14 +258,14 @@ class _AboutmePageState extends State<AboutmePage> {
                   child: MaterialButton(
                       onPressed: () {},
                       child: Text(
-                        'Interfaces',
+                        'C++',
                         style: GoogleFonts.poppins(
                             fontSize: 11.5,
                             color: primaryLightColor,
                             fontWeight: FontWeight.w400),
                       )),
                 ),
-                const Spacer(),
+                /*const Spacer(),
                 Container(
                   height: 32,
                   width: MediaQuery.of(context).size.width*0.3,
@@ -281,7 +282,7 @@ class _AboutmePageState extends State<AboutmePage> {
                             color: primaryLightColor,
                             fontWeight: FontWeight.w400),
                       )),
-                ),
+                ),*/
               ],
             )
           ],

@@ -5,10 +5,13 @@ import 'package:task_tech/presentation/screens/create_profile/profile_controller
 import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_model.dart';
 import 'package:task_tech/presentation/screens/create_profile/profile_controller/proile_photo_model.dart';
 
+import 'get_current_user_model.dart';
+
 class ProfileController {
   static final DioClient _dioClient = DioClient();
   static CreateProfileModel profileModel = CreateProfileModel();
   static ProfilePhotoModel profilePhotoModel = ProfilePhotoModel();
+
 
   static Future<CreateProfileModel?> createProfileFunc( {
      List<String>? skills,
@@ -75,5 +78,28 @@ static Future<ProfilePhotoModel?> addProfilePhoto({
   return null;
 }
 
+
+}
+
+
+class GetCurrentUserController{
+    static final DioClient _dioClient = DioClient();
+    static GetCurrentUser currentUserModel = GetCurrentUser();
+
+  static Future<GetCurrentUser?> getCurrentUserFunc({bool dioLoading=true})async{
+    try {
+      Response res = _dioClient.get('api/v1/users/me',
+       '',
+       isLoading: dioLoading)as Response;
+
+       currentUserModel = GetCurrentUser.fromJson(res.data);
+       logSuccess('current user returned successfully: ${currentUserModel.status}');
+
+      return currentUserModel;
+    } catch (e) {
+      logError('error in get current user ${e.toString()}');
+    }
+    return null;
+  }
 
 }

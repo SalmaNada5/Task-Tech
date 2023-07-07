@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/salary_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
 
-import 'profile_controller/profile_model.dart';
 
 class BioScreen extends StatefulWidget {
   const BioScreen({Key? key}) : super(key: key);
@@ -116,8 +114,11 @@ class BioScreenState extends State<BioScreen> {
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
                     color: const Color.fromRGBO(22, 80, 105, 1),
-                    onpressed: () async {
-                      CreateProfileModel? profileModel;
+                    onpressed: ()  {
+                      Constants.navigateTo(const SalaryScreen(),
+                            pushAndRemoveUntil: true);
+
+                     /* CreateProfileModel? profileModel;
                       profileModel = await ProfileController.createProfileFunc(
                           about: descController.text);
                       if (profileModel == null) {
@@ -126,7 +127,7 @@ class BioScreenState extends State<BioScreen> {
                       } else {
                         Constants.navigateTo(const SalaryScreen(),
                             pushAndRemoveUntil: true);
-                      }
+                      }*/
                     },
                     childWidget: Text(
                       'Next',

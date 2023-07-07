@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/colors.dart';
 
-// ignore: must_be_immutable
 class RequestNotification extends StatefulWidget {
   String name;
   String imageURL;

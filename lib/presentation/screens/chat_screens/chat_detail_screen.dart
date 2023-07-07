@@ -13,10 +13,6 @@ class ChatDetailScreen extends StatefulWidget {
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   bool isOnline = true;
     var messageController = TextEditingController();
-
-
-  @override
-  Widget build(BuildContext context) {
     List<ChatMessage> messages = [
       ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
       ChatMessage(
@@ -28,6 +24,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       ChatMessage(
           messageContent: "Hi Kristin! \n Yes, I just finished developing the \"Chat\" .", messageType: "sender",messageIsRead :false),
     ];
+
+
+  @override
+  Widget build(BuildContext context) {
+    
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

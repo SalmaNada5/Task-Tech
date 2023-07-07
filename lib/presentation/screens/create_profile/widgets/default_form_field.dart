@@ -16,6 +16,7 @@ class DefaultFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: type,
       controller: controller,
       style: GoogleFonts.poppins(
         color: Colors.black,

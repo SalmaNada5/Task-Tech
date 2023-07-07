@@ -20,35 +20,35 @@ class SkillsScreen extends StatefulWidget {
 
 class SkillsScreenState extends State<SkillsScreen> {
   List<Widget> chipList = [
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'UI/UX',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Technology',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Strategy',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Interfaces',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Programming',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Writing',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Web design',
       isSelected: false,
     ),
-     FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Art & illustration',
       isSelected: false,
     ),
@@ -187,8 +187,8 @@ class SkillsScreenState extends State<SkillsScreen> {
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
   final bool isSelected;
-  List<String>? skillList = [];
-  FilterChipWidget(
+  final List<String>? skillList;
+  const FilterChipWidget(
       {Key? key,
       required this.chipName,
       required this.isSelected,

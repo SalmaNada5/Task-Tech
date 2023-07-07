@@ -55,7 +55,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     ),
                      Center(
                       child:  Text(
-                        'Eman Elsayed',
+                        'Noran Tarek',
                         style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
@@ -64,7 +64,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 10,
                     ),
                     Center(
-                      child: GradientText('UI/UX Designer',
+                      child: GradientText('App Developer',
                           style:  GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
