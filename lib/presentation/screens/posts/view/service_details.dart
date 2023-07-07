@@ -59,7 +59,7 @@ class ServiceDetailsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundImage: NetworkImage(''),
                           radius: 20,
                         ),
@@ -142,7 +142,7 @@ class ServiceDetailsPage extends StatelessWidget {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => OrderReviewScreen(
+                      builder: (ctx) => const OrderReviewScreen(
                           imgUrl: 'imgUrl',
                           serviceName: 'serviceName',
                           rate: 2,

@@ -5,7 +5,6 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/view/create_post_screen.dart';
-import 'package:task_tech/presentation/screens/chats_screen.dart';
 import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
@@ -16,6 +15,8 @@ import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
 import '../../../widgets/home_widgets/category_item.dart';
 import '../../../widgets/home_widgets/service_widget.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+
+import '../../chat_screens/chats_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/screens/create_profile/portfolio_page.dart';
-import 'package:task_tech/presentation/screens/create_profile/review_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_pages/portfolio_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_pages/review_page.dart';
 
 import 'about_me_page.dart';
 
@@ -42,16 +42,8 @@ class ProfileScreenState extends State<ProfileScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                   // SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
-                    IconButton(
-                      
-                      icon:
-                          Image.asset('icons/bi_arrow-left-circle-fill.png'),
-                      iconSize: 40,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
+                    
                    const Center(
                       child:  CircleAvatar(
                         radius: 65,
@@ -63,7 +55,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     ),
                      Center(
                       child:  Text(
-                        'Eman Elsayed',
+                        'Noran Tarek',
                         style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
@@ -72,7 +64,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 10,
                     ),
                     Center(
-                      child: GradientText('UI/UX Designer',
+                      child: GradientText('App Developer',
                           style:  GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -160,7 +152,7 @@ class ProfileScreenState extends State<ProfileScreen>
                             child: MaterialButton(
                                 onPressed: () {},
                                 child:  Text(
-                                  'Hire Me',
+                                  'Follow',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20, color: Colors.white),
                                 )),

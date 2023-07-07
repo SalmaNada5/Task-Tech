@@ -1,10 +1,15 @@
+// ignore_for_file: no_logic_in_create_state
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
 
-import 'app_bar_widget.dart';
 import 'bio_screen.dart';
+import 'profile_controller/profile_model.dart';
 
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen({Key? key}) : super(key: key);
@@ -15,42 +20,43 @@ class SkillsScreen extends StatefulWidget {
 
 class SkillsScreenState extends State<SkillsScreen> {
   List<Widget> chipList = [
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'UI/UX',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Technology',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Strategy',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Interfaces',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Programming',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Writing',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Web design',
       isSelected: false,
     ),
-    const FilterChipWidget(
+     const FilterChipWidget(
       chipName: 'Art & illustration',
       isSelected: false,
     ),
   ];
   @override
   Widget build(BuildContext context) {
-    String? chiptext;
+    //String chiptext ='';
+    //bool addchip = false;
     var skillController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -108,6 +114,25 @@ class SkillsScreenState extends State<SkillsScreen> {
                         color: const Color.fromRGBO(227, 227, 227, 1)),
                   ),
                   child: TextFormField(
+                    /*onFieldSubmitted: (value){
+                      setState(() {
+                        chiptext =skillController.text; 
+                        if (chiptext.isEmpty){
+                          addchip = false;
+                        } else addchip =true;
+                      });
+                    },
+                    onSaved: (newValue) {
+                      print('saved');
+                    },
+                    onEditingComplete: (){
+                      setState(() {
+                        chiptext =skillController.text;
+                        if (chiptext.isEmpty){
+                          addchip = false;
+                        } else addchip =true;
+                      });
+                    },*/
                     controller: skillController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -115,7 +140,6 @@ class SkillsScreenState extends State<SkillsScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.all(Radius.circular(8.6)),
                         ),
-                        labelText: chiptext,
                         hintText: 'Type a skill..',
                         hintStyle: GoogleFonts.poppins(
                             fontSize: 14,
@@ -138,27 +162,19 @@ class SkillsScreenState extends State<SkillsScreen> {
                   height: 30,
                 ),
                 Center(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 2, horizontal: Constants.screenWidth * 0.3),
-                    decoration: BoxDecoration(
+                  child: CustomButtonWidget(
+                      width: Constants.screenWidth * 0.7,
+                      height: Constants.screenHeight * 0.075,
                       color: const Color.fromRGBO(22, 80, 105, 1),
-                      borderRadius: BorderRadius.circular(7.7),
-                    ),
-                    child: MaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const BioScreen()));
-                        },
-                        child: Text(
-                          'Next',
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, color: Colors.white),
-                        )),
-                  ),
-                ),
+                      onpressed: () {
+                        Constants.navigateTo(const BioScreen());
+                      },
+                      childWidget: Text(
+                        'Next',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, color: Colors.white),
+                      )),
+                )
               ],
             ),
           ),
@@ -171,8 +187,12 @@ class SkillsScreenState extends State<SkillsScreen> {
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
   final bool isSelected;
+  final List<String>? skillList;
   const FilterChipWidget(
-      {Key? key, required this.chipName, required this.isSelected})
+      {Key? key,
+      required this.chipName,
+      required this.isSelected,
+      this.skillList})
       : super(key: key);
 
   @override
@@ -205,10 +225,22 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
         ],
       ),
       selected: isSelected,
-      onSelected: (selected) {
+      onSelected: (selected) async {
         setState(() {
           isSelected = selected;
+          if(isSelected) widget.skillList!.add(widget.chipName);
         });
+        if (isSelected) {
+          CreateProfileModel? profileModel;
+          profileModel = await ProfileController.createProfileFunc(
+              skills: widget.skillList);
+          if (profileModel == null) {
+            return Constants.errorMessage(description: 'Invalid input data');
+          } else {
+            Constants.navigateTo(const SkillsScreen(),
+                pushAndRemoveUntil: true);
+          }
+        }
       },
       backgroundColor: white,
       showCheckmark: false,

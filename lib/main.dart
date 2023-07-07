@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: Constants.navigatorKey,
       debugShowCheckedModeBanner: false, 
-      home: const SplashScreen(),
+      home:const SplashScreen(),
     );
   }
 }
