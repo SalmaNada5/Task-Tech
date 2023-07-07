@@ -13,11 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       navigatorKey: Constants.navigatorKey,
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );
   }
 }
-

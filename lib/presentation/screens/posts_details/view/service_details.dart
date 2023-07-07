@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/payment/order_review_screen.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/payment_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
+import 'package:task_tech/presentation/screens/posts_details/models/payment_web_view.dart';
 import '../../../../constants/colors.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
@@ -166,21 +168,15 @@ class ServiceDetailsPage extends StatelessWidget {
                   ]),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (ctx) => OrderReviewScreen(
-                          imgUrl: ServiceController.serviceDetailsModel.data
-                                  ?.service.attachFile ??
-                              "",
-                          serviceName: ServiceController
-                                  .serviceDetailsModel.data?.service.name ??
-                              "",
-                          rate: 2.4,
-                          deliveryDate: ServiceController.serviceDetailsModel
-                                  .data?.service.delieveryDate ??
-                              "",
-                          price: 50))),
+              onPressed: () async {
+                String? serviceId =
+                    ServiceController.serviceDetailsModel.data?.service.id;
+                await PaymentController.paymentFunc(serviceId);
+                String url = '';
+                url = PaymentController.paymentModel.session?.url ?? '';
+                logInfo(url);
+                Constants.navigateTo(WebViewPage(url: url));
+              }, 
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
@@ -198,7 +194,10 @@ class ServiceDetailsPage extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),

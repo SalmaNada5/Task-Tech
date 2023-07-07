@@ -6,8 +6,8 @@ import 'package:task_tech/constants/text_styles.dart';
 import '../../../../constants/colors.dart';
 
 class UnexpectedErrorScreen extends StatelessWidget {
-  const UnexpectedErrorScreen({super.key});
-
+  const UnexpectedErrorScreen({super.key, this.failedMessage});
+  final String? failedMessage;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,8 @@ class UnexpectedErrorScreen extends StatelessWidget {
             ),
             Image.asset('images/Computer troubleshooting-pana 1.png'),
             Text(
-              'The link you followed probably\nbroken check the URL spelling\nand try again',
+              failedMessage ??
+                  'The link you followed probably\nbroken check the URL spelling\nand try again',
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 fontSize: 20,

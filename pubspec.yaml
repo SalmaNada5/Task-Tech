@@ -37,6 +37,7 @@ dependencies:
   shared_preferences: ^2.1.2
   cached_network_image:
   timeago: ^3.3.0
+  webview_flutter: ^4.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

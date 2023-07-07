@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
 import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
-
-import '../../../../constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
 
 class PostService extends StatefulWidget {
   const PostService({super.key});
@@ -19,14 +18,15 @@ class _PostServiceState extends State<PostService> {
   Widget build(BuildContext context) {
     return ReusablePostForm(
       onPressed: () {
-        AddPostsController.uploadPostFunc();
+        AddPostsController.uploadServiceFunc();
+        PostController.getTaskPosts(dioLoading: false);
       },
-      taskNameController: AddPostsController.taskNameController,
-      descriptionController: AddPostsController.descriptionController,
-      deliveryDaysController: AddPostsController.deliveryDaysController,
-      salaryController: AddPostsController.salaryController,
-      categoryController: AddPostsController.categoryController,
-      stController: AddPostsController.stController,
+      postNameController: AddPostsController.serviceNameController,
+      descriptionController: AddPostsController.serviceDescriptionController,
+      deliveryDaysController: AddPostsController.serviceDeliveryDaysController,
+      salaryController: AddPostsController.serviceSalaryController,
+      categoryController: AddPostsController.serviceCategoryController,
+      stController: AddPostsController.serviceStController,
       firstLabel: 'Name of your service',
       difFields: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class _PostServiceState extends State<PostService> {
             height: 10,
           ),
           TextFormField(
-            controller: AddPostsController.descriptionController,
+            controller: AddPostsController.serviceDescriptionController,
             style: headStyle,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(left: 15),
@@ -54,14 +54,15 @@ class _PostServiceState extends State<PostService> {
               fillColor: const Color(0xffF5F5F5),
             ),
             onChanged: (value) {
-              AddPostsController.descriptionController.text = value.toString();
-              AddPostsController.descriptionController.selection =
+              AddPostsController.serviceDescriptionController.text =
+                  value.toString();
+              AddPostsController.serviceDescriptionController.selection =
                   TextSelection.fromPosition(TextPosition(
                       offset: AddPostsController
-                          .descriptionController.text.length));
+                          .serviceDescriptionController.text.length));
             },
             validator: (value) {
-              value = AddPostsController.descriptionController.text;
+              value = AddPostsController.serviceDescriptionController.text;
               if (value.isEmpty) {
                 return 'Please fill this field';
               } else {
@@ -83,11 +84,12 @@ class _PostServiceState extends State<PostService> {
           ),
           TextFormField(
             onTap: () async {
-              AddPostsController.selectedFiles =
+              AddPostsController.serviceSelectedFiles =
                   await AddPostsController.attachNewFiles();
               String fileN = '';
-              if (AddPostsController.selectedFiles != null) {
-                for (var element in AddPostsController.selectedFiles!.files) {
+              if (AddPostsController.serviceSelectedFiles != null) {
+                for (var element
+                    in AddPostsController.serviceSelectedFiles!.files) {
                   fileN += '${element.path!.split('/').last}, ';
                 }
               }
@@ -148,7 +150,7 @@ class _PostServiceState extends State<PostService> {
                   size: 20,
                 )),
             onChanged: (value) {
-               //AddPostsController.attachFileController.text = value.toString();
+              //AddPostsController.attachFileController.text = value.toString();
               // AddPostsController.attachFileController.selection =
               //     TextSelection.fromPosition(TextPosition(
               //         offset:
@@ -163,21 +165,4 @@ class _PostServiceState extends State<PostService> {
       ),
     );
   }
-
-  // void openFile(PlatformFile file) {
-  //   OpenFile.open(file.path);
-  // }
-
-  // void openFiles(List<PlatformFile> files){
-  //   Navigator.of(context).push(MaterialPageRoute(builder: (_)=> FilsPage(
-  //     files
-  //   ))
-  // )
-  //}
-  // Future<File> saveSelectedFile(PlatformFile file) async {
-  //   final appStorage = await getApplicationDocumentsDirectory();
-  //   final newFile = File('${appStorage.path}/${file.name}');
-
-  //   return File(file.path!).copy(newFile.path);
-  // }
 }

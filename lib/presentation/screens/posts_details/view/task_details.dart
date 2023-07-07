@@ -101,7 +101,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     width: 8,
                   ),
                   Text(
-                    TaskController.taskDetailsModel.data?.post.name ?? "",
+                    TaskController.taskDetailsModel.data?.post.user.name ?? "",
                     style: labelTextFormStyle,
                   ),
                   const Spacer(),
@@ -319,12 +319,20 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               width: 10,
             ),
             showIcon
-                ? Text(
-                    'Post',
-                    style: TextStyle(
-                      color: primaryLightColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                ? GestureDetector(
+                    onTap: () async {
+                      await CommentsController.addComment(
+                          widget.postId, _commentController.text);
+                      await CommentsController.getAllComments(widget.postId);
+                      _commentController.text = '';
+                    },
+                    child: Text(
+                      'Post',
+                      style: TextStyle(
+                        color: primaryLightColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   )
                 : const SizedBox.shrink(),

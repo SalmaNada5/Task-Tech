@@ -91,28 +91,8 @@ class ReusablePostWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   if (dropDownVal == 'Tasks') {
-                    //TaskController.getTaskFunc(taskId ?? "");
                     Constants.navigateTo(TaskDetailsPage(
                       postId: taskId!,
-                      // userImg: TaskController
-                      //         .taskDetailsModel.data?.post.user.photo ??
-                      //     '',
-                      // name:
-                      //     TaskController.taskDetailsModel.data?.post.user.name ??
-                      //         '',
-                      // taskName:
-                      //     TaskController.taskDetailsModel.data?.post.name ??
-                      //         '',
-                      // description: TaskController
-                      //         .taskDetailsModel.data?.post.description ??
-                      //     '',
-                      // price:
-                      //     TaskController.taskDetailsModel.data?.post.salary ??
-                      //         0,
-                      // deliveryTime: TaskController
-                      //         .taskDetailsModel.data?.post.delieveryDate ??
-                      //     '',
-                      // postTime: postTime
                     ));
                   } else {
                     await ServiceController.getServiceFunc(serviceId ?? "");
