@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 
-import '../../../constants/colors.dart';
+import '../../../../../constants/colors.dart';
 
 // ignore: non_constant_identifier_names
 AppBar MyAppbar({required double percent}) {

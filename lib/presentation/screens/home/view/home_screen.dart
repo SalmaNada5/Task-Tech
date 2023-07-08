@@ -13,7 +13,7 @@ import 'package:task_tech/presentation/screens/home/view/notifications_screen.da
 import 'package:task_tech/presentation/widgets/home_widgets/category_item.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
-import 'package:task_tech/presentation/widgets/home_widgets/service_widget.dart';
+import '../../../widgets/home_widgets/service_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

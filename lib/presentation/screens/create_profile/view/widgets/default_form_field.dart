@@ -10,12 +10,13 @@ class DefaultFormField extends StatelessWidget {
     required this.validate,
   }) : super(key: key);
   final TextEditingController? controller;
-  final IconButton? suffix;
+  final Widget? suffix;
   final TextInputType? type;
   final String? Function(String?)? validate;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: type,
       controller: controller,
       style: GoogleFonts.poppins(
         color: Colors.black,
@@ -55,52 +56,3 @@ borderSide: const BorderSide(color: Color.fromRGBO(227, 227, 227, 1)),
 
 
 
-/* import 'package:flutter/material.dart';
-
-Widget defaultFormField({
-  required TextEditingController controller,
-  required TextInputType type,
-  String? label,
-  IconButton? suffix,
-  required Function validate,
-  Function? onTap,
-}) {
-  return Container(
-    width: double.infinity,
-    height: 40,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(8.6),
-      border: Border.all(
-          style: BorderStyle.solid,
-          color: const Color.fromRGBO(227, 227, 227, 1)),
-    ),
-    child: TextFormField(
-      controller: controller,
-      keyboardType: type,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-        labelText: label,
-        floatingLabelAlignment: FloatingLabelAlignment.center,
-        suffixIcon: suffix != null
-            ? IconButton(
-                padding: const EdgeInsetsDirectional.only(bottom: 5),
-                icon: suffix,
-                onPressed: () {},
-                color: const Color.fromRGBO(197, 197, 197, 1),
-              )
-            : null,
-      ),
-      validator: (s) {
-        validate(s);
-        return null;
-      },
-      onTap: onTap == null
-          ? null
-          : () {
-              onTap();
-            },
-    ),
-  );
-} */

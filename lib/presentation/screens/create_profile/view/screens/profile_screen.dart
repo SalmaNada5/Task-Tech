@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/presentation/screens/create_profile/portfolio_page.dart';
-import 'package:task_tech/presentation/screens/create_profile/review_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/portfolio_page.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/review_page.dart';
 
 import 'about_me_page.dart';
 
@@ -17,7 +17,7 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
-  num rating = 0.0;
+  var rating = 0.0;
   TabController? _tabController;
 
   @override
@@ -34,24 +34,18 @@ class ProfileScreenState extends State<ProfileScreen>
             backgroundColor: Colors.white,
             body: Padding(
                 padding: EdgeInsetsDirectional.only(
-                    start: MediaQuery.of(context).size.width * 0.03,
-                    end: MediaQuery.of(context).size.width * 0.03,
-                    bottom: MediaQuery.of(context).size.height * 0.03,
-                    top: MediaQuery.of(context).size.height * 0.03),
+            start: MediaQuery.of(context).size.width * 0.03,
+            end: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height * 0.03),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
-                    IconButton(
-                      icon: Image.asset('icons/bi_arrow-left-circle-fill.png'),
-                      iconSize: 40,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const Center(
-                      child: CircleAvatar(
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.06,),
+                    
+                   const Center(
+                      child:  CircleAvatar(
                         radius: 65,
                         backgroundImage: AssetImage('images/picture.png'),
                       ),
@@ -59,9 +53,9 @@ class ProfileScreenState extends State<ProfileScreen>
                     const SizedBox(
                       height: 21,
                     ),
-                    Center(
-                      child: Text(
-                        'Eman Elsayed',
+                     Center(
+                      child:  Text(
+                        'Noran Tarek',
                         style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
@@ -70,8 +64,8 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 10,
                     ),
                     Center(
-                      child: GradientText('UI/UX Designer',
-                          style: GoogleFonts.poppins(
+                      child: GradientText('App Developer',
+                          style:  GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
@@ -90,7 +84,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SmoothStarRating(
-                          rating: rating.toDouble(),
+                          rating: rating,
                           size: 25,
                           filledIconData: Icons.star,
                           defaultIconData: Icons.star_border,
@@ -122,9 +116,9 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 19,
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.only(
-                          start: MediaQuery.of(context).size.width * 0.03,
-                          end: MediaQuery.of(context).size.width * 0.03),
+                      padding:  EdgeInsetsDirectional.only(
+                        start:MediaQuery.of(context).size.width * 0.03,
+                        end: MediaQuery.of(context).size.width * 0.03 ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -139,7 +133,7 @@ class ProfileScreenState extends State<ProfileScreen>
                                 )),
                             child: MaterialButton(
                                 onPressed: () {},
-                                child: Text(
+                                child:  Text(
                                   'Message',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20,
@@ -149,7 +143,7 @@ class ProfileScreenState extends State<ProfileScreen>
                           ),
                           const Spacer(),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
+                           width: MediaQuery.of(context).size.width * 0.4,
                             height: MediaQuery.of(context).size.height * 0.06,
                             decoration: BoxDecoration(
                               color: const Color.fromRGBO(22, 80, 105, 1),
@@ -157,8 +151,8 @@ class ProfileScreenState extends State<ProfileScreen>
                             ),
                             child: MaterialButton(
                                 onPressed: () {},
-                                child: Text(
-                                  'Hire Me',
+                                child:  Text(
+                                  'Follow',
                                   style: GoogleFonts.poppins(
                                       fontSize: 20, color: Colors.white),
                                 )),
@@ -170,7 +164,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       height: 30,
                     ),
                     TabBar(
-                      tabs: [
+                      tabs:  [
                         Text(
                           'About me',
                           style: GoogleFonts.poppins(
@@ -215,5 +209,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     )
                   ],
                 ))));
+   
+    
   }
 }

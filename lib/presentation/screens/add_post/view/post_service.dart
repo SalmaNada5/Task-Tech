@@ -149,13 +149,13 @@ class _PostServiceState extends State<PostService> {
                   Icons.attach_file,
                   size: 20,
                 )),
-            onChanged: (value) {
-              //AddPostsController.attachFileController.text = value.toString();
-              // AddPostsController.attachFileController.selection =
-              //     TextSelection.fromPosition(TextPosition(
-              //         offset:
-              //             AddPostsController.attachFileController.text.length));
-            },
+            // onChanged: (value) {
+            //   //AddPostsController.attachFileController.text = value.toString();
+            //   // AddPostsController.attachFileController.selection =
+            //   //     TextSelection.fromPosition(TextPosition(
+            //   //         offset:
+            //   //             AddPostsController.attachFileController.text.length));
+            // },
             maxLines: 1,
           ),
           const SizedBox(

@@ -3,14 +3,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/payment/controller/review_controller.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
 
 class CongratesScreen extends StatelessWidget {
-  const CongratesScreen({super.key});
+  const CongratesScreen({super.key,});
   @override
   Widget build(BuildContext context) {
-    TextEditingController reviewController = TextEditingController();
-
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
@@ -66,7 +69,7 @@ class CongratesScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: BottomSheetWidget(reviewController: reviewController),
+      bottomSheet: const BottomSheetWidget(),
     );
   }
 }
@@ -74,17 +77,15 @@ class CongratesScreen extends StatelessWidget {
 class BottomSheetWidget extends StatefulWidget {
   const BottomSheetWidget({
     super.key,
-    required this.reviewController,
   });
-
-  final TextEditingController reviewController;
 
   @override
   State<BottomSheetWidget> createState() => _BottomSheetWidgetState();
 }
 
 class _BottomSheetWidgetState extends State<BottomSheetWidget> {
-  double rate = 0.0;
+  TextEditingController reviewController = TextEditingController();
+  num? rate;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -123,7 +124,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                   height: 20,
                                 ),
                                 SmoothStarRating(
-                                  rating: rate,
+                                  rating: rate?.toDouble() ?? 0.0,
                                   size: 30,
                                   filledIconData: Icons.star,
                                   defaultIconData: Icons.star_border,
@@ -160,7 +161,10 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                   child: TextField(
                                     minLines: 6,
                                     maxLines: 10,
-                                    controller: widget.reviewController,
+                                    controller: reviewController,
+                                    onChanged: (value) {
+                                      reviewController.text = value;
+                                    },
                                     decoration: InputDecoration(
                                       hintText: 'Your review',
                                       hintStyle: GoogleFonts.poppins(
@@ -177,8 +181,20 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                 ),
                                 const Spacer(),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
+                                  onPressed: () async {
+                                    logInfo(
+                                        'rate: $rate, review: ${reviewController.text} , curUserId: ${CurrentUserInfoController.userInfoModel.data?.user.id ?? ''} , usermadeTaskId: ${TaskController.taskDetailsModel.data?.post.user.id ?? ''}');
+                                    await ReviewController.addReviewFunc(
+                                        rate ?? 0,
+                                        reviewController.text,
+                                        ServiceController.serviceDetailsModel
+                                                .data?.service.user.id ??
+                                            '',
+                                        CurrentUserInfoController
+                                                .userInfoModel.data?.user.id ??
+                                            '');
+                                    Constants.navigateTo(
+                                        const BottomNavBarScreen());
                                   },
                                   style: ButtonStyle(
                                     padding: MaterialStateProperty.all(

@@ -125,6 +125,7 @@ class DioClient {
     String? token, {
     required var body,
     String? fullURL,
+    bool useFormData = false,
     bool isLoading = true,
   }) async {
     var url = _devBaseURL + api;
@@ -135,7 +136,9 @@ class DioClient {
     if (token != "" && token != null) {
       _dio.options.headers["Authorization"] = "Bearer $token";
     }
-    _dio.options.headers['content-Type'] = Headers.jsonContentType;
+    _dio.options.headers['content-Type'] = useFormData
+        ? Headers.formUrlEncodedContentType
+        : Headers.jsonContentType;
     if (interNetaAvailale) {
       try {
         Response response = await _dio.patch(fullURL ?? url, data: body);

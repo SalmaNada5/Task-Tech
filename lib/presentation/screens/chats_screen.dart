@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/create_profile/chat_detail_screen.dart';
+import 'package:task_tech/presentation/screens/chat_screens/chat_detail_screen.dart';
 
 class ChatUsers {
   String name;

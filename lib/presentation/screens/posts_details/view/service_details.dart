@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/posts_details/controller/payment_controller.dart';
+import 'package:task_tech/presentation/screens/payment/controller/payment_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
-import 'package:task_tech/presentation/screens/posts_details/models/payment_web_view.dart';
+import 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';
 import '../../../../constants/colors.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
@@ -175,8 +175,10 @@ class ServiceDetailsPage extends StatelessWidget {
                 String url = '';
                 url = PaymentController.paymentModel.session?.url ?? '';
                 logInfo(url);
-                Constants.navigateTo(WebViewPage(url: url));
-              }, 
+                Constants.navigateTo(WebViewPage(
+                  url: url,
+                ));
+              },
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/posts_details/models/payment_model.dart';
+import 'package:task_tech/presentation/screens/payment/model/payment_model.dart';
 
 class PaymentController {
   static final DioClient _dioClient = DioClient();
