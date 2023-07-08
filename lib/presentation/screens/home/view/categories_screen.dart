@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
 
 import '../../../../constants/colors.dart';
@@ -38,17 +37,16 @@ class CategoriesScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
-                height: 0.4 * Constants.screenHeight,
+                padding: const EdgeInsets.all(8),
                 child: GridView.count(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 18,
+                  mainAxisSpacing: 20,
                   crossAxisSpacing: 28,
                   childAspectRatio: 1.3,
                   shrinkWrap: true,

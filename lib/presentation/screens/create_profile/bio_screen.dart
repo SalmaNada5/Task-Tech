@@ -2,14 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/create_profile/education_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/salary_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
-
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 
 class BioScreen extends StatefulWidget {
-  const BioScreen({Key? key}) : super(key: key);
-
+  const BioScreen({
+    Key? key,
+    this.job,
+    this.birthDate,
+    this.gender,
+    this.age,
+    this.location,
+    this.phoneNumber,
+    this.skills,
+  }) : super(key: key);
+  final String? job;
+  final String? birthDate;
+  final String? gender;
+  final String? age;
+  final String? location;
+  final String? phoneNumber;
+  final List<String>? skills;
   @override
   BioScreenState createState() => BioScreenState();
 }
@@ -70,6 +85,11 @@ class BioScreenState extends State<BioScreen> {
                   height: Constants.screenWidth * 0.4,
                   child: TextFormField(
                     controller: descController,
+                    onChanged: (value) {
+                      descController.text = value.toString();
+                      descController.selection = TextSelection.collapsed(
+                          offset: descController.text.length);
+                    },
                     maxLines: null,
                     expands: true,
                     keyboardType: TextInputType.text,
@@ -114,20 +134,27 @@ class BioScreenState extends State<BioScreen> {
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
                     color: const Color.fromRGBO(22, 80, 105, 1),
-                    onpressed: ()  {
-                      Constants.navigateTo(const SalaryScreen(),
-                            pushAndRemoveUntil: true);
-
-                     /* CreateProfileModel? profileModel;
-                      profileModel = await ProfileController.createProfileFunc(
-                          about: descController.text);
-                      if (profileModel == null) {
-                        return Constants.errorMessage(
-                            description: 'Invalid input data');
-                      } else {
-                        Constants.navigateTo(const SalaryScreen(),
-                            pushAndRemoveUntil: true);
-                      }*/
+                    onpressed: () async {
+                      Constants.navigateTo(SalaryScreen(
+                        age: widget.age,
+                        job: widget.job,
+                        birthDate: widget.birthDate,
+                        gender: widget.gender,
+                        location: widget.location,
+                        phoneNumber: widget.phoneNumber,
+                        skills: widget.skills,
+                        description: descController.text,
+                      ));
+                      // CreateProfileModel? profileModel;
+                      // profileModel = await ProfileController.createProfileFunc(
+                      //     about: descController.text);
+                      // if (profileModel == null) {
+                      //   return Constants.errorMessage(
+                      //       description: 'Invalid input data');
+                      // } else {
+                      //   Constants.navigateTo(const SalaryScreen(),
+                      //       pushAndRemoveUntil: true);
+                      // }
                     },
                     childWidget: Text(
                       'Next',
@@ -145,7 +172,16 @@ class BioScreenState extends State<BioScreen> {
                     color: white,
                     borderColor: const Color.fromRGBO(22, 80, 105, 1),
                     onpressed: () {
-                      Constants.navigateTo(const SalaryScreen());
+                      // Constants.navigateTo(SalaryScreen(
+                      //   job: widget.job,
+                      //   birthDate: widget.birthDate,
+                      //   gender: widget.age,
+                      //   location: widget.location,
+                      //   phoneNumber: widget.phoneNumber,
+                      //   skills: widget.skills,
+                      //   description: descController.text,
+                      // ));
+                      Constants.navigateTo(const EducationScreen());
                     },
                     childWidget: Text(
                       'Skip',

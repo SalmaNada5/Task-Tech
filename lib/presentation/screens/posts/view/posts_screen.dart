@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
@@ -14,8 +15,6 @@ class PostsScreen extends StatefulWidget {
 class _PostsScreenState extends State<PostsScreen> {
   List<String> list = ['Tasks', 'Services'];
   String _dropdownValue = 'Tasks';
-  final String _postTime = '1 Hr ago';
-
   @override
   void initState() {
     taskPageScrollController();
@@ -93,81 +92,123 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                'Posts',
-                style: titleStyle,
-              ),
-              const Spacer(),
-              Text(
-                'Sort by ',
-                style: headStyle.copyWith(
-                  fontWeight: FontWeight.w100,
+        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Posts',
+                  style: titleStyle,
                 ),
-              ),
-              DropdownButton<String>(
-                value: _dropdownValue,
-                elevation: 0,
-                underline: const SizedBox(),
-                style: headStyle,
-                dropdownColor: Colors.white,
-                iconSize: 30,
-                iconEnabledColor: Colors.black,
-                iconDisabledColor: Colors.black,
-                items: list.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem(value: value, child: Text(value));
-                }).toList(),
-                onChanged: (selectedVal) {
-                  setState(() {
-                    _dropdownValue = selectedVal.toString();
-                  });
-                },
-              ),
-            ],
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: PostController.scrollController,
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: [
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, i) => ReusablePostWidget(
-                      dropDownVal: _dropdownValue,
-                      profileImgUrl: _dropdownValue == 'Tasks'
-                          ? PostController.tasks[i].user!.photo
-                          : PostController.services[i].user!.photo,
-                      accountName: _dropdownValue == 'Tasks'
-                          ? PostController.tasks[i].user!.name
-                          : PostController.services[i].user!.name,
-                      postDescription: _dropdownValue == 'Tasks'
-                          ? PostController.tasks[i].description
-                          : PostController.services[i].description,
-                      postTime: _postTime,
-                    ),
-                    itemCount: _dropdownValue == 'Tasks'
-                        ? PostController.tasks.length - 1
-                        : PostController.services.length - 1,
+                const Spacer(),
+                Text(
+                  'Sort by ',
+                  style: headStyle.copyWith(
+                    fontWeight: FontWeight.w100,
                   ),
-                  isLoading
-                      ? const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                          child: CircularProgressIndicator(),
-                        )
-                      : const SizedBox.shrink(),
-                ],
+                ),
+                DropdownButton<String>(
+                  value: _dropdownValue,
+                  elevation: 0,
+                  underline: const SizedBox(),
+                  style: headStyle,
+                  dropdownColor: Colors.white,
+                  iconSize: 30,
+                  iconEnabledColor: Colors.black,
+                  iconDisabledColor: Colors.black,
+                  items: list.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (selectedVal) {
+                    setState(() {
+                      _dropdownValue = selectedVal.toString();
+                    });
+                  },
+                ),
+              ],
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                controller: PostController.scrollController,
+                scrollDirection: Axis.vertical,
+                child: _dropdownValue == 'Tasks'
+                    ? Column(
+                        children: [
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, i) => ReusablePostWidget(
+                              taskId:
+                                  PostController.postModel.data!.posts[i].id,
+                              // serviceId: PostController
+                              //     .serviceModel.data!.services[i].id,
+                              dropDownVal: _dropdownValue,
+                              profileImgUrl:
+                                  PostController.tasks[i].user?.photo ?? '',
+                              accountName:
+                                  PostController.tasks[i].user?.name ?? '',
+                              postDescription:
+                                  PostController.tasks[i].description,
+                              postTime: Constants.convertToTimeAgo(
+                                  PostController
+                                      .postModel.data!.posts[i].createdAt),
+                              // _dropdownValue == 'Tasks'
+                              //     ? PostController.postModel.data!.posts[i].createdAt
+                              //     : PostController
+                              //         .serviceModel.data!.services[i].createdAt,
+                            ),
+                            itemCount: PostController.tasks.length,
+                          ),
+                          isLoading
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, i) => ReusablePostWidget(
+                              //taskId: PostController.postModel.data!.posts[i].id,
+                              serviceId: PostController
+                                  .serviceModel.data!.services[i].id,
+                              dropDownVal: _dropdownValue,
+                              profileImgUrl:
+                                  PostController.services[i].user?.photo ?? '',
+                              accountName:
+                                  PostController.services[i].user?.name ?? '',
+                              postDescription:
+                                  PostController.services[i].description,
+                              postTime: Constants.convertToTimeAgo(
+                                  PostController.serviceModel.data!.services[i]
+                                      .createdAt),
+                              //   DateTime.now(),
+                              // _dropdownValue == 'Tasks'
+                              //     ? PostController.postModel.data!.posts[i].createdAt
+                              //     : PostController
+                              //         .serviceModel.data!.services[i].createdAt,
+                            ),
+                            itemCount: PostController.services.length,
+                          ),
+                          isLoading
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  child: CircularProgressIndicator(),
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
   }
 }

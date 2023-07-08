@@ -1,16 +1,46 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/create_profile/profile_pages/profile_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
+import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/create_profile/controller/create_profile_controller.dart';
+import 'package:task_tech/presentation/screens/create_profile/controller/upload_cv_controller.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/profile_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 
 import '../../../constants/colors.dart';
+import 'controller/upload_profile_photo_controller.dart';
 
 class EducationScreen extends StatefulWidget {
-  const EducationScreen({Key? key}) : super(key: key);
+  const EducationScreen(
+      {Key? key,
+      this.job,
+      this.birthDate,
+      this.gender,
+      this.age,
+      this.location,
+      this.phoneNumber,
+      this.skills,
+      this.description,
+      this.minimum,
+      this.maximum,
+      this.currency,
+      this.frequency})
+      : super(key: key);
+  final String? job;
+  final String? birthDate;
+  final String? gender;
+
+  final String? age;
+  final String? location;
+  final String? phoneNumber;
+  final List<String>? skills;
+  final String? description;
+  final int? minimum;
+  final int? maximum;
+  final String? currency;
+  final String? frequency;
 
   @override
   EducationScreenState createState() => EducationScreenState();
@@ -18,6 +48,7 @@ class EducationScreen extends StatefulWidget {
 
 class EducationScreenState extends State<EducationScreen> {
   String? dropdownValue;
+  String education = '';
   var educationList = [
     'Ain Shams University',
     'Al Alamein International University',
@@ -81,7 +112,7 @@ class EducationScreenState extends State<EducationScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsetsDirectional.only(
-                start:Constants.screenWidth * 0.03,
+                start: Constants.screenWidth * 0.03,
                 end: Constants.screenWidth * 0.03,
                 bottom: Constants.screenHeight * 0.03,
                 top: Constants.screenHeight * 0.03),
@@ -109,14 +140,13 @@ class EducationScreenState extends State<EducationScreen> {
                   height: 34,
                 ),
                 CustomButtonWidget(
-                  width: Constants.screenWidth*0.9,
-                   height: Constants.screenHeight*0.075,
-                    color: const Color.fromRGBO(22, 80, 105, 0.21),
-                      childWidget: DropdownButton(
+                  width: Constants.screenWidth * 0.9,
+                  height: Constants.screenHeight * 0.075,
+                  color: const Color.fromRGBO(22, 80, 105, 0.21),
+                  childWidget: DropdownButton(
                     padding: EdgeInsetsDirectional.only(
-                      start: MediaQuery.of(context).size.width * 0.09,
-                      end: MediaQuery.of(context).size.width *0.09
-                    ),
+                        start: MediaQuery.of(context).size.width * 0.09,
+                        end: MediaQuery.of(context).size.width * 0.09),
                     value: dropdownValue,
                     isExpanded: true,
                     hint: Row(
@@ -142,26 +172,29 @@ class EducationScreenState extends State<EducationScreen> {
                     ),
                     underline: Container(),
                     icon: Container(),
-              
-                    items: educationList.map<DropdownMenuItem<String>>((String items) {
+                    items: educationList
+                        .map<DropdownMenuItem<String>>((String items) {
                       return DropdownMenuItem<String>(
                           value: items,
                           child: Text(
                             items,
                             maxLines: 2,
                             style: GoogleFonts.poppins(
-                                fontSize: MediaQuery.of(context).size.width * 0.04,
-                                color:  primaryLightColor,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                color: primaryLightColor,
                                 fontWeight: FontWeight.w500),
                           ));
                     }).toList(),
                     onChanged: (String? newvalue) {
                       setState(() {
-                        dropdownValue = newvalue!;
+                        education = newvalue!;
+                        dropdownValue = newvalue;
                       });
                     },
-                  ),)
-              ,SizedBox(
+                  ),
+                ),
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Text(
@@ -193,20 +226,19 @@ class EducationScreenState extends State<EducationScreen> {
                           icon: Image.asset('icons/upload.png'),
                           iconSize: 40,
                           onPressed: () async {
-                            FilePickerResult? result =
-                                await FilePicker.platform.pickFiles();
-
-                            if (result != null) {
-                              PlatformFile file = result.files.first;
-
-                              debugPrint(file.name);
-                              debugPrint(file.bytes.toString());
-                              debugPrint(file.size.toString());
-                              debugPrint(file.extension);
-                              debugPrint(file.path);
-                            } else {
-                              // User canceled the picker
-                            }
+                            UploadCVController.attachCV();
+                            // FilePickerResult? result =
+                            //     await FilePicker.platform.pickFiles();
+                            // if (result != null) {
+                            //   PlatformFile file = result.files.first;
+                            //   debugPrint(file.name);
+                            //   debugPrint(file.bytes.toString());
+                            //   debugPrint(file.size.toString());
+                            //   debugPrint(file.extension);
+                            //   debugPrint(file.path);
+                            // } else {
+                            //   // User canceled the picker
+                            // }
                           },
                         ),
                         Text(
@@ -225,19 +257,40 @@ class EducationScreenState extends State<EducationScreen> {
                 ),
                 Center(
                   child: CustomButtonWidget(
-                    width: Constants.screenWidth*0.7,
-                     height: Constants.screenHeight*0.075,
+                      width: Constants.screenWidth * 0.7,
+                      height: Constants.screenHeight * 0.075,
                       color: const Color.fromRGBO(22, 80, 105, 1),
-                      onpressed: (){
+                      onpressed: () async {
+                        logInfo(
+                            'Date sent => ${widget.gender}, ${widget.frequency}, ${widget.age}, ${widget.birthDate} , ${widget.currency}, , ${widget.description}, ${widget.job}, ${widget.location}');
+                        await UploadProfilePhotoController
+                            .uploadProfilePhotoFunc();
+                        await UploadCVController.uploadCVFunc();
+                        await CreateProfileController.createProfileFunc(
+                          widget.description ?? '',
+                          widget.minimum ?? 0,
+                          widget.maximum ?? 0,
+                          widget.currency ?? '',
+                          widget.frequency ?? '',
+                          'App Developer',
+                          widget.job ?? '',
+                          widget.phoneNumber ?? '',
+                          widget.gender ?? '',
+                          widget.age ?? '',
+                          widget.birthDate ?? '',
+                          widget.location ?? '',
+                          widget.skills ?? [],
+                          education,
+                        );
+
                         Constants.navigateTo(const ProfileScreen());
                       },
-                       childWidget:  Text(
-                          'Save',
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, color: Colors.white),
-                        )),
+                      childWidget: Text(
+                        'Save',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, color: Colors.white),
+                      )),
                 ),
-     
               ],
             ),
           ),

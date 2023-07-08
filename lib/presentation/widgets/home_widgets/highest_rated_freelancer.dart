@@ -14,7 +14,7 @@ class HighestRatedFreelancer extends StatelessWidget {
   final String userImgUrl;
   final String userName;
   final String job;
-  final double rate;
+  final num rate;
   final Function()? onPress;
   @override
   Widget build(BuildContext context) {

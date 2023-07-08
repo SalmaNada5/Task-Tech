@@ -24,6 +24,10 @@ class DioClient {
       logSuccess('----------------------------------------------------------');
       return handler.next(response);
     }, onError: (response, handler) {
+      logError(response.requestOptions.uri.toString());
+      logError(response.type.name);
+      logError(response.response?.statusCode?.toString() ?? "No Status Code");
+      logError(response.requestOptions.data?.toString() ?? "No Body");
       logError(response.error.toString());
       logError("error.response.data ${response.response?.data}");
       logError('----------------------------------------------------------');
@@ -59,7 +63,7 @@ class DioClient {
           Constants.hideLoadingOrNavBack();
         }
         return response;
-      } on DioException  catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -79,6 +83,7 @@ class DioClient {
     String? token, {
     required var body,
     String? fullURL,
+    bool useFormData = false,
     bool isLoading = true,
   }) async {
     var url = _devBaseURL + api;
@@ -89,7 +94,9 @@ class DioClient {
     if (token != "" && token != null) {
       _dio.options.headers["Authorization"] = "Bearer $token";
     }
-    _dio.options.headers['content-Type'] = Headers.jsonContentType;
+    _dio.options.headers['Content-Type'] = useFormData
+        ? Headers.formUrlEncodedContentType
+        : Headers.jsonContentType;
     if (interNetaAvailale) {
       try {
         Response response = await _dio.post(fullURL ?? url, data: body);
@@ -118,6 +125,7 @@ class DioClient {
     String? token, {
     required var body,
     String? fullURL,
+    bool useFormData = false,
     bool isLoading = true,
   }) async {
     var url = _devBaseURL + api;
@@ -128,7 +136,9 @@ class DioClient {
     if (token != "" && token != null) {
       _dio.options.headers["Authorization"] = "Bearer $token";
     }
-    _dio.options.headers['content-Type'] = Headers.jsonContentType;
+    _dio.options.headers['content-Type'] = useFormData
+        ? Headers.formUrlEncodedContentType
+        : Headers.jsonContentType;
     if (interNetaAvailale) {
       try {
         Response response = await _dio.patch(fullURL ?? url, data: body);
@@ -137,7 +147,7 @@ class DioClient {
         }
 
         return response;
-      } on DioException  catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -176,7 +186,7 @@ class DioClient {
         }
 
         return response;
-      } on DioException  catch (error) {
+      } on DioException catch (error) {
         if (isLoading) {
           Constants.hideLoadingOrNavBack();
         }
@@ -190,4 +200,23 @@ class DioClient {
       return "No internet connection";
     }
   }
+
+  //? Data will be sent to the server
+  FormData formDataFunc(Map<String, dynamic> map) => FormData.fromMap(map);
+
+  //? The file will be sent to the server inside the form data
+  Future<MultipartFile> fileToUploadFunc(String path, String filename) async =>
+      await MultipartFile.fromFile(path, filename: filename);
 }
+
+
+// final formData = FormData.fromMap({
+//   'name': 'dio',
+//   'date': DateTime.now().toIso8601String(),
+//   'file': await MultipartFile.fromFile('./text.txt', filename: 'upload.txt'),
+//   'files': [
+//     await MultipartFile.fromFile('./text1.txt', filename: 'text1.txt'),
+//     await MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+//   ]
+// });
+// final response = await dio.post('/info', data: formData);

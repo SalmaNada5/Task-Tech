@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -232,7 +235,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: MediaQuery.of(context).size.height * 0.035,
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  final shared = await SharedPreferences.getInstance();
+                  shared.clear();
+                  Constants.navigateTo(const SignInScreen(),
+                      pushAndRemoveUntil: true);
+                },
                 icon: Image.asset('icons/Group 34341.png'),
                 label: Text(
                   'Sign Out',
