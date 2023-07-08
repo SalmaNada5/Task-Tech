@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/screens/splash_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
