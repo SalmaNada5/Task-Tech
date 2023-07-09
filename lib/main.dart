@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/auth/view/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         navigatorKey: Constants.navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: const CreateProfile());
+        home: const SplashScreen());
   }
 }

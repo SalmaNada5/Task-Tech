@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 
 import 'bio_screen.dart';
-import 'profile_controller/profile_model.dart';
 
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen(
@@ -34,6 +32,7 @@ class SkillsScreenState extends State<SkillsScreen> {
     const FilterChipWidget(
       chipName: 'UI/UX',
       isSelected: false,
+
     ),
     const FilterChipWidget(
       chipName: 'Technology',
@@ -64,6 +63,7 @@ class SkillsScreenState extends State<SkillsScreen> {
       isSelected: false,
     ),
   ];
+  
   @override
   Widget build(BuildContext context) {
     //String chiptext ='';
@@ -188,7 +188,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                           gender: widget.gender,
                           location: widget.location,
                           phoneNumber: widget.phoneNumber,
-                          skills: ['UI/UX', 'Programming'],
+                          skills: const ['Dart', 'Flutter'],
                         ));
                       },
                       childWidget: Text(
@@ -209,23 +209,23 @@ class SkillsScreenState extends State<SkillsScreen> {
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
   final bool isSelected;
-  final List<String>? skillList;
-  const FilterChipWidget(
-      {Key? key,
-      required this.chipName,
-      required this.isSelected,
-      this.skillList})
-      : super(key: key);
+  const FilterChipWidget({
+    Key? key,
+    required this.chipName,
+    required this.isSelected,
+  }) : super(key: key);
 
   @override
   FilterChipWidgetState createState() =>
-      FilterChipWidgetState(isSelected: isSelected);
+      FilterChipWidgetState(isSelected: isSelected,chipName:chipName);
+      
 }
 
 class FilterChipWidgetState extends State<FilterChipWidget> {
   late Icon icon;
   bool isSelected = false;
-  FilterChipWidgetState({required isSelected});
+  late List<String> skillList = [];
+  FilterChipWidgetState({required isSelected,required chipName});
   @override
   Widget build(BuildContext context) {
     return FilterChip(
@@ -247,12 +247,22 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
         ],
       ),
       selected: isSelected,
-      onSelected: (selected) async {
+      onSelected: (selected) {
         setState(() {
           isSelected = selected;
-          if (isSelected) widget.skillList!.add(widget.chipName);
+
+
+          //if (isSelected) skillList.addAll([widget.c;
+          //else skillList.remove(widget.chipName);
+           
+
+
         });
-        if (isSelected) {
+          /*if (isSelected == true) {
+            skillList.add(widget.chipName);
+          }*/
+
+        /* if (isSelected) {
           CreateProfileModel? profileModel;
           profileModel = await ProfileController.createProfileFunc(
               skills: widget.skillList);
@@ -262,7 +272,7 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
             Constants.navigateTo(const SkillsScreen(),
                 pushAndRemoveUntil: true);
           }
-        }
+        }*/
       },
       backgroundColor: white,
       showCheckmark: false,

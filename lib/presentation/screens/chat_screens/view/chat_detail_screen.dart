@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
 
@@ -12,7 +12,7 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   bool isOnline = true;
-    var messageController = TextEditingController();
+    TextEditingController? messageController ;
     List<ChatMessage> messages = [
       ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
       ChatMessage(
@@ -25,7 +25,34 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           messageContent: "Hi Kristin! \n Yes, I just finished developing the \"Chat\" .", messageType: "sender",messageIsRead :false),
     ];
 
+late IO.Socket socket;
+List<String> msgs =[];
 
+@override
+  void initState() {
+    messageController = TextEditingController();
+   initTheSocket();
+    super.initState();
+  }
+
+
+  initTheSocket(){
+ socket =  IO.io('https://task-teck.onrender.com/', {
+    'transports': ['websocket'],
+    'autoConnect': false
+  });
+    socket.connect();
+      socket.onConnect((_) => print('connected with server'));
+      print(socket.connected);
+
+  socket.on('res', (data) {
+    setState(() {
+          msgs.add(data);
+
+    });
+  });
+
+  }
   @override
   Widget build(BuildContext context) {
     
@@ -113,7 +140,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           child: Stack(
             children: [
               ListView.builder(
-                  itemCount: messages.length,
+                  itemCount: msgs.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
@@ -153,7 +180,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                                       constraints: BoxConstraints(
                                         maxWidth: MediaQuery.of(context).size.width * 0.80,),
                                     child: Text(
-                                      messages[index].messageContent,
+                                      msgs[index],
                                       style:  GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
@@ -251,7 +278,10 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         width: 10,
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            socket.emit('msg',messageController!.text);
+                            messageController!.clear();
+                          },
                           icon: const Icon(
                             Icons.send,
                             color: Color.fromRGBO(22, 80, 105, 1),
@@ -264,6 +294,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           ),
         ));
   }
+  void sendMessage(String text){
+  var messageJson = {"message":text,"sentByMe":socket.id};
+  socket.emit('message',messageJson);
+}
+void setUpSocketListner(){
+  socket.on('message-receive',(data){
+  });
+}
 }
 
 class ChatMessage {
@@ -272,3 +310,4 @@ class ChatMessage {
   bool messageIsRead;
   ChatMessage({required this.messageContent, required this.messageType,this.messageIsRead = true});
 }
+
