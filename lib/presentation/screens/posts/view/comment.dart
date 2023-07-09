@@ -12,7 +12,7 @@ class ReusableCommentWidget extends StatefulWidget {
       required this.date,
       required this.text});
   final String userName;
-  final double rate;
+  final num rate;
   final String imgUrl;
   final String date;
   final String text;
@@ -25,6 +25,8 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -36,6 +38,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
               width: 10,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -45,7 +48,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
                   ),
                 ),
                 SmoothStarRating(
-                  rating: widget.rate,
+                  rating: widget.rate.toDouble(),
                   size: 15,
                   filledIconData: Icons.star,
                   defaultIconData: Icons.star_border,

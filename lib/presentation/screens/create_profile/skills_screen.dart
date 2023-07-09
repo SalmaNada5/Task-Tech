@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 
 import 'bio_screen.dart';
-import 'profile_controller/profile_model.dart';
 
-List<Widget> chipList = [
+class SkillsScreen extends StatefulWidget {
+  const SkillsScreen(
+      {Key? key,
+      this.job,
+      this.birthDate,
+      this.gender,
+      this.age,
+      this.location,
+      this.phoneNumber})
+      : super(key: key);
+  final String? job;
+  final String? birthDate;
+  final String? gender;
+  final String? age;
+  final String? location;
+  final String? phoneNumber;
+  @override
+  SkillsScreenState createState() => SkillsScreenState();
+}
+
+class SkillsScreenState extends State<SkillsScreen> {
+  List<Widget> chipList = [
     const FilterChipWidget(
       chipName: 'UI/UX',
       isSelected: false,
@@ -44,15 +63,6 @@ List<Widget> chipList = [
       isSelected: false,
     ),
   ];
-
-class SkillsScreen extends StatefulWidget {
-  const SkillsScreen({Key? key}) : super(key: key);
-
-  @override
-  SkillsScreenState createState() => SkillsScreenState();
-}
-
-class SkillsScreenState extends State<SkillsScreen> {
   
   @override
   Widget build(BuildContext context) {
@@ -135,6 +145,9 @@ class SkillsScreenState extends State<SkillsScreen> {
                       });
                     },*/
                     controller: skillController,
+                    onChanged: (value) {
+                      skillController.text = value.toString();
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         border: const OutlineInputBorder(
@@ -168,7 +181,15 @@ class SkillsScreenState extends State<SkillsScreen> {
                       height: Constants.screenHeight * 0.075,
                       color: const Color.fromRGBO(22, 80, 105, 1),
                       onpressed: () {
-                        Constants.navigateTo(const BioScreen());
+                        Constants.navigateTo(BioScreen(
+                          job: widget.job,
+                          birthDate: widget.birthDate,
+                          age: widget.age,
+                          gender: widget.gender,
+                          location: widget.location,
+                          phoneNumber: widget.phoneNumber,
+                          skills: const ['Dart', 'Flutter'],
+                        ));
                       },
                       childWidget: Text(
                         'Next',

@@ -4,27 +4,34 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/posts/view/service_details.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
+import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
+import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
 
 class ReusablePostWidget extends StatelessWidget {
-  const ReusablePostWidget(
-      {super.key,
-      required this.profileImgUrl,
-      required this.accountName,
-      required this.postDescription,
-      required this.postTime,
-      required this.dropDownVal});
+  const ReusablePostWidget({
+    super.key,
+    required this.profileImgUrl,
+    required this.accountName,
+    required this.postDescription,
+    required this.postTime,
+    required this.dropDownVal,
+    this.taskId,
+    this.serviceId,
+  });
   final String profileImgUrl;
   final String accountName;
   final String postDescription;
   final String postTime;
   final String dropDownVal;
+  final String? taskId;
+  final String? serviceId;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
-      padding: const EdgeInsets.all(10),
-      height: MediaQuery.of(context).size.height * 0.29,
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(right: 10, top: 4, left: 10),
+      height: MediaQuery.of(context).size.height * 0.26,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: const Color(0xffF5F5F5),
@@ -82,10 +89,13 @@ class ReusablePostWidget extends StatelessWidget {
             children: [
               const Spacer(),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (dropDownVal == 'Tasks') {
-                    Navigator.pushNamed(context, 'taskDetails');
+                    Constants.navigateTo(TaskDetailsPage(
+                      postId: taskId!,
+                    ));
                   } else {
+                    await ServiceController.getServiceFunc(serviceId ?? "");
                     Constants.navigateTo(const ServiceDetailsPage());
                   }
                 },
@@ -97,7 +107,7 @@ class ReusablePostWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(6.0),
                   child: Text(
-                    dropDownVal == "Tasks" ? 'View Task' : 'View Service',
+                    dropDownVal == 'Tasks' ? 'View Task' : 'View Service',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,

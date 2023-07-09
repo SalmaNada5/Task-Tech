@@ -1,4 +1,3 @@
-import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
 
 class Messages {
   String name;

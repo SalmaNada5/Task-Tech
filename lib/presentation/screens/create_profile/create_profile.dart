@@ -7,13 +7,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/button_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/widgets/default_form_field.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/widgets/default_form_field.dart';
 
 import '../../../constants/consts.dart';
-
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -23,18 +24,18 @@ class CreateProfile extends StatefulWidget {
 }
 
 class _CreateProfileState extends State<CreateProfile> {
-  var nameController = TextEditingController();
-  var dateController = TextEditingController();
-  var ageController = TextEditingController();
-  var locationController = TextEditingController();
-  var phoneController = TextEditingController();
-  var genderController = TextEditingController();
+  TextEditingController jobController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  List<String> list = <String>['Male', 'Female'];
+  List<String> list = <String>['male', 'female'];
   String? gender;
   File? _image;
+  String? age;
   //AssetImage image = const AssetImage('images/picture.png');
-
   String imagepath = "";
   late File imagefile;
   final _picker = ImagePicker();
@@ -48,7 +49,8 @@ class _CreateProfileState extends State<CreateProfile> {
   Future<void> _openImagePicker() async {
     final XFile? pickedImage =
         await _picker.pickImage(source: ImageSource.gallery);
-
+    // UploadProfilePhotoController.selectedPhoto =
+    //     await UploadProfilePhotoController.attachPhoto();
     if (pickedImage != null) {
       setState(() {
         _image = File(
@@ -83,17 +85,25 @@ class _CreateProfileState extends State<CreateProfile> {
                 ),
                 Center(
                   child: CircleAvatar(
-                    radius: Constants.screenWidth * 0.17,
-                    backgroundColor: Colors.grey[600],
-                    child:
-                    ClipOval(
+                      radius: Constants.screenWidth * 0.17,
+                      backgroundColor: Colors.grey[600],
+                      child: ClipOval(
+                        child: _image != null
+                            ? Image.file(
+                                _image!,
+                                scale: 0.5,
+                                fit: BoxFit.cover,
+                                width: Constants.screenWidth * 0.5,
+                                height: Constants.screenWidth * 0.5,
+                              )
+                            : Image.asset(
+                                'images/default person.png',
+                                fit: BoxFit.cover,
+                              ),
+                      )
 
-                      child:_image != null ? Image.file(_image!, scale: 0.5,fit: BoxFit.cover,width: Constants.screenWidth * 0.5,height: Constants.screenWidth * 0.5,) : Image.asset('images/default person.png',fit: BoxFit.cover,),
-
-                    )
-
-                    //image,
-                  ),
+                      //image,
+                      ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -102,7 +112,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   height: Constants.screenHeight * 0.075,
                   width: Constants.screenWidth * 0.9,
                   color: const Color.fromRGBO(22, 80, 105, 0.21),
-                  onpressed: _openImagePicker,
+                  onpressed: () => UploadProfilePhotoController.attachPhoto(),
+                  //_openImagePicker,
                   /*()async{
                     _openImagePicker;
 
@@ -150,17 +161,17 @@ class _CreateProfileState extends State<CreateProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name *',
+                          'Job Name',
                           style: labelFormStyle,
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         DefaultFormField(
-                            controller: nameController,
+                            controller: jobController,
                             type: TextInputType.text,
                             validate: (value) {
-                              value = nameController.text;
+                              value = jobController.text;
                               if (value.isEmpty) {
                                 return 'Name must not be empty';
                               } else {
@@ -258,7 +269,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                         value: gender,
                                         onChanged: (String? value) {
                                           setState(() {
-                                            gender = value!;
+                                            gender = value;
                                           });
                                         }),
                                   )
@@ -281,17 +292,18 @@ class _CreateProfileState extends State<CreateProfile> {
                                     height: 10,
                                   ),
                                   DefaultFormField(
-                                      controller: ageController,
-                                      
-                                      type: const TextInputType.numberWithOptions(decimal: false,signed: false),
-                                      validate: (value) {
-                                        value = ageController.text;
-                                        if (value.isEmpty) {
-                                          return 'Age must not be empty';
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
+                                    controller: ageController,
+                                    type: const TextInputType.numberWithOptions(
+                                        decimal: false, signed: false),
+                                    validate: (value) {
+                                      value = ageController.text;
+                                      if (value.isEmpty) {
+                                        return 'Age must not be empty';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
@@ -351,11 +363,30 @@ class _CreateProfileState extends State<CreateProfile> {
                               height: Constants.screenHeight * 0.07,
                               width: Constants.screenWidth * 0.7,
                               color: const Color.fromRGBO(22, 80, 105, 1),
-                              onpressed: ()  {
+                              onpressed: () async {
+                                // bool photoUploaded =
+                                //     await UploadProfilePhotoController
+                                //         .uploadProfilePhotoFunc();
+                                // if (photoUploaded) {
+                                //   UploadProfilePhotoController
+                                //       .uploadProfilePhotoFunc();
+                                // } else {
+                                //   Constants.errorMessage(description: 'Please try to Upload a photo again!');
+                                // }
+
                                 if (formKey.currentState!.validate()) {
-                                  Constants.navigateTo(const SkillsScreen(),
-                                        pushAndRemoveUntil: true);
-                                  /*CreateProfileModel? profileModel;
+                                  logInfo('age: ${ageController.text}');
+                                  Constants.navigateTo(
+                                      SkillsScreen(
+                                          job: jobController.text,
+                                          birthDate: dateController.text,
+                                          gender: gender,
+                                          age: ageController.text,
+                                          location: locationController.text,
+                                          phoneNumber: phoneController.text),
+                                      pushAndRemoveUntil: true);
+                                }
+                                /*CreateProfileModel? profileModel;
                                   profileModel =
                                       await ProfileController.createProfileFunc(
                                           birthDate: dateController.text,
@@ -371,9 +402,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                     await SharedPreferences.getInstance();
                                     pref.setString('token',profileModel.status!);
                                     pref.setString("id", ProfileController.profileModel.data!.data.id);*/
-                                    
-                                  }
-                                
+                                // }
                               },
                               childWidget: Text(
                                 'Next',

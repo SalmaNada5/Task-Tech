@@ -120,4 +120,5 @@ class AuthController {
       return false;
     }
   }
+
 }

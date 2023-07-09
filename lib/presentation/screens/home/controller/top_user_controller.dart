@@ -9,7 +9,7 @@ class TopUserController {
   static TopUserModel topUserModel = TopUserModel();
   static List<User> users = [];
   static int page = 1;
-  static ScrollController scrollController = ScrollController();
+  static ScrollController highestRatedScrollController = ScrollController();
 
   static Future<List<User>?> getTopUsersFunc({bool dioLoading = true}) async {
     try {

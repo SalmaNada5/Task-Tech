@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
 
 class ServicesItem extends StatefulWidget {
-  const ServicesItem(
-      {super.key,
-      required this.serviceImgUrl,
-      required this.profileImgUrl,
-      required this.userName,
-      required this.description,
-      required this.salary,
-      required this.rate,
-      required this.numOfReviews});
+  const ServicesItem({
+    super.key,
+    required this.serviceImgUrl,
+    required this.profileImgUrl,
+    required this.userName,
+    required this.description,
+    required this.salary,
+    required this.rate,
+  });
   final String serviceImgUrl;
   final String profileImgUrl;
   final String userName;
   final String description;
   final int salary;
-  final double rate;
-  final int numOfReviews;
+  final num rate;
   @override
   State<ServicesItem> createState() => _ServicesItemState();
 }
@@ -27,10 +27,8 @@ bool isFavorite = false;
 class _ServicesItemState extends State<ServicesItem> {
   @override
   Widget build(BuildContext context) {
-    double screenH = MediaQuery.of(context).size.height;
-    double screenW = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: 0.5 * screenW,
+      width: 0.5 * Constants.screenWidth,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -75,12 +73,12 @@ class _ServicesItemState extends State<ServicesItem> {
               height: 5,
             ),
             SizedBox(
-              height: 0.06 * screenH,
-              width: 0.4 * screenW,
+              height: 0.06 * Constants.screenHeight,
+              width: 0.4 * Constants.screenWidth,
               child: Text(
                 widget.description,
                 softWrap: true,
-                maxLines: 3,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: GoogleFonts.poppins(
@@ -95,7 +93,7 @@ class _ServicesItemState extends State<ServicesItem> {
             ),
             Container(
               height: 0.9,
-              width: 0.4 * screenW,
+              width: 0.4 * Constants.screenWidth,
               color: const Color(0xffB1B1B1),
             ),
             const SizedBox(
@@ -134,13 +132,6 @@ class _ServicesItemState extends State<ServicesItem> {
                       color: Colors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  '${widget.numOfReviews} reviews',
-                  style: GoogleFonts.poppins(
-                    fontSize: 8,
-                    color: const Color(0xffA7A7A7),
-                  ),
                 ),
               ],
             ),

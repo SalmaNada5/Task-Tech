@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
-import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
 class ReusablePostForm extends StatefulWidget {
   const ReusablePostForm({
     super.key,
-    required this.taskNameController,
+    required this.postNameController,
     required this.descriptionController,
     required this.deliveryDaysController,
     required this.salaryController,
@@ -16,8 +14,9 @@ class ReusablePostForm extends StatefulWidget {
     required this.stController,
     required this.difFields,
     required this.firstLabel,
+    this.onPressed,
   });
-  final TextEditingController taskNameController;
+  final TextEditingController postNameController;
   final TextEditingController descriptionController;
   final TextEditingController deliveryDaysController;
   final TextEditingController salaryController;
@@ -25,6 +24,7 @@ class ReusablePostForm extends StatefulWidget {
   final TextEditingController stController;
   final Widget difFields;
   final String firstLabel;
+  final void Function()? onPressed;
 
   @override
   State<ReusablePostForm> createState() => _ReusablePostFormState();
@@ -32,7 +32,7 @@ class ReusablePostForm extends StatefulWidget {
 
 class _ReusablePostFormState extends State<ReusablePostForm> {
   final _formKey = GlobalKey<FormState>();
-  DateTime _curDate = DateTime.now();
+  // DateTime _curDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                 height: 10,
               ),
               TextFormField(
-                controller: widget.taskNameController,
+                controller: widget.postNameController,
                 style: headStyle,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 15),
@@ -72,17 +72,17 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   fillColor: const Color(0xffF5F5F5),
                 ),
                 onChanged: (value) {
-                  widget.taskNameController.text = value.toString();
-                  widget.taskNameController.selection =
+                  widget.postNameController.text = value.toString();
+                  widget.postNameController.selection =
                       TextSelection.fromPosition(TextPosition(
-                          offset: widget.taskNameController.text.length));
+                          offset: widget.postNameController.text.length));
                 },
                 validator: (value) {
-                  value = widget.taskNameController.text;
+                  value = widget.postNameController.text;
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
-                    return '';
+                    return null;
                   }
                 },
                 maxLines: 1,
@@ -95,7 +95,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                 height: 10,
               ),
               Text(
-                'Delivery Date',
+                'Delivery Days',
                 textAlign: TextAlign.center,
                 style: headStyle,
               ),
@@ -104,7 +104,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               ),
               TextFormField(
                 controller: widget.deliveryDaysController,
-                readOnly: true,
+                //readOnly: true,
                 style: headStyle,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 15),
@@ -117,36 +117,37 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   ),
                   filled: true,
                   fillColor: const Color(0xffF5F5F5),
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      DateTime? selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: _curDate,
-                        firstDate: DateTime(DateTime.now().year),
-                        lastDate: DateTime(DateTime.now().year + 20),
-                      );
+                  // suffixIcon: IconButton(
+                  //   onPressed: () async {
+                  //     DateTime? selectedDate = await showDatePicker(
+                  //       context: context,
+                  //       initialDate: _curDate,
+                  //       firstDate: DateTime(DateTime.now().year),
+                  //       lastDate: DateTime(DateTime.now().year + 20),
+                  //     );
 
-                      setState(() {
-                        if (selectedDate != null) {
-                          _curDate = selectedDate;
-                          Constants.unFocusFunc();
-                        } else {
-                          debugPrint('no date selected');
-                          Constants.unFocusFunc();
-                        }
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.calendar_today_outlined,
-                      color: Colors.grey,
-                      size: 18,
-                    ),
-                  ),
-                  hintText: DateFormat.yMd().format(_curDate),
-                  hintStyle: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: const Color.fromARGB(255, 15, 14, 14),
-                  ),
+                  //     setState(() {
+                  //       if (selectedDate != null) {
+                  //         _curDate = selectedDate;
+                  //         Constants.unFocusFunc();
+                  //       } else {
+                  //         debugPrint('no date selected');
+                  //         Constants.unFocusFunc();
+                  //       }
+                  //     });
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.calendar_today_outlined,
+                  //     color: Colors.grey,
+                  //     size: 18,
+                  //   ),
+                  // ),
+
+                  //hintText: DateFormat.yMd().format(_curDate),
+                  // hintStyle: GoogleFonts.poppins(
+                  //   fontSize: 16,
+                  //   color: const Color.fromARGB(255, 15, 14, 14),
+                  // ),
                 ),
                 onChanged: (value) {
                   widget.deliveryDaysController.text = value.toString();
@@ -203,7 +204,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                             if (value.isEmpty) {
                               return 'Please fill this field';
                             } else {
-                              return '';
+                              return null;
                             }
                           },
                           maxLines: 1,
@@ -249,14 +250,14 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                                     offset:
                                         widget.categoryController.text.length));
                           },
-                          validator: (value) {
-                            value = widget.categoryController.text;
-                            if (value.isEmpty) {
-                              return 'Please fill this field';
-                            } else {
-                              return '';
-                            }
-                          },
+                          // validator: (value) {
+                          //   value = widget.categoryController.text;
+                          //   if (value.isEmpty) {
+                          //     return 'Please fill this field';
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
                           maxLines: 1,
                         ),
                       ),
@@ -302,7 +303,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
-                    return '';
+                    return null;
                   }
                 },
               ),
@@ -312,8 +313,9 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      debugPrint('correct');
+                    debugPrint('correct');
+                    if (widget.onPressed != null) {
+                      widget.onPressed!();
                     }
                   },
                   style: ButtonStyle(
