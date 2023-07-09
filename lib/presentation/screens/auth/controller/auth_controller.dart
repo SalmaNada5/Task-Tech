@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
@@ -49,9 +50,12 @@ class AuthController {
 
   static Future<bool?> verifySignupFunc(String code) async {
     try {
+      String token;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString("token") ?? '';
       Response res = await _dioClient.post(
         'api/v1/users/verfiysignup',
-        '${authModel.token}',
+        token,
         body: AuthBody.verifyResetCodeMap(code),
       ) as Response;
       if (res.statusCode == 201 || res.statusCode == 200) {
@@ -60,8 +64,8 @@ class AuthController {
       return false;
     } catch (e) {
       logError('error in verifyResetCodeFunc ${e.toString()}');
-      return false;
     }
+    return false;
   }
 
   static Future<bool?> forgetPassword(String email) async {
@@ -120,5 +124,4 @@ class AuthController {
       return false;
     }
   }
-
 }

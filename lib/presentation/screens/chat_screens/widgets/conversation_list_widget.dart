@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/presentation/screens/chat_screens/view/chat_detail_screen.dart';
 
 
 class ConversationList extends StatefulWidget {

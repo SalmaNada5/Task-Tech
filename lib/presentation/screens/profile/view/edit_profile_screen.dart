@@ -1,23 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   bool status = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsetsDirectional.only(
             start: MediaQuery.of(context).size.width * 0.03,
@@ -32,15 +36,25 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.12,
-                    backgroundImage: const AssetImage(
-                      'images/picture.png',
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: CurrentUserInfoController
+                                .userInfoModel.data?.user.photo ??
+                            '',
+                        errorWidget: (context, url, error) {
+                          return Image.asset(
+                            'images/placeholder.jpg',
+                          );
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.06,
                   ),
                   Text(
-                    'Eman Elsayed',
+                    CurrentUserInfoController.userInfoModel.data?.user.name ??
+                        '',
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: MediaQuery.of(context).size.width * 0.05,
@@ -221,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 endIndent: 10,
               ),
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () => Constants.navigateTo(const CreateProfile()),
                 icon: Image.asset('icons/edit.png'),
                 label: Text(
                   'Edit profile',

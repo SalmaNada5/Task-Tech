@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     getAllTopUsers();
     getPopularCateogries();
     getRelatedPosts();
+    getProfileInfo();
     super.initState();
   }
 
@@ -136,9 +137,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void getProfileInfo() async {
+    try {
+      await CurrentUserInfoController.getUserInfoFunc();
+      setState(() {});
+    } catch (e) {
+      logError('$e in getAllTopUsers');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    CurrentUserInfoController.getUserInfoFunc();
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10, top: 30),
       child: CustomScrollView(
@@ -342,7 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               job: TopUserController.users[i].job,
                               rate: TopUserController.users[i].ratingsAverage
                                   .toDouble(),
-                              onPress: () {},
+                              onPress: () async{
+                                
+                              },
                             );
                           },
                         ),
