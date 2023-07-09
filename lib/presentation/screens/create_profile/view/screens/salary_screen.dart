@@ -270,6 +270,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                         fontWeight: FontWeight.w400,
                         color: const Color.fromRGBO(124, 124, 124, 1)),
                   ),
+                
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.04,

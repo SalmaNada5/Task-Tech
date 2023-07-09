@@ -89,7 +89,6 @@ class VerificationScreen extends StatelessWidget {
                             }
                             code = d1 + d2 + d3 + d4;
                             logNormal('coooooode: $code');
-                            //      getCode(d1, d2, d3, d4);
                             if (value.length == 1 && index != 3) {
                               FocusScope.of(context).nextFocus();
                             }

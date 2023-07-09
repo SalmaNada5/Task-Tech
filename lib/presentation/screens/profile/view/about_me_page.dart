@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:task_tech/presentation/screens/profile/controller/user_profile_controller.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 
 import '../../../../../constants/colors.dart';
 
@@ -26,7 +26,6 @@ class _AboutmePageState extends State<AboutmePage> {
 
   @override
   void initState() {
-    //_numberFormat = NumberFormat('#.### \$');
     _rangeStartController = TextEditingController();
     _rangeEndController = TextEditingController();
     super.initState();
@@ -46,11 +45,14 @@ class _AboutmePageState extends State<AboutmePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               maxLines: 5,
-              UserProfileController.userProfileModel.data?.user.about ?? '',
+              CurrentUserInfoController.userInfoModel.data?.user.about ?? '',
               style: GoogleFonts.poppins(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(124, 124, 124, 1)),
             ),
@@ -80,82 +82,93 @@ class _AboutmePageState extends State<AboutmePage> {
               ],
             ),
             const SizedBox(
-              height: 16,
+              height: 12,
             ),
-            Center(
-              child: Container(
-                height: 78,
-                width: 371,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromRGBO(255, 255, 255, 1),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Color.fromRGBO(224, 224, 224, 0.9),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: Offset(0, 2))
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                          radius: 23,
-                          backgroundImage: AssetImage('images/suez canal.png')),
-                      const SizedBox(
-                        width: 14,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Computer Science',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                                color: Color.fromRGBO(13, 13, 38, 1)),
-                          ),
-                          Text(
-                            'Bachelor',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
-                                color: Color.fromRGBO(13, 13, 38, 1)),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 36,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            UserProfileController
-                                    .userProfileModel.data?.user.education ??
-                                "",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Color.fromRGBO(13, 13, 38, 1)),
-                          ),
-                          // Text(
-                          //   '2019 - 2023',
-                          //   style: TextStyle(
-                          //       fontWeight: FontWeight.w400,
-                          //       fontSize: 13,
-                          //       color: Color.fromRGBO(13, 13, 38, 1)),
-                          // )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
+            Text(
+              CurrentUserInfoController.userInfoModel.data?.user.education ??
+                  '',
+              style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Color.fromRGBO(124, 124, 124, 1)),
             ),
+            // Center(
+            //   child: Container(
+            //     height: 78,
+            //     width: 371,
+            //     decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(20),
+            //         color: const Color.fromRGBO(255, 255, 255, 1),
+            //         boxShadow: const [
+            //           BoxShadow(
+            //               color: Color.fromRGBO(224, 224, 224, 0.9),
+            //               spreadRadius: 3,
+            //               blurRadius: 7,
+            //               offset: Offset(0, 2))
+            //         ]),
+            //     child: Padding(
+            //       padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
+            //       child: Row(
+            //         children: [
+            //           const CircleAvatar(
+            //               radius: 23,
+            //               backgroundImage: AssetImage('images/suez canal.png')),
+            //           const SizedBox(
+            //             width: 14,
+            //           ),
+
+            //           // const Column(
+            //           //   crossAxisAlignment: CrossAxisAlignment.start,
+            //           //   mainAxisAlignment: MainAxisAlignment.center,
+            //           //   children: [
+            //           //     Text(
+            //           //       'Computer Science',
+            //           //       style: TextStyle(
+            //           //           fontWeight: FontWeight.w600,
+            //           //           fontSize: 14,
+            //           //           color: Color.fromRGBO(13, 13, 38, 1)),
+            //           //     ),
+            //           //     Text(
+            //           //       'Bachelor',
+            //           //       style: TextStyle(
+            //           //           fontWeight: FontWeight.w400,
+            //           //           fontSize: 13,
+            //           //           color: Color.fromRGBO(13, 13, 38, 1)),
+            //           //     )
+            //           //   ],
+            //           // ),
+
+            //           const SizedBox(
+            //             width: 36,
+            //           ),
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               Text(
+            //                 UserProfileController
+            //                         .userProfileModel.data?.user.education ??
+            //                     "",
+            //                 style: const TextStyle(
+            //                     fontWeight: FontWeight.w500,
+            //                     fontSize: 12,
+            //                     color: Color.fromRGBO(13, 13, 38, 1)),
+            //               ),
+            //               // Text(
+            //               //   '2019 - 2023',
+            //               //   style: TextStyle(
+            //               //       fontWeight: FontWeight.w400,
+            //               //       fontSize: 13,
+            //               //       color: Color.fromRGBO(13, 13, 38, 1)),
+            //               // )
+            //             ],
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
             const SizedBox(
               height: 22,
             ),
@@ -187,9 +200,9 @@ class _AboutmePageState extends State<AboutmePage> {
                 enableTooltip: true,
                 shouldAlwaysShowTooltip: true,
                 values: SfRangeValues(
-                  UserProfileController.userProfileModel.data?.user.maximum ??
+                  CurrentUserInfoController.userInfoModel.data?.user.minimum ??
                       100,
-                  UserProfileController.userProfileModel.data?.user.minimum ??
+                  CurrentUserInfoController.userInfoModel.data?.user.maximum ??
                       500,
                 ),
                 minorTicksPerInterval: 10,
@@ -216,8 +229,8 @@ class _AboutmePageState extends State<AboutmePage> {
               height: 70,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: UserProfileController
-                        .userProfileModel.data?.user.skills.length ??
+                itemCount: CurrentUserInfoController
+                        .userInfoModel.data?.user.skills.length ??
                     0,
                 itemBuilder: (context, i) => Container(
                   margin: const EdgeInsets.all(10),
@@ -228,8 +241,8 @@ class _AboutmePageState extends State<AboutmePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      UserProfileController
-                              .userProfileModel.data?.user.skills[i] ??
+                      CurrentUserInfoController
+                              .userInfoModel.data?.user.skills[i] ??
                           '',
                       style: GoogleFonts.poppins(
                           fontSize: 14,

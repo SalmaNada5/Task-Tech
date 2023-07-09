@@ -33,7 +33,19 @@ class ReusablePostForm extends StatefulWidget {
 class _ReusablePostFormState extends State<ReusablePostForm> {
   final _formKey = GlobalKey<FormState>();
   // DateTime _curDate = DateTime.now();
-
+  String selectedCategory = 'Web Design';
+  List<String> categories = [
+    'Web Design',
+    'Marketing',
+    'Business',
+    'Software Engineering',
+    'Web Developer',
+    'App Developer',
+    'Product Manager',
+    'Accountant',
+    'Ui/Ux Design',
+    'Graphics Designer'
+  ];
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
@@ -228,35 +240,61 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                         width: 0.4 * screenW,
                         child: TextFormField(
                           controller: widget.categoryController,
+                          readOnly: true,
                           style: headStyle,
                           decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(left: 15),
-                              border: InputBorder.none,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                  )),
-                              filled: true,
-                              fillColor: const Color(0xffF5F5F5),
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: const Color(0xffC0C0C0),
-                              )),
-                          onChanged: (value) {
-                            widget.categoryController.text = value.toString();
-                            widget.categoryController.selection =
-                                TextSelection.fromPosition(TextPosition(
-                                    offset:
-                                        widget.categoryController.text.length));
-                          },
-                          // validator: (value) {
-                          //   value = widget.categoryController.text;
-                          //   if (value.isEmpty) {
-                          //     return 'Please fill this field';
-                          //   } else {
-                          //     return null;
-                          //   }
+                            contentPadding: const EdgeInsets.only(left: 15),
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                )),
+                            filled: true,
+                            fillColor: const Color(0xffF5F5F5),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: DropdownButton<String>(
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  size: 25,
+                                  color: Color.fromRGBO(124, 124, 124, 1),
+                                ),
+                                value: selectedCategory,
+                                underline: const SizedBox(),
+                                borderRadius: BorderRadius.circular(8.6),
+                                alignment: AlignmentDirectional.center,
+                                isExpanded: true,
+                                items: categories.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    selectedCategory = value ?? '';
+                                    widget.categoryController.text =
+                                        value ?? '';
+                                  });
+                                },
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color:
+                                        const Color.fromRGBO(124, 124, 124, 1)),
+                              ),
+                            ),
+                          ),
+                          // onChanged: (value) {
+                          //   widget.categoryController.text = value.toString();
+                          //   logWarning(
+                          //       'caatttt ${widget.categoryController.text}');
+                          //   widget.categoryController.selection =
+                          //       TextSelection.fromPosition(TextPosition(
+                          //           offset:
+                          //               widget.categoryController.text.length));
                           // },
                           maxLines: 1,
                         ),

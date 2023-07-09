@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/profile/controller/user_profile_controller.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 
 class ReviewPage extends StatelessWidget {
   const ReviewPage({
@@ -12,19 +12,19 @@ class ReviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount:
-          UserProfileController.userProfileModel.data?.user.reviews.length ?? 0,
+          CurrentUserInfoController.userInfoModel.data?.user.reviews.length ?? 0,
       itemBuilder: (context, i) => reviewCard(
-        name: UserProfileController
-                .userProfileModel.data?.user.reviews[i].reviewer?.name ??
+        name: CurrentUserInfoController
+                .userInfoModel.data?.user.reviews[i].reviewer?.name ??
             '',
-        review: UserProfileController
-                .userProfileModel.data?.user.reviews[i].review ??
+        review: CurrentUserInfoController
+                .userInfoModel.data?.user.reviews[i].review ??
             '',
-        rate: UserProfileController
-                .userProfileModel.data?.user.reviews[i].rating ??
+        rate: CurrentUserInfoController
+                .userInfoModel.data?.user.reviews[i].rating ??
             0.0,
-        imgUrl: UserProfileController
-                .userProfileModel.data?.user.reviews[i].reviewer?.photo ??
+        imgUrl: CurrentUserInfoController
+                .userInfoModel.data?.user.reviews[i].reviewer?.photo ??
             '',
       ),
       //   children: [

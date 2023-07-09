@@ -7,7 +7,7 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
-import 'package:task_tech/presentation/screens/profile/controller/user_profile_controller.dart';
+import 'package:task_tech/presentation/screens/profile/view/edit_profile_screen.dart';
 import 'package:task_tech/presentation/screens/profile/view/portfolio_page.dart';
 import 'package:task_tech/presentation/screens/profile/view/review_page.dart';
 
@@ -34,10 +34,10 @@ class ProfileScreenState extends State<ProfileScreen>
 
   void getProfileInfo() async {
     try {
-      await UserProfileController.getUserProfileDataFunc();
+      await CurrentUserInfoController.getUserInfoFunc();
       setState(() {});
     } catch (e) {
-      logError('$e in getAllTopUsers');
+      logError('$e in getProfileInfo');
     }
   }
 
@@ -66,8 +66,8 @@ class ProfileScreenState extends State<ProfileScreen>
                   radius: 50,
                   child: ClipOval(
                     child: CachedNetworkImage(
-                      imageUrl: UserProfileController
-                              .userProfileModel.data?.user.photo ??
+                      imageUrl: CurrentUserInfoController
+                              .userInfoModel.data?.user.photo ??
                           '',
                       errorWidget: (context, url, error) {
                         return Image.asset(
@@ -83,14 +83,14 @@ class ProfileScreenState extends State<ProfileScreen>
               ),
               Center(
                 child: Text(
-                  UserProfileController.userProfileModel.data?.user.name ?? '',
+                  CurrentUserInfoController.userInfoModel.data?.user.name ?? '',
                   style: GoogleFonts.poppins(
                       fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ),
               Center(
                 child: GradientText(
-                    UserProfileController.userProfileModel.data?.user.job ??
+                    CurrentUserInfoController.userInfoModel.data?.user.job ??
                         'freelancer',
                     style: GoogleFonts.poppins(
                       fontSize: 20,
@@ -111,7 +111,10 @@ class ProfileScreenState extends State<ProfileScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SmoothStarRating(
-                    rating: rating?.toDouble() ?? 0.0,
+                    rating: CurrentUserInfoController
+                            .userInfoModel.data?.user.ratingsAverage
+                            .toDouble() ??
+                        0.0,
                     size: 25,
                     filledIconData: Icons.star,
                     defaultIconData: Icons.star_border,
@@ -120,18 +123,12 @@ class ProfileScreenState extends State<ProfileScreen>
                     spacing: 2,
                     color: const Color.fromRGBO(255, 193, 7, 1),
                     borderColor: const Color.fromRGBO(218, 218, 218, 1),
-                    onRatingChanged: (value) {
-                      setState(() {
-                        rating = value;
-                        debugPrint(rating.toString());
-                      });
-                    },
                   ),
                   const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    rating == 0.0 ? '' : '$rating',
+                    '${CurrentUserInfoController.userInfoModel.data?.user.ratingsAverage ?? 0}',
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -177,22 +174,25 @@ class ProfileScreenState extends State<ProfileScreen>
                       ),
                       child: MaterialButton(
                           onPressed: () {
-                            isFollowed == false
-                                ? UserProfileController.followUser(
-                                    UserProfileController
-                                            .userProfileModel.data?.user.id ??
-                                        '')
-                                : UserProfileController.unFollowUser(
-                                    CurrentUserInfoController
-                                            .userInfoModel.data?.user.id ??
-                                        '');
+                            widget.isMe
+                                ? Constants.navigateTo(
+                                    const EditProfileScreen())
+                                : isFollowed == false
+                                    ? CurrentUserInfoController.followUser(
+                                        CurrentUserInfoController
+                                                .userInfoModel.data?.user.id ??
+                                            '')
+                                    : CurrentUserInfoController.unFollowUser(
+                                        CurrentUserInfoController
+                                                .userInfoModel.data?.user.id ??
+                                            '');
                             setState(() {
                               isFollowed = !isFollowed;
                             });
                           },
                           child: Text(
                             widget.isMe
-                                ? 'Edit Profile'
+                                ? 'Setting'
                                 : isFollowed
                                     ? 'UnFollow'
                                     : 'Follow',

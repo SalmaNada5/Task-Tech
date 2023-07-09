@@ -25,4 +25,38 @@ class CurrentUserInfoController {
     }
     return null;
   }
+  
+  static Future<bool?> followUser(String id) async {
+    String? token;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token");
+    try {
+      Response res = await _dioClient
+          .put('api/v1/users/$id/follow', token, body: {}) as Response;
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logError('error in followUser: $e');
+    }
+    return false;
+  }
+
+  static Future<bool?> unFollowUser(String id) async {
+    String? token;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token");
+    try {
+      Response res = await _dioClient
+          .put('api/v1/users/$id/unfollow', token, body: {}) as Response;
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logError('error in unFollowUser: $e');
+    }
+    return false;
+  }
 }

@@ -178,7 +178,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                 pref.setString("token", authModel.token!);
                                 pref.setString("id",
                                     AuthController.authModel.data!.user!.id!);
-
                                 return Constants.navigateTo(
                                     const BottomNavBarScreen(),
                                     pushAndRemoveUntil: true);
