@@ -5,10 +5,12 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/view/reset_password_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/create_profile.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/text_styles.dart';
+
+String code = '';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key, required this.fromSignup});
@@ -17,7 +19,8 @@ class VerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool? correctCode = false;
-    String d1 = '', d2 = '', d3 = '', d4 = '', code = '';
+    String d1 = '', d2 = '', d3 = '', d4 = '';
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -84,6 +87,8 @@ class VerificationScreen extends StatelessWidget {
                             if (index == 3) {
                               d4 = value;
                             }
+                            code = d1 + d2 + d3 + d4;
+                            logNormal('coooooode: $code');
                             //      getCode(d1, d2, d3, d4);
                             if (value.length == 1 && index != 3) {
                               FocusScope.of(context).nextFocus();
@@ -99,15 +104,14 @@ class VerificationScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    code = d1 + d2 + d3 + d4;
                     logWarning("Code $code");
                     if (fromSignup) {
-                      correctCode = await AuthController.verifySignupFunc(code);
+                       correctCode = await AuthController.verifySignupFunc(code);
                       if (correctCode!) {
                         Constants.navigateTo(const CreateProfile(),
                             pushAndRemoveUntil: true);
                       } else {
-                        Constants.errorMessage(description: 'Invalid code');
+                        //Constants.errorMessage(description: 'Invalid code');
                       }
                     } else {
                       correctCode =
@@ -116,7 +120,7 @@ class VerificationScreen extends StatelessWidget {
                         Constants.navigateTo(const ResetPassword(),
                             pushAndRemoveUntil: true);
                       } else {
-                        Constants.errorMessage(description: 'Invalid code');
+                        //Constants.errorMessage(description: 'Invalid code');
                       }
                     }
                   },

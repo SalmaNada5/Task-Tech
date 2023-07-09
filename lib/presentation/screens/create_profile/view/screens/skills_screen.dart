@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/create_profile/profile_controller/profile_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 
 import 'bio_screen.dart';
-import 'profile_controller/profile_model.dart';
 
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen(
@@ -188,7 +186,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                           gender: widget.gender,
                           location: widget.location,
                           phoneNumber: widget.phoneNumber,
-                          skills: ['UI/UX', 'Programming'],
+                          skills:const ['UI/UX', 'Programming'],
                         ));
                       },
                       childWidget: Text(
@@ -253,15 +251,16 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           if (isSelected) widget.skillList!.add(widget.chipName);
         });
         if (isSelected) {
-          CreateProfileModel? profileModel;
-          profileModel = await ProfileController.createProfileFunc(
-              skills: widget.skillList);
-          if (profileModel == null) {
-            return Constants.errorMessage(description: 'Invalid input data');
-          } else {
-            Constants.navigateTo(const SkillsScreen(),
-                pushAndRemoveUntil: true);
-          }
+          // CreateProfileModel? profileModel;
+          // profileModel = await ProfileController.createProfileFunc(
+          //     skills: widget.skillList);
+          // if (profileModel == null) {
+          //   return Constants.errorMessage(description: 'Invalid input data');
+          //}
+          //  else {
+          //   Constants.navigateTo(const SkillsScreen(),
+          //       pushAndRemoveUntil: true);
+          // }
         }
       },
       backgroundColor: white,

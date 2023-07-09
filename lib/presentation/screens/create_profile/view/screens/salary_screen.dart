@@ -4,21 +4,22 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
+import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 import 'education_screen.dart';
 
 class SalaryScreen extends StatefulWidget {
-  const SalaryScreen(
-      {Key? key,
-      this.job,
-      this.birthDate,
-      this.gender,
-      this.age,
-      this.location,
-      this.phoneNumber,
-      this.skills,
-      this.description})
-      : super(key: key);
+  const SalaryScreen({
+    Key? key,
+    this.job,
+    this.birthDate,
+    this.gender,
+    this.age,
+    this.location,
+    this.phoneNumber,
+    this.skills,
+    this.description,
+  }) : super(key: key);
   final String? job;
   final String? birthDate;
   final String? gender;
@@ -54,7 +55,7 @@ class SalaryScreenState extends State<SalaryScreen> {
   List<String> frequencyList = <String>[
     'per hour',
     'per day',
-    'per weak',
+    'per week',
     'per month'
   ];
   @override
@@ -96,37 +97,50 @@ class SalaryScreenState extends State<SalaryScreen> {
                 const SizedBox(
                   height: 9,
                 ),
-                Container(
-                  padding: const EdgeInsetsDirectional.only(start: 9, end: 3),
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromRGBO(245, 245, 245, 1),
-                  ),
-                  child: TextFormField(
-                    controller: minController,
-                    onChanged: (value) {
-                      minController.selection = TextSelection.collapsed(
-                          offset: minController.text.length);
-                      minController.text = value;
-                    },
-                    style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: const Color.fromRGBO(124, 124, 124, 1)),
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(8.6)),
-                        ),
-                        hintText: '2.000',
-                        hintStyle: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: const Color.fromRGBO(124, 124, 124, 1))),
-                  ),
+                // Container(
+                //   padding: const EdgeInsetsDirectional.only(start: 9, end: 3),
+                //   width: double.infinity,
+                //   height: 50,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(10),
+                //     color: const Color.fromRGBO(245, 245, 245, 1),
+                //   ),
+                //   child: TextFormField(
+                //     controller: minController,
+                //     onChanged: (value) {
+                //       minController.selection = TextSelection.collapsed(
+                //           offset: minController.text.length);
+                //       minController.text = value;
+                //     },
+                //     style: GoogleFonts.poppins(
+                //         fontSize: 18,
+                //         fontWeight: FontWeight.w400,
+                //         color: const Color.fromRGBO(124, 124, 124, 1)),
+                //     keyboardType: TextInputType.number,
+                //     decoration: InputDecoration(
+                //         border: const OutlineInputBorder(
+                //           borderSide: BorderSide.none,
+                //           borderRadius: BorderRadius.all(Radius.circular(8.6)),
+                //         ),
+                //         hintText: '200',
+                //         hintStyle: GoogleFonts.poppins(
+                //             fontSize: 18,
+                //             fontWeight: FontWeight.w400,
+                //             color: const Color.fromRGBO(124, 124, 124, 1))),
+                //   ),
+                // ),
+                CustomTextFormField(
+                  controller: minController,
+                  obscure: false,
+                  validator: (value) {
+                    value = minController.text;
+                    if (value.isEmpty) {
+                      return 'Please fill this field';
+                    } else {
+                      return '';
+                    }
+                  },
+                  hintText: '2.000',
                 ),
                 const SizedBox(
                   height: 20,
@@ -141,38 +155,18 @@ class SalaryScreenState extends State<SalaryScreen> {
                 const SizedBox(
                   height: 9,
                 ),
-                Container(
-                  padding: const EdgeInsetsDirectional.only(start: 9, end: 3),
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromRGBO(245, 245, 245, 1),
-                  ),
-                  child: TextFormField(
-                    controller: maxController,
-                    onChanged: (value) {
-                      maxController.selection = TextSelection.collapsed(
-                          offset: maxController.text.length);
-                      maxController.text = value;
-                    },
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromRGBO(124, 124, 124, 1)),
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.all(Radius.circular(8.6)),
-                      ),
-                      hintText: '5.000',
-                      hintStyle: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(124, 124, 124, 1)),
-                    ),
-                  ),
+                CustomTextFormField(
+                  controller: maxController,
+                  obscure: false,
+                  validator: (value) {
+                    value = maxController.text;
+                    if (value.isEmpty) {
+                      return 'Please fill this field';
+                    } else {
+                      return '';
+                    }
+                  },
+                  hintText: '2.000',
                 ),
                 const SizedBox(
                   height: 20,
@@ -287,7 +281,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                       color: const Color.fromRGBO(22, 80, 105, 1),
                       onpressed: () {
                         logInfo(
-                            'frequency $frequencyValue , currency: $currencyValue');
+                            'desc ${widget.description} , job: ${widget.job}');
                         Constants.navigateTo(EducationScreen(
                           age: widget.age,
                           job: widget.job,

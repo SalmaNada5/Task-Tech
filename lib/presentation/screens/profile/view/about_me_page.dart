@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:task_tech/presentation/screens/profile/controller/user_profile_controller.dart';
 
 import '../../../../../constants/colors.dart';
 
-
 class AboutmePage extends StatefulWidget {
-  const AboutmePage({Key? key}) : super(key: key);
-
+  const AboutmePage({
+    Key? key,
+  }) : super(key: key);
   @override
   State<AboutmePage> createState() => _AboutmePageState();
 }
 
 class _AboutmePageState extends State<AboutmePage> {
-  SfRangeValues values = const SfRangeValues(2000, 5000);
-  RangeValues currentSliderValue = const RangeValues(2000, 5000);
-  // final double _uppervalue = 10000;
-  // final double _lowervalue = 500;
   late SfRangeValues value;
-  late NumberFormat _numberFormat;
+  //late NumberFormat _numberFormat;
   late TextEditingController _rangeStartController = TextEditingController();
   late TextEditingController _rangeEndController = TextEditingController();
 
-  String _getFormattedText(dynamic value) {
-    return _numberFormat.format(value);
-  }
+  // String _getFormattedText(dynamic value) {
+  //   return _numberFormat.format(value);
+  // }
 
   @override
   void initState() {
-    value = const SfRangeValues(1000, 10000);
-    _numberFormat = NumberFormat('#.### \$');
+    //_numberFormat = NumberFormat('#.### \$');
     _rangeStartController = TextEditingController();
     _rangeEndController = TextEditingController();
     super.initState();
@@ -51,21 +46,20 @@ class _AboutmePageState extends State<AboutmePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
+            Text(
               maxLines: 5,
-              "This Web Developer job description sample template is optimized for advertising for a  website developer on online job boards or careers",
+              UserProfileController.userProfileModel.data?.user.about ?? '',
               style: GoogleFonts.poppins(
-                
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(124, 124, 124, 1)),
             ),
             const SizedBox(
-              height: 19,
+              height: 5,
             ),
             Row(
               children: [
-                 Text(
+                Text(
                   'Education',
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
@@ -75,7 +69,7 @@ class _AboutmePageState extends State<AboutmePage> {
                 const Spacer(),
                 TextButton(
                   onPressed: () {},
-                  child:  Text(
+                  child: Text(
                     'See all',
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
@@ -102,17 +96,17 @@ class _AboutmePageState extends State<AboutmePage> {
                           blurRadius: 7,
                           offset: Offset(0, 2))
                     ]),
-                child: const Padding(
-                  padding: EdgeInsetsDirectional.only(start: 10, end: 10),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
                   child: Row(
                     children: [
-                       CircleAvatar(
+                      const CircleAvatar(
                           radius: 23,
                           backgroundImage: AssetImage('images/suez canal.png')),
-                       SizedBox(
+                      const SizedBox(
                         width: 14,
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -132,27 +126,29 @@ class _AboutmePageState extends State<AboutmePage> {
                           )
                         ],
                       ),
-                       SizedBox(
+                      const SizedBox(
                         width: 36,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
+                        children: [
                           Text(
-                            'Suez canal university',
-                            style: TextStyle(
+                            UserProfileController
+                                    .userProfileModel.data?.user.education ??
+                                "",
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
                                 color: Color.fromRGBO(13, 13, 38, 1)),
                           ),
-                          Text(
-                            '2019 - 2023',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
-                                color: Color.fromRGBO(13, 13, 38, 1)),
-                          )
+                          // Text(
+                          //   '2019 - 2023',
+                          //   style: TextStyle(
+                          //       fontWeight: FontWeight.w400,
+                          //       fontSize: 13,
+                          //       color: Color.fromRGBO(13, 13, 38, 1)),
+                          // )
                         ],
                       )
                     ],
@@ -163,7 +159,7 @@ class _AboutmePageState extends State<AboutmePage> {
             const SizedBox(
               height: 22,
             ),
-             Text(
+            Text(
               'Salary',
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
@@ -171,7 +167,7 @@ class _AboutmePageState extends State<AboutmePage> {
                   color: const Color.fromRGBO(13, 13, 38, 1)),
             ),
             const SizedBox(
-              height: 50,
+              height: 60,
             ),
             SfRangeSliderTheme(
               data: SfRangeSliderThemeData(
@@ -186,39 +182,27 @@ class _AboutmePageState extends State<AboutmePage> {
               child: SfRangeSlider(
                 inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
                 activeColor: primaryLightColor,
-                min: 100,
-                max: 10000,
+                min: 10,
+                max: 1000,
                 enableTooltip: true,
                 shouldAlwaysShowTooltip: true,
-                values:const SfRangeValues(150, 500), 
-                //value,
-                minorTicksPerInterval: 500,
-                stepSize: 500,
+                values: SfRangeValues(
+                  UserProfileController.userProfileModel.data?.user.maximum ??
+                      100,
+                  UserProfileController.userProfileModel.data?.user.minimum ??
+                      500,
+                ),
+                minorTicksPerInterval: 10,
                 startThumbIcon: Image.asset('images/thumbIcon.png'),
                 endThumbIcon: Image.asset('images/thumbIcon.png'),
-                onChangeStart: (SfRangeValues newValues) {
-                  _rangeStartController.text =
-                      _getFormattedText(newValues.start);
-                  _rangeEndController.text = _getFormattedText(newValues.end);
-                },
-                onChanged: (SfRangeValues newValues) {
-                  setState(() {
-                    _rangeStartController.text =
-                        _getFormattedText(newValues.start);
-                    _rangeEndController.text = _getFormattedText(newValues.end);
-                    value = newValues;
-                  });
-                },
-                onChangeEnd: (SfRangeValues newValues) {
-                  _rangeStartController.text = "";
-                  _rangeEndController.text = "";
-                },
+                onChanged: (sFRange) {},
+                stepSize: 10,
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
-             Text(
+            Text(
               'Skills',
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
@@ -226,65 +210,73 @@ class _AboutmePageState extends State<AboutmePage> {
                   color: const Color.fromRGBO(13, 13, 38, 1)),
             ),
             const SizedBox(
-              height: 16,
+              height: 10,
             ),
-            Row(
-              children: [
-                Container(
-                  height: 32,
-                  width: MediaQuery.of(context).size.width*0.3,
+            SizedBox(
+              height: 70,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: UserProfileController
+                        .userProfileModel.data?.user.skills.length ??
+                    0,
+                itemBuilder: (context, i) => Container(
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(206, 218, 223, 1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: MaterialButton(
-                      onPressed: () {},
-                      child: Text(
-                        'C',
-                        style: GoogleFonts.poppins(
-                            fontSize: 11.5,
-                            color: primaryLightColor,
-                            fontWeight: FontWeight.w400),
-                      )),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      UserProfileController
+                              .userProfileModel.data?.user.skills[i] ??
+                          '',
+                      style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: primaryLightColor,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
                 ),
-                const Spacer(),
-                Container(
-                  height: 32,
-                  width: MediaQuery.of(context).size.width*0.3,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(206, 218, 223, 1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: MaterialButton(
-                      onPressed: () {},
-                      child: Text(
-                        'C++',
-                        style: GoogleFonts.poppins(
-                            fontSize: 11.5,
-                            color: primaryLightColor,
-                            fontWeight: FontWeight.w400),
-                      )),
-                ),
-                /*const Spacer(),
-                Container(
-                  height: 32,
-                  width: MediaQuery.of(context).size.width*0.3,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(206, 218, 223, 1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: MaterialButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Web Design',
-                        style: GoogleFonts.poppins(
-                            fontSize: 11.5,
-                            color: primaryLightColor,
-                            fontWeight: FontWeight.w400),
-                      )),
-                ),*/
-              ],
-            )
+              ),
+            ),
+            // Row(
+            //   children: [
+            //     Container(
+            //       height: 32,
+            //       width: MediaQuery.of(context).size.width * 0.3,
+            //       decoration: BoxDecoration(
+            //         color: const Color.fromRGBO(206, 218, 223, 1),
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //       child: MaterialButton(
+            //           onPressed: () {},
+            //           child: Text(
+            //             'C',
+            //             style: GoogleFonts.poppins(
+            //                 fontSize: 11.5,
+            //                 color: primaryLightColor,
+            //                 fontWeight: FontWeight.w400),
+            //           )),
+            //     ),
+            //     const Spacer(),
+            //     Container(
+            //       height: 32,
+            //       width: MediaQuery.of(context).size.width * 0.3,
+            //       decoration: BoxDecoration(
+            //         color: const Color.fromRGBO(206, 218, 223, 1),
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //       child: MaterialButton(
+            //           onPressed: () {},
+            //           child: Text(
+            //             'C++',
+            //             style: GoogleFonts.poppins(
+            //                 fontSize: 11.5,
+            //                 color: primaryLightColor,
+            //                 fontWeight: FontWeight.w400),
+            //           )),
+            //     ),
           ],
         ),
       ),
