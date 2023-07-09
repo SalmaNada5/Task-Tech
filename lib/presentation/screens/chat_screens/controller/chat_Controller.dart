@@ -18,14 +18,14 @@ class ChatController{
     static List<dynamic> userChats =[];
     
 
-    static Future<List<dynamic>?> findUserChats({bool dioLoading=true, String? chatId})async{
+    static Future<List<dynamic>?> findUserChats({bool dioLoading=true, String? userId})async{
       String? token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
 
     try {
       Response res = await _dioClient.get(
-        'api/v1/chats/$chatId',
+        'api/v1/chats/$userId',
          token,
          isLoading: dioLoading)as Response;
          userChatModel = UserChatsModel.fromJson(res.data);

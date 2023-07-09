@@ -142,7 +142,7 @@ List<String> msgs =[];
               ListView.builder(
                   itemCount: msgs.length,
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Container(
                       padding: const EdgeInsetsDirectional.only(
@@ -252,6 +252,7 @@ List<String> msgs =[];
                         width: double.infinity * 0.5,
                         child: TextField(
                           controller:messageController ,
+                          
                           style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
@@ -259,11 +260,13 @@ List<String> msgs =[];
                           ),
                           
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsetsDirectional.all(5),
+                           
+                            contentPadding: EdgeInsetsDirectional.all(10),
                             labelStyle:  GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
-                            color: Color.fromRGBO(15, 24, 40, 1)
+                            color: Color.fromRGBO(15, 24, 40, 1),
+                            
                           ),
                               filled: true,
                               focusColor: const Color.fromRGBO(247, 247, 252, 1),
@@ -272,6 +275,11 @@ List<String> msgs =[];
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none),
                               fillColor: const Color.fromRGBO(247, 247, 252, 1)),
+                              onChanged: (value) {
+                                messageController!.text = value;
+                              
+                                
+                              },
                         ),
                       )),
                       const SizedBox(
@@ -281,6 +289,7 @@ List<String> msgs =[];
                           onPressed: () {
                             socket.emit('msg',messageController!.text);
                             messageController!.clear();
+
                           },
                           icon: const Icon(
                             Icons.send,
