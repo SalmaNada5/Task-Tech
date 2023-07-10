@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
 import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
+import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
 import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
 
 class PostService extends StatefulWidget {
@@ -21,7 +23,8 @@ class _PostServiceState extends State<PostService> {
       onPressed: () async {
         logWarning(AddPostsController.serviceDeliveryDaysController.text);
         await AddPostsController.uploadServiceFunc();
-        await PostController.getTaskPosts(dioLoading: false);
+        await PostController.getServicePosts();
+        Constants.navigateTo(const BottomNavBarScreen());
       },
       postNameController: AddPostsController.serviceNameController,
       descriptionController: AddPostsController.serviceDescriptionController,

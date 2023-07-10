@@ -34,12 +34,29 @@ class ProfileScreenState extends State<ProfileScreen>
   }
 
   void getProfileInfo() async {
-    try {
-      await CurrentUserInfoController.getUserInfoFunc();
-      setState(() {});
-    } catch (e) {
-      logError('$e in getProfileInfo');
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        Constants.showLoading();
+        await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
+        try {
+          String? id = CurrentUserInfoController
+              .userInfoModel.data?.user.followings
+              .firstWhere((element) =>
+                  element.toString() == UserController.userModel.data?.user.id);
+
+          if (id != null) {
+            isFollowed = true;
+          }
+        } catch (e) {
+          isFollowed = false;
+          logError('$e');
+        }
+        Constants.hideLoadingOrNavBack();
+        setState(() {});
+      } catch (e) {
+        logError('$e in getProfileInfo');
+      }
+    });
   }
 
   bool isFollowed = false;
@@ -255,7 +272,8 @@ class ProfileScreenState extends State<ProfileScreen>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    const AboutmePage(),
+                    // ignore: prefer_const_constructors
+                    AboutmePage(),
                     const ReviewPage(),
                     PortfolioPage(isMe: widget.isMe),
                   ],

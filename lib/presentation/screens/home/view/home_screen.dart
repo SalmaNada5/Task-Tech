@@ -28,37 +28,45 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    highestRatedScrollController();
-    categoriesScrollController();
-    relatedPostsScrollController();
-    getAllTopUsers();
-    getPopularCateogries();
-    getRelatedPosts();
-    getProfileInfo();
+    getAllData();
     super.initState();
   }
 
-  void getAllTopUsers() async {
+  void getAllData() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Constants.showLoading();
+      await highestRatedScrollController();
+      await categoriesScrollController();
+      await relatedPostsScrollController();
+      await getAllTopUsers();
+      await getPopularCateogries();
+      await getRelatedPosts();
+      await getProfileInfo();
+      Constants.hideLoadingOrNavBack();
+    });
+  }
+
+  Future<void> getAllTopUsers() async {
     try {
-      await TopUserController.getTopUsersFunc();
+      await TopUserController.getTopUsersFunc(dioLoading: false);
       setState(() {});
     } catch (e) {
       logError('$e in getAllTopUsers');
     }
   }
 
-  void getPopularCateogries() async {
+  Future<void> getPopularCateogries() async {
     try {
-      await CategoryController.getPopularCategoriesFunc();
+      await CategoryController.getPopularCategoriesFunc(dioLoading: false);
       setState(() {});
     } catch (e) {
       logError('$e in getPopularCategoriesFunc');
     }
   }
 
-  void getRelatedPosts() async {
+  Future<void> getRelatedPosts() async {
     try {
-      await RelatedPostscontroller.getRelatedPostsFunc();
+      await RelatedPostscontroller.getRelatedPostsFunc(dioLoading: false);
       setState(() {});
     } catch (e) {
       logError('$e in getRelatedPosts');
@@ -70,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool relatedPostsLoading = false;
   bool photoReturned = false;
 
-  void highestRatedScrollController() async {
+  Future<void> highestRatedScrollController() async {
     TopUserController.highestRatedScrollController.addListener(() async {
       if (TopUserController.highestRatedScrollController.position.atEdge &&
           TopUserController.highestRatedScrollController.position.pixels != 0) {
@@ -93,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void categoriesScrollController() async {
+  Future<void> categoriesScrollController() async {
     CategoryController.scrollController.addListener(() async {
       if (CategoryController.scrollController.position.atEdge &&
           CategoryController.scrollController.position.pixels != 0) {
@@ -116,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void relatedPostsScrollController() async {
+  Future<void> relatedPostsScrollController() async {
     RelatedPostscontroller.scrollController.addListener(() async {
       if (RelatedPostscontroller.scrollController.position.atEdge &&
           RelatedPostscontroller.scrollController.position.pixels != 0) {
@@ -140,9 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void getProfileInfo() async {
+  Future<void> getProfileInfo() async {
     try {
-      await CurrentUserInfoController.getUserInfoFunc();
+      await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
       setState(() {});
     } catch (e) {
       logError('$e in getAllTopUsers');
@@ -254,34 +262,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: Constants.screenHeight * 0.2,
-                  child: SingleChildScrollView(
-                    controller: CategoryController.scrollController,
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: CategoryController.categories.length,
-                          itemBuilder: (ctx, i) => CategoryItem(
-                            catName: CategoryController.categories[i].name,
-                            imgUrl: CategoryController.categories[i].photo,
-                            numOfSkills:
-                                CategoryController.categories[i].nSkills,
-                          ),
-                        ),
-                        isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 4),
-                                child: Opacity(
-                                  opacity: 0.8,
-                                  child: ModalBarrier(
-                                      dismissible: false, color: Colors.grey),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ],
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: CategoryController.categories.length,
+                    itemBuilder: (ctx, i) => CategoryItem(
+                      catName: CategoryController.categories[i].name,
+                      imgUrl: CategoryController.categories[i].photo,
+                      numOfSkills: CategoryController.categories[i].nSkills,
                     ),
                   ),
                 ),
@@ -294,58 +283,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 0.3 * Constants.screenHeight,
-                  child: SingleChildScrollView(
-                    controller: RelatedPostscontroller.scrollController,
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (ctx, i) => Padding(
+                    //  physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, i) => CurrentUserInfoController
+                                .userInfoModel.data?.user.id ==
+                            RelatedPostscontroller.posts[i].user.id
+                        ? const SizedBox.shrink()
+                        : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: RelatedPostItem(
-                              onpressed: () => Constants.navigateTo(
-                                  TaskDetailsPage(
-                                      postId: RelatedPostscontroller
-                                              .relatedPostModel
-                                              .data
-                                              ?.posts[i]
-                                              .id ??
-                                          '')),
-                              description: RelatedPostscontroller
-                                      .relatedPostModel
-                                      .data
-                                      ?.posts[i]
-                                      .description ??
-                                  '',
-                              profileImgUrl: RelatedPostscontroller
-                                      .relatedPostModel
-                                      .data
-                                      ?.posts[i]
-                                      .user
-                                      .photo ??
-                                  '',
-                              rate: RelatedPostscontroller.relatedPostModel.data
-                                      ?.posts[i].user.ratingsAverage ??
-                                  0,
-                              salary: RelatedPostscontroller
-                                      .relatedPostModel.data?.posts[i].salary ??
-                                  0,
+                              onpressed: () {
+                                Constants.navigateTo(TaskDetailsPage(
+                                    postId:
+                                        RelatedPostscontroller.posts[i].id));
+                                return;
+                              },
+                              description:
+                                  RelatedPostscontroller.posts[i].description,
+                              profileImgUrl:
+                                  RelatedPostscontroller.posts[i].user.photo,
+                              rate: RelatedPostscontroller
+                                  .posts[i].user.ratingsAverage,
+                              salary: RelatedPostscontroller.posts[i].salary,
                               serviceImgUrl:
                                   RelatedPostscontroller.posts[i].attachFile,
-                              userName: RelatedPostscontroller.relatedPostModel
-                                      .data?.posts[i].user.name ??
-                                  '',
+                              userName:
+                                  RelatedPostscontroller.posts[i].user.name,
                             ),
                           ),
-                          itemCount: RelatedPostscontroller
-                                  .relatedPostModel.data?.posts.length ??
-                              0,
-                        ),
-                      ],
-                    ),
+                    itemCount: RelatedPostscontroller.posts.length,
                   ),
                 ),
                 const SizedBox(
@@ -360,18 +328,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: Constants.screenHeight * 0.27,
-                  child: SingleChildScrollView(
-                    controller: TopUserController.highestRatedScrollController,
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: TopUserController.users.length,
-                          itemBuilder: (ctx, i) {
-                            return HighestRatedFreelancer(
+                    //physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: TopUserController.users.length,
+                    itemBuilder: (ctx, i) {
+                      return CurrentUserInfoController
+                                  .userInfoModel.data?.user.id ==
+                              TopUserController.users[i].id
+                          ? const SizedBox.shrink()
+                          : HighestRatedFreelancer(
                               userImgUrl: TopUserController.users[i].photo,
                               userName: TopUserController.users[i].name,
                               job: TopUserController.users[i].job,
@@ -384,16 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const ProfileScreen(isMe: false));
                               },
                             );
-                          },
-                        ),
-                        isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 4),
-                                // child: CircularProgressIndicator(),
-                              )
-                            : const SizedBox.shrink()
-                      ],
-                    ),
+                    },
                   ),
                 ),
               ],

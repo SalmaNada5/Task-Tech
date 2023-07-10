@@ -24,19 +24,19 @@ dependencies:
   smooth_star_rating_null_safety: ^1.0.4+2
   syncfusion_flutter_sliders: ^20.4.49
   syncfusion_flutter_core:
-  google_maps_flutter: ^2.2.4
+ # google_maps_flutter: ^2.2.4
   flutter_switch: ^0.3.2
-  path: ^1.8.2
-  image_picker: ^0.8.7+4
-  image_cropper: 
-  google_maps_flutter_web: ^0.5.0+1
+  #path: ^1.8.2
+ # image_picker: ^0.8.7+4
+ # image_cropper: 
+ # google_maps_flutter_web: ^0.5.0+1
   dio: ^5.1.1
   internet_connection_checker: ^1.0.0+1
-  open_file: ^3.3.1
+ # open_file: ^3.3.1
   path_provider: ^2.0.15
   shared_preferences: ^2.1.2
-  geolocator: ^9.0.2
-  geocoding: ^2.1.0
+ # geolocator: ^9.0.2
+ # geocoding: ^2.1.0
   cached_network_image:
   timeago: ^3.3.0
   webview_flutter: ^4.2.2
