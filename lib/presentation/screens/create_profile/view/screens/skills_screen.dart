@@ -144,7 +144,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                     },*/
                     controller: skillController,
                     onChanged: (value) {
-                      skillController.text = value.toString();
+                       //value = skillController.text;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -248,7 +248,7 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
       onSelected: (selected) async {
         setState(() {
           isSelected = selected;
-          if (isSelected) widget.skillList!.add(widget.chipName);
+          //if (isSelected) widget.skillList!.add(widget.chipName);
         });
         if (isSelected) {
           // CreateProfileModel? profileModel;
