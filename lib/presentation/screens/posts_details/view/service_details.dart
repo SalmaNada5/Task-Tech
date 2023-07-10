@@ -11,7 +11,7 @@ import '../../../../constants/colors.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
   const ServiceDetailsPage({
-    super.key,
+    super.key, String? serviceId,
   });
 
   @override

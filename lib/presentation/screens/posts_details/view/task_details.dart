@@ -12,22 +12,10 @@ import 'package:task_tech/presentation/screens/posts_details/controller/task_det
 class TaskDetailsPage extends StatefulWidget {
   const TaskDetailsPage({
     super.key,
-    // required this.name,
-    // required this.description,
-    // required this.price,
-    // required this.deliveryTime,
-    // required this.postTime,
-    // required this.taskName,
-    // required this.userImg,
+  
     required this.postId,
   });
-  // final String userImg;
-  // final String name;
-  // final String taskName;
-  // final String description;
-  // final int price;
-  // final String deliveryTime;
-  // final DateTime postTime;
+
   final String postId;
   @override
   State<TaskDetailsPage> createState() => _TaskDetailsPageState();

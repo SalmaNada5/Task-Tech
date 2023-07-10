@@ -4,16 +4,15 @@ import 'package:task_tech/presentation/screens/create_profile/controller/upload_
 import '../../../../../constants/colors.dart';
 
 class PortfolioPage extends StatelessWidget {
-  const PortfolioPage({Key? key}) : super(key: key);
-
+  const PortfolioPage({Key? key, required this.isMe}) : super(key: key);
+  final bool isMe;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 5),
-            Center(
+            isMe? Center(
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: MediaQuery.of(context).size.height * 0.06,
@@ -46,7 +45,8 @@ class PortfolioPage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ): const SizedBox.shrink(),
+            const SizedBox(height: 5),
             const SizedBox(
               height: 10,
             ),

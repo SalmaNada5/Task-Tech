@@ -6,10 +6,13 @@ import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
+import 'package:task_tech/presentation/screens/home/controller/get_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/related_posts_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/categories_screen.dart';
 import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
+import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/category_item.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
@@ -271,7 +274,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         isLoading
                             ? const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 4),
-                                child: CircularProgressIndicator(),
+                                child: Opacity(
+                                  opacity: 0.8,
+                                  child: ModalBarrier(
+                                      dismissible: false, color: Colors.grey),
+                                ),
                               )
                             : const SizedBox.shrink(),
                       ],
@@ -298,20 +305,39 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (ctx, i) => Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ServicesItem(
+                            child: RelatedPostItem(
+                              onpressed: () => Constants.navigateTo(
+                                  TaskDetailsPage(
+                                      postId: RelatedPostscontroller
+                                              .relatedPostModel
+                                              .data
+                                              ?.posts[i]
+                                              .id ??
+                                          '')),
                               description: RelatedPostscontroller
-                                  .relatedPostModel.data!.posts[i].description,
+                                      .relatedPostModel
+                                      .data
+                                      ?.posts[i]
+                                      .description ??
+                                  '',
                               profileImgUrl: RelatedPostscontroller
-                                  .relatedPostModel.data!.posts[i].user.photo,
-                              rate: RelatedPostscontroller.relatedPostModel
-                                  .data!.posts[i].user.ratingsAverage,
+                                      .relatedPostModel
+                                      .data
+                                      ?.posts[i]
+                                      .user
+                                      .photo ??
+                                  '',
+                              rate: RelatedPostscontroller.relatedPostModel.data
+                                      ?.posts[i].user.ratingsAverage ??
+                                  0,
                               salary: RelatedPostscontroller
                                       .relatedPostModel.data?.posts[i].salary ??
                                   0,
                               serviceImgUrl:
                                   RelatedPostscontroller.posts[i].attachFile,
-                              userName: RelatedPostscontroller
-                                  .relatedPostModel.data!.posts[i].user.name,
+                              userName: RelatedPostscontroller.relatedPostModel
+                                      .data?.posts[i].user.name ??
+                                  '',
                             ),
                           ),
                           itemCount: RelatedPostscontroller
@@ -351,8 +377,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               job: TopUserController.users[i].job,
                               rate: TopUserController.users[i].ratingsAverage
                                   .toDouble(),
-                              onPress: () async{
-                                
+                              onPress: () async {
+                                await UserController.getUserByIdFunc(
+                                    TopUserController.users[i].id);
+                                Constants.navigateTo(
+                                    const ProfileScreen(isMe: false));
                               },
                             );
                           },
@@ -360,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         isLoading
                             ? const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 4),
-                                child: CircularProgressIndicator(),
+                                // child: CircularProgressIndicator(),
                               )
                             : const SizedBox.shrink()
                       ],

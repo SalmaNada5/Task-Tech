@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
 import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
 import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
@@ -18,7 +19,8 @@ class _PostServiceState extends State<PostService> {
   Widget build(BuildContext context) {
     return ReusablePostForm(
       onPressed: () async {
-       await AddPostsController.uploadServiceFunc();
+        logWarning(AddPostsController.serviceDeliveryDaysController.text);
+        await AddPostsController.uploadServiceFunc();
         await PostController.getTaskPosts(dioLoading: false);
       },
       postNameController: AddPostsController.serviceNameController,
@@ -149,13 +151,6 @@ class _PostServiceState extends State<PostService> {
                   Icons.attach_file,
                   size: 20,
                 )),
-            // onChanged: (value) {
-            //   //AddPostsController.attachFileController.text = value.toString();
-            //   // AddPostsController.attachFileController.selection =
-            //   //     TextSelection.fromPosition(TextPosition(
-            //   //         offset:
-            //   //             AddPostsController.attachFileController.text.length));
-            // },
             maxLines: 1,
           ),
           const SizedBox(

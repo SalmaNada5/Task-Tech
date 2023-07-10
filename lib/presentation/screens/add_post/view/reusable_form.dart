@@ -167,6 +167,14 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                       TextSelection.fromPosition(TextPosition(
                           offset: widget.deliveryDaysController.text.length));
                 },
+                validator: (value) {
+                  value = widget.deliveryDaysController.text;
+                  if (value.isEmpty) {
+                    return 'Please fill this field';
+                  } else {
+                    return null;
+                  }
+                },
                 maxLines: 1,
               ),
               const SizedBox(

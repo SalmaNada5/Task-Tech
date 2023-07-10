@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/home/controller/search_service_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/search_post_result.dart';
+import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key});
@@ -55,6 +58,14 @@ class _SearchWidgetState extends State<SearchWidget> {
 }
 
 class HomeSearchDelegate extends SearchDelegate {
+  void getSearchResult() async {
+    try {
+      await SearchServiceController.searchServiceFunc(query);
+    } catch (e) {
+      logError('error in getSearchResult: $e');
+    }
+  }
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -80,11 +91,16 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    SearchServiceController.searchServiceFunc(query);
+    getSearchResult();
     return ListView.builder(
       itemCount:
           SearchServiceController.searchServiceModel.services?.length ?? 0,
       itemBuilder: (BuildContext context, int i) => SearchPostResult(
+          onPressed: () => Constants.navigateTo(ServiceDetailsPage(
+                serviceId: SearchServiceController
+                        .searchServiceModel.services?[i].id ??
+                    '',
+              )),
           serviceAttachFile: SearchServiceController
                   .searchServiceModel.services?[i].attachFile ??
               '',

@@ -7,12 +7,14 @@ class SearchPostResult extends StatelessWidget {
   final String userImg;
   final String userName;
   final String serviceName;
+  final void Function()? onPressed;
   const SearchPostResult(
       {super.key,
       required this.serviceAttachFile,
       required this.userImg,
       required this.userName,
-      required this.serviceName});
+      required this.serviceName,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class SearchPostResult extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all(Colors.white),
               elevation: MaterialStateProperty.all(8),
               padding: MaterialStateProperty.all(const EdgeInsets.all(10))),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Row(
             children: [
               Container(

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:task_tech/constants/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 mixin Constants {
@@ -28,7 +29,10 @@ mixin Constants {
       context: navigatorKey.currentContext!,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+            child: CircularProgressIndicator(
+          color: primaryLightColor,
+        ));
       },
     );
   }

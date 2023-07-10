@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 
-class ServicesItem extends StatefulWidget {
-  const ServicesItem({
+class RelatedPostItem extends StatefulWidget {
+  const RelatedPostItem({
     super.key,
     required this.serviceImgUrl,
     required this.profileImgUrl,
@@ -11,6 +11,7 @@ class ServicesItem extends StatefulWidget {
     required this.description,
     required this.salary,
     required this.rate,
+    this.onpressed,
   });
   final String serviceImgUrl;
   final String profileImgUrl;
@@ -18,13 +19,14 @@ class ServicesItem extends StatefulWidget {
   final String description;
   final int salary;
   final num rate;
+  final void Function()? onpressed;
   @override
-  State<ServicesItem> createState() => _ServicesItemState();
+  State<RelatedPostItem> createState() => _RelatedPostItemState();
 }
 
 bool isFavorite = false;
 
-class _ServicesItemState extends State<ServicesItem> {
+class _RelatedPostItemState extends State<RelatedPostItem> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -34,7 +36,7 @@ class _ServicesItemState extends State<ServicesItem> {
           backgroundColor: MaterialStateProperty.all(Colors.white),
           elevation: MaterialStateProperty.all(8),
         ),
-        onPressed: () {},
+        onPressed: widget.onpressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
