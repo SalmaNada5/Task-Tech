@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/presentation/screens/add_post/view/create_post_screen.dart';
 import 'package:task_tech/presentation/screens/home/view/home_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/profile_page.dart';
 import 'package:task_tech/presentation/screens/posts/view/posts_screen.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
 
 import '../../chat_screens/view/chats_screen.dart';
 
@@ -23,7 +23,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     const ChatsScreen(),
     const AddPostScreen(),
     const PostsScreen(),
-    const ProfilePage(),
+    const ProfileScreen(isMe: true,),
   ];
 
   @override

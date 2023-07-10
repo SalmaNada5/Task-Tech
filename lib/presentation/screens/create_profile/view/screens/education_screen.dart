@@ -1,38 +1,36 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/create_profile_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_cv_controller.dart';
+import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
-
-import '../../../constants/colors.dart';
-import '../auth/controller/cur_user_controller.dart';
-import '../profile/view/profile_screen.dart';
-import 'controller/upload_profile_photo_controller.dart';
+import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
 
 class EducationScreen extends StatefulWidget {
-  const EducationScreen(
-      {Key? key,
-      this.job,
-      this.birthDate,
-      this.gender,
-      this.age,
-      this.location,
-      this.phoneNumber,
-      this.skills,
-      this.description,
-      this.minimum,
-      this.maximum,
-      this.currency,
-      this.frequency})
-      : super(key: key);
+  const EducationScreen({
+    Key? key,
+    this.job,
+    this.birthDate,
+    this.gender,
+    this.age,
+    this.location,
+    this.phoneNumber,
+    this.skills,
+    this.description,
+    this.minimum,
+    this.maximum,
+    this.currency,
+    this.frequency,
+  }) : super(key: key);
   final String? job;
   final String? birthDate;
   final String? gender;
-
   final String? age;
   final String? location;
   final String? phoneNumber;
@@ -227,7 +225,7 @@ class EducationScreenState extends State<EducationScreen> {
                           icon: Image.asset('icons/upload.png'),
                           iconSize: 40,
                           onPressed: () async {
-                            UploadCVController.attachCV();
+                            await UploadCVController.attachCV();
                             // FilePickerResult? result =
                             //     await FilePicker.platform.pickFiles();
                             // if (result != null) {
@@ -282,11 +280,11 @@ class EducationScreenState extends State<EducationScreen> {
                           widget.skills ?? [],
                           education,
                         );
-
-await CurrentUserInfoController.getUserInfoFunc();
+                        await CurrentUserInfoController.getUserInfoFunc();
                         Constants.navigateTo(const ProfileScreen(
                           isMe: true,
-                        ));                      },
+                        ));
+                      },
                       childWidget: Text(
                         'Save',
                         style: GoogleFonts.poppins(

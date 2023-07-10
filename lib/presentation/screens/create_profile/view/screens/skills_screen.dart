@@ -32,7 +32,6 @@ class SkillsScreenState extends State<SkillsScreen> {
     const FilterChipWidget(
       chipName: 'UI/UX',
       isSelected: false,
-
     ),
     const FilterChipWidget(
       chipName: 'Technology',
@@ -63,7 +62,6 @@ class SkillsScreenState extends State<SkillsScreen> {
       isSelected: false,
     ),
   ];
-  
   @override
   Widget build(BuildContext context) {
     //String chiptext ='';
@@ -146,7 +144,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                     },*/
                     controller: skillController,
                     onChanged: (value) {
-                      skillController.text = value.toString();
+                       //value = skillController.text;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -188,7 +186,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                           gender: widget.gender,
                           location: widget.location,
                           phoneNumber: widget.phoneNumber,
-                          skills: const ['Dart', 'Flutter'],
+                          skills:const ['UI/UX', 'Programming'],
                         ));
                       },
                       childWidget: Text(
@@ -209,23 +207,23 @@ class SkillsScreenState extends State<SkillsScreen> {
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
   final bool isSelected;
-  const FilterChipWidget({
-    Key? key,
-    required this.chipName,
-    required this.isSelected,
-  }) : super(key: key);
+  final List<String>? skillList;
+  const FilterChipWidget(
+      {Key? key,
+      required this.chipName,
+      required this.isSelected,
+      this.skillList})
+      : super(key: key);
 
   @override
   FilterChipWidgetState createState() =>
-      FilterChipWidgetState(isSelected: isSelected,chipName:chipName);
-      
+      FilterChipWidgetState(isSelected: isSelected);
 }
 
 class FilterChipWidgetState extends State<FilterChipWidget> {
   late Icon icon;
   bool isSelected = false;
-  late List<String> skillList = [];
-  FilterChipWidgetState({required isSelected,required chipName});
+  FilterChipWidgetState({required isSelected});
   @override
   Widget build(BuildContext context) {
     return FilterChip(
@@ -247,32 +245,23 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
         ],
       ),
       selected: isSelected,
-      onSelected: (selected) {
+      onSelected: (selected) async {
         setState(() {
           isSelected = selected;
-
-
-          //if (isSelected) skillList.addAll([widget.c;
-          //else skillList.remove(widget.chipName);
-           
-
-
+          //if (isSelected) widget.skillList!.add(widget.chipName);
         });
-          /*if (isSelected == true) {
-            skillList.add(widget.chipName);
-          }*/
-
-        /* if (isSelected) {
-          CreateProfileModel? profileModel;
-          profileModel = await ProfileController.createProfileFunc(
-              skills: widget.skillList);
-          if (profileModel == null) {
-            return Constants.errorMessage(description: 'Invalid input data');
-          } else {
-            Constants.navigateTo(const SkillsScreen(),
-                pushAndRemoveUntil: true);
-          }
-        }*/
+        if (isSelected) {
+          // CreateProfileModel? profileModel;
+          // profileModel = await ProfileController.createProfileFunc(
+          //     skills: widget.skillList);
+          // if (profileModel == null) {
+          //   return Constants.errorMessage(description: 'Invalid input data');
+          //}
+          //  else {
+          //   Constants.navigateTo(const SkillsScreen(),
+          //       pushAndRemoveUntil: true);
+          // }
+        }
       },
       backgroundColor: white,
       showCheckmark: false,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/home/models/top_user_model.dart';
@@ -13,8 +14,12 @@ class TopUserController {
 
   static Future<List<User>?> getTopUsersFunc({bool dioLoading = true}) async {
     try {
-      Response res = await _dioClient.get('api/v1/users/topuser?page=$page', '',
-          isLoading: dioLoading) as Response;
+      String? token;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString("token");
+      Response res = await _dioClient.get(
+              'api/v1/users/topuser?page=$page', token, isLoading: dioLoading)
+          as Response;
 
       topUserModel = TopUserModel.fromJson(res.data);
       users.addAll(topUserModel.data!.users);

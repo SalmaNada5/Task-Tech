@@ -4,17 +4,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/skills_screen.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/skills_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/default_form_field.dart';
-
-import '../../../constants/consts.dart';
 
 class CreateProfile extends StatefulWidget {
   const CreateProfile({super.key});
@@ -38,7 +36,7 @@ class _CreateProfileState extends State<CreateProfile> {
   //AssetImage image = const AssetImage('images/picture.png');
   String imagepath = "";
   late File imagefile;
-  final _picker = ImagePicker();
+  //final _picker = ImagePicker();
 
   late GoogleMapController mapController;
 
@@ -46,19 +44,19 @@ class _CreateProfileState extends State<CreateProfile> {
   String? _currentAddress;
   late AnimationController controller;
 
-  Future<void> _openImagePicker() async {
-    final XFile? pickedImage =
-        await _picker.pickImage(source: ImageSource.gallery);
-    // UploadProfilePhotoController.selectedPhoto =
-    //     await UploadProfilePhotoController.attachPhoto();
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(
-          pickedImage.path,
-        );
-      });
-    }
-  }
+  // Future<void> _openImagePicker() async {
+  //   final XFile? pickedImage =
+  //       await _picker.pickImage(source: ImageSource.gallery);
+  //   // UploadProfilePhotoController.selectedPhoto =
+  //   //     await UploadProfilePhotoController.attachPhoto();
+  //   if (pickedImage != null) {
+  //     setState(() {
+  //       _image = File(
+  //         pickedImage.path,
+  //       );
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
@@ -349,7 +347,7 @@ class _CreateProfileState extends State<CreateProfile> {
                             type: TextInputType.phone,
                             validate: (value) {
                               value = phoneController.text;
-                              if (value.isEmpty && value.length < 11) {
+                              if (value.isEmpty || value.length < 11) {
                                 return 'Phone is too short ';
                               } else {
                                 return null;
@@ -375,7 +373,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                 // }
 
                                 if (formKey.currentState!.validate()) {
-                                  logInfo('age: ${ageController.text}');
+                                  logInfo('job: ${jobController.text}');
                                   Constants.navigateTo(
                                       SkillsScreen(
                                           job: jobController.text,

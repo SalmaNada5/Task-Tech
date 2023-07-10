@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
@@ -173,6 +174,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   password: passController.text,
                                   name: fullNameController.text,
                                   confirmPassword: confirmPassController.text);
+                              SharedPreferences pref =
+                                  await SharedPreferences.getInstance();
+                              pref.setString("token", authModel?.token ?? "");
                               if (authModel == null) {
                                 return Constants.errorMessage();
                               } else {

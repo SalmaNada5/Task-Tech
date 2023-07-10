@@ -24,11 +24,13 @@ class HighestRatedFreelancer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            child: CachedNetworkImage(
-                imageUrl: userImgUrl,
-                errorWidget: (context, url, error) {
-                  return Image.asset('images/default person.png');
-                }),
+            child: ClipOval(
+              child: CachedNetworkImage(
+                  imageUrl: userImgUrl,
+                  errorWidget: (context, url, error) {
+                    return Image.asset('images/default person.png');
+                  }),
+            ),
           ),
           const SizedBox(
             height: 5,
@@ -77,6 +79,7 @@ class HighestRatedFreelancer extends StatelessWidget {
             height: 5,
           ),
           ElevatedButton(
+            
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
                 const Color(0xffCEDADF),

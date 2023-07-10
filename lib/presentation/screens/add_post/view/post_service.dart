@@ -17,9 +17,9 @@ class _PostServiceState extends State<PostService> {
   @override
   Widget build(BuildContext context) {
     return ReusablePostForm(
-      onPressed: () {
-        AddPostsController.uploadServiceFunc();
-        PostController.getTaskPosts(dioLoading: false);
+      onPressed: () async {
+       await AddPostsController.uploadServiceFunc();
+        await PostController.getTaskPosts(dioLoading: false);
       },
       postNameController: AddPostsController.serviceNameController,
       descriptionController: AddPostsController.serviceDescriptionController,
