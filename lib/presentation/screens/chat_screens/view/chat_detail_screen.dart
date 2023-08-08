@@ -48,7 +48,10 @@ List<String> msgs =[];
       // ignore: avoid_print
       print(socket.connected);
 
+      socket.onDisconnect((_) => print("disconnected with server"));
+
   socket.on('res', (data) {
+    print(data);
     setState(() {
           msgs.add(data);
 
@@ -86,8 +89,8 @@ List<String> msgs =[];
                           ),
                           CircleAvatar(
                             radius: 6,
-                            backgroundColor: isOnline
-                                ? const Color.fromRGBO(76, 175, 80, 1)
+                            backgroundColor: isOnline?
+                             const Color.fromRGBO(76, 175, 80, 1)
                                 : Colors.transparent,
                           )
                         ],
@@ -145,7 +148,7 @@ List<String> msgs =[];
               ListView.builder(
                   itemCount: msgs.length,
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Container(
                       padding: const EdgeInsetsDirectional.only(
@@ -153,9 +156,9 @@ List<String> msgs =[];
                       child: Column(
                         children: [
                           Align(
-                            alignment: (messages[index].messageType == 'receiver'
+                            alignment: /*(messages[index].messageType == 'receiver'
                                 ? Alignment.topLeft
-                                : Alignment.topRight),
+                                :*/ Alignment.topRight,
                             child: Container(
                               
                               decoration: BoxDecoration(
@@ -187,32 +190,38 @@ List<String> msgs =[];
                                       style:  GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-                            color: messages[index].messageType == "receiver"?
-                            Color.fromRGBO(255, 255, 255, 1):
+                            color:
+                            // messages[index].messageType == "receiver"?
+                           // Color.fromRGBO(255, 255, 255, 1):
                             Color.fromRGBO(89, 95, 105, 1)
                           ), 
                                     ),
                                   ),
-                                  messages[index].messageType == "sender"? Container(
+                                  //messages[index].messageType == "sender"?
+                                   Container(
                                     alignment:AlignmentDirectional.bottomEnd,
                                     width: MediaQuery.of(context).size.width * 0.03,
                                     
                                     margin: EdgeInsetsDirectional.only(top: MediaQuery.of(context).size.height * 0.01),
                                     child: Icon(
-                                      messages[index].messageIsRead==true? Icons.done_all_rounded: Icons.done,
+                                      //messages[index].messageIsRead==true?
+                                       Icons.done_all_rounded,
+                                       //: Icons.done,
                                       size: MediaQuery.of(context).size.width * 0.04,
                                       color: Color.fromRGBO(22, 80, 105, 1),
                                     ),
-                                  ):SizedBox(width: 0),
+                                  )
+                                  //:SizedBox(width: 0),
                                 
                                 ],
                               ),
                             ),
                           ),
                             Align(
-                              alignment: (messages[index].messageType == 'receiver'
-                                ? Alignment.topLeft
-                                : Alignment.topRight),
+                              alignment: 
+                              //(messages[index].messageType == 'receiver'?
+                               Alignment.topLeft,
+                               // : Alignment.topRight),
                               child: Container(
                                         padding: EdgeInsets.zero,
                                         margin: EdgeInsets.only(
@@ -255,6 +264,7 @@ List<String> msgs =[];
                         width: double.infinity * 0.5,
                         child: TextField(
                           controller:messageController ,
+                          
                           style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
@@ -262,11 +272,13 @@ List<String> msgs =[];
                           ),
                           
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsetsDirectional.all(5),
+                           
+                            contentPadding: EdgeInsetsDirectional.all(10),
                             labelStyle:  GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
-                            color: Color.fromRGBO(15, 24, 40, 1)
+                            color: Color.fromRGBO(15, 24, 40, 1),
+                            
                           ),
                               filled: true,
                               focusColor: const Color.fromRGBO(247, 247, 252, 1),
@@ -275,6 +287,7 @@ List<String> msgs =[];
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none),
                               fillColor: const Color.fromRGBO(247, 247, 252, 1)),
+                              
                         ),
                       )),
                       const SizedBox(
@@ -284,6 +297,7 @@ List<String> msgs =[];
                           onPressed: () {
                             socket.emit('msg',messageController!.text);
                             messageController!.clear();
+
                           },
                           icon: const Icon(
                             Icons.send,
