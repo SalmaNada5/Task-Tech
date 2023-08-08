@@ -16,24 +16,25 @@ class PostController {
   static int taskPage = 1;
   static int servicePage = 1;
   static ScrollController scrollController = ScrollController();
-  static Future<List<Post>?> getTaskPosts({bool dioLoading = true}) async {
+  static Future<List<Post>?> getTaskPosts(
+      {bool dioLoading = true, int? page}) async {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
     try {
       Response res = await _dioClient.get(
-        'api/v1/posts?sort=-createdAt&fields=user,description,createdAt&page=$taskPage',
+        'api/v1/posts?sort=-createdAt&fields=user,description,createdAt&page=${page ?? taskPage}',
         token,
         isLoading: dioLoading,
       ) as Response;
       postModel = PostModel.fromJson(res.data);
-      tasks.addAll(postModel.data!.posts);
-      taskPage = taskPage + 1;
+      tasks.addAll(postModel.data?.posts ?? []);
+      taskPage = page ?? taskPage + 1;
       logSuccess('tasks returned successfully: ${postModel.status}');
       return tasks;
     } catch (e) {
       if (taskPage == postModel.paginationResult?.numberOfPages) {
-        taskPage = taskPage + 1;
+        taskPage = page ?? taskPage + 1;
       }
       logError('error in getTaskPosts ${e.toString()}');
     }
@@ -41,7 +42,7 @@ class PostController {
   }
 
   static Future<List<Service>?> getServicePosts(
-      {bool dioLoading = true}) async {
+      {bool dioLoading = true, int? page}) async {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
@@ -53,7 +54,7 @@ class PostController {
       ) as Response;
       serviceModel = ServiceModel.fromJson(res.data);
       services.addAll(serviceModel.data!.services);
-      servicePage = servicePage + 1;
+      servicePage = page ?? servicePage + 1;
       logSuccess('services returned successfully: ${serviceModel.status}');
       return services;
     } catch (e) {

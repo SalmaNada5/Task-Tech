@@ -7,6 +7,7 @@ import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
+import 'package:task_tech/presentation/screens/home/controller/get_user_controller.dart';
 import 'package:task_tech/presentation/screens/profile/view/edit_profile_screen.dart';
 import 'package:task_tech/presentation/screens/profile/view/portfolio_page.dart';
 import 'package:task_tech/presentation/screens/profile/view/review_page.dart';
@@ -33,12 +34,29 @@ class ProfileScreenState extends State<ProfileScreen>
   }
 
   void getProfileInfo() async {
-    try {
-      await CurrentUserInfoController.getUserInfoFunc();
-      setState(() {});
-    } catch (e) {
-      logError('$e in getProfileInfo');
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        Constants.showLoading();
+        await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
+        try {
+          String? id = CurrentUserInfoController
+              .userInfoModel.data?.user.followings
+              .firstWhere((element) =>
+                  element.toString() == UserController.userModel.data?.user.id);
+
+          if (id != null) {
+            isFollowed = true;
+          }
+        } catch (e) {
+          isFollowed = false;
+          logError('$e');
+        }
+        Constants.hideLoadingOrNavBack();
+        setState(() {});
+      } catch (e) {
+        logError('$e in getProfileInfo');
+      }
+    });
   }
 
   bool isFollowed = false;
@@ -66,9 +84,11 @@ class ProfileScreenState extends State<ProfileScreen>
                   radius: 50,
                   child: ClipOval(
                     child: CachedNetworkImage(
-                      imageUrl: CurrentUserInfoController
-                              .userInfoModel.data?.user.photo ??
-                          '',
+                      imageUrl: widget.isMe
+                          ? CurrentUserInfoController
+                                  .userInfoModel.data?.user.photo ??
+                              ''
+                          : UserController.userModel.data?.user.photo ?? '',
                       errorWidget: (context, url, error) {
                         return Image.asset(
                           'images/placeholder.jpg',
@@ -83,15 +103,23 @@ class ProfileScreenState extends State<ProfileScreen>
               ),
               Center(
                 child: Text(
-                  CurrentUserInfoController.userInfoModel.data?.user.name ?? '',
+                  widget.isMe
+                      ? CurrentUserInfoController
+                              .userInfoModel.data?.user.name ??
+                          ''
+                      : UserController.userModel.data?.user.name ?? '',
                   style: GoogleFonts.poppins(
                       fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ),
               Center(
                 child: GradientText(
-                    CurrentUserInfoController.userInfoModel.data?.user.job ??
-                        'freelancer',
+                    widget.isMe
+                        ? CurrentUserInfoController
+                                .userInfoModel.data?.user.job ??
+                            'freelancer'
+                        : UserController.userModel.data?.user.job ??
+                            'freelancer',
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -111,10 +139,14 @@ class ProfileScreenState extends State<ProfileScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SmoothStarRating(
-                    rating: CurrentUserInfoController
-                            .userInfoModel.data?.user.ratingsAverage
-                            .toDouble() ??
-                        0.0,
+                    rating: widget.isMe
+                        ? CurrentUserInfoController
+                                .userInfoModel.data?.user.ratingsAverage
+                                .toDouble() ??
+                            0.0
+                        : UserController.userModel.data?.user.ratingsAverage
+                                .toDouble() ??
+                            0.0,
                     size: 25,
                     filledIconData: Icons.star,
                     defaultIconData: Icons.star_border,
@@ -128,7 +160,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     width: 5,
                   ),
                   Text(
-                    '${CurrentUserInfoController.userInfoModel.data?.user.ratingsAverage ?? 0}',
+                    '${widget.isMe ? CurrentUserInfoController.userInfoModel.data?.user.ratingsAverage ?? 0 : UserController.userModel.data?.user.ratingsAverage ?? 0}',
                     style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -178,14 +210,12 @@ class ProfileScreenState extends State<ProfileScreen>
                                 ? Constants.navigateTo(
                                     const EditProfileScreen())
                                 : isFollowed == false
-                                    ? CurrentUserInfoController.followUser(
-                                        CurrentUserInfoController
-                                                .userInfoModel.data?.user.id ??
-                                            '')
-                                    : CurrentUserInfoController.unFollowUser(
-                                        CurrentUserInfoController
-                                                .userInfoModel.data?.user.id ??
-                                            '');
+                                    ? UserController.followUser(UserController
+                                            .userModel.data?.user.id ??
+                                        '')
+                                    : UserController.unFollowUser(UserController
+                                            .userModel.data?.user.id ??
+                                        '');
                             setState(() {
                               isFollowed = !isFollowed;
                             });
@@ -241,10 +271,11 @@ class ProfileScreenState extends State<ProfileScreen>
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
-                  children: const [
+                  children: [
+                    // ignore: prefer_const_constructors
                     AboutmePage(),
-                    ReviewPage(),
-                    PortfolioPage()
+                    const ReviewPage(),
+                    PortfolioPage(isMe: widget.isMe),
                   ],
                 ),
               ),

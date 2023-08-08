@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -38,7 +38,7 @@ class _CreateProfileState extends State<CreateProfile> {
   late File imagefile;
   //final _picker = ImagePicker();
 
-  late GoogleMapController mapController;
+ // late GoogleMapController mapController;
 
   // ignore: unused_field
   String? _currentAddress;

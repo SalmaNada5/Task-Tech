@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
-import 'package:task_tech/presentation/screens/auth/view/verification_code_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 import 'package:task_tech/presentation/widgets/unfocus.dart';
@@ -30,7 +28,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AuthModel? authModel;
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -169,23 +166,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              authModel = await AuthController.signUpFunc(
+                              BlocProvider.of<AuthCubit>(context).signupCubit(
                                   email: emailController.text,
                                   password: passController.text,
                                   name: fullNameController.text,
                                   confirmPassword: confirmPassController.text);
-                              SharedPreferences pref =
-                                  await SharedPreferences.getInstance();
-                              pref.setString("token", authModel?.token ?? "");
-                              if (authModel == null) {
-                                return Constants.errorMessage();
-                              } else {
-                                Constants.navigateTo(
-                                  const VerificationScreen(
-                                    fromSignup: true,
-                                  ),
-                                );
-                              }
                             }
                           },
                           style: ButtonStyle(

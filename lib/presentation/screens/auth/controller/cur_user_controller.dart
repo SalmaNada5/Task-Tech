@@ -8,7 +8,7 @@ class CurrentUserInfoController {
   static final DioClient _dioClient = DioClient();
   static UserInfoModel userInfoModel = UserInfoModel();
 
-  static Future<UserInfoModel?> getUserInfoFunc() async {
+  static Future<UserInfoModel?> getUserInfoFunc({bool dioLoading = true}) async {
     try {
       String token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -16,6 +16,7 @@ class CurrentUserInfoController {
       Response res = await _dioClient.get(
         'api/v1/users/me',
         token,
+        isLoading:dioLoading 
       ) as Response;
       userInfoModel = UserInfoModel.fromJson(res.data);
       logSuccess('User info returned successfully: $userInfoModel');
@@ -26,37 +27,4 @@ class CurrentUserInfoController {
     return null;
   }
   
-  static Future<bool?> followUser(String id) async {
-    String? token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token");
-    try {
-      Response res = await _dioClient
-          .put('api/v1/users/$id/follow', token, body: {}) as Response;
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      logError('error in followUser: $e');
-    }
-    return false;
-  }
-
-  static Future<bool?> unFollowUser(String id) async {
-    String? token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token");
-    try {
-      Response res = await _dioClient
-          .put('api/v1/users/$id/unfollow', token, body: {}) as Response;
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      logError('error in unFollowUser: $e');
-    }
-    return false;
-  }
 }

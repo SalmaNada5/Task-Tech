@@ -26,7 +26,7 @@ class _PostsScreenState extends State<PostsScreen> {
 
   void getAllTasks() async {
     try {
-      await PostController.getTaskPosts();
+      await PostController.getTaskPosts(dioLoading: false);
       setState(() {});
     } catch (e) {
       logError('$e in getAllTasks');
@@ -35,7 +35,7 @@ class _PostsScreenState extends State<PostsScreen> {
 
   void getAllServices() async {
     try {
-      await PostController.getServicePosts();
+      await PostController.getServicePosts(dioLoading: false);
       setState(() {});
     } catch (e) {
       logError('$e in getAllServices');
@@ -92,43 +92,53 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Posts',
-                  style: titleStyle,
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Posts',
+                style: titleStyle,
+              ),
+              const Spacer(),
+              Text(
+                'Sort by ',
+                style: headStyle.copyWith(
+                  fontWeight: FontWeight.w100,
                 ),
-                const Spacer(),
-                Text(
-                  'Sort by ',
-                  style: headStyle.copyWith(
-                    fontWeight: FontWeight.w100,
-                  ),
-                ),
-                DropdownButton<String>(
-                  value: _dropdownValue,
-                  elevation: 0,
-                  underline: const SizedBox(),
-                  style: headStyle,
-                  dropdownColor: Colors.white,
-                  iconSize: 30,
-                  iconEnabledColor: Colors.black,
-                  iconDisabledColor: Colors.black,
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (selectedVal) {
-                    setState(() {
-                      _dropdownValue = selectedVal.toString();
-                    });
-                  },
-                ),
-              ],
-            ),
-            Expanded(
+              ),
+              DropdownButton<String>(
+                value: _dropdownValue,
+                elevation: 0,
+                underline: const SizedBox(),
+                style: headStyle,
+                dropdownColor: Colors.white,
+                iconSize: 30,
+                iconEnabledColor: Colors.black,
+                iconDisabledColor: Colors.black,
+                items: list.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem(value: value, child: Text(value));
+                }).toList(),
+                onChanged: (selectedVal) {
+                  setState(() {
+                    _dropdownValue = selectedVal.toString();
+                  });
+                },
+              ),
+            ],
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                if (_dropdownValue == 'Tasks') {
+                  await PostController.getTaskPosts(page: 1);
+                  setState(() {});
+                  return;
+                }
+                await PostController.getServicePosts(page: 1);
+                setState(() {});
+              },
               child: SingleChildScrollView(
                 controller: PostController.scrollController,
                 scrollDirection: Axis.vertical,
@@ -140,10 +150,7 @@ class _PostsScreenState extends State<PostsScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, i) => ReusablePostWidget(
-                              taskId:
-                                  PostController.postModel.data!.posts[i].id,
-                              // serviceId: PostController
-                              //     .serviceModel.data!.services[i].id,
+                              taskId: PostController.tasks[i].id,
                               dropDownVal: _dropdownValue,
                               profileImgUrl:
                                   PostController.tasks[i].user?.photo ?? '',
@@ -152,8 +159,7 @@ class _PostsScreenState extends State<PostsScreen> {
                               postDescription:
                                   PostController.tasks[i].description,
                               postTime: Constants.convertToTimeAgo(
-                                  PostController
-                                      .postModel.data!.posts[i].createdAt),
+                                  PostController.tasks[i].createdAt),
                               // _dropdownValue == 'Tasks'
                               //     ? PostController.postModel.data!.posts[i].createdAt
                               //     : PostController
@@ -177,8 +183,7 @@ class _PostsScreenState extends State<PostsScreen> {
                             shrinkWrap: true,
                             itemBuilder: (context, i) => ReusablePostWidget(
                               //taskId: PostController.postModel.data!.posts[i].id,
-                              serviceId: PostController
-                                  .serviceModel.data!.services[i].id,
+                              serviceId: PostController.services[i].id,
                               dropDownVal: _dropdownValue,
                               profileImgUrl:
                                   PostController.services[i].user?.photo ?? '',
@@ -187,8 +192,7 @@ class _PostsScreenState extends State<PostsScreen> {
                               postDescription:
                                   PostController.services[i].description,
                               postTime: Constants.convertToTimeAgo(
-                                  PostController.serviceModel.data!.services[i]
-                                      .createdAt),
+                                  PostController.services[i].createdAt),
                               //   DateTime.now(),
                               // _dropdownValue == 'Tasks'
                               //     ? PostController.postModel.data!.posts[i].createdAt
@@ -207,8 +211,9 @@ class _PostsScreenState extends State<PostsScreen> {
                       ),
               ),
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
   }
 }

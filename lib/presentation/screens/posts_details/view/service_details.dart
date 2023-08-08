@@ -8,19 +8,24 @@ import 'package:task_tech/presentation/screens/payment/controller/payment_contro
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';
 import '../../../../constants/colors.dart';
+import '../../home/models/search_service_model.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
+  final Service? service;
   const ServiceDetailsPage({
     super.key,
+    this.service,
   });
 
   @override
   Widget build(BuildContext context) {
     logInfo(
-        "ServiCE ID ${ServiceController.serviceDetailsModel.data?.service.id}");
+        "Service ID ${ServiceController.serviceDetailsModel.data?.service.id}");
     SharedPreferences.getInstance().then((value) {
       logWarning("Token : ${value.getString('token')}");
     });
+    dynamic serviceItem =
+        service ?? ServiceController.serviceDetailsModel.data?.service;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -55,12 +60,10 @@ class ServiceDetailsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ServiceController.serviceDetailsModel.data == null
+            serviceItem == null
                 ? const SizedBox.shrink()
                 : Image.network(
-                    ServiceController
-                            .serviceDetailsModel.data?.service.attachFile ??
-                        "",
+                    serviceItem.attachFile ?? "",
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     fit: BoxFit.fill,
@@ -73,22 +76,15 @@ class ServiceDetailsPage extends StatelessWidget {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(ServiceController
-                                  .serviceDetailsModel
-                                  .data
-                                  ?.service
-                                  .user
-                                  .photo ??
-                              ""),
+                          backgroundImage:
+                              NetworkImage(serviceItem?.user?.photo ?? ""),
                           radius: 20,
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          ServiceController.serviceDetailsModel.data?.service
-                                  .user.name ??
-                              "",
+                          serviceItem?.user?.name ?? "",
                           style: headStyle.copyWith(fontSize: 15),
                         ),
                       ],
@@ -97,9 +93,7 @@ class ServiceDetailsPage extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      ServiceController
-                              .serviceDetailsModel.data?.service.name ??
-                          "",
+                      serviceItem?.name ?? "",
                       style: headStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
@@ -108,9 +102,7 @@ class ServiceDetailsPage extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      ServiceController
-                              .serviceDetailsModel.data?.service.description ??
-                          "",
+                      serviceItem?.description ?? "",
                       style: postDescriptionStyle,
                       softWrap: true,
                       overflow: TextOverflow.visible,
@@ -126,9 +118,7 @@ class ServiceDetailsPage extends StatelessWidget {
                             )),
                         const Spacer(),
                         Text(
-                          ServiceController.serviceDetailsModel.data?.service
-                                  .delieveryDate ??
-                              "",
+                          serviceItem?.delieveryDate ?? "",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -147,9 +137,7 @@ class ServiceDetailsPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      ServiceController
-                              .serviceDetailsModel.data?.service.category ??
-                          "",
+                      serviceItem?.category ?? "",
                       style: postDescriptionStyle.copyWith(fontSize: 15),
                     ),
                     const SizedBox(
@@ -162,15 +150,14 @@ class ServiceDetailsPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${ServiceController.serviceDetailsModel.data?.service.softwareTool}',
+                      '${serviceItem?.softwareTool}',
                       style: postDescriptionStyle.copyWith(fontSize: 15),
                     ),
                   ]),
             ),
             ElevatedButton(
               onPressed: () async {
-                String? serviceId =
-                    ServiceController.serviceDetailsModel.data?.service.id;
+                String? serviceId = serviceItem?.id;
                 await PaymentController.paymentFunc(serviceId);
                 String url = '';
                 url = PaymentController.paymentModel.session?.url ?? '';
@@ -190,7 +177,7 @@ class ServiceDetailsPage extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Continue (\$${ServiceController.serviceDetailsModel.data?.service.salary})',
+                'Continue (\$${serviceItem?.salary})',
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize: 16,

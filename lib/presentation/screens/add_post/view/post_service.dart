@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
 import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
+import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
 import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
 
 class PostService extends StatefulWidget {
@@ -18,8 +21,10 @@ class _PostServiceState extends State<PostService> {
   Widget build(BuildContext context) {
     return ReusablePostForm(
       onPressed: () async {
-       await AddPostsController.uploadServiceFunc();
-        await PostController.getTaskPosts(dioLoading: false);
+        logWarning(AddPostsController.serviceDeliveryDaysController.text);
+        await AddPostsController.uploadServiceFunc();
+        await PostController.getServicePosts();
+        Constants.navigateTo(const BottomNavBarScreen());
       },
       postNameController: AddPostsController.serviceNameController,
       descriptionController: AddPostsController.serviceDescriptionController,
@@ -149,13 +154,6 @@ class _PostServiceState extends State<PostService> {
                   Icons.attach_file,
                   size: 20,
                 )),
-            // onChanged: (value) {
-            //   //AddPostsController.attachFileController.text = value.toString();
-            //   // AddPostsController.attachFileController.selection =
-            //   //     TextSelection.fromPosition(TextPosition(
-            //   //         offset:
-            //   //             AddPostsController.attachFileController.text.length));
-            // },
             maxLines: 1,
           ),
           const SizedBox(

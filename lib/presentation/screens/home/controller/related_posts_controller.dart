@@ -24,7 +24,7 @@ class RelatedPostscontroller {
           isLoading: dioLoading) as Response;
 
       relatedPostModel = RelatedPostModel.fromJson(res.data);
-      posts.addAll(relatedPostModel.data!.posts);
+      posts.addAll(relatedPostModel.data?.posts ?? []);
       page = page + 1;
       logSuccess(
           'related posts returned successfully: ${relatedPostModel.status}');

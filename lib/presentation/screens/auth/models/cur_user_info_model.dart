@@ -57,7 +57,7 @@ class User {
     int v;
     bool resetVerified;
     String cv;
-    String about;
+    String? about;
     int age;
     DateTime birthDate;
     String catogery;
@@ -88,7 +88,7 @@ class User {
         required this.v,
         required this.resetVerified,
         required this.cv,
-        required this.about,
+        this.about,
         required this.age,
         required this.birthDate,
         required this.catogery,

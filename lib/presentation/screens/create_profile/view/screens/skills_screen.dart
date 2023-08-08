@@ -186,7 +186,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                           gender: widget.gender,
                           location: widget.location,
                           phoneNumber: widget.phoneNumber,
-                          skills:const ['UI/UX', 'Programming'],
+                          skills: const ['UI/UX', 'Programming'],
                         ));
                       },
                       childWidget: Text(
@@ -217,6 +217,7 @@ class FilterChipWidget extends StatefulWidget {
 
   @override
   FilterChipWidgetState createState() =>
+      // ignore: no_logic_in_create_state
       FilterChipWidgetState(isSelected: isSelected);
 }
 

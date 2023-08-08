@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/home/controller/search_service_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/search_post_result.dart';
+import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key});
@@ -55,6 +58,7 @@ class _SearchWidgetState extends State<SearchWidget> {
 }
 
 class HomeSearchDelegate extends SearchDelegate {
+  late final Future myFuture = getSearchResult();
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -80,28 +84,47 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    SearchServiceController.searchServiceFunc(query);
-    return ListView.builder(
-      itemCount:
-          SearchServiceController.searchServiceModel.services?.length ?? 0,
-      itemBuilder: (BuildContext context, int i) => SearchPostResult(
-          serviceAttachFile: SearchServiceController
-                  .searchServiceModel.services?[i].attachFile ??
-              '',
-          userImg: SearchServiceController
-                  .searchServiceModel.services?[i].user.photo ??
-              '',
-          userName: SearchServiceController
-                  .searchServiceModel.services?[i].user.name ??
-              '',
-          serviceName:
-              SearchServiceController.searchServiceModel.services?[i].name ??
-                  ''),
-    );
+    return FutureBuilder(
+        future: myFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView.builder(
+              itemCount:
+                  SearchServiceController.searchServiceModel.services?.length ??
+                      0,
+              itemBuilder: (BuildContext context, int i) => SearchPostResult(
+                  onPressed: () => Constants.navigateTo(ServiceDetailsPage(
+                        service: SearchServiceController
+                            .searchServiceModel.services?[i],
+                      )),
+                  serviceAttachFile: SearchServiceController
+                          .searchServiceModel.services?[i].attachFile ??
+                      '',
+                  userImg: SearchServiceController
+                          .searchServiceModel.services?[i].user?.photo ??
+                      '',
+                  userName: SearchServiceController
+                          .searchServiceModel.services?[i].user?.name ??
+                      '',
+                  serviceName: SearchServiceController
+                          .searchServiceModel.services?[i].name ??
+                      ''),
+            );
+          }
+          return const SizedBox.shrink();
+        });
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     return Container();
+  }
+
+  Future<void> getSearchResult() async {
+    try {
+      await SearchServiceController.searchServiceFunc(query);
+    } catch (e) {
+      logError('error in getSearchResult: $e');
+    }
   }
 }

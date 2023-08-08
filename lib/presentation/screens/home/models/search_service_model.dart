@@ -34,19 +34,19 @@ class SearchServiceModel {
 
 class Service {
     List<String> softwareTool;
-    String id;
-    String name;
-    String description;
-    String delieveryDate;
+    String? id;
+    String? name;
+    String? description;
+    String? delieveryDate;
     int salary;
-    String category;
-    User user;
-    String attachFile;
-    DateTime createdAt;
-    DateTime updatedAt;
-    String slug;
-    int v;
-    String serviceId;
+    String? category;
+    User? user;
+    String? attachFile;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+    String? slug;
+    int? v;
+    String? serviceId;
 
     Service({
         required this.softwareTool,
@@ -90,10 +90,10 @@ class Service {
         "delieveryDate": delieveryDate,
         "salary": salary,
         "category": category,
-        "user": user.toJson(),
+        "user": user?.toJson(),
         "attachFile": attachFile,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
         "slug": slug,
         "__v": v,
         "id": serviceId,
