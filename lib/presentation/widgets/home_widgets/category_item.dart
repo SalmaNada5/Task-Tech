@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CategoryItem extends StatelessWidget {
+class CategoryItem extends StatelessWidget{
   const CategoryItem(
       {super.key,
       required this.imgUrl,

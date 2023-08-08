@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
 import 'package:task_tech/presentation/screens/auth/view/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_up_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 import 'package:task_tech/presentation/widgets/unfocus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -166,22 +164,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              AuthModel? authModel;
-                              authModel = await AuthController.loginFunc(
-                                  emailController.text, passController.text);
-                              if (authModel == null) {
-                                return Constants.errorMessage(
-                                    description: 'Invalid email or password!');
-                              } else {
-                                SharedPreferences pref =
-                                    await SharedPreferences.getInstance();
-                                pref.setString("token", authModel.token!);
-                                pref.setString("id",
-                                    AuthController.authModel.data!.user!.id!);
-                                return Constants.navigateTo(
-                                    const BottomNavBarScreen(),
-                                    pushAndRemoveUntil: true);
-                              }
+                              await BlocProvider.of<AuthCubit>(context)
+                                  .loginCubit(emailController.text,
+                                      passController.text);
                             }
                           },
                           style: ButtonStyle(

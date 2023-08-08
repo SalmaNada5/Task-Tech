@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -42,7 +43,9 @@ List<String> msgs =[];
     'autoConnect': false
   });
     socket.connect();
+      // ignore: avoid_print
       socket.onConnect((_) => print('connected with server'));
+      // ignore: avoid_print
       print(socket.connected);
 
   socket.on('res', (data) {

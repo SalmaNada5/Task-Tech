@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/view/verification_code_screen.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    bool correctEmail = false;
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
@@ -79,15 +78,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      correctEmail = await AuthController.forgetPassword(
-                              forgotPassEmailController.text) ??
-                          false;
-                    }
-                    if (correctEmail) {
-                      Constants.navigateTo(
-                          const VerificationScreen(fromSignup: false));
-                    } else {
-                      Constants.errorMessage(description: 'Wrong email address');
+                      BlocProvider.of<AuthCubit>(context)
+                          .forgotPassCubit(forgotPassEmailController.text);
                     }
                   },
                   style: ButtonStyle(

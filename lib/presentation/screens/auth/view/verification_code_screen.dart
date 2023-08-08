@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
-import 'package:task_tech/presentation/screens/auth/view/reset_password_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/text_styles.dart';
@@ -18,7 +17,6 @@ class VerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool? correctCode = false;
     String d1 = '', d2 = '', d3 = '', d4 = '';
 
     return Scaffold(
@@ -105,22 +103,10 @@ class VerificationScreen extends StatelessWidget {
                   onPressed: () async {
                     logWarning("Code $code");
                     if (fromSignup) {
-                       correctCode = await AuthController.verifySignupFunc(code);
-                      if (correctCode!) {
-                        Constants.navigateTo(const CreateProfile(),
-                            pushAndRemoveUntil: true);
-                      } else {
-                        //Constants.errorMessage(description: 'Invalid code');
-                      }
+                      BlocProvider.of<AuthCubit>(context)
+                          .verifysignUpCubit(code);
                     } else {
-                      correctCode =
-                          await AuthController.verifyResetCodeFunc(code);
-                      if (correctCode!) {
-                        Constants.navigateTo(const ResetPassword(),
-                            pushAndRemoveUntil: true);
-                      } else {
-                        //Constants.errorMessage(description: 'Invalid code');
-                      }
+                      BlocProvider.of<AuthCubit>(context).resetCodeCubit(code);
                     }
                   },
                   style: ButtonStyle(
