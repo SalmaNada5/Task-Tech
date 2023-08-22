@@ -48,10 +48,10 @@ List<String> msgs =[];
       // ignore: avoid_print
       print(socket.connected);
 
-      socket.onDisconnect((_) => print("disconnected with server"));
+      socket.onDisconnect((_) => debugPrint("disconnected with server"));
 
   socket.on('res', (data) {
-    print(data);
+    debugPrint(data);
     setState(() {
           msgs.add(data);
 

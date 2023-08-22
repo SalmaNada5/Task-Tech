@@ -41,15 +41,11 @@ class SalaryScreenState extends State<SalaryScreen> {
   String? currencyValue;
   List<String> currencyList = <String>[
     'EUR',
-    'GBP',
     'USD',
-    'AUD',
-    'CAD',
-    'JPY',
-    'HKD',
+    'SAR',
     'CHF',
-    'SEK',
-    'ILS'
+    'EGP',
+    'GBP',
   ];
   String? frequencyValue;
   List<String> frequencyList = <String>[
@@ -270,7 +266,6 @@ class SalaryScreenState extends State<SalaryScreen> {
                         fontWeight: FontWeight.w400,
                         color: const Color.fromRGBO(124, 124, 124, 1)),
                   ),
-                
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.04,

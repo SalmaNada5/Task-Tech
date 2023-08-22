@@ -8,19 +8,19 @@ class CreateProfileController {
   static final DioClient _dioClient = DioClient();
 
   static Future<bool?> createProfileFunc(
-      String about,
-      int minimum,
-      int maximum,
-      String currency,
-      String frequency,
-      String job,
-      String phoneNumber,
-      String gender,
-      String age,
-      String birthDate,
-      String location,
-      List<String> skills,
-      String education) async {
+      {String? about,
+      required int minimum,
+      required int maximum,
+      required String currency,
+      required String frequency,
+      required String job,
+      required String phoneNumber,
+      required String gender,
+      required String age,
+      required String birthDate,
+      required String location,
+      required List<String> skills,
+      required String education}) async {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");

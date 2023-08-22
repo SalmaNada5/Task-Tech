@@ -42,10 +42,10 @@ class Data {
 
 class User {
     List<String> skills;
-    String photo;
+    String? photo;
     List<String> images;
-    String job;
-    String role;
+    String? job;
+    String? role;
     int ratingsAverage;
     int ratingsQuantity;
     List<dynamic> followers;
@@ -56,13 +56,13 @@ class User {
     String email;
     int v;
     bool resetVerified;
-    String cv;
+    String? cv;
     String? about;
     int age;
     DateTime birthDate;
     String catogery;
     String currency;
-    String education;
+    String? education;
     String gender;
     String location;
     int maximum;
@@ -73,9 +73,9 @@ class User {
 
     User({
         required this.skills,
-        required this.photo,
+        this.photo,
         required this.images,
-        required this.job,
+        this.job,
         required this.role,
         required this.ratingsAverage,
         required this.ratingsQuantity,
@@ -87,13 +87,13 @@ class User {
         required this.email,
         required this.v,
         required this.resetVerified,
-        required this.cv,
+        this.cv,
         this.about,
         required this.age,
         required this.birthDate,
         required this.catogery,
         required this.currency,
-        required this.education,
+        this.education,
         required this.gender,
         required this.location,
         required this.maximum,
@@ -217,13 +217,13 @@ class Review {
 }
 
 class Reviewer {
-    String photo;
+    String? photo;
     String id;
     String name;
     String reviewerId;
 
     Reviewer({
-        required this.photo,
+        this.photo,
         required this.id,
         required this.name,
         required this.reviewerId,

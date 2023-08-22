@@ -11,22 +11,14 @@ import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
 import 'package:task_tech/presentation/widgets/unfocus.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  final _formKey = GlobalKey<FormState>();
-  bool _isVisible = false;
-  bool _value = false;
-  TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passController = TextEditingController();
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -35,248 +27,259 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Padding(
           padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Welcome back,',
-                  style: titleStyle,
-                ),
-                Text(
-                  'Sign in your account',
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff7C7C7C),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email',
-                        style: labelTextFormStyle,
+            child: BlocBuilder<AuthCubit, AuthState>(
+              bloc: BlocProvider.of<AuthCubit>(context),
+              buildWhen: (prevState, currState) =>
+                  currState is LoginObsecureOff ||
+                  currState is LoginObsecureOn ||
+                  currState is RememberMeOn ||
+                  currState is RememberMeOff,
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Welcome back,',
+                      style: titleStyle,
+                    ),
+                    Text(
+                      'Sign in your account',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff7C7C7C),
                       ),
-                      CustomTextFormField(
-                        controller: emailController,
-                        obscure: false,
-                        hintText: 'Enter your mail',
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          value = emailController.text;
-                          if (value.isEmpty) {
-                            return 'Please enter your email address';
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Password',
-                        style: labelTextFormStyle,
-                      ),
-                      CustomTextFormField(
-                        controller: passController,
-                        validator: (value) {
-                          value = passController.text;
-                          if (value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                        icon: IconButton(
-                          icon: Icon(
-                            _isVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            size: 20,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isVisible = !_isVisible;
-                            });
-                          },
-                        ),
-                        obscure: _isVisible ? false : true,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: _value,
-                                checkColor: primaryLightColor,
-                                fillColor:
-                                    MaterialStateProperty.all(Colors.white),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _value = value!;
-                                  });
-                                },
-                                side:
-                                    const BorderSide(color: Color(0xffB1B1B1)),
+                          Text(
+                            'Email',
+                            style: labelTextFormStyle,
+                          ),
+                          CustomTextFormField(
+                            controller: emailController,
+                            obscure: false,
+                            hintText: 'Enter your mail',
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              value = emailController.text;
+                              if (value.isEmpty) {
+                                return 'Please enter your email address';
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Password',
+                            style: labelTextFormStyle,
+                          ),
+                          CustomTextFormField(
+                            controller: passController,
+                            validator: (value) {
+                              value = passController.text;
+                              if (value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                            icon: IconButton(
+                              icon: Icon(
+                                BlocProvider.of<AuthCubit>(context).obsecureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                size: 20,
                               ),
-                              Text(
-                                'Remember me',
-                                style: GoogleFonts.poppins(
-                                  color: const Color(0xffB1B1B1),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300,
+                              onPressed: () {
+                                BlocProvider.of<AuthCubit>(context)
+                                    .obsecureLogic();
+                              },
+                            ),
+                            obscure: BlocProvider.of<AuthCubit>(context)
+                                .obsecureText,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: BlocProvider.of<AuthCubit>(context)
+                                        .rememberMe,
+                                    checkColor: primaryLightColor,
+                                    fillColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                    onChanged: (value) {
+                                      BlocProvider.of<AuthCubit>(context)
+                                          .rememberMeLogic();
+                                    },
+                                    side: const BorderSide(
+                                        color: Color(0xffB1B1B1)),
+                                  ),
+                                  Text(
+                                    'Remember me',
+                                    style: GoogleFonts.poppins(
+                                      color: const Color(0xffB1B1B1),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () => Constants.navigateTo(
+                                    const ForgotPasswordScreen()),
+                                child: Text(
+                                  'Forgot password?',
+                                  style: GoogleFonts.poppins(
+                                    color: const Color(0xffB1B1B1),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () => Constants.navigateTo(
-                                const ForgotPasswordScreen()),
-                            child: Text(
-                              'Forgot password?',
-                              style: GoogleFonts.poppins(
-                                color: const Color(0xffB1B1B1),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300,
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (formKey.currentState!.validate()) {
+                                  await BlocProvider.of<AuthCubit>(context)
+                                      .loginCubit(emailController.text,
+                                          passController.text);
+                                }
+                              },
+                              style: ButtonStyle(
+                                padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(vertical: 15)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    primaryLightColor),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                ),
+                              ),
+                              child: Text(
+                                'Sign in',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 8,
+                          ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              await BlocProvider.of<AuthCubit>(context)
-                                  .loginCubit(emailController.text,
-                                      passController.text);
-                            }
-                          },
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.symmetric(vertical: 15)),
-                            backgroundColor:
-                                MaterialStateProperty.all(primaryLightColor),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                          ),
-                          child: Text(
-                            'Sign in',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w400,
-                            ),
+                    ),
+                    SizedBox(
+                      height: screenH / 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 1,
+                          width: 0.2 * screenW,
+                          child: Container(
+                            color: const Color(0xffB1B1B1),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: screenH / 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 1,
-                      width: 0.2 * screenW,
-                      child: Container(
-                        color: const Color(0xffB1B1B1),
-                      ),
-                    ),
-                    const Text(
-                      '  Or Signip With  ',
-                      style: TextStyle(
-                        color: Color(0xffB1B1B1),
-                        fontSize: 12,
-                      ),
+                        const Text(
+                          '  Or Signip With  ',
+                          style: TextStyle(
+                            color: Color(0xffB1B1B1),
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 1,
+                          width: 0.25 * screenW,
+                          child: Container(
+                            color: const Color(0xffB1B1B1),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
-                      height: 1,
-                      width: 0.25 * screenW,
-                      child: Container(
-                        color: const Color(0xffB1B1B1),
-                      ),
+                      height: screenH / 22,
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: screenH / 22,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SignWith(
-                      child: Image.asset(
-                        'images/google.png',
-                        width: 30,
-                        height: 30,
-                      ),
-                      onPress: () {},
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SignWith(
+                          child: Image.asset(
+                            'images/google.png',
+                            width: 30,
+                            height: 30,
+                          ),
+                          onPress: () {},
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        SignWith(
+                          child: const Icon(
+                            Icons.facebook,
+                            size: 30,
+                            color: Color(0xff395185),
+                          ),
+                          onPress: () {},
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 20,
+                    SizedBox(
+                      height: screenH / 18,
                     ),
-                    SignWith(
-                      child: const Icon(
-                        Icons.facebook,
-                        size: 30,
-                        color: Color(0xff395185),
-                      ),
-                      onPress: () {},
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: screenH / 18,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Don\'t have an account? ',
-                      style: GoogleFonts.poppins(
-                        color: const Color(0xff7C7C7C),
-                        fontSize: 14,
-                      ),
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Signup',
-                        style: GoogleFonts.poppins(
-                            color: primaryLightColor,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have an account? ',
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xff7C7C7C),
                             fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      onTap: () => Constants.navigateTo(const SignUpScreen()),
+                          ),
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            'Signup',
+                            style: GoogleFonts.poppins(
+                                color: primaryLightColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          onTap: () =>
+                              Constants.navigateTo(const SignUpScreen()),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
+                );
+              },
             ),
           ),
         ),

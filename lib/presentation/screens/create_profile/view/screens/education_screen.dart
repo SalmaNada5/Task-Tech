@@ -226,18 +226,6 @@ class EducationScreenState extends State<EducationScreen> {
                           iconSize: 40,
                           onPressed: () async {
                             await UploadCVController.attachCV();
-                            // FilePickerResult? result =
-                            //     await FilePicker.platform.pickFiles();
-                            // if (result != null) {
-                            //   PlatformFile file = result.files.first;
-                            //   debugPrint(file.name);
-                            //   debugPrint(file.bytes.toString());
-                            //   debugPrint(file.size.toString());
-                            //   debugPrint(file.extension);
-                            //   debugPrint(file.path);
-                            // } else {
-                            //   // User canceled the picker
-                            // }
                           },
                         ),
                         Text(
@@ -266,19 +254,19 @@ class EducationScreenState extends State<EducationScreen> {
                             .uploadProfilePhotoFunc();
                         await UploadCVController.uploadCVFunc();
                         await CreateProfileController.createProfileFunc(
-                          widget.description ?? '',
-                          widget.minimum ?? 0,
-                          widget.maximum ?? 0,
-                          widget.currency ?? '',
-                          widget.frequency ?? '',
-                          widget.job ?? '',
-                          widget.phoneNumber ?? '',
-                          widget.gender ?? '',
-                          widget.age ?? '',
-                          widget.birthDate ?? '',
-                          widget.location ?? '',
-                          widget.skills ?? [],
-                          education,
+                          about: widget.description ?? '',
+                          minimum: widget.minimum ?? 0,
+                          maximum: widget.maximum ?? 0,
+                          currency: widget.currency ?? '',
+                          frequency: widget.frequency ?? '',
+                          job: widget.job ?? '',
+                          phoneNumber: widget.phoneNumber ?? '',
+                          gender: widget.gender ?? '',
+                          age: widget.age ?? '',
+                          birthDate: widget.birthDate ?? '',
+                          location: widget.location ?? '',
+                          skills: widget.skills ?? [],
+                          education: education,
                         );
                         await CurrentUserInfoController.getUserInfoFunc();
                         Constants.navigateTo(const ProfileScreen(

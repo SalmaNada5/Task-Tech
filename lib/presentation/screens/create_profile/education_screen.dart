@@ -268,19 +268,19 @@ class EducationScreenState extends State<EducationScreen> {
                             .uploadProfilePhotoFunc();
                         await UploadCVController.uploadCVFunc();
                         await CreateProfileController.createProfileFunc(
-                          widget.description ?? '',
-                          widget.minimum ?? 0,
-                          widget.maximum ?? 0,
-                          widget.currency ?? '',
-                          widget.frequency ?? '',
-                          widget.job ?? '',
-                          widget.phoneNumber ?? '',
-                          widget.gender ?? '',
-                          widget.age ?? '',
-                          widget.birthDate ?? '',
-                          widget.location ?? '',
-                          widget.skills ?? [],
-                          education,
+                         about: widget.description ?? '',
+                        minimum:  widget.minimum ?? 0,
+                       maximum:   widget.maximum ?? 0,
+                        currency:  widget.currency ?? '',
+                      frequency:    widget.frequency ?? '',
+                        job:  widget.job ?? '',
+                       phoneNumber:   widget.phoneNumber ?? '',
+                        gender:  widget.gender ?? '',
+                         age: widget.age ?? '',
+                         birthDate: widget.birthDate ?? '',
+                        location:  widget.location ?? '',
+                        skills:  widget.skills ?? [],
+                        education:  education,
                         );
 
 await CurrentUserInfoController.getUserInfoFunc();

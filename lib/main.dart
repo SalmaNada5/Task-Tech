@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
-import 'package:task_tech/presentation/screens/auth/view/splash_screen.dart';
-import 'package:task_tech/presentation/screens/chat_screens/view/chats_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
+import 'package:task_tech/presentation/screens/auth/view/reset_password_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           navigatorKey: Constants.navigatorKey,
           debugShowCheckedModeBanner: false,
-          home: const SplashScreen()),
+          home: const ResetPassword()),
     );
   }
 }
