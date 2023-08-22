@@ -22,7 +22,7 @@ class CurrentUserInfoController {
       logSuccess('User info returned successfully: $userInfoModel');
       return userInfoModel;
     } catch (e) {
-      logError('error in getUserInfoFunc ${e.toString()}');
+      logError('error in getUserInfoFunc: ${e.toString()}');
     }
     return null;
   }

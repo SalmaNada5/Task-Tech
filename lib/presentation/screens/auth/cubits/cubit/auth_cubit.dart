@@ -80,13 +80,70 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> resetPassCubit(
-      {required String email,required String password,required String confirmPassword}) async {
+      {required String email,
+      required String password,
+      required String confirmPassword}) async {
     bool? resetPassword = await AuthController.resetPasswordFunc(
         email: email, password: password, confirmPassword: confirmPassword);
     if (resetPassword!) {
       Constants.navigateTo(const SignInScreen(), pushAndRemoveUntil: true);
     } else {
       Constants.errorMessage();
+    }
+  }
+
+  bool obsecureText = true;
+  void obsecureLogic() {
+    if (obsecureText) {
+      obsecureText = false;
+      emit(LoginObsecureOff());
+    } else {
+      obsecureText = true;
+      emit(LoginObsecureOn());
+    }
+  }
+
+  bool rememberMe = false;
+  void rememberMeLogic() {
+    if (rememberMe) {
+      rememberMe = false;
+      emit(RememberMeOff());
+    } else {
+      rememberMe = true;
+      emit(RememberMeOn());
+    }
+  }
+
+  bool signUpObsecureTextPass = true;
+  bool signUpObsecureTextConfirmPass = true;
+  bool obsecureTextForResetPass = true;
+  bool obsecureTextForResetConfirmPass = true;
+
+  void obsecureSignUpPasswordLogic([bool useReset = false]) {
+    if (signUpObsecureTextPass) {
+      useReset
+          ? obsecureTextForResetPass = false
+          : signUpObsecureTextPass = false;
+      emit(SignUpPassInVisible());
+    } else {
+      useReset
+          ? obsecureTextForResetPass = true
+          : signUpObsecureTextPass = true;
+      emit(SignUpPassVisible());
+    }
+  }
+
+  void obsecureSignUpConfirmPasswordLogic([bool useReset = false]) {
+    if (signUpObsecureTextConfirmPass) {
+      useReset
+          ? obsecureTextForResetConfirmPass = false
+          : signUpObsecureTextConfirmPass = false;
+      emit(SignUpConfirmPassInVisible());
+    } else {
+      useReset
+          ? obsecureTextForResetConfirmPass = true
+          : signUpObsecureTextConfirmPass = true;
+      emit(SignUpConfirmPassVisible());
     }
   }
 }

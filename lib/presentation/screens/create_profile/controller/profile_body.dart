@@ -1,6 +1,6 @@
 mixin ProfileBody {
   static Map<String, dynamic> profileMap(
-          {required String about,
+          {String? about,
           required int minimum,
           required int maximum,
           required String currency,
@@ -25,6 +25,7 @@ mixin ProfileBody {
         "birthDate": birthDate,
         "location": location,
         "skills": skills,
-        "education": education
+        "education": education,
+        "about": about,
       };
 }
