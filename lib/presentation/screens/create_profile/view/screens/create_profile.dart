@@ -347,7 +347,7 @@ class _CreateProfileState extends State<CreateProfile> {
                             type: TextInputType.phone,
                             validate: (value) {
                               value = phoneController.text;
-                              if (value.isEmpty && value.length < 11) {
+                              if (value.isEmpty || value.length < 11) {
                                 return 'Phone is too short ';
                               } else {
                                 return null;
