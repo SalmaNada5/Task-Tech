@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../../constants/colors.dart';
 
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
@@ -27,7 +26,7 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
             width:MediaQuery.of(context).size.width * 0.01,
           ),
           icon = _isSelected
-              ? Icon(Icons.check, color: white, size: 22, weight: 400)
+              ? const Icon(Icons.check, color: Colors.white, size: 22, weight: 400)
               : const Icon(Icons.add,
                   color: Color.fromRGBO(166, 166, 166, 0.8),
                   size: 22,
@@ -41,9 +40,9 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           _isSelected = isSelected;
         });
       },
-      backgroundColor: white,
+      backgroundColor: Colors.white,
       showCheckmark: false,
-      checkmarkColor: white,
+      checkmarkColor: Colors.white,
       side: const BorderSide(
           width: 1,
           color: Color.fromRGBO(217, 217, 217, 1),
@@ -53,9 +52,9 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      selectedColor: primaryLightColor,
+      selectedColor: Theme.of(context).primaryColor,
       labelStyle: GoogleFonts.poppins(
-        color: _isSelected ? white : const Color.fromRGBO(166, 166, 166, 0.8),
+        color: _isSelected ? Colors.white : const Color.fromRGBO(166, 166, 166, 0.8),
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),

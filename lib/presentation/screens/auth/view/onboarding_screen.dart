@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_up_screen.dart';
 
@@ -26,7 +25,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
         onPageChanged: (value) {
@@ -49,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               controller: _pageController,
               count: 2,
               effect: ExpandingDotsEffect(
-                activeDotColor: primaryLightColor,
+                activeDotColor: Theme.of(context).primaryColor,
                 dotColor: const Color(0xffD9D9D9),
                 dotHeight: 10,
                 dotWidth: 12,
@@ -58,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all(primaryLightColor),
+                        MaterialStateProperty.all(Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6)))),
                 onPressed: isLastPage
@@ -72,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text('Get Started',
                             style: GoogleFonts.poppins(
-                              color: white,
+                              color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             )),
@@ -111,7 +109,7 @@ class FirstOnBoarding extends StatelessWidget {
             child: Text(
               'Skip',
               style: TextStyle(
-                color: primaryLightColor,
+                color: Theme.of(context).primaryColor,
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),

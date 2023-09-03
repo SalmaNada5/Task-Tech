@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static final screenHeight =
@@ -31,7 +29,7 @@ mixin Constants {
       builder: (BuildContext context) {
         return Center(
             child: CircularProgressIndicator(
-          color: primaryLightColor,
+          color: Theme.of(context).primaryColor,
         ));
       },
     );

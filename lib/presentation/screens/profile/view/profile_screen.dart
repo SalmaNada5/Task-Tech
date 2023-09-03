@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
@@ -65,7 +64,6 @@ class ProfileScreenState extends State<ProfileScreen>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: Padding(
           padding: EdgeInsetsDirectional.only(
               start: MediaQuery.of(context).size.width * 0.03,
@@ -182,10 +180,10 @@ class ProfileScreenState extends State<ProfileScreen>
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: MediaQuery.of(context).size.height * 0.05,
                       decoration: BoxDecoration(
-                          color: white,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(6),
                           border: Border.all(
-                            color: primaryLightColor,
+                            color: Theme.of(context).primaryColor,
                           )),
                       child: MaterialButton(
                           onPressed: () {},
@@ -260,7 +258,7 @@ class ProfileScreenState extends State<ProfileScreen>
                         color: Colors.black),
                   ),
                 ],
-                indicatorColor: primaryLightColor,
+                indicatorColor: Theme.of(context).primaryColor,
                 indicatorWeight: 5,
                 labelPadding: const EdgeInsetsDirectional.only(bottom: 10),
                 controller: _tabController,

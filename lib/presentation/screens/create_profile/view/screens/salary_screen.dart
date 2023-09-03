@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/Lists.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
@@ -39,21 +40,9 @@ class SalaryScreenState extends State<SalaryScreen> {
   TextEditingController freqcontroller = TextEditingController();
 
   String? currencyValue;
-  List<String> currencyList = <String>[
-    'EUR',
-    'USD',
-    'SAR',
-    'CHF',
-    'EGP',
-    'GBP',
-  ];
+  
   String? frequencyValue;
-  List<String> frequencyList = <String>[
-    'per hour',
-    'per day',
-    'per week',
-    'per month'
-  ];
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

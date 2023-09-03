@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
@@ -22,7 +21,6 @@ class SignInScreen extends StatelessWidget {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
@@ -120,7 +118,7 @@ class SignInScreen extends StatelessWidget {
                                   Checkbox(
                                     value: BlocProvider.of<AuthCubit>(context)
                                         .rememberMe,
-                                    checkColor: primaryLightColor,
+                                    checkColor: Theme.of(context).primaryColor,
                                     fillColor:
                                         MaterialStateProperty.all(Colors.white),
                                     shape: RoundedRectangleBorder(
@@ -173,7 +171,7 @@ class SignInScreen extends StatelessWidget {
                                 padding: MaterialStateProperty.all(
                                     const EdgeInsets.symmetric(vertical: 15)),
                                 backgroundColor: MaterialStateProperty.all(
-                                    primaryLightColor),
+                                    Theme.of(context).primaryColor),
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)),
@@ -268,7 +266,7 @@ class SignInScreen extends StatelessWidget {
                           child: Text(
                             'Signup',
                             style: GoogleFonts.poppins(
-                                color: primaryLightColor,
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),

@@ -4,7 +4,6 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 
-import '../../../../../constants/colors.dart';
 
 class AboutmePage extends StatefulWidget {
   const AboutmePage({
@@ -194,7 +193,7 @@ class _AboutmePageState extends State<AboutmePage> {
               ),
               child: SfRangeSlider(
                 inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
-                activeColor: primaryLightColor,
+                activeColor: Theme.of(context).primaryColor,
                 min: 10,
                 max: 1000,
                 enableTooltip: true,
@@ -246,7 +245,7 @@ class _AboutmePageState extends State<AboutmePage> {
                           '',
                       style: GoogleFonts.poppins(
                           fontSize: 14,
-                          color: primaryLightColor,
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400),
                     ),
                   ),

@@ -6,7 +6,6 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
 
-import '../../../../constants/colors.dart';
 import '../../../../constants/text_styles.dart';
 
 String code = '';
@@ -20,7 +19,6 @@ class VerificationScreen extends StatelessWidget {
     String d1 = '', d2 = '', d3 = '', d4 = '';
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -33,7 +31,7 @@ class VerificationScreen extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: primaryLightColor,
+              color: Theme.of(context).primaryColor,
             ),
             child: IconButton(
               icon: const Icon(
@@ -117,7 +115,7 @@ class VerificationScreen extends StatelessWidget {
                       ),
                     ),
                     backgroundColor:
-                        MaterialStateProperty.all(primaryLightColor),
+                        MaterialStateProperty.all(Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),

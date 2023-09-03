@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../constants/colors.dart';
 import '../../../../constants/text_styles.dart';
 
 class AddCardScreen extends StatelessWidget {
@@ -14,7 +13,6 @@ class AddCardScreen extends StatelessWidget {
     TextEditingController expirationDateController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -24,7 +22,7 @@ class AddCardScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -115,7 +113,7 @@ class AddCardScreen extends StatelessWidget {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 20)),
-                backgroundColor: MaterialStateProperty.all(primaryLightColor),
+                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/constants/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
@@ -35,32 +33,35 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryLightColor,
+      backgroundColor: Theme.of(context).primaryColor,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset('images/logo.png'),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              'TASK-TECH',
-              style: GoogleFonts.redRose(
-                  textStyle: TextStyle(
-                    color: white,
-                    fontSize: 30,
-                  ),
-                  shadows: [
-                    Shadow(
-                        color: Colors.white.withOpacity(0.15),
-                        offset: const Offset(3, 4))
-                  ]),
-            ),
-          ],
-        ),
-      ),
+          child: Center(
+        child: Image.asset('images/logo.png'),
+      )
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     Image.asset('images/logo.png'),
+          //     const SizedBox(
+          //       height: 10,
+          //     ),
+          //     Text(
+          //       'TASK-TECH',
+          //       style: GoogleFonts.redRose(
+          //           textStyle: const TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 30,
+          //           ),
+          //           shadows: [
+          //             Shadow(
+          //                 color: Colors.white.withOpacity(0.15),
+          //                 offset: const Offset(3, 4))
+          //           ]),
+          //     ),
+          //   ],
+          // ),
+          ),
     );
   }
 }

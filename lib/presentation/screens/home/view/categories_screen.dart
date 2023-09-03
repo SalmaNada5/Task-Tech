@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
-
-import '../../../../constants/colors.dart';
 import '../../../../constants/text_styles.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -25,7 +23,7 @@ class CategoriesScreen extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: primaryLightColor,
+            color: Theme.of(context).primaryColor,
           ),
           child: IconButton(
             icon: const Icon(

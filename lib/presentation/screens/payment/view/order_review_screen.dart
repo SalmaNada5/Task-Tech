@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
 class OrderReviewScreen extends StatefulWidget {
@@ -30,7 +29,6 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -40,7 +38,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -276,7 +274,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             style: ButtonStyle(
               padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 20)),
-              backgroundColor: MaterialStateProperty.all(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -317,7 +315,7 @@ class CheckBoxlistTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        unselectedWidgetColor: primaryLightColor,
+        unselectedWidgetColor: Theme.of(context).primaryColor,
       ),
       child: CheckboxListTile(
         title: Row(
@@ -339,12 +337,12 @@ class CheckBoxlistTile extends StatelessWidget {
         checkboxShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
-            color: primaryLightColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         controlAffinity: ListTileControlAffinity.leading,
-        checkColor: primaryLightColor,
-        activeColor: white,
+        checkColor: Theme.of(context).primaryColor,
+        activeColor: Colors.white,
         value: isChecked,
         onChanged: onChanged,
       ),

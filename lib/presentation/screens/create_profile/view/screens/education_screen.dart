@@ -1,7 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/Lists.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
@@ -48,64 +48,10 @@ class EducationScreen extends StatefulWidget {
 class EducationScreenState extends State<EducationScreen> {
   String? dropdownValue;
   String education = '';
-  var educationList = [
-    'Ain Shams University',
-    'Al Alamein International University',
-    'Al-Azhar University',
-    'Alexandria University',
-    'Arish University',
-    'Assiut University',
-    'Aswan University',
-    'Badr University in Cairo',
-    'Benha University',
-    'Beni-Suef University',
-    'Cairo University',
-    'Damanhour University',
-    'Damietta University',
-    'Delta University for Science and Technology',
-    'Egyptian Chinese University',
-    'Egypt-Japan University of Science and Technology',
-    'Fayoum University',
-    'Future University in Egypt',
-    'Galala University',
-    'Helwan University',
-    'Kafrelsheikh University',
-    'Luxor University',
-    'Mansoura University',
-    'Matrouh University',
-    'Menoufia University',
-    'Minia University',
-    'Misr International University',
-    'New Valley University',
-    'Pharos University in Alexandria',
-    'Port Said University',
-    'Sinai University',
-    'Sohag university',
-    'South Valley University',
-    'Suez Canal University',
-    'Suez University',
-    'Tanta University',
-    'The American University in Cairo',
-    'The Arab Academy for Management',
-    'Banking and Financial Sciences',
-    'The British University in Egypt',
-    'The German University in Cairo',
-    "Université Française d'Égypte",
-    'University of Sadat City',
-    'University of Science and Technology at Zewail City',
-    'Zagazig University',
-    'Massachusetts Institute of Technology (MIT)',
-    'Harvard University',
-    'University of Oxford',
-    'University of Cambridge',
-    'ETH Zurich (Swiss Federal Institute of Technology)',
-    'University of Tokyo',
-    'Universite PSL',
-  ];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: MyAppbar(percent: 100),
       body: Center(
         child: SingleChildScrollView(
@@ -153,7 +99,7 @@ class EducationScreenState extends State<EducationScreen> {
                       children: [
                         Icon(
                           Icons.add_outlined,
-                          color: primaryLightColor,
+                          color: Theme.of(context).primaryColor,
                           weight: 500,
                           size: 30,
                         ),
@@ -164,7 +110,7 @@ class EducationScreenState extends State<EducationScreen> {
                           'Add Education',
                           style: GoogleFonts.poppins(
                               fontSize: 20,
-                              color: primaryLightColor,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500),
                         )
                       ],
@@ -181,7 +127,7 @@ class EducationScreenState extends State<EducationScreen> {
                             style: GoogleFonts.poppins(
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.04,
-                                color: primaryLightColor,
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w500),
                           ));
                     }).toList(),

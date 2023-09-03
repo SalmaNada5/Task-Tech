@@ -7,7 +7,6 @@ import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/payment/controller/payment_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';
-import '../../../../constants/colors.dart';
 import '../../home/models/search_service_model.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
@@ -27,7 +26,6 @@ class ServiceDetailsPage extends StatelessWidget {
     dynamic serviceItem =
         service ?? ServiceController.serviceDetailsModel.data?.service;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -37,7 +35,7 @@ class ServiceDetailsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -169,7 +167,7 @@ class ServiceDetailsPage extends StatelessWidget {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
-                backgroundColor: MaterialStateProperty.all(primaryLightColor),
+                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

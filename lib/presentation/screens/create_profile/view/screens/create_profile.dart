@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
@@ -132,7 +131,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     children: [
                       Icon(
                         Icons.add_outlined,
-                        color: primaryLightColor,
+                        color: Theme.of(context).primaryColor,
                         weight: 500,
                         size: 30,
                       ),
@@ -143,7 +142,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         'Upload photo',
                         style: GoogleFonts.poppins(
                             fontSize: 20,
-                            color: primaryLightColor,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500),
                       )
                     ],

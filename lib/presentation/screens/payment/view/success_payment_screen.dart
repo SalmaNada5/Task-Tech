@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
@@ -15,9 +14,8 @@ class CongratesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
       appBar: AppBar(
-        backgroundColor: white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -25,7 +23,7 @@ class CongratesScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -52,7 +50,7 @@ class CongratesScreen extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
-                color: primaryLightColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             const SizedBox(
@@ -90,7 +88,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      color: white,
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -115,7 +113,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                 Text(
                                   'What is your rate?',
                                   style: GoogleFonts.poppins(
-                                    color: primaryLightColor,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -173,7 +171,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                         fontSize: 16,
                                       ),
                                       contentPadding: const EdgeInsets.all(10),
-                                      fillColor: white,
+                                      fillColor: Colors.white,
                                       filled: true,
                                       border: InputBorder.none,
                                     ),
@@ -201,7 +199,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                         const EdgeInsets.symmetric(
                                             horizontal: 60, vertical: 15)),
                                     backgroundColor: MaterialStateProperty.all(
-                                        primaryLightColor),
+                                        Theme.of(context).primaryColor),
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -226,7 +224,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 20)),
-                backgroundColor: MaterialStateProperty.all(primaryLightColor),
+                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -253,11 +251,11 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               },
               style: ButtonStyle(
                 side: MaterialStateProperty.all(BorderSide(
-                  color: primaryLightColor,
+                  color: Theme.of(context).primaryColor,
                 )),
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 20)),
-                backgroundColor: MaterialStateProperty.all(white),
+                backgroundColor: MaterialStateProperty.all(Colors.white),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -267,7 +265,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               child: Text(
                 'Skip',
                 style: GoogleFonts.poppins(
-                  color: primaryLightColor,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 16,
                 ),
               ),

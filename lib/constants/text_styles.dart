@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
 
 TextStyle titleStyle = GoogleFonts.poppins(
   fontSize: 22,
   fontWeight: FontWeight.w500,
-  color: primaryLightColor,
+  color: const Color(0xff165069),
 );
 
 TextStyle labelTextFormStyle = GoogleFonts.poppins(
@@ -23,7 +22,7 @@ TextStyle headStyle = GoogleFonts.poppins(
 TextStyle postNameStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
-  color: primaryLightColor,
+  color:const Color(0xff165069),
 );
 TextStyle postDescriptionStyle = GoogleFonts.poppins(
   fontSize: 14,

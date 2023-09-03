@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 
-import '../../../../../constants/colors.dart';
-
 // ignore: non_constant_identifier_names
 AppBar MyAppbar({required double percent}) {
   return AppBar(
     toolbarHeight: 70,
-    backgroundColor: white,
+    backgroundColor: Colors.white,
     elevation: 0,
     leading: Builder(
       builder: (BuildContext context) {
@@ -41,7 +39,7 @@ AppBar MyAppbar({required double percent}) {
           style: RoundedProgressBarStyle(
               widthShadow: 0,
               borderWidth: 0,
-              colorProgress: primaryLightColor,
+              colorProgress: const Color(0xff165069),
               backgroundProgress: const Color.fromRGBO(217, 217, 217, 1)),
         )),
   );

@@ -63,7 +63,6 @@ List<String> msgs =[];
   Widget build(BuildContext context) {
     
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           toolbarHeight: 85,
           elevation: 0,
