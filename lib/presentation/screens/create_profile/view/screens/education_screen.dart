@@ -48,11 +48,11 @@ class EducationScreen extends StatefulWidget {
 class EducationScreenState extends State<EducationScreen> {
   String? dropdownValue;
   String education = '';
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(percent: 100),
+      appBar: myAppbar(percent: 100),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-TextStyle labelFormStyle = GoogleFonts.poppins(
-    color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
-
 class CustomButtonWidget extends StatelessWidget {
   const CustomButtonWidget(
       {super.key,
@@ -27,10 +22,8 @@ class CustomButtonWidget extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
           color: color,
-          //const Color.fromRGBO(22, 80, 105, 1),
           borderRadius: BorderRadius.circular(6),
           border:Border.all(color: borderColor==null ? Colors.transparent: borderColor!) 
-          //Border.all(color: const Color.fromRGBO(22, 80, 105, 1))
           ),
       child: MaterialButton(
         onPressed: onpressed,

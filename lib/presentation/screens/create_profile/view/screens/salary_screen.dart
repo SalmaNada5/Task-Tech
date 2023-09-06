@@ -40,14 +40,14 @@ class SalaryScreenState extends State<SalaryScreen> {
   TextEditingController freqcontroller = TextEditingController();
 
   String? currencyValue;
-  
+
   String? frequencyValue;
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MyAppbar(percent: 80),
+      appBar: myAppbar(percent: 80),
       body: Center(
         child: Padding(
           padding: EdgeInsetsDirectional.only(

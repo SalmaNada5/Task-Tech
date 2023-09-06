@@ -25,6 +25,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: PageView(
         controller: _pageController,
         onPageChanged: (value) {
@@ -38,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ],
       ),
       bottomSheet: Container(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,8 +56,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Theme.of(context).primaryColor),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6)))),
                 onPressed: isLastPage
@@ -106,16 +107,16 @@ class FirstOnBoarding extends StatelessWidget {
             height: 10,
           ),
           TextButton(
-            child: Text(
-              'Skip',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+              child: Text(
+                'Skip',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            onPressed: () => Constants.navigateTo(const SignUpScreen(),pushReplacment: true)
-          ),
+              onPressed: () => Constants.navigateTo(const SignUpScreen(),
+                  pushReplacment: true)),
           SizedBox(
             height: screenH / 12,
           ),

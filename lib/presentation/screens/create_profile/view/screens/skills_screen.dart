@@ -67,7 +67,7 @@ class SkillsScreenState extends State<SkillsScreen> {
     //bool addchip = false;
     var skillController = TextEditingController();
     return Scaffold(
-      appBar: MyAppbar(percent: 40),
+      appBar: myAppbar(percent: 40),
       body: Center(
         child: Padding(
           padding: EdgeInsetsDirectional.only(
@@ -142,7 +142,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                     },*/
                     controller: skillController,
                     onChanged: (value) {
-                       //value = skillController.text;
+                      //value = skillController.text;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -236,7 +236,8 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
             width: Constants.screenWidth * 0.01,
           ),
           icon = isSelected
-              ?const Icon(Icons.check, color: Colors.white, size: 22, weight: 400)
+              ? const Icon(Icons.check,
+                  color: Colors.white, size: 22, weight: 400)
               : const Icon(Icons.add,
                   color: Color.fromRGBO(166, 166, 166, 0.8),
                   size: 22,
@@ -274,7 +275,9 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
       ),
       selectedColor: Theme.of(context).primaryColor,
       labelStyle: GoogleFonts.poppins(
-        color: isSelected ? Colors.white : const Color.fromRGBO(166, 166, 166, 0.8),
+        color: isSelected
+            ? Colors.white
+            : const Color.fromRGBO(166, 166, 166, 0.8),
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),

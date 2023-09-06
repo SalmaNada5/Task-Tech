@@ -34,7 +34,7 @@ class BioScreenState extends State<BioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(percent: 60),
+      appBar: myAppbar(percent: 60),
       body: Padding(
         padding: EdgeInsetsDirectional.only(
             start: Constants.screenWidth * 0.03,

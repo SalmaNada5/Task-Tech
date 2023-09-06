@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,7 +24,11 @@ class OnboardingWidget extends StatelessWidget {
         Text(
           title!,
           style: GoogleFonts.poppins(
-              color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
+              color: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+                  ? Colors.white
+                  : Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w600),
         ),
         const SizedBox(
           height: 10,

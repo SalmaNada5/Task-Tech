@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -33,10 +34,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+          ? const Color(0xff1B2936)
+          : const Color(0xff165069),
       body: Center(
           child: Center(
         child: Image.asset('images/logo.png'),
+        //Lottie.asset('images/logo.json', animate: true),
       )
           // Column(
           //   mainAxisAlignment: MainAxisAlignment.center,
