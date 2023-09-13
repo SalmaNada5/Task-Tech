@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,6 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
 
-import '../../../../constants/colors.dart';
 import '../../../../constants/text_styles.dart';
 
 String code = '';
@@ -20,9 +20,8 @@ class VerificationScreen extends StatelessWidget {
     String d1 = '', d2 = '', d3 = '', d4 = '';
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           centerTitle: true,
           title: Text(
@@ -33,7 +32,7 @@ class VerificationScreen extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: primaryLightColor,
+              color: Theme.of(context).primaryColor,
             ),
             child: IconButton(
               icon: const Icon(
@@ -55,7 +54,7 @@ class VerificationScreen extends StatelessWidget {
                   'Enter the verification code we just sent you\non your e-mail address',
                   textAlign: TextAlign.center,
                   style: labelTextFormStyle.copyWith(
-                    color: const Color(0xff3E4446),
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                     fontSize: 16,
                   ),
                 ),
@@ -116,8 +115,8 @@ class VerificationScreen extends StatelessWidget {
                         horizontal: 0.35 * Constants.screenWidth,
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(primaryLightColor),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
@@ -189,7 +188,9 @@ class CustomOneDigitField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xffF5F5F5))),
           border: InputBorder.none,
-          filled: true,
+          filled: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+              ? false
+              : true,
           fillColor: const Color(0xffF5F5F5),
         ),
       ),

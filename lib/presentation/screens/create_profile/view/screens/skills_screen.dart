@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 
@@ -68,8 +67,7 @@ class SkillsScreenState extends State<SkillsScreen> {
     //bool addchip = false;
     var skillController = TextEditingController();
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: MyAppbar(percent: 40),
+      appBar: myAppbar(percent: 40),
       body: Center(
         child: Padding(
           padding: EdgeInsetsDirectional.only(
@@ -117,7 +115,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                   height: 54,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromRGBO(245, 245, 245, 1),
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     border: Border.all(
                         style: BorderStyle.solid,
                         color: const Color.fromRGBO(227, 227, 227, 1)),
@@ -144,7 +142,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                     },*/
                     controller: skillController,
                     onChanged: (value) {
-                       //value = skillController.text;
+                      //value = skillController.text;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -177,7 +175,6 @@ class SkillsScreenState extends State<SkillsScreen> {
                   child: CustomButtonWidget(
                       width: Constants.screenWidth * 0.7,
                       height: Constants.screenHeight * 0.075,
-                      color: const Color.fromRGBO(22, 80, 105, 1),
                       onpressed: () {
                         Constants.navigateTo(BioScreen(
                           job: widget.job,
@@ -238,7 +235,8 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
             width: Constants.screenWidth * 0.01,
           ),
           icon = isSelected
-              ? Icon(Icons.check, color: white, size: 22, weight: 400)
+              ? const Icon(Icons.check,
+                  color: Colors.white, size: 22, weight: 400)
               : const Icon(Icons.add,
                   color: Color.fromRGBO(166, 166, 166, 0.8),
                   size: 22,
@@ -264,9 +262,9 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           // }
         }
       },
-      backgroundColor: white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       showCheckmark: false,
-      checkmarkColor: white,
+      checkmarkColor: Colors.white,
       side: const BorderSide(
           width: 1,
           color: Color.fromRGBO(217, 217, 217, 1),
@@ -274,9 +272,11 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      selectedColor: primaryLightColor,
+      selectedColor: Theme.of(context).primaryColor,
       labelStyle: GoogleFonts.poppins(
-        color: isSelected ? white : const Color.fromRGBO(166, 166, 166, 0.8),
+        color: isSelected
+            ? Colors.white
+            : const Color.fromRGBO(166, 166, 166, 0.8),
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),

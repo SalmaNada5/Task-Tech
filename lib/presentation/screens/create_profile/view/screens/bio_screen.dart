@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/screens/education_screen.dart';
@@ -35,8 +34,7 @@ class BioScreenState extends State<BioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: MyAppbar(percent: 60),
+      appBar: myAppbar(percent: 60),
       body: Padding(
         padding: EdgeInsetsDirectional.only(
             start: Constants.screenWidth * 0.03,
@@ -54,7 +52,7 @@ class BioScreenState extends State<BioScreen> {
                 style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
-                    color: const Color.fromRGBO(0, 0, 0, 1)),
+                    color: Theme.of(context).textTheme.headlineSmall!.color),
               ),
               const SizedBox(
                 height: 10,
@@ -67,7 +65,7 @@ class BioScreenState extends State<BioScreen> {
                 style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
-                    color: const Color.fromRGBO(58, 51, 53, 1)),
+                    color: Theme.of(context).textTheme.headlineSmall!.color),
               ),
               const SizedBox(
                 height: 30,
@@ -101,7 +99,8 @@ class BioScreenState extends State<BioScreen> {
                       hintStyle: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(124, 124, 124, 1)),
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(
@@ -123,7 +122,7 @@ class BioScreenState extends State<BioScreen> {
               Text(
                 'At least 100 characters',
                 style: GoogleFonts.poppins(
-                    color: const Color.fromRGBO(124, 124, 124, 1),
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
               ),
@@ -134,7 +133,6 @@ class BioScreenState extends State<BioScreen> {
                 child: CustomButtonWidget(
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
-                    color: const Color.fromRGBO(22, 80, 105, 1),
                     onpressed: () async {
                       logWarning('desc: ${descController.text}');
                       Constants.navigateTo(SalaryScreen(
@@ -161,7 +159,7 @@ class BioScreenState extends State<BioScreen> {
                 child: CustomButtonWidget(
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
-                    color: white,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                     borderColor: const Color.fromRGBO(22, 80, 105, 1),
                     onpressed: () {
                       Constants.navigateTo(EducationScreen(
@@ -176,8 +174,7 @@ class BioScreenState extends State<BioScreen> {
                     childWidget: Text(
                       'Skip',
                       style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          color: const Color.fromRGBO(22, 80, 105, 1)),
+                          fontSize: 20, color: Theme.of(context).primaryColor),
                     )),
               ),
             ],

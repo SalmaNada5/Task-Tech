@@ -1,5 +1,7 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/Lists.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
@@ -39,26 +41,17 @@ class SalaryScreenState extends State<SalaryScreen> {
   TextEditingController freqcontroller = TextEditingController();
 
   String? currencyValue;
-  List<String> currencyList = <String>[
-    'EUR',
-    'USD',
-    'SAR',
-    'CHF',
-    'EGP',
-    'GBP',
-  ];
+
   String? frequencyValue;
-  List<String> frequencyList = <String>[
-    'per hour',
-    'per day',
-    'per week',
-    'per month'
-  ];
+
   @override
   Widget build(BuildContext context) {
+    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+        ? const Color(0xff213440)
+        : Colors.white;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: MyAppbar(percent: 80),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: myAppbar(percent: 80),
       body: Center(
         child: Padding(
           padding: EdgeInsetsDirectional.only(
@@ -77,6 +70,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   'Expected Salary',
                   style: GoogleFonts.poppins(
                     fontSize: 24,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -88,7 +82,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: const Color.fromRGBO(90, 80, 80, 1)),
+                      color: Theme.of(context).textTheme.headlineSmall!.color),
                 ),
                 const SizedBox(
                   height: 9,
@@ -127,6 +121,8 @@ class SalaryScreenState extends State<SalaryScreen> {
                 // ),
                 CustomTextFormField(
                   controller: minController,
+                  fillColor: fieldColor,
+                  borderColor: fieldColor,
                   obscure: false,
                   validator: (value) {
                     value = minController.text;
@@ -146,13 +142,15 @@ class SalaryScreenState extends State<SalaryScreen> {
                   style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: const Color.fromRGBO(90, 80, 80, 1)),
+                      color: Theme.of(context).textTheme.headlineSmall!.color),
                 ),
                 const SizedBox(
                   height: 9,
                 ),
                 CustomTextFormField(
                   controller: maxController,
+                  fillColor: fieldColor,
+                  borderColor: fieldColor,
                   obscure: false,
                   validator: (value) {
                     value = maxController.text;
@@ -172,7 +170,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: const Color.fromRGBO(90, 80, 80, 1)),
+                      color: Theme.of(context).textTheme.headlineSmall!.color),
                 ),
                 const SizedBox(
                   height: 9,
@@ -182,9 +180,8 @@ class SalaryScreenState extends State<SalaryScreen> {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromRGBO(245, 245, 245, 1),
-                  ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: fieldColor),
                   child: DropdownButton<String>(
                     icon: const Icon(
                       Icons.keyboard_arrow_down_outlined,
@@ -224,7 +221,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
-                      color: const Color.fromRGBO(90, 80, 80, 1)),
+                      color: Theme.of(context).textTheme.headlineSmall!.color),
                 ),
                 const SizedBox(
                   height: 9,
@@ -235,7 +232,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromRGBO(245, 245, 245, 1),
+                    color: fieldColor,
                   ),
                   child: DropdownButton<String>(
                     icon: const Icon(
@@ -274,7 +271,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   child: CustomButtonWidget(
                       width: Constants.screenWidth * 0.7,
                       height: Constants.screenHeight * 0.075,
-                      color: const Color.fromRGBO(22, 80, 105, 1),
+                      color: Theme.of(context).primaryColor,
                       onpressed: () {
                         logInfo(
                             'desc ${widget.description} , job: ${widget.job}');

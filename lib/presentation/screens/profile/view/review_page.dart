@@ -12,21 +12,22 @@ class ReviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount:
-          CurrentUserInfoController.userInfoModel.data?.user.reviews.length ?? 0,
+          CurrentUserInfoController.userInfoModel.data?.user.reviews.length ??
+              0,
       itemBuilder: (context, i) => reviewCard(
-        name: CurrentUserInfoController
-                .userInfoModel.data?.user.reviews[i].reviewer?.name ??
-            '',
-        review: CurrentUserInfoController
-                .userInfoModel.data?.user.reviews[i].review ??
-            '',
-        rate: CurrentUserInfoController
-                .userInfoModel.data?.user.reviews[i].rating ??
-            0.0,
-        imgUrl: CurrentUserInfoController
-                .userInfoModel.data?.user.reviews[i].reviewer?.photo ??
-            '',
-      ),
+          name: CurrentUserInfoController
+                  .userInfoModel.data?.user.reviews[i].reviewer?.name ??
+              '',
+          review: CurrentUserInfoController
+                  .userInfoModel.data?.user.reviews[i].review ??
+              '',
+          rate: CurrentUserInfoController
+                  .userInfoModel.data?.user.reviews[i].rating ??
+              0.0,
+          imgUrl: CurrentUserInfoController
+                  .userInfoModel.data?.user.reviews[i].reviewer?.photo ??
+              '',
+          textColor: Theme.of(context).textTheme.headlineSmall!.color!),
       //   children: [
       //   reviewCard(
       //       name: 'Emily',
@@ -55,7 +56,8 @@ Widget reviewCard(
     {required String name,
     required String review,
     required num rate,
-    required String imgUrl}) {
+    required String imgUrl,
+    required Color textColor}) {
   return ListTile(
     leading: CircleAvatar(
       child: ClipOval(
@@ -93,7 +95,7 @@ Widget reviewCard(
       child: Text(
         name,
         style: GoogleFonts.poppins(
-            fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
+            fontSize: 18, fontWeight: FontWeight.w500, color: textColor),
       ),
     ),
     isThreeLine: true,
@@ -102,9 +104,7 @@ Widget reviewCard(
       child: Text(
         review,
         style: GoogleFonts.poppins(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: const Color.fromRGBO(124, 124, 124, 1)),
+            fontSize: 16, fontWeight: FontWeight.w500, color: textColor),
       ),
     ),
   );

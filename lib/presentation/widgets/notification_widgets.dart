@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../constants/colors.dart';
 
 class RequestNotification extends StatefulWidget {
   String name;
@@ -113,10 +112,10 @@ class _RequestNotificationState extends State<RequestNotification> {
                   SizedBox(width: MediaQuery.of(context).size.width * 0.03),
                   Container(
                     decoration: BoxDecoration(
-                        color: white,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: primaryLightColor,
+                          color: Theme.of(context).primaryColor,
                         )),
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(

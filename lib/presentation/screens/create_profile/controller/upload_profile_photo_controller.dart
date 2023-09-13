@@ -10,7 +10,7 @@ class UploadProfilePhotoController {
 
   static Future<FilePickerResult?> attachPhoto() async {
     final FilePickerResult? pickedFile =
-        await FilePicker.platform.pickFiles();
+        await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: false);
     if (pickedFile != null) {
       selectedPhoto = pickedFile;
       return pickedFile;

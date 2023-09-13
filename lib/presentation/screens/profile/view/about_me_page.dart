@@ -4,8 +4,6 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 
-import '../../../../../constants/colors.dart';
-
 class AboutmePage extends StatefulWidget {
   const AboutmePage({
     Key? key,
@@ -40,6 +38,8 @@ class _AboutmePageState extends State<AboutmePage> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor =
+        Theme.of(context).textTheme.headlineSmall!.color ?? Colors.grey;
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -66,7 +66,7 @@ class _AboutmePageState extends State<AboutmePage> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: const Color.fromRGBO(13, 13, 38, 1)),
+                      color: textColor),
                 ),
                 const Spacer(),
                 TextButton(
@@ -175,9 +175,7 @@ class _AboutmePageState extends State<AboutmePage> {
             Text(
               'Salary',
               style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: const Color.fromRGBO(13, 13, 38, 1)),
+                  fontWeight: FontWeight.w600, fontSize: 16, color: textColor),
             ),
             const SizedBox(
               height: 60,
@@ -194,7 +192,7 @@ class _AboutmePageState extends State<AboutmePage> {
               ),
               child: SfRangeSlider(
                 inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
-                activeColor: primaryLightColor,
+                activeColor: Theme.of(context).primaryColor,
                 min: 10,
                 max: 1000,
                 enableTooltip: true,
@@ -218,9 +216,7 @@ class _AboutmePageState extends State<AboutmePage> {
             Text(
               'Skills',
               style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: const Color.fromRGBO(13, 13, 38, 1)),
+                  fontWeight: FontWeight.w600, fontSize: 16, color: textColor),
             ),
             const SizedBox(
               height: 10,
@@ -246,7 +242,7 @@ class _AboutmePageState extends State<AboutmePage> {
                           '',
                       style: GoogleFonts.poppins(
                           fontSize: 14,
-                          color: primaryLightColor,
+                          color: textColor,
                           fontWeight: FontWeight.w400),
                     ),
                   ),

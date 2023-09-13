@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
+import 'package:task_tech/constants/Lists.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
 class ReusablePostForm extends StatefulWidget {
@@ -34,18 +34,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
   final _formKey = GlobalKey<FormState>();
   // DateTime _curDate = DateTime.now();
   String selectedCategory = 'Web Design';
-  List<String> categories = [
-    'Web Design',
-    'Marketing',
-    'Business',
-    'Software Engineering',
-    'Web Developer',
-    'App Developer',
-    'Product Manager',
-    'Accountant',
-    'Ui/Ux Design',
-    'Graphics Designer'
-  ];
+
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
@@ -372,7 +361,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                       ),
                     ),
                     backgroundColor:
-                        MaterialStateProperty.all(primaryLightColor),
+                        MaterialStateProperty.all(Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),

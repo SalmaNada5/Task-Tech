@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/models/message_model.dart';
+import 'package:task_tech/presentation/screens/chat_screens/model/message_static_model.dart';
 
 import '../widgets/conversation_list_widget.dart';
 import '../widgets/search_widget.dart';
@@ -21,7 +21,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(

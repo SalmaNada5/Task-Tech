@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_cv_controller.dart';
-import '../../../../../constants/colors.dart';
 
 class PortfolioPage extends StatelessWidget {
   const PortfolioPage({Key? key, required this.isMe}) : super(key: key);
@@ -27,7 +26,7 @@ class PortfolioPage extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.add_outlined,
-                        color: primaryLightColor,
+                        color: Theme.of(context).primaryColor,
                         weight: 500,
                         size: 30,
                       ),
@@ -38,7 +37,7 @@ class PortfolioPage extends StatelessWidget {
                         'Upload CV',
                         style: GoogleFonts.poppins(
                             fontSize: 20,
-                            color: primaryLightColor,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500),
                       )
                     ],

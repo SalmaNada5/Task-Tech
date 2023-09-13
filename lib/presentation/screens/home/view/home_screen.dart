@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             expandedHeight: 70,
             floating: true,
             flexibleSpace: FlexibleSpaceBar(

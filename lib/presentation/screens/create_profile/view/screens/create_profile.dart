@@ -1,11 +1,8 @@
 import 'dart:core';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
@@ -31,33 +28,14 @@ class _CreateProfileState extends State<CreateProfile> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<String> list = <String>['male', 'female'];
   String? gender;
-  File? _image;
   String? age;
-  //AssetImage image = const AssetImage('images/picture.png');
   String imagepath = "";
-  late File imagefile;
-  //final _picker = ImagePicker();
-
- // late GoogleMapController mapController;
-
-  // ignore: unused_field
-  String? _currentAddress;
+  File? imagefile;
   late AnimationController controller;
-
-  // Future<void> _openImagePicker() async {
-  //   final XFile? pickedImage =
-  //       await _picker.pickImage(source: ImageSource.gallery);
-  //   // UploadProfilePhotoController.selectedPhoto =
-  //   //     await UploadProfilePhotoController.attachPhoto();
-  //   if (pickedImage != null) {
-  //     setState(() {
-  //       _image = File(
-  //         pickedImage.path,
-  //       );
-  //     });
-  //   }
-  // }
-
+  TextStyle? labelTextTheme = Theme.of(Constants.navigatorKey.currentContext!)
+      .textTheme
+      .headlineSmall!
+      .copyWith(fontSize: 18);
   @override
   void initState() {
     super.initState();
@@ -66,8 +44,8 @@ class _CreateProfileState extends State<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: MyAppbar(percent: 20),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: myAppbar(percent: 20),
       body: Center(
         child: Padding(
           padding: EdgeInsetsDirectional.only(
@@ -79,16 +57,16 @@ class _CreateProfileState extends State<CreateProfile> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Center(
                   child: CircleAvatar(
-                      radius: Constants.screenWidth * 0.17,
+                      radius: Constants.screenWidth * 0.12,
                       backgroundColor: Colors.grey[600],
                       child: ClipOval(
-                        child: _image != null
+                        child: imagefile != null
                             ? Image.file(
-                                _image!,
+                                imagefile!,
                                 scale: 0.5,
                                 fit: BoxFit.cover,
                                 width: Constants.screenWidth * 0.5,
@@ -98,41 +76,30 @@ class _CreateProfileState extends State<CreateProfile> {
                                 'images/default person.png',
                                 fit: BoxFit.cover,
                               ),
-                      )
-
-                      //image,
-                      ),
+                      )),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 CustomButtonWidget(
-                  height: Constants.screenHeight * 0.075,
+                  height: 50,
                   width: Constants.screenWidth * 0.9,
                   color: const Color.fromRGBO(22, 80, 105, 0.21),
-                  onpressed: () => UploadProfilePhotoController.attachPhoto(),
-                  //_openImagePicker,
-                  /*()async{
-                    _openImagePicker;
-
-                    ProfilePhotoModel? photoModel;
-                    var photopath = _image?.path;
-                    photoModel = await ProfileController.addProfilePhoto(
-                         photo: photopath
-                        );
-                        if (photoModel == null) {
-                                    return Constants.errorMessage(
-                                        description: 'Invalid input data');
-                                  } 
-                  
-
-                  },*/
+                  onpressed: () async {
+                    final result =
+                        await UploadProfilePhotoController.attachPhoto();
+                    if (result != null) {
+                      setState(() {
+                        imagefile = File(result.files.single.path!);
+                      });
+                    }
+                  },
                   childWidget: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.add_outlined,
-                        color: primaryLightColor,
+                        color: Theme.of(context).primaryColor,
                         weight: 500,
                         size: 30,
                       ),
@@ -143,7 +110,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         'Upload photo',
                         style: GoogleFonts.poppins(
                             fontSize: 20,
-                            color: primaryLightColor,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500),
                       )
                     ],
@@ -160,7 +127,7 @@ class _CreateProfileState extends State<CreateProfile> {
                       children: [
                         Text(
                           'Job Name',
-                          style: labelFormStyle,
+                          style: labelTextTheme,
                         ),
                         const SizedBox(
                           height: 10,
@@ -181,7 +148,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         Text(
                           'Birth Date',
-                          style: labelFormStyle,
+                          style: labelTextTheme,
                         ),
                         const SizedBox(
                           height: 10,
@@ -224,7 +191,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                 children: [
                                   Text(
                                     'Gender',
-                                    style: labelFormStyle,
+                                    style: labelTextTheme,
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -233,7 +200,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                     width: Constants.screenWidth * 0.5,
                                     padding: const EdgeInsetsDirectional.only(
                                         start: 12, end: 12),
-                                    height: 40,
+                                    height: 48,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8.6),
                                       border: Border.all(
@@ -242,6 +209,8 @@ class _CreateProfileState extends State<CreateProfile> {
                                           style: BorderStyle.solid),
                                     ),
                                     child: DropdownButton<String>(
+                                        dropdownColor:
+                                            Theme.of(context).primaryColor,
                                         underline:
                                             Container(), //remove underline
                                         borderRadius:
@@ -261,6 +230,10 @@ class _CreateProfileState extends State<CreateProfile> {
                                             value: value,
                                             child: Text(
                                               value,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall!
+                                                  .copyWith(fontSize: 16),
                                             ),
                                           );
                                         }).toList(),
@@ -284,7 +257,7 @@ class _CreateProfileState extends State<CreateProfile> {
                                 children: [
                                   Text(
                                     'Age',
-                                    style: labelFormStyle,
+                                    style: labelTextTheme,
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -312,7 +285,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         Text(
                           'Location',
-                          style: labelFormStyle,
+                          style: labelTextTheme,
                         ),
                         const SizedBox(
                           height: 10,
@@ -337,7 +310,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         ),
                         Text(
                           'Phone Number',
-                          style: labelFormStyle,
+                          style: labelTextTheme,
                         ),
                         const SizedBox(
                           height: 10,
@@ -360,7 +333,7 @@ class _CreateProfileState extends State<CreateProfile> {
                           child: CustomButtonWidget(
                               height: Constants.screenHeight * 0.07,
                               width: Constants.screenWidth * 0.7,
-                              color: const Color.fromRGBO(22, 80, 105, 1),
+                              //color: Theme.of(context).primaryColor,
                               onpressed: () async {
                                 // bool photoUploaded =
                                 //     await UploadProfilePhotoController

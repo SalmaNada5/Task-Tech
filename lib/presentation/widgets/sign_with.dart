@@ -9,11 +9,11 @@ class SignWith extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        padding: MaterialStateProperty.all(
-            const EdgeInsets.symmetric(horizontal: 30, vertical: 15)),
-        backgroundColor: MaterialStateProperty.all(Colors.white),
-        elevation: MaterialStateProperty.all(5),
-      ),
+          padding: MaterialStateProperty.all(
+              const EdgeInsets.symmetric(horizontal: 30, vertical: 15)),
+          backgroundColor: MaterialStateProperty.all(Colors.white),
+          elevation: MaterialStateProperty.all(6),
+          shadowColor: MaterialStateProperty.all(Colors.white)),
       onPressed: onPress,
       child: Center(child: child),
     );

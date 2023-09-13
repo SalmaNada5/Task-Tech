@@ -1,7 +1,7 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/colors.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
@@ -11,12 +11,15 @@ class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+        ? const Color(0xff213440)
+        : Colors.white;
+
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           centerTitle: true,
           title: Text(
@@ -27,7 +30,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: primaryLightColor,
+              color: Theme.of(context).primaryColor,
             ),
             child: IconButton(
               icon: const Icon(
@@ -51,7 +54,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: labelTextFormStyle.copyWith(
-                    color: const Color(0xff3E4446),
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                     fontSize: 16,
                   ),
                 ),
@@ -61,6 +64,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: forgotPassEmailController,
                   obscure: false,
+                  fillColor: fieldColor,
+                  borderColor: fieldColor,
                   validator: (email) {
                     email = forgotPassEmailController.text.toString();
                     if (email.isEmpty) {
@@ -86,11 +91,11 @@ class ForgotPasswordScreen extends StatelessWidget {
                     padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(
                         vertical: 10,
-                        horizontal: 0.35 * Constants.screenWidth,
+                        horizontal: 0.2 * Constants.screenWidth,
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(primaryLightColor),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
