@@ -333,7 +333,7 @@ class _CreateProfileState extends State<CreateProfile> {
                           child: CustomButtonWidget(
                               height: Constants.screenHeight * 0.07,
                               width: Constants.screenWidth * 0.7,
-                              color: Theme.of(context).primaryColor,
+                              //color: Theme.of(context).primaryColor,
                               onpressed: () async {
                                 // bool photoUploaded =
                                 //     await UploadProfilePhotoController

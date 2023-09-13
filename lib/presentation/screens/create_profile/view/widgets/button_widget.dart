@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+
 class CustomButtonWidget extends StatelessWidget {
   const CustomButtonWidget(
       {super.key,
       required this.width,
       required this.height,
-      required this.color,
+      this.color,
       this.onpressed,
       this.borderColor,
       required this.childWidget});
   final double width;
   final double height;
-  final Color color;
+  final Color? color;
   final Color? borderColor;
   final void Function()? onpressed;
   final Widget childWidget;
@@ -21,10 +22,10 @@ class CustomButtonWidget extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          color: color,
+          color: color ?? Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(6),
-          border:Border.all(color: borderColor==null ? Colors.transparent: borderColor!) 
-          ),
+          border: Border.all(
+              color: borderColor == null ? Colors.transparent : borderColor!)),
       child: MaterialButton(
         onPressed: onpressed,
         child: childWidget,

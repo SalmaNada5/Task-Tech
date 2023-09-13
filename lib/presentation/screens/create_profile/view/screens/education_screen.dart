@@ -67,7 +67,9 @@ class EducationScreenState extends State<EducationScreen> {
                 Text(
                   'Add your education here',
                   style: GoogleFonts.poppins(
-                      fontSize: 24, fontWeight: FontWeight.w500),
+                      fontSize: 24,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                      fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   height: 19,
@@ -77,9 +79,10 @@ class EducationScreenState extends State<EducationScreen> {
                   'relevant education helps make your profile'
                   ' visible.',
                   style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: const Color.fromRGBO(58, 51, 53, 1)),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                  ),
                 ),
                 const SizedBox(
                   height: 34,
@@ -145,7 +148,9 @@ class EducationScreenState extends State<EducationScreen> {
                 Text(
                   'Upload cv/ resume .',
                   style: GoogleFonts.poppins(
-                      fontSize: 24, fontWeight: FontWeight.w500),
+                      fontSize: 24,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                      fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
                   height: 27,
@@ -192,7 +197,6 @@ class EducationScreenState extends State<EducationScreen> {
                   child: CustomButtonWidget(
                       width: Constants.screenWidth * 0.7,
                       height: Constants.screenHeight * 0.075,
-                      color: const Color.fromRGBO(22, 80, 105, 1),
                       onpressed: () async {
                         logInfo(
                             'Date sent => ${widget.gender}, ${widget.frequency}, ${widget.age}, ${widget.birthDate} , ${widget.currency}, , ${widget.description}, ${widget.job}, ${widget.location}');

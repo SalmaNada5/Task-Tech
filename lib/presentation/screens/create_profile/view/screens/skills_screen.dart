@@ -115,7 +115,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                   height: 54,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromRGBO(245, 245, 245, 1),
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     border: Border.all(
                         style: BorderStyle.solid,
                         color: const Color.fromRGBO(227, 227, 227, 1)),
@@ -175,7 +175,6 @@ class SkillsScreenState extends State<SkillsScreen> {
                   child: CustomButtonWidget(
                       width: Constants.screenWidth * 0.7,
                       height: Constants.screenHeight * 0.075,
-                      color: const Color.fromRGBO(22, 80, 105, 1),
                       onpressed: () {
                         Constants.navigateTo(BioScreen(
                           job: widget.job,
@@ -263,7 +262,7 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           // }
         }
       },
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       showCheckmark: false,
       checkmarkColor: Colors.white,
       side: const BorderSide(

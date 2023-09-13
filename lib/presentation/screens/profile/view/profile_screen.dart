@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -61,6 +62,7 @@ class ProfileScreenState extends State<ProfileScreen>
   bool isFollowed = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -180,18 +182,21 @@ class ProfileScreenState extends State<ProfileScreen>
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: MediaQuery.of(context).size.height * 0.05,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          //color: Colors.white,
                           borderRadius: BorderRadius.circular(6),
                           border: Border.all(
-                            color: Theme.of(context).primaryColor,
+                            color: isDarkMode
+                                ? Colors.white
+                                : const Color.fromRGBO(22, 80, 105, 1),
                           )),
                       child: MaterialButton(
                           onPressed: () {},
                           child: Text(
                             'Message',
                             style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                color: const Color.fromRGBO(22, 80, 105, 1)),
+                              fontSize: 18,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           )),
                     ),
                     const Spacer(),
@@ -199,7 +204,7 @@ class ProfileScreenState extends State<ProfileScreen>
                       width: Constants.screenWidth * 0.4,
                       height: Constants.screenHeight * 0.05,
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(22, 80, 105, 1),
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: MaterialButton(
@@ -241,21 +246,21 @@ class ProfileScreenState extends State<ProfileScreen>
                     style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black),
+                        color: isDarkMode ? Colors.white : Colors.black),
                   ),
                   Text(
                     'Reviews',
                     style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black),
+                        color: isDarkMode ? Colors.white : Colors.black),
                   ),
                   Text(
                     'Portfolio',
                     style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black),
+                        color: isDarkMode ? Colors.white : Colors.black),
                   ),
                 ],
                 indicatorColor: Theme.of(context).primaryColor,

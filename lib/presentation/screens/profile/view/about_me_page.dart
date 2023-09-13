@@ -4,7 +4,6 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 
-
 class AboutmePage extends StatefulWidget {
   const AboutmePage({
     Key? key,
@@ -39,6 +38,8 @@ class _AboutmePageState extends State<AboutmePage> {
 
   @override
   Widget build(BuildContext context) {
+    Color textColor =
+        Theme.of(context).textTheme.headlineSmall!.color ?? Colors.grey;
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -65,7 +66,7 @@ class _AboutmePageState extends State<AboutmePage> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: const Color.fromRGBO(13, 13, 38, 1)),
+                      color: textColor),
                 ),
                 const Spacer(),
                 TextButton(
@@ -174,9 +175,7 @@ class _AboutmePageState extends State<AboutmePage> {
             Text(
               'Salary',
               style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: const Color.fromRGBO(13, 13, 38, 1)),
+                  fontWeight: FontWeight.w600, fontSize: 16, color: textColor),
             ),
             const SizedBox(
               height: 60,
@@ -217,9 +216,7 @@ class _AboutmePageState extends State<AboutmePage> {
             Text(
               'Skills',
               style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: const Color.fromRGBO(13, 13, 38, 1)),
+                  fontWeight: FontWeight.w600, fontSize: 16, color: textColor),
             ),
             const SizedBox(
               height: 10,
@@ -245,7 +242,7 @@ class _AboutmePageState extends State<AboutmePage> {
                           '',
                       style: GoogleFonts.poppins(
                           fontSize: 14,
-                          color: Theme.of(context).primaryColor,
+                          color: textColor,
                           fontWeight: FontWeight.w400),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,7 @@ class ResetPassword extends StatelessWidget {
     AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -50,6 +51,11 @@ class ResetPassword extends StatelessWidget {
                 cur is SignUpConfirmPassInVisible ||
                 cur is SignUpConfirmPassVisible,
             builder: (context, state) {
+              Color fieldColor =
+                  AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+                      ? const Color(0xff213440)
+                      : Colors.white;
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -70,6 +76,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     controller: emailController,
+                    fillColor: fieldColor,
+                    borderColor: fieldColor,
                     obscure: false,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
@@ -87,6 +95,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     hintText: 'New password',
+                    fillColor: fieldColor,
+                    borderColor: fieldColor,
                     icon: IconButton(
                       icon: Icon(
                         authCubit.obsecureTextForResetPass
@@ -114,6 +124,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     hintText: 'Confirm password',
+                    fillColor: fieldColor,
+                    borderColor: fieldColor,
                     icon: IconButton(
                       icon: Icon(
                         authCubit.obsecureTextForResetConfirmPass
@@ -152,8 +164,8 @@ class ResetPassword extends StatelessWidget {
                       padding: MaterialStateProperty.all(EdgeInsets.symmetric(
                           vertical: 10,
                           horizontal: 0.35 * Constants.screenWidth)),
-                      backgroundColor:
-                          MaterialStateProperty.all(Theme.of(context).primaryColor),
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).primaryColor),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),

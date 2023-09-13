@@ -10,6 +10,8 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     required this.obscure,
     required this.validator,
+    this.fillColor,
+    this.borderColor,
   }) : super(key: key);
   final TextEditingController? controller;
   final String? hintText;
@@ -17,12 +19,14 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool obscure;
   final String? Function(String?)? validator;
+  final Color? fillColor;
+  final Color? borderColor;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       style: GoogleFonts.poppins(
-        color: Colors.black,
+        color: Theme.of(context).textTheme.headlineSmall!.color,
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
@@ -40,18 +44,18 @@ class CustomTextFormField extends StatelessWidget {
         ),
         suffixIcon: icon,
         suffixIconColor: const Color(0xffB1B1B1),
-        fillColor: const Color(0xffF5F5F5),
+        fillColor: fillColor ?? Colors.white,
         filled: true,
         contentPadding: const EdgeInsets.all(10),
         border: InputBorder.none,
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: borderColor ?? Colors.white),
           borderRadius: BorderRadius.circular(10),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(10),
-        ),
+        // focusedBorder: OutlineInputBorder(
+        //   borderSide: const BorderSide(color: Colors.white),
+        //   borderRadius: BorderRadius.circular(10),
+        // ),
       ),
       obscureText: obscure,
       validator: validator,

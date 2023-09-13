@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ class VerificationScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           centerTitle: true,
           title: Text(
@@ -53,7 +54,7 @@ class VerificationScreen extends StatelessWidget {
                   'Enter the verification code we just sent you\non your e-mail address',
                   textAlign: TextAlign.center,
                   style: labelTextFormStyle.copyWith(
-                    color: const Color(0xff3E4446),
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                     fontSize: 16,
                   ),
                 ),
@@ -114,8 +115,8 @@ class VerificationScreen extends StatelessWidget {
                         horizontal: 0.35 * Constants.screenWidth,
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Theme.of(context).primaryColor),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
@@ -187,7 +188,9 @@ class CustomOneDigitField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xffF5F5F5))),
           border: InputBorder.none,
-          filled: true,
+          filled: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+              ? false
+              : true,
           fillColor: const Color(0xffF5F5F5),
         ),
       ),
