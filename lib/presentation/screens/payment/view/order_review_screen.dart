@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
@@ -38,7 +39,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -68,21 +70,21 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    width: 160,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0xffE0E0E0),
-                          blurRadius: 6,
-                          offset: Offset(2, 2),
-                        )
-                      ],
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(widget.imgUrl),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.imgUrl,
+                    imageBuilder: (context, imageProvider) =>
+                     Container(
+                      width: 160,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xffE0E0E0),
+                            blurRadius: 6,
+                            offset: Offset(2, 2),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -274,7 +276,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             style: ButtonStyle(
               padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 20)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

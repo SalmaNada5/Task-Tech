@@ -2,13 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static final screenHeight =
       MediaQuery.sizeOf(navigatorKey.currentContext!).height;
   static final screenWidth =
       MediaQuery.sizeOf(navigatorKey.currentContext!).width;
-
+  static bool enableShimmer = false;
   static void closeAppFunction() {
     if (Platform.isAndroid) {
       SystemNavigator.pop();

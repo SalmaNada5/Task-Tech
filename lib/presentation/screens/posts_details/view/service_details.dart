@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,7 +36,8 @@ class ServiceDetailsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -60,12 +62,13 @@ class ServiceDetailsPage extends StatelessWidget {
           children: [
             serviceItem == null
                 ? const SizedBox.shrink()
-                : Image.network(
-                    serviceItem.attachFile ?? "",
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
+                : CachedNetworkImage(imageUrl: serviceItem.attachFile ?? "",
+                height:  MediaQuery.of(context).size.height * 0.3,
+                     width: double.infinity,
+                     fit: BoxFit.fill,
+                     errorWidget: (context, url, error) => Image.asset('images/placeholder.jpg'),
+                )
+              ,
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -74,9 +77,11 @@ class ServiceDetailsPage extends StatelessWidget {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(serviceItem?.user?.photo ?? ""),
-                          radius: 20,
+                        radius: 20,
+                          child: CachedNetworkImage(
+                            imageUrl: serviceItem?.user?.photo ?? "",
+                            errorWidget: (context, url, error) => Image.asset('images/placeholder.jpg'),
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
@@ -167,7 +172,8 @@ class ServiceDetailsPage extends StatelessWidget {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
-                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                backgroundColor:
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

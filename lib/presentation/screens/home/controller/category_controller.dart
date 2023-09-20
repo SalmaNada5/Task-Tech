@@ -10,7 +10,7 @@ class CategoryController {
   static CategoryModel categoryModel = CategoryModel();
   static List<CategoryElement> categories = [];
   static int page = 1;
-  static ScrollController scrollController = ScrollController();
+  static ScrollController categoriesScrollContrller = ScrollController();
 
   static Future<List<CategoryElement>?> getPopularCategoriesFunc(
       {bool dioLoading = true}) async {

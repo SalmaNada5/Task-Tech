@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -238,11 +239,12 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                  CurrentUserInfoController.userInfoModel.data?.user.photo ??
-                      ''),
+             CircleAvatar(
               radius: 18,
+              child: CachedNetworkImage(imageUrl:CurrentUserInfoController.userInfoModel.data?.user.photo ?? '', 
+              errorWidget: (context, url, error) => Image.asset('images/default person.png'),
+              )
+              
             ),
             const SizedBox(
               width: 10,

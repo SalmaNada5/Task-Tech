@@ -82,7 +82,7 @@ class AuthController {
         return false;
       }
     } catch (e) {
-      logError('error in loginFunc ${e.toString()}');
+      logError('error in forgetPassword ${e.toString()}');
       return false;
     }
   }

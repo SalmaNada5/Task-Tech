@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/constants/shimmer_widget.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
@@ -10,7 +9,7 @@ import 'package:task_tech/presentation/screens/home/controller/get_user_controll
 import 'package:task_tech/presentation/screens/home/controller/related_posts_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/categories_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/widgets/slivver_appbar.dart';
 import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
 import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
 import 'package:task_tech/presentation/widgets/home_widgets/category_item.dart';
@@ -34,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getAllData() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Constants.showLoading();
+      //  Constants.showLoading();
+      Constants.enableShimmer = true;
       await highestRatedScrollController();
       await categoriesScrollController();
       await relatedPostsScrollController();
@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
       await getPopularCateogries();
       await getRelatedPosts();
       await getProfileInfo();
-      Constants.hideLoadingOrNavBack();
+      Constants.enableShimmer = false;
+      //Constants.hideLoadingOrNavBack();
     });
   }
 
@@ -73,6 +74,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> getProfileInfo() async {
+    try {
+      await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
+      setState(() {});
+    } catch (e) {
+      logError('$e in getUserInfoFunc');
+    }
+  }
+
   bool isCatLoading = false;
   bool isLoading = false;
   bool relatedPostsLoading = false;
@@ -91,20 +101,23 @@ class _HomeScreenState extends State<HomeScreen> {
           return;
         }
         setState(() {
-          isLoading = true;
+          //isLoading = true;
+          Constants.enableShimmer = true;
         });
         await TopUserController.getTopUsersFunc(dioLoading: false);
         setState(() {
-          isLoading = false;
+          Constants.enableShimmer = false;
+
+          //isLoading = false;
         });
       }
     });
   }
 
   Future<void> categoriesScrollController() async {
-    CategoryController.scrollController.addListener(() async {
-      if (CategoryController.scrollController.position.atEdge &&
-          CategoryController.scrollController.position.pixels != 0) {
+    CategoryController.categoriesScrollContrller.addListener(() async {
+      if (CategoryController.categoriesScrollContrller.position.atEdge &&
+          CategoryController.categoriesScrollContrller.position.pixels != 0) {
         if (CategoryController.page >
             (CategoryController.categoryModel.paginationResult?.numberOfPages ??
                 1)) {
@@ -114,11 +127,13 @@ class _HomeScreenState extends State<HomeScreen> {
           return;
         }
         setState(() {
-          isCatLoading = true;
+          //isCatLoading = true;
+          Constants.enableShimmer = true;
         });
         await CategoryController.getPopularCategoriesFunc(dioLoading: false);
         setState(() {
-          isCatLoading = false;
+          //isCatLoading = false;
+          Constants.enableShimmer = false;
         });
       }
     });
@@ -138,23 +153,16 @@ class _HomeScreenState extends State<HomeScreen> {
           return;
         }
         setState(() {
-          relatedPostsLoading = true;
+          //relatedPostsLoading = true;
+          Constants.enableShimmer = true;
         });
         await RelatedPostscontroller.getRelatedPostsFunc(dioLoading: false);
         setState(() {
-          relatedPostsLoading = false;
+          // relatedPostsLoading = false;
+          Constants.enableShimmer = false;
         });
       }
     });
-  }
-
-  Future<void> getProfileInfo() async {
-    try {
-      await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
-      setState(() {});
-    } catch (e) {
-      logError('$e in getAllTopUsers');
-    }
   }
 
   @override
@@ -163,68 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.only(left: 10.0, right: 10, top: 30),
       child: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            expandedHeight: 70,
-            floating: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 28,
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: CurrentUserInfoController
-                                  .userInfoModel.data?.user.photo ??
-                              '',
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              'images/placeholder.jpg',
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Welcome back!',
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            color: const Color(0xff7C7C7C),
-                          ),
-                        ),
-                        Text(
-                          CurrentUserInfoController
-                                  .userInfoModel.data?.user.name ??
-                              '',
-                          style: titleStyle.copyWith(fontSize: 22),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Constants.navigateTo(const NotificationsScreen());
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Image.asset('images/notifications.png'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          const CustomSliverAppbar(),
           SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,17 +207,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: Constants.screenHeight * 0.2,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: CategoryController.categories.length,
-                    itemBuilder: (ctx, i) => CategoryItem(
-                      catName: CategoryController.categories[i].name,
-                      imgUrl: CategoryController.categories[i].photo,
-                      numOfSkills: CategoryController.categories[i].nSkills,
+                ShimmerWidget(
+                  enableShimmer: Constants.enableShimmer,
+                  child: SizedBox(
+                    height: Constants.screenHeight * 0.2,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: CategoryController.categories.length,
+                      itemBuilder: (ctx, i) => CategoryItem(
+                        catName: CategoryController.categories[i].name,
+                        imgUrl: CategoryController.categories[i].photo,
+                        numOfSkills: CategoryController.categories[i].nSkills,
+                      ),
                     ),
                   ),
                 ),
@@ -281,39 +231,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
-                  height: 0.3 * Constants.screenHeight,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    //  physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, i) => CurrentUserInfoController
-                                .userInfoModel.data?.user.id ==
-                            RelatedPostscontroller.posts[i].user.id
-                        ? const SizedBox.shrink()
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: RelatedPostItem(
-                              onpressed: () {
-                                Constants.navigateTo(TaskDetailsPage(
-                                    postId:
-                                        RelatedPostscontroller.posts[i].id));
-                                return;
-                              },
-                              description:
-                                  RelatedPostscontroller.posts[i].description,
-                              profileImgUrl:
-                                  RelatedPostscontroller.posts[i].user.photo,
-                              rate: RelatedPostscontroller
-                                  .posts[i].user.ratingsAverage,
-                              salary: RelatedPostscontroller.posts[i].salary,
-                              serviceImgUrl:
-                                  RelatedPostscontroller.posts[i].attachFile,
-                              userName:
-                                  RelatedPostscontroller.posts[i].user.name,
+                ShimmerWidget(
+                  enableShimmer: Constants.enableShimmer,
+                  child: SizedBox(
+                    height: 0.3 * Constants.screenHeight,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      //  physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (ctx, i) => CurrentUserInfoController
+                                  .userInfoModel.data?.user.id ==
+                              RelatedPostscontroller.posts[i].user.id
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: RelatedPostItem(
+                                onpressed: () {
+                                  Constants.navigateTo(TaskDetailsPage(
+                                      postId:
+                                          RelatedPostscontroller.posts[i].id));
+                                  return;
+                                },
+                                description:
+                                    RelatedPostscontroller.posts[i].description,
+                                profileImgUrl:
+                                    RelatedPostscontroller.posts[i].user.photo,
+                                rate: RelatedPostscontroller
+                                    .posts[i].user.ratingsAverage,
+                                salary: RelatedPostscontroller.posts[i].salary,
+                                serviceImgUrl:
+                                    RelatedPostscontroller.posts[i].attachFile,
+                                userName:
+                                    RelatedPostscontroller.posts[i].user.name,
+                              ),
                             ),
-                          ),
-                    itemCount: RelatedPostscontroller.posts.length,
+                      itemCount: RelatedPostscontroller.posts.length,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -326,32 +279,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
-                  height: Constants.screenHeight * 0.27,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    //physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: TopUserController.users.length,
-                    itemBuilder: (ctx, i) {
-                      return CurrentUserInfoController
-                                  .userInfoModel.data?.user.id ==
-                              TopUserController.users[i].id
-                          ? const SizedBox.shrink()
-                          : HighestRatedFreelancer(
-                              userImgUrl: TopUserController.users[i].photo,
-                              userName: TopUserController.users[i].name,
-                              job: TopUserController.users[i].job,
-                              rate: TopUserController.users[i].ratingsAverage
-                                  .toDouble(),
-                              onPress: () async {
-                                await UserController.getUserByIdFunc(
-                                    TopUserController.users[i].id);
-                                Constants.navigateTo(
-                                    const ProfileScreen(isMe: false));
-                              },
-                            );
-                    },
+                ShimmerWidget(
+                  enableShimmer: Constants.enableShimmer,
+                  child: SizedBox(
+                    height: Constants.screenHeight * 0.27,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: TopUserController.users.length,
+                      itemBuilder: (ctx, i) {
+                        return CurrentUserInfoController
+                                    .userInfoModel.data?.user.id ==
+                                TopUserController.users[i].id
+                            ? const SizedBox.shrink()
+                            : HighestRatedFreelancer(
+                                userImgUrl: TopUserController.users[i].photo,
+                                userName: TopUserController.users[i].name,
+                                job: TopUserController.users[i].job,
+                                rate: TopUserController.users[i].ratingsAverage
+                                    .toDouble(),
+                                onPress: () async {
+                                  await UserController.getUserByIdFunc(
+                                      TopUserController.users[i].id);
+                                  Constants.navigateTo(
+                                      const ProfileScreen(isMe: false));
+                                },
+                              );
+                      },
+                    ),
                   ),
                 ),
               ],

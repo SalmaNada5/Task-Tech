@@ -37,7 +37,7 @@ class SignInScreen extends StatelessWidget {
                 Color fieldColor =
                     AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
                         ? const Color(0xff213440)
-                        : Colors.white;
+                        : const Color(0xffF5F5F5);
 
                 return Column(
                   children: [

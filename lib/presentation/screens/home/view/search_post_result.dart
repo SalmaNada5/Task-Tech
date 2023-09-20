@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -30,15 +31,14 @@ class SearchPostResult extends StatelessWidget {
           onPressed: onPressed,
           child: Row(
             children: [
-              Container(
-                width: Constants.screenWidth * 0.4,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(serviceAttachFile),
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: CachedNetworkImage(
+                  imageUrl: serviceAttachFile,
+                  width: Constants.screenWidth * 0.4,
+                  fit: BoxFit.fill,
+                  errorWidget: (context, url, error) =>
+                      Image.asset('images/placeholder.jpg'),
                 ),
               ),
               const SizedBox(
@@ -51,8 +51,13 @@ class SearchPostResult extends StatelessWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(userImg),
                         radius: 10,
+                        child: CachedNetworkImage(
+                          imageUrl: userImg,
+                          errorWidget: (context, url, error) =>
+                              Image.asset('images/placeholder.jpg'),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       const SizedBox(
                         width: 5,

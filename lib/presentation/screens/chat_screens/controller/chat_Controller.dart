@@ -2,13 +2,12 @@
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/chat_screens/controller/chat_body.dart';
 import 'package:task_tech/presentation/screens/chat_screens/model/create_chat.dart';
 import 'package:task_tech/presentation/screens/chat_screens/model/find_one_chat.dart';
 import 'package:task_tech/presentation/screens/chat_screens/model/find_user_chats.dart';
-
-import '../../../../core/dio/dio_client.dart';
 
 class ChatController{
     static final DioClient _dioClient = DioClient();

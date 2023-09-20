@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/chat_screens/model/message_static_model.dart';
-
-import '../widgets/conversation_list_widget.dart';
-import '../widgets/search_widget.dart';
-
+import 'package:task_tech/presentation/screens/chat_screens/widgets/conversation_list_widget.dart';
+import 'package:task_tech/presentation/screens/chat_screens/widgets/search_widget.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -15,8 +13,6 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   final TextEditingController _searchController = TextEditingController();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +57,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   controller: _searchController,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
-                    prefixIcon: Image.asset('images/search.png'),                   
+                    prefixIcon: Image.asset('images/search.png'),
                     suffixIcon: Image.asset('images/filter.png'),
                     hintText: 'Search message..',
                     hintStyle: GoogleFonts.poppins(
@@ -81,9 +77,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
                     ),
                     border: InputBorder.none,
                   ),
-                  onTap: (){
-                    showSearch(context: context,
-                         delegate: CustomSearchDelegate());
+                  onTap: () {
+                    showSearch(
+                        context: context, delegate: CustomSearchDelegate());
                   },
                   onChanged: (value) {
                     _searchController.text = value.toString();
@@ -106,7 +102,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       isRead: chatsList[index].isRead,
                       unreadCount: chatsList[index].unreadCount,
                       isReceiveMess: chatsList[index].isReceiveMess,
-
                     );
                   })
             ],
@@ -116,4 +111,3 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 }
-

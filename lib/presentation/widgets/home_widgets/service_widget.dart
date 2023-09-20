@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -41,13 +42,12 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 80,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(widget.serviceImgUrl))),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: CachedNetworkImage(
+                imageUrl: widget.serviceImgUrl,
+                height: 80,
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -55,8 +55,12 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(widget.profileImgUrl),
                   radius: 10,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.profileImgUrl,
+                    errorWidget: (context, url, error) =>
+                        Image.asset('images/default person.png'),
+                  ),
                 ),
                 const SizedBox(
                   width: 5,

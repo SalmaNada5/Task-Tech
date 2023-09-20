@@ -23,6 +23,8 @@ class AuthCubit extends Cubit<AuthState> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString("token", authModel.token!);
       pref.setString("id", AuthController.authModel.data!.user!.id!);
+      pref.setString('cuurentUserName', AuthController.authModel.data!.user!.name ?? 'no data'
+          );
       return Constants.navigateTo(const BottomNavBarScreen(),
           pushAndRemoveUntil: true);
     }

@@ -50,6 +50,7 @@ class _SearchWidgetState extends State<SearchWidget> {
         _searchController.selection =
             TextSelection.collapsed(offset: _searchController.text.length);
       },
+      readOnly: true,
       onTap: () {
         showSearch(context: context, delegate: HomeSearchDelegate());
       },
