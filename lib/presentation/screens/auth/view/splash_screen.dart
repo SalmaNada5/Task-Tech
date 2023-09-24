@@ -1,5 +1,5 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/onboarding_screen.dart';
@@ -12,14 +12,59 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<Offset> animation;
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToHomeOrOnboardingScreen();
+    initAnimation();
   }
 
-  _navigateToHome() async {
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('images/Logo.png'),
+            AnimatedBuilder(
+                animation: animation,
+                builder: (context, _) {
+                  return SlideTransition(
+                    position: animation,
+                    child: Text(
+                      'TASK-TECH',
+                      style: GoogleFonts.redRose(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                          ),
+                          shadows: [
+                            Shadow(
+                                color: Colors.white.withOpacity(0.15),
+                                offset: const Offset(3, 4))
+                          ]),
+                    ),
+                  );
+                }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _navigateToHomeOrOnboardingScreen() async {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
@@ -31,41 +76,11 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
-          ? const Color(0xff1B2936)
-          : const Color(0xff165069),
-      body: Center(
-          child: Center(
-        child: Image.asset('images/logo.png'),
-        //Lottie.asset('images/logo.json', animate: true),
-      )
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     Image.asset('images/logo.png'),
-          //     const SizedBox(
-          //       height: 10,
-          //     ),
-          //     Text(
-          //       'TASK-TECH',
-          //       style: GoogleFonts.redRose(
-          //           textStyle: const TextStyle(
-          //             color: Colors.white,
-          //             fontSize: 30,
-          //           ),
-          //           shadows: [
-          //             Shadow(
-          //                 color: Colors.white.withOpacity(0.15),
-          //                 offset: const Offset(3, 4))
-          //           ]),
-          //     ),
-          //   ],
-          // ),
-          ),
-    );
+  initAnimation() {
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    animation = Tween<Offset>(begin: const Offset(-1, 2), end: Offset.zero)
+        .animate(animationController);
+    animationController.forward();
   }
 }

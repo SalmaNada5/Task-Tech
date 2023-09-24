@@ -47,6 +47,8 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
               child: CachedNetworkImage(
                 imageUrl: widget.serviceImgUrl,
                 height: 80,
+                width: double.infinity,
+                fit: BoxFit.fill,
               ),
             ),
             const SizedBox(
