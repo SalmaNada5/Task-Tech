@@ -80,14 +80,14 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   CircleAvatar(
                     radius: 16,
                     backgroundImage: NetworkImage(
-                        TaskController.taskDetailsModel.data?.post.user.photo ??
+                        TaskController.taskDetailsModel.data?.post.user?.photo ??
                             ""),
                   ),
                   const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    TaskController.taskDetailsModel.data?.post.user.name ?? "",
+                    TaskController.taskDetailsModel.data?.post.user?.name ?? "",
                     style: labelTextFormStyle,
                   ),
                   const Spacer(),
@@ -174,13 +174,13 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                   itemBuilder: (BuildContext context, int i) {
                     return ReusableCommentWidget(
-                      userName: CommentsController.comments[i].user.name,
-                      rate: CommentsController.comments[i].user.ratingsAverage,
+                      userName: CommentsController.comments[i].user?.name ?? '',
+                      rate: CommentsController.comments[i].user?.ratingsAverage ?? 0,
                       date: Constants.convertToTimeAgo(
                               CommentsController.comments[i].createdAt)
                           .toString(),
-                      imgUrl: CommentsController.comments[i].user.photo,
-                      text: CommentsController.comments[i].text,
+                      imgUrl: CommentsController.comments[i].user?.photo ?? '',
+                      text: CommentsController.comments[i].text ?? '',
                     );
                   },
                 ),

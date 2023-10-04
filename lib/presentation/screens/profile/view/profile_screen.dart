@@ -40,7 +40,7 @@ class ProfileScreenState extends State<ProfileScreen>
         await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
         try {
           String? id = CurrentUserInfoController
-              .userInfoModel.data?.user.followings
+              .userInfoModel.data?.user.followings!
               .firstWhere((element) =>
                   element.toString() == UserController.userModel.data?.user.id);
 
@@ -141,7 +141,7 @@ class ProfileScreenState extends State<ProfileScreen>
                   SmoothStarRating(
                     rating: widget.isMe
                         ? CurrentUserInfoController
-                                .userInfoModel.data?.user.ratingsAverage
+                                .userInfoModel.data?.user.ratingsAverage!
                                 .toDouble() ??
                             0.0
                         : UserController.userModel.data?.user.ratingsAverage

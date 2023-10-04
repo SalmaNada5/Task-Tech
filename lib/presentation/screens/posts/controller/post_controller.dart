@@ -46,23 +46,23 @@ class PostController {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
-    try {
-      Response res = await _dioClient.get(
-        'api/v1/services?sort=-createdAt&fields=user,description&page=$servicePage',
-        token,
-        isLoading: dioLoading,
-      ) as Response;
-      serviceModel = ServiceModel.fromJson(res.data);
-      services.addAll(serviceModel.data!.services);
-      servicePage = page ?? servicePage + 1;
-      logSuccess('services returned successfully: ${serviceModel.status}');
-      return services;
-    } catch (e) {
-      if (servicePage == serviceModel.paginationResult?.numberOfPages) {
-        servicePage = servicePage + 1;
-      }
-      logError('error in getServicePosts ${e.toString()}');
-    }
-    return null;
+    // try {
+    Response res = await _dioClient.get(
+      'api/v1/services?sort=-createdAt&fields=user,description&page=$servicePage',
+      token,
+      isLoading: dioLoading,
+    ) as Response;
+    serviceModel = ServiceModel.fromJson(res.data);
+    services.addAll(serviceModel.data!.services);
+    servicePage = page ?? servicePage + 1;
+    logSuccess('services returned successfully: ${serviceModel.status}');
+    return services;
+    // } catch (e) {
+    //   if (servicePage == serviceModel.paginationResult?.numberOfPages) {
+    //     servicePage = servicePage + 1;
+    //   }
+    //   logError('error in getServicePosts ${e.toString()}');
+    // }
+    // return null;
   }
 }

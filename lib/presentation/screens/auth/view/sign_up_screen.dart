@@ -1,8 +1,9 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/auth_cubit/auth_cubit.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';
 import 'package:task_tech/presentation/widgets/text_form_field.dart';
@@ -23,6 +24,9 @@ class SignUpScreen extends StatelessWidget {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
+    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+        ? const Color(0xff213440)
+        : const Color(0xffF5F5F5);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -65,6 +69,8 @@ class SignUpScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: fullNameController,
                             obscure: false,
+                            fillColor: fieldColor,
+                            borderColor: fieldColor,
                             keyboardType: TextInputType.name,
                             validator: (value) {
                               value = fullNameController.text;
@@ -85,6 +91,8 @@ class SignUpScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: emailController,
                             obscure: false,
+                            fillColor: fieldColor,
+                            borderColor: fieldColor,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               value = emailController.text;
@@ -104,6 +112,8 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: passController,
+                            fillColor: fieldColor,
+                            borderColor: fieldColor,
                             validator: (value) {
                               value = passController.text;
                               if (value.length < 6) {
@@ -113,21 +123,17 @@ class SignUpScreen extends StatelessWidget {
                             },
                             icon: IconButton(
                               icon: Icon(
-                               authCubit
-                                        .signUpObsecureTextPass
+                                authCubit.signUpObsecureTextPass
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 size: 20,
                               ),
                               onPressed: () {
-                                authCubit
-                                    .obsecureSignUpPasswordLogic();
+                                authCubit.obsecureSignUpPasswordLogic();
                               },
                             ),
-                            obscure: authCubit
-                                    .signUpObsecureTextPass
-                                ? false
-                                : true,
+                            obscure:
+                                authCubit.signUpObsecureTextPass ? false : true,
                           ),
                           const SizedBox(
                             height: 10,
@@ -138,6 +144,8 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: confirmPassController,
+                            fillColor: fieldColor,
+                            borderColor: fieldColor,
                             validator: (value) {
                               value = confirmPassController.text;
                               if (value != passController.text) {
@@ -147,19 +155,16 @@ class SignUpScreen extends StatelessWidget {
                             },
                             icon: IconButton(
                               icon: Icon(
-                                authCubit
-                                        .signUpObsecureTextConfirmPass
+                                authCubit.signUpObsecureTextConfirmPass
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 size: 20,
                               ),
                               onPressed: () {
-                                authCubit
-                                    .obsecureSignUpConfirmPasswordLogic();
+                                authCubit.obsecureSignUpConfirmPasswordLogic();
                               },
                             ),
-                            obscure: authCubit
-                                    .signUpObsecureTextConfirmPass
+                            obscure: authCubit.signUpObsecureTextConfirmPass
                                 ? false
                                 : true,
                           ),
@@ -171,13 +176,12 @@ class SignUpScreen extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  authCubit
-                                      .signupCubit(
-                                          email: emailController.text,
-                                          password: passController.text,
-                                          name: fullNameController.text,
-                                          confirmPassword:
-                                              confirmPassController.text);
+                                  authCubit.signupCubit(
+                                      email: emailController.text,
+                                      password: passController.text,
+                                      name: fullNameController.text,
+                                      confirmPassword:
+                                          confirmPassController.text);
                                 }
                               },
                               style: ButtonStyle(

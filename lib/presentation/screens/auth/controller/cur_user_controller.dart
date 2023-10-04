@@ -10,15 +10,15 @@ class CurrentUserInfoController {
 
   static Future<UserInfoModel?> getUserInfoFunc(
       {bool dioLoading = true}) async {
-    try {
-      String token;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      token = prefs.getString("token") ?? '';
-      Response res = await _dioClient.get('api/v1/users/me', token,
-          isLoading: dioLoading) as Response;
-      userInfoModel = UserInfoModel.fromJson(res.data);
-      logSuccess('User info returned successfully: $userInfoModel');
-      return userInfoModel;
+     try {
+    String token;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token") ?? '';
+    Response res = await _dioClient.get('api/v1/users/me', token,
+        isLoading: dioLoading) as Response;
+    userInfoModel = UserInfoModel.fromJson(res.data);
+    logSuccess('User info returned successfully: $userInfoModel');
+    return userInfoModel;
     } catch (e) {
       logError('error in getUserInfoFunc: ${e.toString()}');
     }

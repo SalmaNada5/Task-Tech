@@ -181,7 +181,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     logInfo(
-                                        'rate: $rate, review: ${reviewController.text} , curUserId: ${CurrentUserInfoController.userInfoModel.data?.user.id ?? ''} , usermadeTaskId: ${TaskController.taskDetailsModel.data?.post.user.id ?? ''}');
+                                        'rate: $rate, review: ${reviewController.text} , curUserId: ${CurrentUserInfoController.userInfoModel.data?.user.id ?? ''} , usermadeTaskId: ${TaskController.taskDetailsModel.data?.post.user?.id ?? ''}');
                                     await ReviewController.addReviewFunc(
                                         rate ?? 0,
                                         reviewController.text,

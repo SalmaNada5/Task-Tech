@@ -33,7 +33,7 @@ class PostModel {
 }
 
 class Data {
-  List<Post> posts;
+  List<Post>? posts;
 
   Data({
     required this.posts,
@@ -44,22 +44,22 @@ class Data {
       );
 
   Map<String, dynamic> toJson() => {
-        "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
+        "posts": List<dynamic>.from(posts!.map((x) => x.toJson())),
       };
 }
 
 class Post {
-  String id;
-  String description;
+  String? id;
+  String? description;
   User? user;
-  String postId;
+  String? postId;
   final DateTime? createdAt;
 
   Post({
-    required this.id,
-    required this.description,
+    this.id,
+    this.description,
     this.user,
-    required this.postId,
+    this.postId,
     this.createdAt,
   });
 
@@ -83,18 +83,18 @@ class Post {
 }
 
 class User {
-  String photo;
-  bool isOnline;
-  String id;
-  String name;
-  String userId;
+  String? photo;
+  bool? isOnline;
+  String? id;
+  String? name;
+  String? userId;
 
   User({
-    required this.photo,
-    required this.isOnline,
-    required this.id,
-    required this.name,
-    required this.userId,
+    this.photo,
+    this.isOnline,
+    this.id,
+    this.name,
+    this.userId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -115,14 +115,14 @@ class User {
 }
 
 class PaginationResult {
-  int currentPage;
-  int limit;
-  int numberOfPages;
+  int? currentPage;
+  int? limit;
+  int? numberOfPages;
 
   PaginationResult({
-    required this.currentPage,
-    required this.limit,
-    required this.numberOfPages,
+    this.currentPage,
+    this.limit,
+    this.numberOfPages,
   });
 
   factory PaginationResult.fromJson(Map<String, dynamic> json) =>

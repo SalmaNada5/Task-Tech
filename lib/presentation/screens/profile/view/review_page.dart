@@ -12,20 +12,20 @@ class ReviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount:
-          CurrentUserInfoController.userInfoModel.data?.user.reviews.length ??
+          CurrentUserInfoController.userInfoModel.data?.user.reviews?.length ??
               0,
       itemBuilder: (context, i) => reviewCard(
           name: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].reviewer?.name ??
+                  .userInfoModel.data?.user.reviews?[i].reviewer?.name ??
               '',
           review: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].review ??
+                  .userInfoModel.data?.user.reviews?[i].review ??
               '',
           rate: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].rating ??
+                  .userInfoModel.data?.user.reviews?[i].rating ??
               0.0,
           imgUrl: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].reviewer?.photo ??
+                  .userInfoModel.data?.user.reviews?[i].reviewer?.photo ??
               '',
           textColor: Theme.of(context).textTheme.headlineSmall!.color!),
       //   children: [

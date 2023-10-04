@@ -30,10 +30,10 @@ class CommentsModel {
 }
 
 class Data {
-  List<Comment> comments;
+  List<Comment>? comments;
 
   Data({
-    required this.comments,
+    this.comments,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -42,29 +42,29 @@ class Data {
       );
 
   Map<String, dynamic> toJson() => {
-        "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
+        "comments": List<dynamic>.from(comments!.map((x) => x.toJson())),
       };
 }
 
 class Comment {
-  String id;
-  String text;
-  String post;
-  User user;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
-  String commentId;
+  String? id;
+  String? text;
+  String? post;
+  User? user;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? v;
+  String? commentId;
 
   Comment({
-    required this.id,
-    required this.text,
-    required this.post,
-    required this.user,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
-    required this.commentId,
+     this.id,
+     this.text,
+     this.post,
+     this.user,
+     this.createdAt,
+     this.updatedAt,
+     this.v,
+     this.commentId,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
@@ -82,29 +82,29 @@ class Comment {
         "_id": id,
         "text": text,
         "post": post,
-        "user": user.toJson(),
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "user": user?.toJson(),
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
         "id": commentId,
       };
 }
 
 class User {
-  String photo;
-  double ratingsAverage;
-  bool isOnline;
-  String id;
-  String name;
-  String userId;
+  String? photo;
+  double? ratingsAverage;
+  bool? isOnline;
+  String? id;
+  String? name;
+  String? userId;
 
   User({
-    required this.photo,
-    required this.ratingsAverage,
-    required this.isOnline,
-    required this.id,
-    required this.name,
-    required this.userId,
+   this.photo,
+   this.ratingsAverage,
+   this.isOnline,
+   this.id,
+   this.name,
+   this.userId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(

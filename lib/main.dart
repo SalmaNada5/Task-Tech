@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/themes.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/auth_cubit/auth_cubit.dart';
 import 'package:task_tech/presentation/screens/auth/view/splash_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthCubit>.value(
           value: AuthCubit(),
+        ),
+        BlocProvider<HomeCubit>.value(
+          value: HomeCubit(),
         ),
       ],
       child: AdaptiveTheme(

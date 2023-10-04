@@ -18,7 +18,7 @@ class CommentsController {
           'api/v1/posts/$postId/comments', token) as Response;
       commentsModel = CommentsModel.fromJson(res.data);
       comments.clear();
-      comments.addAll(commentsModel.data!.comments);
+      comments.addAll(commentsModel.data!.comments ?? []);
       logSuccess('all comments returned successfuly: $commentsModel');
       return comments;
     } catch (e) {

@@ -226,7 +226,7 @@ class _AboutmePageState extends State<AboutmePage> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: CurrentUserInfoController
-                        .userInfoModel.data?.user.skills.length ??
+                        .userInfoModel.data?.user.skills!.length ??
                     0,
                 itemBuilder: (context, i) => Container(
                   margin: const EdgeInsets.all(10),
@@ -238,7 +238,7 @@ class _AboutmePageState extends State<AboutmePage> {
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
                       CurrentUserInfoController
-                              .userInfoModel.data?.user.skills[i] ??
+                              .userInfoModel.data?.user.skills![i] ??
                           '',
                       style: GoogleFonts.poppins(
                           fontSize: 14,

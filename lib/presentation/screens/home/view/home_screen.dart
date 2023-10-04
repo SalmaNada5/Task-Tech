@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/shimmer_widget.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
-import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/get_user_controller.dart';
-import 'package:task_tech/presentation/screens/home/controller/related_posts_controller.dart';
 import 'package:task_tech/presentation/screens/home/controller/top_user_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/categories_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
 import 'package:task_tech/presentation/screens/home/view/widgets/slivver_appbar.dart';
 import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
 import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
@@ -17,156 +15,14 @@ import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freela
 import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
 import '../../../widgets/home_widgets/service_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    getAllData();
-    super.initState();
-  }
-
-  void getAllData() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      //  Constants.showLoading();
-      Constants.enableShimmer = true;
-      await highestRatedScrollController();
-      await categoriesScrollController();
-      await relatedPostsScrollController();
-      await getAllTopUsers();
-      await getPopularCateogries();
-      await getRelatedPosts();
-      await getProfileInfo();
-      Constants.enableShimmer = false;
-      //Constants.hideLoadingOrNavBack();
-    });
-  }
-
-  Future<void> getAllTopUsers() async {
-    try {
-      await TopUserController.getTopUsersFunc(dioLoading: false);
-      setState(() {});
-    } catch (e) {
-      logError('$e in getAllTopUsers');
-    }
-  }
-
-  Future<void> getPopularCateogries() async {
-    try {
-      await CategoryController.getPopularCategoriesFunc(dioLoading: false);
-      setState(() {});
-    } catch (e) {
-      logError('$e in getPopularCategoriesFunc');
-    }
-  }
-
-  Future<void> getRelatedPosts() async {
-    try {
-      await RelatedPostscontroller.getRelatedPostsFunc(dioLoading: false);
-      setState(() {});
-    } catch (e) {
-      logError('$e in getRelatedPosts');
-    }
-  }
-
-  Future<void> getProfileInfo() async {
-    try {
-      await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
-      setState(() {});
-    } catch (e) {
-      logError('$e in getUserInfoFunc');
-    }
-  }
-
-  bool isCatLoading = false;
-  bool isLoading = false;
-  bool relatedPostsLoading = false;
-  bool photoReturned = false;
-
-  Future<void> highestRatedScrollController() async {
-    TopUserController.highestRatedScrollController.addListener(() async {
-      if (TopUserController.highestRatedScrollController.position.atEdge &&
-          TopUserController.highestRatedScrollController.position.pixels != 0) {
-        if (TopUserController.page >
-            (TopUserController.topUserModel.paginationResult?.numberOfPages ??
-                1)) {
-          return;
-        }
-        if (isLoading) {
-          return;
-        }
-        setState(() {
-          //isLoading = true;
-          Constants.enableShimmer = true;
-        });
-        await TopUserController.getTopUsersFunc(dioLoading: false);
-        setState(() {
-          Constants.enableShimmer = false;
-
-          //isLoading = false;
-        });
-      }
-    });
-  }
-
-  Future<void> categoriesScrollController() async {
-    CategoryController.categoriesScrollContrller.addListener(() async {
-      if (CategoryController.categoriesScrollContrller.position.atEdge &&
-          CategoryController.categoriesScrollContrller.position.pixels != 0) {
-        if (CategoryController.page >
-            (CategoryController.categoryModel.paginationResult?.numberOfPages ??
-                1)) {
-          return;
-        }
-        if (isCatLoading) {
-          return;
-        }
-        setState(() {
-          //isCatLoading = true;
-          Constants.enableShimmer = true;
-        });
-        await CategoryController.getPopularCategoriesFunc(dioLoading: false);
-        setState(() {
-          //isCatLoading = false;
-          Constants.enableShimmer = false;
-        });
-      }
-    });
-  }
-
-  Future<void> relatedPostsScrollController() async {
-    RelatedPostscontroller.scrollController.addListener(() async {
-      if (RelatedPostscontroller.scrollController.position.atEdge &&
-          RelatedPostscontroller.scrollController.position.pixels != 0) {
-        if (RelatedPostscontroller.page >
-            (RelatedPostscontroller
-                    .relatedPostModel.paginationResult?.numberOfPages ??
-                1)) {
-          return;
-        }
-        if (relatedPostsLoading) {
-          return;
-        }
-        setState(() {
-          //relatedPostsLoading = true;
-          Constants.enableShimmer = true;
-        });
-        await RelatedPostscontroller.getRelatedPostsFunc(dioLoading: false);
-        setState(() {
-          // relatedPostsLoading = false;
-          Constants.enableShimmer = false;
-        });
-      }
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
+    homeCubit.initCubit();
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10, top: 30),
       child: CustomScrollView(
@@ -207,22 +63,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                ShimmerWidget(
-                  enableShimmer: Constants.enableShimmer,
-                  child: SizedBox(
-                    height: Constants.screenHeight * 0.2,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: CategoryController.categories.length,
-                      itemBuilder: (ctx, i) => CategoryItem(
-                        catName: CategoryController.categories[i].name,
-                        imgUrl: CategoryController.categories[i].photo,
-                        numOfSkills: CategoryController.categories[i].nSkills,
+                BlocBuilder<HomeCubit, HomeState>(
+                  bloc: homeCubit,
+                  builder: (context, state) {
+                    return ShimmerWidget(
+                      enableShimmer: homeCubit.categoriesEnableShimmer,
+                      child: SizedBox(
+                        height: Constants.screenHeight * 0.2,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: homeCubit.categories.length,
+                          itemBuilder: (ctx, i) => CategoryItem(
+                            catName: homeCubit.categories[i].name,
+                            imgUrl: homeCubit.categories[i].photo,
+                            numOfSkills: homeCubit.categories[i].nSkills,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 Text(
                   'Related posts',
@@ -231,43 +92,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                ShimmerWidget(
-                  enableShimmer: Constants.enableShimmer,
-                  child: SizedBox(
-                    height: 0.3 * Constants.screenHeight,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      //  physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, i) => CurrentUserInfoController
-                                  .userInfoModel.data?.user.id ==
-                              RelatedPostscontroller.posts[i].user.id
-                          ? const SizedBox.shrink()
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: RelatedPostItem(
-                                onpressed: () {
-                                  Constants.navigateTo(TaskDetailsPage(
-                                      postId:
-                                          RelatedPostscontroller.posts[i].id));
-                                  return;
-                                },
-                                description:
-                                    RelatedPostscontroller.posts[i].description,
-                                profileImgUrl:
-                                    RelatedPostscontroller.posts[i].user.photo,
-                                rate: RelatedPostscontroller
-                                    .posts[i].user.ratingsAverage,
-                                salary: RelatedPostscontroller.posts[i].salary,
-                                serviceImgUrl:
-                                    RelatedPostscontroller.posts[i].attachFile,
-                                userName:
-                                    RelatedPostscontroller.posts[i].user.name,
-                              ),
-                            ),
-                      itemCount: RelatedPostscontroller.posts.length,
-                    ),
-                  ),
+                BlocBuilder<HomeCubit, HomeState>(
+                  bloc: homeCubit,
+                  builder: (context, state) {
+                    return ShimmerWidget(
+                      enableShimmer: homeCubit.relatedPostsEnableShimmer,
+                      child: SizedBox(
+                        height: 0.3 * Constants.screenHeight,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (ctx, i) => homeCubit
+                                      .userInfoModel.data?.user.id ==
+                                  homeCubit.posts[i].user.id
+                              ? const SizedBox.shrink()
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RelatedPostItem(
+                                    onpressed: () {
+                                      Constants.navigateTo(TaskDetailsPage(
+                                          postId: homeCubit.posts[i].id));
+                                      return;
+                                    },
+                                    description: homeCubit.posts[i].description,
+                                    profileImgUrl:
+                                        homeCubit.posts[i].user.photo,
+                                    rate:
+                                        homeCubit.posts[i].user.ratingsAverage,
+                                    salary: homeCubit.posts[i].salary,
+                                    serviceImgUrl:
+                                        homeCubit.posts[i].attachFile,
+                                    userName: homeCubit.posts[i].user.name,
+                                  ),
+                                ),
+                          itemCount: homeCubit.posts.length,
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -279,35 +141,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                ShimmerWidget(
-                  enableShimmer: Constants.enableShimmer,
-                  child: SizedBox(
-                    height: Constants.screenHeight * 0.27,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: TopUserController.users.length,
-                      itemBuilder: (ctx, i) {
-                        return CurrentUserInfoController
-                                    .userInfoModel.data?.user.id ==
-                                TopUserController.users[i].id
-                            ? const SizedBox.shrink()
-                            : HighestRatedFreelancer(
-                                userImgUrl: TopUserController.users[i].photo,
-                                userName: TopUserController.users[i].name,
-                                job: TopUserController.users[i].job,
-                                rate: TopUserController.users[i].ratingsAverage
-                                    .toDouble(),
-                                onPress: () async {
-                                  await UserController.getUserByIdFunc(
-                                      TopUserController.users[i].id);
-                                  Constants.navigateTo(
-                                      const ProfileScreen(isMe: false));
-                                },
-                              );
-                      },
-                    ),
-                  ),
+                BlocBuilder<HomeCubit, HomeState>(
+                  bloc: homeCubit,
+                  builder: (context, state) {
+                    return ShimmerWidget(
+                      enableShimmer: homeCubit.topUsersEnableShimmer,
+                      child: SizedBox(
+                        height: Constants.screenHeight * 0.27,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: homeCubit.users.length,
+                          itemBuilder: (ctx, i) {
+                            return homeCubit.userInfoModel.data?.user.id ==
+                                    homeCubit.users[i].id
+                                ? const SizedBox.shrink()
+                                : HighestRatedFreelancer(
+                                    userImgUrl: homeCubit.users[i].photo,
+                                    userName: homeCubit.users[i].name,
+                                    job: homeCubit.users[i].job,
+                                    rate: homeCubit.users[i].ratingsAverage
+                                        .toDouble(),
+                                    onPress: () async {
+                                      await UserController.getUserByIdFunc(
+                                          TopUserController.users[i].id);
+                                      Constants.navigateTo(
+                                          const ProfileScreen(isMe: false));
+                                    },
+                                  );
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

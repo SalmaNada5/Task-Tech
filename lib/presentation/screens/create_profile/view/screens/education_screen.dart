@@ -218,6 +218,7 @@ class EducationScreenState extends State<EducationScreen> {
                           skills: widget.skills ?? [],
                           education: education,
                         );
+                        //userCubit.getUserInfoFunc();
                         await CurrentUserInfoController.getUserInfoFunc();
                         Constants.navigateTo(const ProfileScreen(
                           isMe: true,

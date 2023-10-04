@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
+import 'package:task_tech/presentation/screens/auth/cubits/auth_cubit/auth_cubit.dart';
 import 'package:task_tech/presentation/screens/auth/view/forgot_password_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_up_screen.dart';
 import 'package:task_tech/presentation/widgets/sign_with.dart';

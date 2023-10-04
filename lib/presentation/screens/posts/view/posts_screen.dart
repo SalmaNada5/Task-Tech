@@ -35,8 +35,8 @@ class _PostsScreenState extends State<PostsScreen> {
 
   void getAllServices() async {
     try {
-      await PostController.getServicePosts(dioLoading: false);
-      setState(() {});
+    await PostController.getServicePosts(dioLoading: false);
+    setState(() {});
     } catch (e) {
       logError('$e in getAllServices');
     }
@@ -157,7 +157,7 @@ class _PostsScreenState extends State<PostsScreen> {
                               accountName:
                                   PostController.tasks[i].user?.name ?? '',
                               postDescription:
-                                  PostController.tasks[i].description,
+                                  PostController.tasks[i].description ?? '',
                               postTime: Constants.convertToTimeAgo(
                                   PostController.tasks[i].createdAt),
                               // _dropdownValue == 'Tasks'
@@ -190,7 +190,7 @@ class _PostsScreenState extends State<PostsScreen> {
                               accountName:
                                   PostController.services[i].user?.name ?? '',
                               postDescription:
-                                  PostController.services[i].description,
+                                  PostController.services[i].description ?? '',
                               postTime: Constants.convertToTimeAgo(
                                   PostController.services[i].createdAt),
                               //   DateTime.now(),

@@ -41,8 +41,8 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        services:
-            List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
+        services: List<Service>.from(
+            json["services"].map((x) => Service.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,17 +51,17 @@ class Data {
 }
 
 class Service {
-  String id;
-  String description;
+  String? id;
+  String? description;
   User? user;
-  String postId;
+  String? postId;
   final DateTime? createdAt;
-  
+
   Service({
-    required this.id,
-    required this.description,
+    this.id,
+    this.description,
     this.user,
-    required this.postId,
+    this.postId,
     this.createdAt,
   });
 
@@ -69,8 +69,8 @@ class Service {
         id: json["_id"],
         description: json["description"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
-        postId: json["id"],
-          createdAt: json["createdAt"] == null
+        postId: json["id"] ?? '',
+        createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
       );
@@ -85,18 +85,18 @@ class Service {
 }
 
 class User {
-  String photo;
-  bool isOnline;
-  String id;
-  String name;
-  String userId;
+  String? photo;
+  bool? isOnline;
+  String? id;
+  String? name;
+  String? userId;
 
   User({
-    required this.photo,
-    required this.isOnline,
-    required this.id,
-    required this.name,
-    required this.userId,
+     this.photo,
+     this.isOnline,
+     this.id,
+     this.name,
+     this.userId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -117,14 +117,14 @@ class User {
 }
 
 class PaginationResult {
-  int currentPage;
-  int limit;
-  int numberOfPages;
+  int? currentPage;
+  int? limit;
+  int? numberOfPages;
 
   PaginationResult({
-    required this.currentPage,
-    required this.limit,
-    required this.numberOfPages,
+   this.currentPage,
+    this.limit,
+   this.numberOfPages,
   });
 
   factory PaginationResult.fromJson(Map<String, dynamic> json) =>
