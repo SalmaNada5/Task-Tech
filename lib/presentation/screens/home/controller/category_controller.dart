@@ -13,14 +13,14 @@ class CategoryController {
   static ScrollController categoriesScrollContrller = ScrollController();
 
   static Future<List<CategoryElement>?> getPopularCategoriesFunc(
-      {bool dioLoading = true}) async {
+      ) async {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
     try {
       Response res = await _dioClient.get(
           'api/v1/categorys/?type=popular&page=$page', token,
-          isLoading: dioLoading) as Response;
+          ) as Response;
 
       categoryModel = CategoryModel.fromJson(res.data);
       categories.addAll(categoryModel.data!.category);

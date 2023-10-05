@@ -28,7 +28,7 @@ class ServiceDetailsPage extends StatelessWidget {
         service ?? ServiceController.serviceDetailsModel.data?.service;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -62,13 +62,14 @@ class ServiceDetailsPage extends StatelessWidget {
           children: [
             serviceItem == null
                 ? const SizedBox.shrink()
-                : CachedNetworkImage(imageUrl: serviceItem.attachFile ?? "",
-                height:  MediaQuery.of(context).size.height * 0.3,
-                     width: double.infinity,
-                     fit: BoxFit.fill,
-                     errorWidget: (context, url, error) => Image.asset('images/placeholder.jpg'),
-                )
-              ,
+                : CachedNetworkImage(
+                    imageUrl: serviceItem.attachFile ?? "",
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    errorWidget: (context, url, error) =>
+                        Image.asset('images/placeholder.jpg'),
+                  ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -77,10 +78,13 @@ class ServiceDetailsPage extends StatelessWidget {
                     Row(
                       children: [
                         CircleAvatar(
-                        radius: 20,
-                          child: CachedNetworkImage(
-                            imageUrl: serviceItem?.user?.photo ?? "",
-                            errorWidget: (context, url, error) => Image.asset('images/placeholder.jpg'),
+                          radius: 20,
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: serviceItem?.user?.photo ?? "",
+                              errorWidget: (context, url, error) =>
+                                  Image.asset('images/placeholder.jpg'),
+                            ),
                           ),
                         ),
                         const SizedBox(

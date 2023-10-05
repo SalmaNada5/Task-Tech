@@ -4,38 +4,10 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 
-class AboutmePage extends StatefulWidget {
+class AboutmePage extends StatelessWidget {
   const AboutmePage({
     Key? key,
   }) : super(key: key);
-  @override
-  State<AboutmePage> createState() => _AboutmePageState();
-}
-
-class _AboutmePageState extends State<AboutmePage> {
-  late SfRangeValues value;
-  //late NumberFormat _numberFormat;
-  late TextEditingController _rangeStartController = TextEditingController();
-  late TextEditingController _rangeEndController = TextEditingController();
-
-  // String _getFormattedText(dynamic value) {
-  //   return _numberFormat.format(value);
-  // }
-
-  @override
-  void initState() {
-    _rangeStartController = TextEditingController();
-    _rangeEndController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _rangeStartController.dispose();
-    _rangeEndController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     Color textColor =
@@ -229,63 +201,28 @@ class _AboutmePageState extends State<AboutmePage> {
                         .userInfoModel.data?.user.skills!.length ??
                     0,
                 itemBuilder: (context, i) => Container(
-                  margin: const EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(206, 218, 223, 1),
+                    color: Theme.of(context).primaryColor,
+                    // const Color.fromRGBO(206, 218, 223, 1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      CurrentUserInfoController
-                              .userInfoModel.data?.user.skills![i] ??
-                          '',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          color: textColor,
-                          fontWeight: FontWeight.w400),
-                    ),
+                  child: Text(
+                    CurrentUserInfoController
+                            .userInfoModel.data?.user.skills![i] ??
+                        '',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: textColor,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ),
             ),
-            // Row(
-            //   children: [
-            //     Container(
-            //       height: 32,
-            //       width: MediaQuery.of(context).size.width * 0.3,
-            //       decoration: BoxDecoration(
-            //         color: const Color.fromRGBO(206, 218, 223, 1),
-            //         borderRadius: BorderRadius.circular(8),
-            //       ),
-            //       child: MaterialButton(
-            //           onPressed: () {},
-            //           child: Text(
-            //             'C',
-            //             style: GoogleFonts.poppins(
-            //                 fontSize: 11.5,
-            //                 color: primaryLightColor,
-            //                 fontWeight: FontWeight.w400),
-            //           )),
-            //     ),
-            //     const Spacer(),
-            //     Container(
-            //       height: 32,
-            //       width: MediaQuery.of(context).size.width * 0.3,
-            //       decoration: BoxDecoration(
-            //         color: const Color.fromRGBO(206, 218, 223, 1),
-            //         borderRadius: BorderRadius.circular(8),
-            //       ),
-            //       child: MaterialButton(
-            //           onPressed: () {},
-            //           child: Text(
-            //             'C++',
-            //             style: GoogleFonts.poppins(
-            //                 fontSize: 11.5,
-            //                 color: primaryLightColor,
-            //                 fontWeight: FontWeight.w400),
-            //           )),
-            //     ),
           ],
         ),
       ),

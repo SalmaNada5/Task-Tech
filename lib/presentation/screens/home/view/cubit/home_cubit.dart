@@ -6,6 +6,7 @@ import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/models/cur_user_info_model.dart';
 import 'package:task_tech/presentation/screens/home/models/category_model.dart';
+import 'package:task_tech/presentation/screens/home/models/get_user_model.dart';
 import 'package:task_tech/presentation/screens/home/models/related_posts_model.dart';
 import 'package:task_tech/presentation/screens/home/models/top_user_model.dart'
     as top_user;
@@ -17,24 +18,37 @@ class HomeCubit extends Cubit<HomeState> {
 
   final DioClient _dioClient = DioClient();
   initCubit() {
+    categoriesScrollControllerFunc();
+    relatedPostsScrollControllerFunc();
     getUserInfoFunc();
     getPopularCategoriesFunc();
     getRelatedPostsFunc();
     getTopUsersFunc();
   }
 
-// user info
-  UserInfoModel userInfoModel = UserInfoModel();
-  bool userInfoEnableShimmer = true;
+  Future<String> getToken() async {
+    String? token;
 
-  getUserInfoFunc({bool dioLoading = true}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token") ?? '';
+    return token;
+  }
+
+//? user info
+
+  UserInfoModel userInfoModel = UserInfoModel();
+  bool userInfoEnableShimmer = false;
+
+  getUserInfoFunc() async {
     emit(HomeInitial());
+    userInfoEnableShimmer = true;
     try {
-      String token;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      token = prefs.getString("token") ?? '';
-      Response res = await _dioClient.get('api/v1/users/me', token,
-          isLoading: dioLoading) as Response;
+      String token = await getToken();
+      Response res = await _dioClient.get(
+        'api/v1/users/me',
+        token,
+        isLoading: false,
+      ) as Response;
       userInfoModel = UserInfoModel.fromJson(res.data);
       logSuccess('User info returned successfully: $userInfoModel');
       userInfoEnableShimmer = false;
@@ -45,23 +59,26 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  // popular categories
+  //? popular categories logic
+
   CategoryModel categoryModel = CategoryModel();
-  bool categoriesEnableShimmer = true;
+  bool categoriesEnableShimmer = false;
 
   List<CategoryElement> categories = [];
   int categoriesPage = 1;
-  ScrollController categoriesScrollContrller = ScrollController();
+  ScrollController categoriesScrollController = ScrollController();
 
-  getPopularCategoriesFunc({bool dioLoading = true}) async {
-    String? token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token");
+  getPopularCategoriesFunc() async {
     emit(HomeInitial());
+    categoriesEnableShimmer = true;
     try {
+      String token = await getToken();
+
       Response res = await _dioClient.get(
-          'api/v1/categorys/?type=popular&page=$categoriesPage', token,
-          isLoading: dioLoading) as Response;
+        'api/v1/categorys/?type=popular&page=$categoriesPage',
+        token,
+        isLoading: false,
+      ) as Response;
 
       categoryModel = CategoryModel.fromJson(res.data);
       categories.addAll(categoryModel.data!.category);
@@ -79,26 +96,43 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  //related posts
+  bool categoriesLoading = false;
+  categoriesScrollControllerFunc() {
+    categoriesScrollController.addListener(() async {
+      if (categoriesScrollController.position.atEdge &&
+          categoriesScrollController.position.pixels != 0) {
+        if (categoriesPage >
+            (categoryModel.paginationResult?.numberOfPages ?? 1)) {
+          return;
+        }
+        categoriesLoading = true;
+        getPopularCategoriesFunc();
+        categoriesLoading = false;
+      }
+    });
+  }
+
+  //? related posts logic
 
   RelatedPostModel relatedPostModel = RelatedPostModel();
-  bool relatedPostsEnableShimmer = true;
-
+  bool relatedPostsEnableShimmer = false;
   List<Post> posts = [];
   int relatedPostspage = 1;
   ScrollController scrollController = ScrollController();
 
-  getRelatedPostsFunc({bool dioLoading = true}) async {
+  getRelatedPostsFunc() async {
     String? token, id;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
     id = prefs.getString("id");
     emit(HomeInitial());
+    categoriesEnableShimmer = true;
     try {
       Response res = await _dioClient.get(
-          'api/v1/users/$id/relatedPosts?page=$relatedPostspage', token,
-          isLoading: dioLoading) as Response;
-
+        'api/v1/users/$id/relatedPosts?page=$relatedPostspage',
+        token,
+        isLoading: false,
+      ) as Response;
       relatedPostModel = RelatedPostModel.fromJson(res.data);
       posts.addAll(relatedPostModel.data?.posts ?? []);
       relatedPostspage = relatedPostspage + 1;
@@ -116,118 +150,95 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  //highest rated freelancers
+  bool relatesPostsLoading = false;
+  ScrollController relatedPostsScrollController = ScrollController();
+  relatedPostsScrollControllerFunc() {
+    relatedPostsScrollController.addListener(() async {
+      if (relatedPostsScrollController.position.atEdge &&
+          relatedPostsScrollController.position.pixels != 0) {
+        if (relatedPostspage >
+            (relatedPostModel.paginationResult?.numberOfPages ?? 1)) {
+          return;
+        }
+        relatesPostsLoading = true;
+        await getRelatedPostsFunc();
+        relatesPostsLoading = false;
+      }
+    });
+  }
+
+  //? highest rated freelancers logic
+
   top_user.TopUserModel topUserModel = top_user.TopUserModel();
-  bool topUsersEnableShimmer = true;
+  bool topUsersEnableShimmer = false;
 
   List<top_user.User> users = [];
-  int page = 1;
+  int highestRatedUsersPage = 1;
   ScrollController highestRatedScrollController = ScrollController();
 
-  getTopUsersFunc({bool dioLoading = true}) async {
+  getTopUsersFunc() async {
+    topUsersEnableShimmer = true;
     emit(HomeInitial());
     try {
-      String? token;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      token = prefs.getString("token");
+      String token = await getToken();
+
       Response res = await _dioClient.get(
-              'api/v1/users/topuser?page=$page', token, isLoading: dioLoading)
-          as Response;
+        'api/v1/users/topuser?page=$highestRatedUsersPage',
+        token,
+        isLoading: false,
+      ) as Response;
 
       topUserModel = top_user.TopUserModel.fromJson(res.data);
       users.addAll(topUserModel.data!.users);
-      page = page + 1;
+      highestRatedUsersPage = highestRatedUsersPage + 1;
       logSuccess('top users returned successfully: ${topUserModel.status}');
       topUsersEnableShimmer = false;
       emit(GetTopUsersSucces());
     } catch (e) {
-      if (page == topUserModel.paginationResult?.numberOfPages) {
-        page = page + 1;
+      if (highestRatedUsersPage ==
+          topUserModel.paginationResult?.numberOfPages) {
+        highestRatedUsersPage = highestRatedUsersPage + 1;
       }
       logError('error in getTopUserFunc ${e.toString()}');
       emit(GetTopUsersError());
     }
   }
+
+  bool topUserLoading = false;
+  highestRatedUsersScrollControllerFunc() {
+    highestRatedScrollController.addListener(() async {
+      if (highestRatedScrollController.position.atEdge &&
+          highestRatedScrollController.position.pixels != 0) {
+        if (highestRatedUsersPage >
+            (topUserModel.paginationResult?.numberOfPages ?? 1)) {
+          return;
+        }
+        topUserLoading = true;
+        getTopUsersFunc();
+        topUserLoading = false;
+      }
+    });
+  }
+
+//! access user from top users in home (get data but not show info after navigating).
+  UserModel userModel = UserModel();
+
+  getUserByIdFunc(String userId) async {
+    emit(HomeInitial());
+    try {
+      String token = await getToken();
+
+      Response res = await _dioClient.get(
+        'api/v1/users/$userId',
+        token,
+      ) as Response;
+      userModel = UserModel.fromJson(res.data);
+      logSuccess(
+          'Specific User info returned successfully: ${userModel.status}');
+      emit(GetSpecificUserSucces());
+    } catch (e) {
+      emit(GetSpecificUserError());
+      logError('error in getUserByIdFunc ${e.toString()}');
+    }
+  }
 }
-
-//! scroll controllers 
-
-// final bool isCatLoading = false;
-//   final bool isLoading = false;
-//   final bool relatedPostsLoading = false;
-//   final bool photoReturned = false;
-
-  // Future<void> highestRatedScrollController() async {
-  //   TopUserController.highestRatedScrollController.addListener(() async {
-  //     if (TopUserController.highestRatedScrollController.position.atEdge &&
-  //         TopUserController.highestRatedScrollController.position.pixels != 0) {
-  //       if (TopUserController.page >
-  //           (TopUserController.topUserModel.paginationResult?.numberOfPages ??
-  //               1)) {
-  //         return;
-  //       }
-  //       if (isLoading) {
-  //         return;
-  //       }
-  //       // setState(() {
-  //       //   //isLoading = true;
-  //       //   Constants.enableShimmer = true;
-  //       // });
-  //       await TopUserController.getTopUsersFunc(dioLoading: false);
-  //       // setState(() {
-  //       //   Constants.enableShimmer = false;
-
-  //       //   //isLoading = false;
-  //       // });
-  //     }
-  //   });
-  // }
-
-  // Future<void> categoriesScrollController() async {
-  //   CategoryController.categoriesScrollContrller.addListener(() async {
-  //     if (CategoryController.categoriesScrollContrller.position.atEdge &&
-  //         CategoryController.categoriesScrollContrller.position.pixels != 0) {
-  //       if (CategoryController.page >
-  //           (CategoryController.categoryModel.paginationResult?.numberOfPages ??
-  //               1)) {
-  //         return;
-  //       }
-  //       if (isCatLoading) {
-  //         return;
-  //       }
-  //       // setState(() {
-  //       //   Constants.enableShimmer = true;
-  //       // });
-  //       await CategoryController.getPopularCategoriesFunc(dioLoading: false);
-  //       // setState(() {
-  //       //   Constants.enableShimmer = false;
-  //       // });
-  //     }
-  //   });
-  // }
-
-  // Future<void> relatedPostsScrollController() async {
-  //   RelatedPostscontroller.scrollController.addListener(() async {
-  //     if (RelatedPostscontroller.scrollController.position.atEdge &&
-  //         RelatedPostscontroller.scrollController.position.pixels != 0) {
-  //       if (RelatedPostscontroller.page >
-  //           (RelatedPostscontroller
-  //                   .relatedPostModel.paginationResult?.numberOfPages ??
-  //               1)) {
-  //         return;
-  //       }
-  //       if (relatedPostsLoading) {
-  //         return;
-  //       }
-  //       // setState(() {
-  //       //   //relatedPostsLoading = true;
-  //       //   Constants.enableShimmer = true;
-  //       // });
-  //       await RelatedPostscontroller.getRelatedPostsFunc(dioLoading: false);
-  //       // setState(() {
-  //       //   // relatedPostsLoading = false;
-  //       //   Constants.enableShimmer = false;
-  //       // });
-  //     }
-  //   });
-  // }

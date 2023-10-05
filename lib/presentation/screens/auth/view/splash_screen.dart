@@ -1,9 +1,10 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/onboarding_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/bottom_nav_bar_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light ? const Color(0xff165069) : const Color(0xff1B2936),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

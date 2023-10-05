@@ -32,10 +32,7 @@ class _AddPostScreenState extends State<AddPostScreen>
             children: [
               TabBar(
                 tabs: [
-                  Text(
-                    'Post a task',
-                    style: headStyle,
-                  ),
+                  Text('Post a task', style: headStyle),
                   Text(
                     'Post a service',
                     style: headStyle,

@@ -35,8 +35,8 @@ class _PostsScreenState extends State<PostsScreen> {
 
   void getAllServices() async {
     try {
-    await PostController.getServicePosts(dioLoading: false);
-    setState(() {});
+      await PostController.getServicePosts(dioLoading: false);
+      setState(() {});
     } catch (e) {
       logError('$e in getAllServices');
     }
@@ -115,8 +115,8 @@ class _PostsScreenState extends State<PostsScreen> {
                 style: headStyle,
                 dropdownColor: Colors.white,
                 iconSize: 30,
-                iconEnabledColor: Colors.black,
-                iconDisabledColor: Colors.black,
+                iconEnabledColor: Colors.grey,
+                iconDisabledColor: Colors.grey,
                 items: list.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem(value: value, child: Text(value));
                 }).toList(),

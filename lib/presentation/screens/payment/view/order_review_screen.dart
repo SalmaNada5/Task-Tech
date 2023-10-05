@@ -31,7 +31,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -47,9 +47,9 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 ),
               ),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               size: 30,
             ),
           ),
@@ -72,8 +72,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                 Expanded(
                   child: CachedNetworkImage(
                     imageUrl: widget.imgUrl,
-                    imageBuilder: (context, imageProvider) =>
-                     Container(
+                    imageBuilder: (context, imageProvider) => Container(
                       width: 160,
                       height: 100,
                       decoration: BoxDecoration(
@@ -225,7 +224,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         'Total',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                       const Spacer(),
@@ -233,7 +233,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         '${widget.price}',
                         style: GoogleFonts.poppins(
                           fontSize: 15,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                     ],
@@ -255,7 +256,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         widget.deliveryDate,
                         style: GoogleFonts.poppins(
                           fontSize: 15,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                     ],
@@ -330,7 +332,7 @@ class CheckBoxlistTile extends StatelessWidget {
             Text(
               text,
               style: GoogleFonts.poppins(
-                color: Colors.black,
+                color: Theme.of(context).textTheme.headlineSmall!.color,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),

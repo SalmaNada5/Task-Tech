@@ -25,8 +25,10 @@ class SearchPostResult extends StatelessWidget {
         height: 0.2 * Constants.screenHeight,
         child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.white),
+              backgroundColor: MaterialStateProperty.all(
+                  Theme.of(context).scaffoldBackgroundColor),
               elevation: MaterialStateProperty.all(8),
+              shadowColor: MaterialStateProperty.all(Colors.white),
               padding: MaterialStateProperty.all(const EdgeInsets.all(10))),
           onPressed: onPressed,
           child: Row(
@@ -67,7 +69,8 @@ class SearchPostResult extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                     ],
@@ -87,7 +90,7 @@ class SearchPostResult extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black,
+                        color: Theme.of(context).textTheme.headlineSmall!.color,
                       ),
                     ),
                   ),

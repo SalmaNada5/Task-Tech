@@ -34,8 +34,10 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
       width: 0.5 * Constants.screenWidth,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.white),
-          elevation: MaterialStateProperty.all(8),
+          backgroundColor: MaterialStateProperty.all(
+              Theme.of(context).scaffoldBackgroundColor),
+          elevation: MaterialStateProperty.all(4),
+          shadowColor: MaterialStateProperty.all(Colors.white),
         ),
         onPressed: widget.onpressed,
         child: Column(
@@ -72,7 +74,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                   ),
                 ),
               ],
@@ -92,7 +94,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                 ),
               ),
             ),
@@ -122,7 +124,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                   ),
                 ),
                 const Spacer(),
@@ -136,8 +138,8 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                 ),
                 Text(
                   '${widget.rate}',
-                  style: const TextStyle(
-                      color: Colors.black,
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
                       fontSize: 12,
                       fontWeight: FontWeight.w500),
                 ),

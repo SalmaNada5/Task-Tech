@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/Lists.dart';
@@ -38,6 +39,9 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
+    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+        ? const Color(0xff213440)
+        : Colors.white;
     return Form(
       key: _formKey,
       child: Padding(
@@ -66,11 +70,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   border: InputBorder.none,
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
+                      borderSide: BorderSide(
+                        color: fieldColor,
                       )),
                   filled: true,
-                  fillColor: const Color(0xffF5F5F5),
+                  fillColor: fieldColor,
                 ),
                 onChanged: (value) {
                   widget.postNameController.text = value.toString();
@@ -112,12 +116,12 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   border: InputBorder.none,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
+                    borderSide: BorderSide(
+                      color: fieldColor,
                     ),
                   ),
                   filled: true,
-                  fillColor: const Color(0xffF5F5F5),
+                  fillColor: fieldColor,
                   // suffixIcon: IconButton(
                   //   onPressed: () async {
                   //     DateTime? selectedDate = await showDatePicker(
@@ -192,11 +196,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                               border: InputBorder.none,
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(6),
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
+                                  borderSide: BorderSide(
+                                    color: fieldColor,
                                   )),
                               filled: true,
-                              fillColor: const Color(0xffF5F5F5),
+                              fillColor: fieldColor,
                               hintStyle: GoogleFonts.poppins(
                                 fontSize: 16,
                                 color: const Color(0xffC0C0C0),
@@ -244,11 +248,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6),
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
+                                borderSide: BorderSide(
+                                  color: fieldColor,
                                 )),
                             filled: true,
-                            fillColor: const Color(0xffF5F5F5),
+                            fillColor: fieldColor,
                             suffixIcon: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: DropdownButton<String>(
@@ -319,11 +323,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
+                        borderSide: BorderSide(
+                          color: fieldColor,
                         )),
                     filled: true,
-                    fillColor: const Color(0xffF5F5F5),
+                    fillColor: fieldColor,
                     hintStyle: GoogleFonts.poppins(
                       fontSize: 16,
                       color: const Color(0xffC0C0C0),
@@ -357,11 +361,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                     padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(
                         horizontal: 80,
-                        vertical: 8,
+                         vertical: 8,
                       ),
                     ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Theme.of(context).primaryColor),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),

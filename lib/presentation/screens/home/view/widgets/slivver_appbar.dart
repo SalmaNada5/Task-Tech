@@ -6,7 +6,7 @@ import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/shimmer_widget.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
-import 'package:task_tech/presentation/screens/home/view/notifications_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/notifications_screen.dart';
 
 class CustomSliverAppbar extends StatelessWidget {
   const CustomSliverAppbar({super.key});
@@ -28,16 +28,19 @@ class CustomSliverAppbar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 28,
+                    foregroundColor: Theme.of(context).primaryColor,
+                    radius: 26,
                     child: ClipOval(
                       child: ShimmerWidget(
                         enableShimmer: homeCubit.userInfoEnableShimmer,
                         child: CachedNetworkImage(
                           imageUrl:
                               homeCubit.userInfoModel.data?.user.photo ?? '',
+                          fit: BoxFit.cover,
                           errorWidget: (context, url, error) {
                             return Image.asset(
                               'images/placeholder.jpg',
+                              fit: BoxFit.fill,
                             );
                           },
                         ),

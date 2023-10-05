@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +34,9 @@ class ReusablePostWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.26,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-        color: const Color(0xffF5F5F5),
+        color: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+            ? const Color(0xff213440)
+            : const Color(0xffF5F5F5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +59,7 @@ class ReusablePostWidget extends StatelessWidget {
                 accountName,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -65,7 +68,7 @@ class ReusablePostWidget extends StatelessWidget {
                 postTime,
                 style: GoogleFonts.poppins(
                   fontSize: 12,
-                  color: const Color(0xff1B2936),
+                  color: Theme.of(context).primaryColor,
                 ),
               )
             ],
@@ -99,8 +102,8 @@ class ReusablePostWidget extends StatelessWidget {
                   }
                 },
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Theme.of(context).primaryColor),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)))),
                 child: Padding(

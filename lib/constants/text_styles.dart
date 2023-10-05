@@ -24,13 +24,16 @@ TextStyle labelTextFormStyle = GoogleFonts.poppins(
 TextStyle headStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
-  color: Colors.black,
+  color: Theme.of(Constants.navigatorKey.currentContext!)
+      .textTheme
+      .headlineSmall!
+      .color,
 );
 
 TextStyle postNameStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
-  color: const Color(0xff165069),
+  color: Theme.of(Constants.navigatorKey.currentContext!).primaryColor,
 );
 TextStyle postDescriptionStyle = GoogleFonts.poppins(
   fontSize: 14,

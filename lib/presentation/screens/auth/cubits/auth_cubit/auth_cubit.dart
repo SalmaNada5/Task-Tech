@@ -8,7 +8,7 @@ import 'package:task_tech/presentation/screens/auth/view/reset_password_screen.d
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/verification_code_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/bottom_nav_bar_screen.dart';
 
 part 'auth_state.dart';
 

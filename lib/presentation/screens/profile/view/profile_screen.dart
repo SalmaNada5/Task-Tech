@@ -37,7 +37,7 @@ class ProfileScreenState extends State<ProfileScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       try {
         Constants.showLoading();
-        await CurrentUserInfoController.getUserInfoFunc(dioLoading: false);
+        await CurrentUserInfoController.getUserInfoFunc();
         try {
           String? id = CurrentUserInfoController
               .userInfoModel.data?.user.followings!
@@ -109,7 +109,10 @@ class ProfileScreenState extends State<ProfileScreen>
                           ''
                       : UserController.userModel.data?.user.name ?? '',
                   style: GoogleFonts.poppins(
-                      fontSize: 24, fontWeight: FontWeight.w500),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                  ),
                 ),
               ),
               Center(

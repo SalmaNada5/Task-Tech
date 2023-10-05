@@ -4,7 +4,7 @@ import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.da
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/bottom_nav_bar_screen.dart';
 import 'package:task_tech/presentation/screens/payment/controller/review_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';

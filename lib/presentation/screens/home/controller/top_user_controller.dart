@@ -12,13 +12,13 @@ class TopUserController {
   static int page = 1;
   static ScrollController highestRatedScrollController = ScrollController();
 
-  static Future<List<User>?> getTopUsersFunc({bool dioLoading = true}) async {
+  static Future<List<User>?> getTopUsersFunc() async {
     try {
       String? token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString("token");
       Response res = await _dioClient.get(
-              'api/v1/users/topuser?page=$page', token, isLoading: dioLoading)
+              'api/v1/users/topuser?page=$page', token,)
           as Response;
 
       topUserModel = TopUserModel.fromJson(res.data);

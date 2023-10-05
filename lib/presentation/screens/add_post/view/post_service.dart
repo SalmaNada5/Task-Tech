@@ -1,10 +1,11 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
 import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/bottom_nav_bar_screen.dart';
 import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
 
 class PostService extends StatefulWidget {
@@ -19,6 +20,9 @@ class _PostServiceState extends State<PostService> {
   bool fileDisSelected = false;
   @override
   Widget build(BuildContext context) {
+    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+        ? const Color(0xff213440)
+        : Colors.white;
     return ReusablePostForm(
       onPressed: () async {
         logWarning(AddPostsController.serviceDeliveryDaysController.text);
@@ -52,11 +56,11 @@ class _PostServiceState extends State<PostService> {
               border: InputBorder.none,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
+                  borderSide: BorderSide(
+                    color: fieldColor,
                   )),
               filled: true,
-              fillColor: const Color(0xffF5F5F5),
+              fillColor: fieldColor,
             ),
             onChanged: (value) {
               AddPostsController.serviceDescriptionController.text =
@@ -110,12 +114,12 @@ class _PostServiceState extends State<PostService> {
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
+                  borderSide: BorderSide(
+                    color: fieldColor,
                   ),
                 ),
                 filled: true,
-                fillColor: const Color(0xffF5F5F5),
+                fillColor: fieldColor,
                 prefixIcon: fileDisSelected
                     ? null
                     : fileName == null
@@ -153,6 +157,7 @@ class _PostServiceState extends State<PostService> {
                 suffixIcon: const Icon(
                   Icons.attach_file,
                   size: 20,
+                  color: Colors.grey,
                 )),
             maxLines: 1,
           ),
