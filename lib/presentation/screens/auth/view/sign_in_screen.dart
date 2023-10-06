@@ -21,13 +21,14 @@ class SignInScreen extends StatelessWidget {
     TextEditingController passController = TextEditingController();
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
+    AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
     return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
           child: SingleChildScrollView(
             child: BlocBuilder<AuthCubit, AuthState>(
-              bloc: BlocProvider.of<AuthCubit>(context),
+              bloc: authCubit,
               buildWhen: (prevState, currState) =>
                   currState is LoginObsecureOff ||
                   currState is LoginObsecureOn ||
@@ -110,17 +111,17 @@ class SignInScreen extends StatelessWidget {
                             },
                             icon: IconButton(
                               icon: Icon(
-                                BlocProvider.of<AuthCubit>(context).obsecureText
+                                authCubit.obsecureText
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                                 size: 20,
                               ),
                               onPressed: () {
-                                BlocProvider.of<AuthCubit>(context)
+                                authCubit
                                     .obsecureLogic();
                               },
                             ),
-                            obscure: BlocProvider.of<AuthCubit>(context)
+                            obscure: authCubit
                                 .obsecureText,
                           ),
                           const SizedBox(
@@ -132,7 +133,7 @@ class SignInScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Checkbox(
-                                    value: BlocProvider.of<AuthCubit>(context)
+                                    value: authCubit
                                         .rememberMe,
                                     checkColor: Theme.of(context).primaryColor,
                                     fillColor:
@@ -140,7 +141,7 @@ class SignInScreen extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     onChanged: (value) {
-                                      BlocProvider.of<AuthCubit>(context)
+                                      authCubit
                                           .rememberMeLogic();
                                     },
                                     side: const BorderSide(
@@ -178,7 +179,7 @@ class SignInScreen extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  await BlocProvider.of<AuthCubit>(context)
+                                  await authCubit
                                       .loginCubit(emailController.text,
                                           passController.text);
                                 }

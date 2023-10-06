@@ -1,13 +1,14 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/Lists.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/controller/create_profile_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_cv_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
+import 'package:task_tech/presentation/screens/create_profile/cubit/create_profile_cubit.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
 import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
@@ -51,6 +52,8 @@ class EducationScreenState extends State<EducationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CreateProfileCubit createProfileCubit =
+        BlocProvider.of<CreateProfileCubit>(context);
     return Scaffold(
       appBar: myAppbar(percent: 100),
       body: Center(
@@ -203,7 +206,7 @@ class EducationScreenState extends State<EducationScreen> {
                         await UploadProfilePhotoController
                             .uploadProfilePhotoFunc();
                         await UploadCVController.uploadCVFunc();
-                        await CreateProfileController.createProfileFunc(
+                        createProfileCubit.createProfileCubit(
                           about: widget.description ?? '',
                           minimum: widget.minimum ?? 0,
                           maximum: widget.maximum ?? 0,
