@@ -18,22 +18,26 @@ class _ChatsScreenState extends State<ChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Image.asset(
-            'icons/bi_arrow-left-circle-fill.png',
-            width: 40,
-            height: 40,
+        leading: Container(
+          margin: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Theme.of(context).primaryColor,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 20,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         title: Text(
           'Messages',
           style: GoogleFonts.poppins(
             fontSize: 24,
             fontWeight: FontWeight.w500,
-            color: const Color.fromRGBO(22, 80, 105, 1),
+            color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
@@ -65,7 +69,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       fontWeight: FontWeight.w400,
                       color: const Color(0xffC0C0C0),
                     ),
-                    fillColor: const Color(0xffF5F5F5),
+                    fillColor: Theme.of(context).canvasColor,
                     filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: Color(0xffB8B8B8)),

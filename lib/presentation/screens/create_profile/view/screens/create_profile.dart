@@ -32,10 +32,7 @@ class _CreateProfileState extends State<CreateProfile> {
   String imagepath = "";
   File? imagefile;
   late AnimationController controller;
-  TextStyle? labelTextTheme = Theme.of(Constants.navigatorKey.currentContext!)
-      .textTheme
-      .headlineSmall!
-      .copyWith(fontSize: 18);
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +40,11 @@ class _CreateProfileState extends State<CreateProfile> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? labelTextTheme = GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Theme.of(context).textTheme.headlineSmall!.color);
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppbar(percent: 20),

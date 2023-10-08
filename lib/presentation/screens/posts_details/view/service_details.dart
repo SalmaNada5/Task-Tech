@@ -92,7 +92,13 @@ class ServiceDetailsPage extends StatelessWidget {
                         ),
                         Text(
                           serviceItem?.user?.name ?? "",
-                          style: headStyle.copyWith(fontSize: 15),
+                          style: headStyle.copyWith(
+                            fontSize: 15,
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .color,
+                          ),
                         ),
                       ],
                     ),
@@ -101,7 +107,9 @@ class ServiceDetailsPage extends StatelessWidget {
                     ),
                     Text(
                       serviceItem?.name ?? "",
-                      style: headStyle,
+                      style: headStyle.copyWith(
+                        color: Theme.of(context).textTheme.headlineSmall!.color,
+                      ),
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),

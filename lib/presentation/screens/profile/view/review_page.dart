@@ -22,7 +22,7 @@ class ReviewPage extends StatelessWidget {
           itemCount: isMe
               ? state.userInfoModel?.data?.user.reviews!.length ?? 0
               : homeCubit.userModel.data?.user.reviews?.length ?? 0,
-          itemBuilder: (context, i) => reviewCard(
+          itemBuilder: (context, i) => ReviewCard(
               name: isMe
                   ? state.userInfoModel?.data?.user.reviews![i].reviewer!
                           .name ??
@@ -50,13 +50,22 @@ class ReviewPage extends StatelessWidget {
   }
 }
 
-Widget reviewCard(
-    {required String name,
-    required String review,
-    required num rate,
-    required String imgUrl,
-    required Color textColor}) {
-  return ListTile(
+class ReviewCard extends StatelessWidget {
+  const ReviewCard(
+      {super.key,
+      required this. name,
+      required this. review,
+      required this. rate,
+      required this. imgUrl,
+      required this. textColor});
+  final String name;
+  final String review;
+  final num rate;
+  final String imgUrl;
+  final Color textColor;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
     leading: CircleAvatar(
       child: ClipOval(
         child: CachedNetworkImage(
@@ -106,4 +115,5 @@ Widget reviewCard(
       ),
     ),
   );
+  }
 }

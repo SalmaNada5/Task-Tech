@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,9 +24,7 @@ class SignUpScreen extends StatelessWidget {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
-    Color fieldColor =Constants.isDarkMode
-        ? const Color(0xff213440)
-        : const Color(0xffF5F5F5);
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Scaffold(
       body: Center(
         child: Padding(
@@ -35,7 +34,9 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Text(
                   'Create an account,',
-                  style: titleStyle,
+                  style: titleStyle.copyWith(
+                    color: isDarkMode ? Colors.white : const Color(0xff165069),
+                  ),
                 ),
                 Text(
                   'Let\'s create an acount together',
@@ -68,8 +69,8 @@ class SignUpScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: fullNameController,
                             obscure: false,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             keyboardType: TextInputType.name,
                             validator: (value) {
                               value = fullNameController.text;
@@ -90,8 +91,8 @@ class SignUpScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: emailController,
                             obscure: false,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               value = emailController.text;
@@ -111,8 +112,8 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: passController,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             validator: (value) {
                               value = passController.text;
                               if (value.length < 6) {
@@ -143,8 +144,8 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: confirmPassController,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             validator: (value) {
                               value = confirmPassController.text;
                               if (value != passController.text) {

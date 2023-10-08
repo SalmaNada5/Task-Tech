@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/Lists.dart';
-import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
 class ReusablePostForm extends StatefulWidget {
@@ -39,9 +38,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
-    Color fieldColor =Constants.isDarkMode
-        ? const Color(0xff213440)
-        : Colors.white;
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -57,24 +54,24 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               Text(
                 widget.firstLabel,
                 textAlign: TextAlign.center,
-                style: headStyle,
+                style: headStyle.copyWith(
+                    color: Theme.of(context).textTheme.headlineSmall!.color),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextFormField(
                 controller: widget.postNameController,
-                style: headStyle,
+                style: headStyle.copyWith(color: Theme.of(context).hintColor),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 15),
                   border: InputBorder.none,
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6),
-                      borderSide: BorderSide(
-                        color: fieldColor,
-                      )),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).canvasColor)),
                   filled: true,
-                  fillColor: fieldColor,
+                  fillColor: Theme.of(context).canvasColor,
                 ),
                 onChanged: (value) {
                   widget.postNameController.text = value.toString();
@@ -102,7 +99,8 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               Text(
                 'Delivery Days',
                 textAlign: TextAlign.center,
-                style: headStyle,
+                style: headStyle.copyWith(
+                    color: Theme.of(context).textTheme.headlineSmall!.color),
               ),
               const SizedBox(
                 height: 10,
@@ -110,18 +108,19 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               TextFormField(
                 controller: widget.deliveryDaysController,
                 //readOnly: true,
-                style: headStyle,
+                style: headStyle.copyWith(color: Theme.of(context).hintColor),
+
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 15),
                   border: InputBorder.none,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(6),
                     borderSide: BorderSide(
-                      color: fieldColor,
+                      color: Theme.of(context).canvasColor,
                     ),
                   ),
                   filled: true,
-                  fillColor: fieldColor,
+                  fillColor: Theme.of(context).canvasColor,
                   // suffixIcon: IconButton(
                   //   onPressed: () async {
                   //     DateTime? selectedDate = await showDatePicker(
@@ -181,7 +180,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                       Text(
                         'Salary',
                         textAlign: TextAlign.center,
-                        style: headStyle,
+                        style: headStyle.copyWith(
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .color),
                       ),
                       const SizedBox(
                         height: 10,
@@ -190,17 +193,18 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                         width: 0.4 * screenW,
                         child: TextFormField(
                           controller: widget.salaryController,
-                          style: headStyle,
+                          style: headStyle.copyWith(
+                              color: Theme.of(context).hintColor),
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(left: 15),
                               border: InputBorder.none,
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(6),
                                   borderSide: BorderSide(
-                                    color: fieldColor,
+                                    color: Theme.of(context).canvasColor,
                                   )),
                               filled: true,
-                              fillColor: fieldColor,
+                              fillColor: Theme.of(context).canvasColor,
                               hintStyle: GoogleFonts.poppins(
                                 fontSize: 16,
                                 color: const Color(0xffC0C0C0),
@@ -232,7 +236,11 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                       Text(
                         'Category',
                         textAlign: TextAlign.center,
-                        style: headStyle,
+                        style: headStyle.copyWith(
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .color),
                       ),
                       const SizedBox(
                         height: 10,
@@ -242,17 +250,19 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                         child: TextFormField(
                           controller: widget.categoryController,
                           readOnly: true,
-                          style: headStyle,
+                          style: headStyle.copyWith(
+                              color: Theme.of(context).hintColor),
+
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(left: 15),
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6),
                                 borderSide: BorderSide(
-                                  color: fieldColor,
+                                  color: Theme.of(context).canvasColor,
                                 )),
                             filled: true,
-                            fillColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
                             suffixIcon: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: DropdownButton<String>(
@@ -310,24 +320,25 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               Text(
                 'Software Tool',
                 textAlign: TextAlign.center,
-                style: headStyle,
+                style: headStyle.copyWith(
+                    color: Theme.of(context).textTheme.headlineSmall!.color),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextFormField(
                 controller: widget.stController,
-                style: headStyle,
+                style: headStyle.copyWith(color: Theme.of(context).hintColor),
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(left: 15),
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                          color: fieldColor,
+                          color: Theme.of(context).canvasColor,
                         )),
                     filled: true,
-                    fillColor: fieldColor,
+                    fillColor: Theme.of(context).canvasColor,
                     hintStyle: GoogleFonts.poppins(
                       fontSize: 16,
                       color: const Color(0xffC0C0C0),
@@ -361,7 +372,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                     padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(
                         horizontal: 80,
-                         vertical: 8,
+                        vertical: 8,
                       ),
                     ),
                     backgroundColor: MaterialStateProperty.all(

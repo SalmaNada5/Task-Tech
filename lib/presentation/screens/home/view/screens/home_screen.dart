@@ -74,27 +74,39 @@ class HomeScreen extends StatelessWidget {
                         child: SingleChildScrollView(
                           controller: homeCubit.categoriesScrollController,
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: homeCubit.categories.length,
-                                itemBuilder: (ctx, i) => CategoryItem(
-                                  catName: homeCubit.categories[i].name,
-                                  imgUrl: homeCubit.categories[i].photo,
-                                  numOfSkills: homeCubit.categories[i].nSkills,
-                                ),
-                              ),
-                              homeCubit.categoriesLoading
-                                  ? const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 4),
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : const SizedBox.shrink(),
-                            ],
+                          child: ShimmerWidget(
+                            enableShimmer: homeCubit.categoriesEnableShimmer,
+                            child: Row(
+                              children: homeCubit.categoriesEnableShimmer
+                                  ? List.generate(
+                                      3,
+                                      (index) => const CategoryItem(
+                                          imgUrl: '',
+                                          catName: 'name',
+                                          numOfSkills: 0))
+                                  : [
+                                      ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: homeCubit.categories.length,
+                                        itemBuilder: (ctx, i) => CategoryItem(
+                                          catName: homeCubit.categories[i].name,
+                                          imgUrl: homeCubit.categories[i].photo,
+                                          numOfSkills:
+                                              homeCubit.categories[i].nSkills,
+                                        ),
+                                      ),
+                                      homeCubit.categoriesLoading
+                                          ? const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 4),
+                                              child: CircularProgressIndicator(),
+                                            )
+                                          : const SizedBox.shrink(),
+                                    ],
+                            ),
                           ),
                         ),
                       );
@@ -209,42 +221,59 @@ class HomeScreen extends StatelessWidget {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           controller: homeCubit.highestRatedScrollController,
-                          child: Row(
-                            children: [
-                              ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: homeCubit.users.length,
-                                itemBuilder: (ctx, i) {
-                                  return state.userInfoModel?.data?.user.id ==
-                                          homeCubit.users[i].id
-                                      ? const SizedBox.shrink()
-                                      : HighestRatedFreelancer(
-                                          userImgUrl: homeCubit.users[i].photo,
-                                          userName: homeCubit.users[i].name,
-                                          job: homeCubit.users[i].job,
-                                          rate: homeCubit
-                                              .users[i].ratingsAverage
-                                              .toDouble(),
-                                          onPress: () async {
-                                            await homeCubit.getUserByIdFunc(
-                                                homeCubit.users[i].id);
-                                            Constants.navigateTo(
-                                                const ProfileScreen(
-                                                    isMe: false));
-                                          },
-                                        );
-                                },
-                              ),
-                              homeCubit.topUserLoading
-                                  ? const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 4),
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : const SizedBox.shrink(),
-                            ],
+                          child: ShimmerWidget(
+                            enableShimmer: homeCubit.topUsersEnableShimmer,
+                            child: Row(
+                              children: homeCubit.topUsersEnableShimmer
+                                  ? List.generate(
+                                      3,
+                                      (index) => const HighestRatedFreelancer(
+                                          userImgUrl: '',
+                                          userName: 'userName',
+                                          job: 'job',
+                                          rate: 0.0,
+                                          onPress: null))
+                                  : [
+                                      ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: homeCubit.users.length,
+                                        itemBuilder: (ctx, i) {
+                                          return state.userInfoModel?.data?.user
+                                                      .id ==
+                                                  homeCubit.users[i].id
+                                              ? const SizedBox.shrink()
+                                              : HighestRatedFreelancer(
+                                                  userImgUrl:
+                                                      homeCubit.users[i].photo,
+                                                  userName:
+                                                      homeCubit.users[i].name,
+                                                  job: homeCubit.users[i].job,
+                                                  rate: homeCubit
+                                                      .users[i].ratingsAverage
+                                                      .toDouble(),
+                                                  onPress: () async {
+                                                    await homeCubit
+                                                        .getUserByIdFunc(homeCubit
+                                                            .users[i].id);
+                                                    Constants.navigateTo(
+                                                        const ProfileScreen(
+                                                            isMe: false));
+                                                  },
+                                                );
+                                        },
+                                      ),
+                                      homeCubit.topUserLoading
+                                          ? const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 4),
+                                              child: CircularProgressIndicator(),
+                                            )
+                                          : const SizedBox.shrink(),
+                                    ],
+                            ),
                           ),
                         ),
                       );

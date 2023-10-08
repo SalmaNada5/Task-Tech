@@ -19,9 +19,6 @@ class _PostTaskState extends State<PostTask> {
   bool fileDisSelected = false;
   @override
   Widget build(BuildContext context) {
-    Color fieldColor = Constants.isDarkMode
-        ? const Color(0xff213440)
-        : Colors.white;
     return ReusablePostForm(
       onPressed: () async {
         await AddPostsController.uploadTaskFunc();
@@ -41,25 +38,26 @@ class _PostTaskState extends State<PostTask> {
           Text(
             'Tell us about your Task',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
           ),
           TextFormField(
             controller: AddPostsController.taskeDescriptionController,
-            style: headStyle,
+            style: headStyle.copyWith(color: Theme.of(context).hintColor),
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: 15),
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(6),
                     borderSide: BorderSide(
-                      color: fieldColor,
+                      color: Theme.of(context).canvasColor,
                       //Colors.white,
                     )),
                 filled: true,
-                fillColor: fieldColor,
+                fillColor: Theme.of(context).canvasColor,
                 hintText: 'Description',
                 hintStyle: GoogleFonts.poppins(
                   fontSize: 16,
@@ -85,7 +83,8 @@ class _PostTaskState extends State<PostTask> {
           Text(
             'Attach File',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
@@ -107,18 +106,18 @@ class _PostTaskState extends State<PostTask> {
               });
             },
             readOnly: true,
-            style: headStyle,
+            style: headStyle.copyWith(color: Theme.of(context).hintColor),
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: 15),
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
                   borderSide: BorderSide(
-                    color: fieldColor,
+                    color: Theme.of(context).canvasColor,
                   ),
                 ),
                 filled: true,
-                fillColor: fieldColor,
+                fillColor: Theme.of(context).canvasColor,
                 prefixIcon: fileDisSelected
                     ? null
                     : fileName == null

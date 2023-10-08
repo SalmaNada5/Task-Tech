@@ -159,7 +159,7 @@ class BioScreenState extends State<BioScreen> {
                 child: CustomButtonWidget(
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     borderColor: const Color.fromRGBO(22, 80, 105, 1),
                     onpressed: () {
                       Constants.navigateTo(EducationScreen(

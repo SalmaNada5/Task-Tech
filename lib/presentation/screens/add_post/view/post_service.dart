@@ -19,9 +19,6 @@ class _PostServiceState extends State<PostService> {
   bool fileDisSelected = false;
   @override
   Widget build(BuildContext context) {
-    Color fieldColor = Constants.isDarkMode
-        ? const Color(0xff213440)
-        : Colors.white;
     return ReusablePostForm(
       onPressed: () async {
         logWarning(AddPostsController.serviceDeliveryDaysController.text);
@@ -42,24 +39,25 @@ class _PostServiceState extends State<PostService> {
           Text(
             'Description',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
           ),
           TextFormField(
             controller: AddPostsController.serviceDescriptionController,
-            style: headStyle,
+            style: headStyle.copyWith(color: Theme.of(context).hintColor),
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(left: 15),
               border: InputBorder.none,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
                   borderSide: BorderSide(
-                    color: fieldColor,
+                    color: Theme.of(context).canvasColor,
                   )),
               filled: true,
-              fillColor: fieldColor,
+              fillColor: Theme.of(context).canvasColor,
             ),
             onChanged: (value) {
               AddPostsController.serviceDescriptionController.text =
@@ -85,7 +83,8 @@ class _PostServiceState extends State<PostService> {
           Text(
             'Attach File',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
@@ -114,11 +113,11 @@ class _PostServiceState extends State<PostService> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
                   borderSide: BorderSide(
-                    color: fieldColor,
+                    color: Theme.of(context).canvasColor,
                   ),
                 ),
                 filled: true,
-                fillColor: fieldColor,
+                fillColor: Theme.of(context).canvasColor,
                 prefixIcon: fileDisSelected
                     ? null
                     : fileName == null

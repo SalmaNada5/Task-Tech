@@ -22,6 +22,13 @@ base class HomeState extends Equatable {
           : null,
     );
   }
+  HomeState copyWith({
+    UserInfoModel? userInfoModel,
+  }) {
+    return HomeState(
+      userInfoModel: userInfoModel ?? this.userInfoModel,
+    );
+  }
 }
 
 final class HomeInitial extends HomeState {
@@ -40,7 +47,13 @@ final class GetUserInfoSucces extends HomeState {
       ];
 }
 
-final class GetUserInfoError extends HomeState {}
+final class GetUserInfoError extends HomeState {
+   const GetUserInfoError({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
 
 final class GetPopularCategoriesSucces extends HomeState {
   const GetPopularCategoriesSucces({super.userInfoModel});
@@ -50,7 +63,13 @@ final class GetPopularCategoriesSucces extends HomeState {
       ];
 }
 
-final class GetPopularCategoriesError extends HomeState {}
+final class GetPopularCategoriesError extends HomeState {
+   const GetPopularCategoriesError({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
 
 final class GetRelatedPostsSucces extends HomeState {
   const GetRelatedPostsSucces({super.userInfoModel});
@@ -60,7 +79,13 @@ final class GetRelatedPostsSucces extends HomeState {
       ];
 }
 
-final class GetRelatedPostsError extends HomeState {}
+final class GetRelatedPostsError extends HomeState {
+   const GetRelatedPostsError({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
 
 final class GetTopUsersSucces extends HomeState {
   const GetTopUsersSucces({super.userInfoModel});
@@ -70,7 +95,13 @@ final class GetTopUsersSucces extends HomeState {
       ];
 }
 
-final class GetTopUsersError extends HomeState {}
+final class GetTopUsersError extends HomeState {
+   const GetTopUsersError({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
 
 final class GetSpecificUserSucces extends HomeState {
   const GetSpecificUserSucces({super.userInfoModel});
@@ -80,4 +111,10 @@ final class GetSpecificUserSucces extends HomeState {
       ];
 }
 
-final class GetSpecificUserError extends HomeState {}
+final class GetSpecificUserError extends HomeState {
+   const GetSpecificUserError({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}

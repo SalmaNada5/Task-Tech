@@ -45,9 +45,6 @@ class SalaryScreenState extends State<SalaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color fieldColor = Constants.isDarkMode
-        ? const Color(0xff213440)
-        : Colors.white;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppbar(percent: 80),
@@ -120,8 +117,8 @@ class SalaryScreenState extends State<SalaryScreen> {
                 // ),
                 CustomTextFormField(
                   controller: minController,
-                  fillColor: fieldColor,
-                  borderColor: fieldColor,
+                  fillColor: Theme.of(context).canvasColor,
+                  borderColor: Theme.of(context).canvasColor,
                   obscure: false,
                   validator: (value) {
                     value = minController.text;
@@ -148,8 +145,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                 ),
                 CustomTextFormField(
                   controller: maxController,
-                  fillColor: fieldColor,
-                  borderColor: fieldColor,
+                  fillColor: Theme.of(context).canvasColor,
                   obscure: false,
                   validator: (value) {
                     value = maxController.text;
@@ -180,7 +176,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: fieldColor),
+                      color: Theme.of(context).canvasColor),
                   child: DropdownButton<String>(
                     icon: const Icon(
                       Icons.keyboard_arrow_down_outlined,
@@ -231,7 +227,7 @@ class SalaryScreenState extends State<SalaryScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: fieldColor,
+                    color: Theme.of(context).canvasColor,
                   ),
                   child: DropdownButton<String>(
                     icon: const Icon(

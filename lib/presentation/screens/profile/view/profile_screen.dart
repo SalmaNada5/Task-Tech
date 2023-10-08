@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,7 @@ class ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -77,18 +79,26 @@ class ProfileScreenState extends State<ProfileScreen>
               c is GetUserInfoSucces,
           builder: (context, state) {
             return Padding(
-              padding: EdgeInsetsDirectional.only(
-                  start: MediaQuery.of(context).size.width * 0.03,
-                  end: MediaQuery.of(context).size.width * 0.03,
-                  bottom: MediaQuery.of(context).size.height * 0.03,
-                  top: MediaQuery.of(context).size.height * 0.03),
+              padding:
+                  const EdgeInsetsDirectional.only(top: 20, start: 10, end: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                  ),
+                  widget.isMe
+                      ? Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () => Constants.navigateTo(
+                              const EditProfileScreen(),
+                            ),
+                            icon: Icon(
+                              Icons.settings,
+                              color: Theme.of(context).primaryColor,
+                              size: 26,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   Center(
                     child: Stack(
                       alignment: Alignment.center,
@@ -115,16 +125,10 @@ class ProfileScreenState extends State<ProfileScreen>
                           child: widget.isMe
                               ? GestureDetector(
                                   onTap: () async {
-                                    final result =
-                                        await UploadProfilePhotoController
-                                            .attachPhoto();
+                                    await UploadProfilePhotoController
+                                        .attachPhoto();
                                     await UploadProfilePhotoController
                                         .uploadProfilePhotoFunc();
-                                    if (result != null) {
-                                      // setState(() {
-                                      //   imagefile = File(result.files.single.path!);
-                                      // });
-                                    }
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -218,47 +222,46 @@ class ProfileScreenState extends State<ProfileScreen>
                   const SizedBox(
                     height: 10,
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(
-                        start: MediaQuery.of(context).size.width * 0.03,
-                        end: MediaQuery.of(context).size.width * 0.03),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                color: Constants.isDarkMode
-                                    ? Colors.white
-                                    : const Color.fromRGBO(22, 80, 105, 1),
-                              )),
-                          child: MaterialButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Message',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 18,
+                  !widget.isMe
+                      ? Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 10, end: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : const Color.fromRGBO(
+                                              22, 80, 105, 1),
+                                    )),
+                                child: MaterialButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      'Message',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    )),
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: Constants.screenWidth * 0.4,
+                                height: Constants.screenHeight * 0.05,
+                                decoration: BoxDecoration(
                                   color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(6),
                                 ),
-                              )),
-                        ),
-                        const Spacer(),
-                        Container(
-                          width: Constants.screenWidth * 0.4,
-                          height: Constants.screenHeight * 0.05,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: MaterialButton(
-                              onPressed: () {
-                                widget.isMe
-                                    ? Constants.navigateTo(
-                                        const EditProfileScreen())
-                                    : isFollowed == false
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    isFollowed == false
                                         ? UserController.followUser(
                                             UserController
                                                     .userModel.data?.user.id ??
@@ -267,23 +270,21 @@ class ProfileScreenState extends State<ProfileScreen>
                                             UserController
                                                     .userModel.data?.user.id ??
                                                 '');
-                                setState(() {
-                                  isFollowed = !isFollowed;
-                                });
-                              },
-                              child: Text(
-                                widget.isMe
-                                    ? 'Setting'
-                                    : isFollowed
-                                        ? 'UnFollow'
-                                        : 'Follow',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 18, color: Colors.white),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
+                                    setState(() {
+                                      isFollowed = !isFollowed;
+                                    });
+                                  },
+                                  child: Text(
+                                    isFollowed ? 'UnFollow' : 'Follow',
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   const SizedBox(
                     height: 15,
                   ),
@@ -292,29 +293,29 @@ class ProfileScreenState extends State<ProfileScreen>
                       Text(
                         'About me',
                         style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Constants.isDarkMode
-                                ? Colors.white
-                                : Colors.black),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
+                        ),
                       ),
                       Text(
                         'Reviews',
                         style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Constants.isDarkMode
-                                ? Colors.white
-                                : Colors.black),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
+                        ),
                       ),
                       Text(
                         'Portfolio',
                         style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Constants.isDarkMode
-                                ? Colors.white
-                                : Colors.black),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
+                        ),
                       ),
                     ],
                     indicatorColor: Theme.of(context).primaryColor,
@@ -322,15 +323,13 @@ class ProfileScreenState extends State<ProfileScreen>
                     labelPadding: const EdgeInsetsDirectional.only(bottom: 10),
                     controller: _tabController,
                   ),
-                  const SizedBox(
-                    height: 9,
-                  ),
                   Expanded(
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        // ignore: prefer_const_constructors
-                        AboutmePage( isMe:widget.isMe,),
+                        AboutmePage(
+                          isMe: widget.isMe,
+                        ),
                         ReviewPage(isMe: widget.isMe),
                         PortfolioPage(isMe: widget.isMe),
                       ],

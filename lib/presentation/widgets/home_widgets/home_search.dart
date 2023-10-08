@@ -33,9 +33,10 @@ class _SearchWidgetState extends State<SearchWidget> {
           fontWeight: FontWeight.w400,
           color: const Color(0xffC0C0C0),
         ),
-        fillColor: Constants.isDarkMode
-            ? const Color(0xff213440)
-            : Colors.white,
+        fillColor: Theme.of(context).scaffoldBackgroundColor,
+        //  Constants.isDarkMode
+        //     ? const Color(0xff213440)
+        //     : Colors.white,
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color(0xffB8B8B8)),
@@ -92,9 +93,9 @@ class HomeSearchDelegate extends SearchDelegate {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
-              itemCount: SearchServiceController
-                      .searchServiceModel.services?.length ??
-                  0,
+              itemCount:
+                  SearchServiceController.searchServiceModel.services?.length ??
+                      0,
               itemBuilder: (BuildContext context, int i) => SearchPostResult(
                   onPressed: () => Constants.navigateTo(ServiceDetailsPage(
                         service: SearchServiceController

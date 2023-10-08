@@ -16,6 +16,7 @@ class AboutmePage extends StatelessWidget {
     Color textColor =
         Theme.of(context).textTheme.headlineSmall!.color ?? Colors.grey;
     HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
+
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -228,12 +229,14 @@ class AboutmePage extends StatelessWidget {
               height: 70,
               child: BlocBuilder<HomeCubit, HomeState>(
                 bloc: homeCubit,
-                buildWhen: (p, c) => c is GetSpecificUserSucces || c is GetUserInfoSucces,
+                buildWhen: (p, c) =>
+                    c is GetSpecificUserSucces || c is GetUserInfoSucces,
                 builder: (context, state) {
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: isMe?
-                     state.userInfoModel?.data?.user.skills!.length ?? 0 : homeCubit.userModel.data?.user.skills?.length ?? 0,
+                    itemCount: isMe
+                        ? state.userInfoModel?.data?.user.skills!.length ?? 0
+                        : homeCubit.userModel.data?.user.skills?.length ?? 0,
                     itemBuilder: (context, i) => Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(
@@ -246,11 +249,12 @@ class AboutmePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                       isMe?
-                     state.userInfoModel?.data?.user.skills![i] ?? '' : homeCubit.userModel.data?.user.skills?[i] ?? '',
+                        isMe
+                            ? state.userInfoModel?.data?.user.skills![i] ?? ''
+                            : homeCubit.userModel.data?.user.skills?[i] ?? '',
                         style: GoogleFonts.poppins(
                             fontSize: 14,
-                            color: textColor,
+                            color: Colors.white,
                             fontWeight: FontWeight.w400),
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +22,7 @@ class SignInScreen extends StatelessWidget {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Scaffold(
       body: Center(
         child: Padding(
@@ -34,11 +36,6 @@ class SignInScreen extends StatelessWidget {
                   currState is RememberMeOn ||
                   currState is RememberMeOff,
               builder: (context, state) {
-                Color fieldColor =
-                    Constants.isDarkMode
-                        ? const Color(0xff213440)
-                        : const Color(0xffF5F5F5);
-
                 return Column(
                   children: [
                     const SizedBox(
@@ -46,7 +43,10 @@ class SignInScreen extends StatelessWidget {
                     ),
                     Text(
                       'Welcome back,',
-                      style: titleStyle,
+                      style: titleStyle.copyWith(
+                        color:
+                            isDarkMode ? Colors.white : const Color(0xff165069),
+                      ),
                     ),
                     Text(
                       'Sign in your account',
@@ -74,8 +74,8 @@ class SignInScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: emailController,
                             obscure: false,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             hintText: 'Enter your mail',
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
@@ -99,8 +99,8 @@ class SignInScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: passController,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             validator: (value) {
                               value = passController.text;
                               if (value.isEmpty) {
@@ -116,12 +116,10 @@ class SignInScreen extends StatelessWidget {
                                 size: 20,
                               ),
                               onPressed: () {
-                                authCubit
-                                    .obsecureLogic();
+                                authCubit.obsecureLogic();
                               },
                             ),
-                            obscure: authCubit
-                                .obsecureText,
+                            obscure: authCubit.obsecureText,
                           ),
                           const SizedBox(
                             height: 10,
@@ -132,16 +130,14 @@ class SignInScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Checkbox(
-                                    value: authCubit
-                                        .rememberMe,
+                                    value: authCubit.rememberMe,
                                     checkColor: Theme.of(context).primaryColor,
                                     fillColor:
                                         MaterialStateProperty.all(Colors.white),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     onChanged: (value) {
-                                      authCubit
-                                          .rememberMeLogic();
+                                      authCubit.rememberMeLogic();
                                     },
                                     side: const BorderSide(
                                         color: Color(0xffB1B1B1)),
@@ -178,9 +174,9 @@ class SignInScreen extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  await authCubit
-                                      .loginCubit(emailController.text,
-                                          passController.text);
+                                  await authCubit.loginCubit(
+                                      emailController.text,
+                                      passController.text);
                                 }
                               },
                               style: ButtonStyle(

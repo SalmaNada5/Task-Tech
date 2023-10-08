@@ -45,6 +45,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
                   widget.userName,
                   style: headStyle.copyWith(
                     fontSize: 16,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                   ),
                 ),
                 SmoothStarRating(

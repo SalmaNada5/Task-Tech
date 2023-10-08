@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,6 +44,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+      AdaptiveTheme.of(context).mode ==
+          AdaptiveThemeMode.dark;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -133,7 +137,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               Text(
                 'Delivery Time',
-                style: headStyle,
+                style: headStyle.copyWith(
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
               ),
               Text(
                 '${TaskController.taskDetailsModel.data?.post.delieveryDate} Days',
@@ -148,7 +154,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               Text(
                 'Comments',
-                style: headStyle,
+                style: headStyle.copyWith(
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.4,
@@ -276,10 +284,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                   contentPadding: const EdgeInsets.all(8),
                   filled: true,
-                  fillColor:
-                      Constants.isDarkMode
-                          ? const Color(0xff213440)
-                          : Colors.white,
+                  fillColor: isDarkMode
+                      ? const Color(0xff213440)
+                      : Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color.fromRGBO(224, 224, 224, 0.9),

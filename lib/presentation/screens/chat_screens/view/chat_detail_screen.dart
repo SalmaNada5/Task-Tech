@@ -92,7 +92,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           toolbarHeight: 85,
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           flexibleSpace: SafeArea(
             child: Column(
               children: [
@@ -130,9 +130,10 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             Text(
                               'Kristin Waston',
                               style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color.fromRGBO(22, 80, 105, 1)),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                             SizedBox(
                               height:
@@ -327,29 +328,29 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none),
-                              fillColor:
-                                  const Color.fromRGBO(247, 247, 252, 1)),
+                              fillColor: Theme.of(context).canvasColor),
                         ),
                       )),
                       const SizedBox(
                         width: 10,
                       ),
                       IconButton(
-                          onPressed: () {
-                            if (messageController.text.isNotEmpty) {
-                              sendMessages();
-                              debugPrint('senttt');
-                            }
-                            // setState(() {
-                            //   socket.emit('msg', messageController!.text);
-                            //   msgs.add(messageController!.text);
-                            //   messageController!.clear();
-                            // });
-                          },
-                          icon: const Icon(
-                            Icons.send,
-                            color: Color.fromRGBO(22, 80, 105, 1),
-                          ))
+                        onPressed: () {
+                          if (messageController.text.isNotEmpty) {
+                            sendMessages();
+                            debugPrint('senttt');
+                          }
+                          // setState(() {
+                          //   socket.emit('msg', messageController!.text);
+                          //   msgs.add(messageController!.text);
+                          //   messageController!.clear();
+                          // });
+                        },
+                        icon: Icon(
+                          Icons.send,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ],
                   ),
                 ),

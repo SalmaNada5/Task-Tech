@@ -45,19 +45,19 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           elevation: 20,
           items: [
             CustomNavigationBarItem(
-                icon: const Icon(CupertinoIcons.home,
+                icon: const Icon(CupertinoIcons.house_fill,
                     size: 24, color: Colors.grey),
                 selectedIcon: Icon(
-                  CupertinoIcons.home,
+                  CupertinoIcons.house_fill,
                   size: 24,
                   color: Theme.of(context).primaryColor,
                 )),
             CustomNavigationBarItem(
-                icon: const Icon(CupertinoIcons.chat_bubble_text,
-                    size: 26, color: Colors.grey),
+                icon: const Icon(CupertinoIcons.chat_bubble_2,
+                    size: 30, color: Colors.grey),
                 selectedIcon: Icon(
-                  CupertinoIcons.chat_bubble_text,
-                  size: 26,
+                  CupertinoIcons.chat_bubble_2,
+                  size: 30,
                   color: Theme.of(context).primaryColor,
                 )),
             CustomNavigationBarItem(

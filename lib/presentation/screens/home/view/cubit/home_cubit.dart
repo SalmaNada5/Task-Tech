@@ -5,6 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/auth/models/cur_user_info_model.dart';
 import 'package:task_tech/presentation/screens/home/models/category_model.dart';
 import 'package:task_tech/presentation/screens/home/models/get_user_model.dart';
@@ -19,15 +20,14 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
 
   final DioClient _dioClient = DioClient();
   initCubit() {
-    logWarning('${state.userInfoModel}');
     if (state.userInfoModel == null) {
       getUserInfoFunc();
     }
-    categoriesScrollControllerFunc();
-    relatedPostsScrollControllerFunc();
-    getPopularCategoriesFunc();
-    getRelatedPostsFunc();
-    getTopUsersFunc();
+    // categoriesScrollControllerFunc();
+    // relatedPostsScrollControllerFunc();
+    // getPopularCategoriesFunc();
+    // getRelatedPostsFunc();
+    // getTopUsersFunc();
   }
 
   Future<String> getToken() async {
@@ -49,20 +49,16 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
   getUserInfoFunc() async {
     emit(HomeInitial(userInfoModel: state.userInfoModel));
     userInfoEnableShimmer = true;
-    try {
-      String token = await getToken();
-      Response res = await _dioClient.get(
-        'api/v1/users/me',
-        token,
-        isLoading: false,
-      ) as Response;
-      //userInfoModel = UserInfoModel.fromJson(res.data);
-      logSuccess('User info returned successfully: ${res.data}');
+    logNormal('state: $state');
+    UserInfoModel? userInfoModel =
+        await CurrentUserInfoController.getUserInfoFunc();
+    if (userInfoModel != null) {
       userInfoEnableShimmer = false;
-      emit(GetUserInfoSucces(userInfoModel: UserInfoModel.fromJson(res.data)));
-    } catch (e) {
-      emit(GetUserInfoError());
-      logError('error in getUserInfoFunc: ${e.toString()}');
+      emit(GetUserInfoSucces(userInfoModel: userInfoModel));
+      logWarning('state after: $state');
+    } else {
+      emit(GetUserInfoError(userInfoModel: state.userInfoModel));
+      logError('error in getUserInfoFunc: ${userInfoModel?.status}');
     }
   }
 
@@ -76,7 +72,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
   ScrollController categoriesScrollController = ScrollController();
 
   getPopularCategoriesFunc() async {
-    emit(const HomeInitial());
+    emit(HomeInitial(userInfoModel: state.userInfoModel));
     categoriesEnableShimmer = true;
     try {
       String token = await getToken();
@@ -93,12 +89,12 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
       logSuccess(
           'popular categories returned successfully: ${categoryModel.status}');
       categoriesEnableShimmer = false;
-      emit(GetPopularCategoriesSucces());
+      emit(GetPopularCategoriesSucces(userInfoModel: state.userInfoModel));
     } catch (e) {
       if (categoriesPage == categoryModel.paginationResult?.numberOfPages) {
         categoriesPage = categoriesPage + 1;
       }
-      emit(GetPopularCategoriesError());
+      emit(GetPopularCategoriesError(userInfoModel: state.userInfoModel));
       logError('error in getPopularCategoriesFunc ${e.toString()}');
     }
   }
@@ -132,7 +128,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
     id = prefs.getString("id");
-    emit(const HomeInitial());
+    emit(HomeInitial(userInfoModel: state.userInfoModel));
     relatedPostsEnableShimmer = true;
     try {
       Response res = await _dioClient.get(
@@ -146,14 +142,14 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
       logSuccess(
           'related posts returned successfully: ${relatedPostModel.status}');
       relatedPostsEnableShimmer = false;
-      emit(GetRelatedPostsSucces());
+      emit(GetRelatedPostsSucces(userInfoModel: state.userInfoModel));
     } catch (e) {
       if (relatedPostspage ==
           relatedPostModel.paginationResult?.numberOfPages) {
         relatedPostspage = relatedPostspage + 1;
       }
       logError('error in getRelatedPostsFunc ${e.toString()}');
-      emit(GetRelatedPostsError());
+      emit(GetRelatedPostsError(userInfoModel: state.userInfoModel));
     }
   }
 
@@ -185,7 +181,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
 
   getTopUsersFunc() async {
     topUsersEnableShimmer = true;
-    emit(const HomeInitial());
+    emit(HomeInitial(userInfoModel: state.userInfoModel));
     try {
       String token = await getToken();
 
@@ -200,14 +196,14 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
       highestRatedUsersPage = highestRatedUsersPage + 1;
       logSuccess('top users returned successfully: ${topUserModel.status}');
       topUsersEnableShimmer = false;
-      emit(GetTopUsersSucces());
+      emit(GetTopUsersSucces(userInfoModel: state.userInfoModel));
     } catch (e) {
       if (highestRatedUsersPage ==
           topUserModel.paginationResult?.numberOfPages) {
         highestRatedUsersPage = highestRatedUsersPage + 1;
       }
       logError('error in getTopUserFunc ${e.toString()}');
-      emit(GetTopUsersError());
+      emit(GetTopUsersError(userInfoModel: state.userInfoModel));
     }
   }
 
@@ -231,7 +227,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
   UserModel userModel = UserModel();
 
   getUserByIdFunc(String userId) async {
-    emit(const HomeInitial());
+    emit(HomeInitial(userInfoModel: state.userInfoModel));
     try {
       String token = await getToken();
 
@@ -242,9 +238,9 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
       userModel = UserModel.fromJson(res.data);
       logSuccess(
           'Specific User info returned successfully: ${userModel.status}');
-      emit(GetSpecificUserSucces());
+      emit(GetSpecificUserSucces(userInfoModel: state.userInfoModel));
     } catch (e) {
-      emit(GetSpecificUserError());
+      emit(GetSpecificUserError(userInfoModel: state.userInfoModel));
       logError('error in getUserByIdFunc ${e.toString()}');
     }
   }

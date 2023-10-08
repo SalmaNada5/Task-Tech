@@ -1,94 +1,90 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
+import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
+import 'package:task_tech/presentation/screens/profile/view/profile_cubit/profile_cubit.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
-}
-
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  bool status = true;
-
-  @override
   Widget build(BuildContext context) {
+    ProfileCubit profileCubit =
+        BlocProvider.of<ProfileCubit>(context, listen: true);
+    HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
     final manager = AdaptiveTheme.of(context);
-    final mode = AdaptiveTheme.of(context).mode;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsetsDirectional.only(
-            start: MediaQuery.of(context).size.width * 0.03,
-            end: MediaQuery.of(context).size.width * 0.03,
-            bottom: MediaQuery.of(context).size.height * 0.03,
-            top: MediaQuery.of(context).size.height * 0.03),
+        padding: const EdgeInsetsDirectional.all(10),
         child: SafeArea(
           child: SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: MediaQuery.of(context).size.width * 0.12,
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: CurrentUserInfoController
-                                .userInfoModel.data?.user.photo ??
-                            '',
-                        errorWidget: (context, url, error) {
-                          return Image.asset(
-                            'images/placeholder.jpg',
-                          );
-                        },
+              BlocBuilder<HomeCubit, HomeState>(
+                buildWhen: (p, c) => c is HomeInitial || c is GetUserInfoSucces,
+                bloc: homeCubit,
+                builder: (context, state) {
+                  return Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                state.userInfoModel?.data?.user.photo ?? '',
+                            errorWidget: (context, url, error) {
+                              return Image.asset(
+                                'images/placeholder.jpg',
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.06,
-                  ),
-                  Text(
-                    CurrentUserInfoController.userInfoModel.data?.user.name ??
-                        '',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
-                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        state.userInfoModel?.data?.user.name ?? '',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
+              const SizedBox(height: 30),
               Text(
                 'Account',
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w500,
-                  fontSize: MediaQuery.of(context).size.width * 0.045,
+                  fontSize: 20,
                   color: Theme.of(context).textTheme.headlineSmall!.color,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.025,
+              const SizedBox(
+                height: 5,
               ),
               TextButton.icon(
                   onPressed: () {},
-                  icon: mode == AdaptiveThemeMode.light
-                      ? Image.asset('icons/personal_info.png')
-                      : Image.asset('icons/personal_info_dark.png'),
+                  icon: Icon(
+                    CupertinoIcons.person_crop_circle,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                  ),
                   label: Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: MediaQuery.of(context).size.width * 0.02,
-                      end: MediaQuery.of(context).size.width * 0.02,
-                    ),
+                    padding: const EdgeInsetsDirectional.only(start: 20),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,8 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               'Personal information',
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w500,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.045,
+                                fontSize: 18,
                                 color: Theme.of(context)
                                     .textTheme
                                     .headlineSmall!
@@ -119,31 +114,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           'Security, Privacy',
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.038,
+                              fontSize: 14,
                               color: const Color.fromRGBO(177, 177, 177, 1)),
                         ),
                       ],
                     ),
                   )),
-              Divider(
-                height: MediaQuery.of(context).size.height * 0.04,
+              const Divider(
+                height: 4,
                 thickness: 1,
-                color: const Color.fromRGBO(224, 224, 224, 1),
+                color: Color.fromRGBO(224, 224, 224, 1),
                 indent: 10,
                 endIndent: 10,
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/Group 34333.png')
-                    : Image.asset('icons/message_circle_dark.png'),
-                label: Text(
-                  'Message',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                icon: Icon(
+                  CupertinoIcons.chat_bubble_2,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Messages',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              TextButton.icon(
+                onPressed: () {},
+                icon: Icon(
+                  CupertinoIcons.bookmark,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Saved',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
                   ),
                 ),
               ),
@@ -152,15 +171,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/Vector.png')
-                    : Image.asset('icons/saved_dark.png'),
-                label: Text(
-                  'Saved',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                icon: Icon(
+                  Icons.mail_outline_rounded,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Contact Us',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
                   ),
                 ),
               ),
@@ -169,15 +192,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/Group 34337.png')
-                    : Image.asset('icons/contact_us_dark.png'),
-                label: Text(
-                  'Contact Us',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                icon: Icon(
+                  CupertinoIcons.creditcard,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Payment',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
                   ),
                 ),
               ),
@@ -186,99 +213,96 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/credit.png')
-                    : Image.asset('icons/payment_dark.png'),
-                label: Text(
-                  'Payment',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                icon: Icon(
+                  CupertinoIcons.bell,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Notifications',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.035,
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/notification.png')
-                    : Image.asset('icons/notification_dark.png'),
-                label: Text(
-                  'Notifications',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
-                  ),
-                ),
-              ),
-              Divider(
-                height: MediaQuery.of(context).size.height * 0.043,
+              const Divider(
+                height: 15,
                 thickness: 1,
-                color: const Color.fromRGBO(224, 224, 224, 1),
+                color: Color.fromRGBO(224, 224, 224, 1),
                 indent: 10,
                 endIndent: 10,
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/Vector-1.png')
-                    : Image.asset('icons/dark_mode.png'),
+                icon: Icon(
+                  Icons.remove_red_eye,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
                 label: Row(
                   children: [
-                    Text(
-                      'Dark mode',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: MediaQuery.of(context).size.width * 0.045,
-                        color: Theme.of(context).textTheme.headlineSmall!.color,
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 20),
+                      child: Text(
+                        'Dark mode',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
+                        ),
                       ),
                     ),
                     const Spacer(),
-                    FlutterSwitch(
-                      width: 50.0,
-                      height: 25.0,
-                      toggleSize: 18.0,
-                      value: status,
-                      inactiveColor: const Color.fromRGBO(224, 224, 224, 1),
-                      activeColor: const Color(0xff6695A0),
-                      borderRadius: 20.0,
-                      onToggle: (val) {
-                        setState(() {
-                          status = val;
-                        });
-                        if (manager.mode.isLight) {
-                          manager.setDark();
-                        } else {
-                          manager.setLight();
-                        }
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+                        return FlutterSwitch(
+                          width: 50.0,
+                          height: 25.0,
+                          toggleSize: 18.0,
+                          value: profileCubit.status,
+                          inactiveColor: const Color(0xff6695A0),
+                          activeColor: const Color.fromRGBO(224, 224, 224, 1),
+                          borderRadius: 20.0,
+                          onToggle: (val) {
+                            profileCubit.onThemeModeSwitched(val);
+                            if (profileCubit.status) {
+                              manager.setLight();
+                            } else {
+                              manager.setDark();
+                            }
+                          },
+                        );
                       },
                     ),
-                  
                   ],
                 ),
               ),
-              Divider(
-                height: MediaQuery.of(context).size.height * 0.043,
+              const Divider(
+                height: 15,
                 thickness: 1,
-                color: const Color.fromRGBO(224, 224, 224, 1),
+                color: Color.fromRGBO(224, 224, 224, 1),
                 indent: 10,
                 endIndent: 10,
               ),
               TextButton.icon(
                 onPressed: () => Constants.navigateTo(const CreateProfile()),
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/edit.png')
-                    : Image.asset('icons/settings_dark.png'),
-                label: Text(
-                  'Edit profile',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                icon: Icon(
+                  Icons.edit_document,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Edit profile',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
                   ),
                 ),
               ),
@@ -292,15 +316,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Constants.navigateTo(const SignInScreen(),
                       pushAndRemoveUntil: true);
                 },
-                icon: mode == AdaptiveThemeMode.light
-                    ? Image.asset('icons/Group 34341.png')
-                    : Image.asset('icons/logout_dark.png'),
-                label: Text(
-                  'Sign Out',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: MediaQuery.of(context).size.width * 0.045,
-                    color: Theme.of(context).textTheme.headlineSmall!.color,
+                icon: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
+                label: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    'Sign Out',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
                   ),
                 ),
               ),

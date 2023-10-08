@@ -9,12 +9,14 @@ import 'package:task_tech/presentation/screens/auth/cubits/auth_cubit/auth_cubit
 import 'package:task_tech/presentation/screens/auth/view/splash_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/cubit/create_profile_cubit.dart';
 import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
+import 'package:task_tech/presentation/screens/profile/view/profile_cubit/profile_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
+    
   );
   runApp(MyApp(savedThemeMode: savedThemeMode));
 }
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CreateProfileCubit>.value(
           value: CreateProfileCubit(),
+        ),
+        BlocProvider<ProfileCubit>.value(
+          value: ProfileCubit(),
         ),
       ],
       child: AdaptiveTheme(

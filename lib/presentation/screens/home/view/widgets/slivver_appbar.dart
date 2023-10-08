@@ -64,7 +64,9 @@ class CustomSliverAppbar extends StatelessWidget {
                       ),
                       Text(
                         state.userInfoModel?.data?.user.name ?? '',
-                        style: titleStyle.copyWith(fontSize: 22),
+                        style: titleStyle.copyWith(
+                            fontSize: 22,
+                            color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
@@ -81,8 +83,7 @@ class CustomSliverAppbar extends StatelessWidget {
                         width: 36,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.5)),
+                          border: Border.all(color: Colors.grey),
                         ),
                         child: Icon(
                           CupertinoIcons.bell,

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,9 @@ class SearchPostResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+      AdaptiveTheme.of(context).mode ==
+          AdaptiveThemeMode.dark;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -26,7 +30,7 @@ class SearchPostResult extends StatelessWidget {
         child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                  Constants.isDarkMode ? const Color(0xff213440) : Colors.white),
+                  isDarkMode ? const Color(0xff213440) : Colors.white),
               elevation: MaterialStateProperty.all(8),
               shadowColor: MaterialStateProperty.all(Colors.white),
               padding: MaterialStateProperty.all(const EdgeInsets.all(10))),
@@ -71,7 +75,7 @@ class SearchPostResult extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Constants.isDarkMode ? Colors.white : Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black,
                         ),
                       ),
                     ],
@@ -91,7 +95,7 @@ class SearchPostResult extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: Constants.isDarkMode ? Colors.white : Colors.black,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),

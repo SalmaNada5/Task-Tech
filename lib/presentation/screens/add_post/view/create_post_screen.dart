@@ -32,10 +32,17 @@ class _AddPostScreenState extends State<AddPostScreen>
             children: [
               TabBar(
                 tabs: [
-                  Text('Post a task', style: headStyle),
+                  Text(
+                    'Post a task',
+                    style: headStyle.copyWith(
+                        color:
+                            Theme.of(context).textTheme.headlineSmall!.color),
+                  ),
                   Text(
                     'Post a service',
-                    style: headStyle,
+                    style: headStyle.copyWith(
+                        color:
+                            Theme.of(context).textTheme.headlineSmall!.color),
                   ),
                 ],
                 indicatorWeight: 7,

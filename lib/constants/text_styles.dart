@@ -5,9 +5,6 @@ import 'package:task_tech/constants/consts.dart';
 TextStyle titleStyle = GoogleFonts.poppins(
   fontSize: 22,
   fontWeight: FontWeight.w500,
-  color: Constants.isDarkMode
-      ? Colors.white
-      : const Color(0xff165069),
 );
 
 TextStyle labelTextFormStyle = GoogleFonts.poppins(
@@ -22,10 +19,6 @@ TextStyle labelTextFormStyle = GoogleFonts.poppins(
 TextStyle headStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
-  color: Theme.of(Constants.navigatorKey.currentContext!)
-      .textTheme
-      .headlineSmall!
-      .color,
 );
 
 TextStyle postNameStyle = GoogleFonts.poppins(

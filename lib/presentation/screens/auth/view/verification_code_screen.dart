@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -166,6 +167,9 @@ class CustomOneDigitField extends StatelessWidget {
   final Function(String)? onChange;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+      AdaptiveTheme.of(context).mode ==
+          AdaptiveThemeMode.dark;
     return SizedBox(
       height: 58,
       width: 54,
@@ -187,7 +191,7 @@ class CustomOneDigitField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xffF5F5F5))),
           border: InputBorder.none,
-          filled: Constants.isDarkMode
+          filled: isDarkMode
               ? false
               : true,
           fillColor: const Color(0xffF5F5F5),

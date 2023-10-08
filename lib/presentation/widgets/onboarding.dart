@@ -1,6 +1,6 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
 
 class OnboardingWidget extends StatelessWidget {
   const OnboardingWidget(
@@ -14,6 +14,9 @@ class OnboardingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenH = MediaQuery.of(context).size.height;
+    bool isDarkMode =
+      AdaptiveTheme.of(context).mode ==
+          AdaptiveThemeMode.dark;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,7 +27,7 @@ class OnboardingWidget extends StatelessWidget {
         Text(
           title!,
           style: GoogleFonts.poppins(
-              color: Constants.isDarkMode
+              color: isDarkMode
                   ? Colors.white
                   : Colors.black,
               fontSize: 24,

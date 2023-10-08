@@ -10,10 +10,6 @@ class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    Color fieldColor = Constants.isDarkMode
-        ? const Color(0xff213440)
-        : Colors.white;
-
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
@@ -63,8 +59,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: forgotPassEmailController,
                   obscure: false,
-                  fillColor: fieldColor,
-                  borderColor: fieldColor,
+                  fillColor: Theme.of(context).canvasColor,
+                  borderColor: Theme.of(context).canvasColor,
                   validator: (email) {
                     email = forgotPassEmailController.text.toString();
                     if (email.isEmpty) {
