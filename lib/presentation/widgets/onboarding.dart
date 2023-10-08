@@ -1,6 +1,6 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/constants/consts.dart';
 
 class OnboardingWidget extends StatelessWidget {
   const OnboardingWidget(
@@ -24,7 +24,7 @@ class OnboardingWidget extends StatelessWidget {
         Text(
           title!,
           style: GoogleFonts.poppins(
-              color: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+              color: Constants.isDarkMode
                   ? Colors.white
                   : Colors.black,
               fontSize: 24,

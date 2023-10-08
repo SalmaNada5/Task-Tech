@@ -26,7 +26,7 @@ class SearchPostResult extends StatelessWidget {
         child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                  Theme.of(context).scaffoldBackgroundColor),
+                  Constants.isDarkMode ? const Color(0xff213440) : Colors.white),
               elevation: MaterialStateProperty.all(8),
               shadowColor: MaterialStateProperty.all(Colors.white),
               padding: MaterialStateProperty.all(const EdgeInsets.all(10))),
@@ -54,11 +54,13 @@ class SearchPostResult extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 10,
-                        child: CachedNetworkImage(
-                          imageUrl: userImg,
-                          errorWidget: (context, url, error) =>
-                              Image.asset('images/placeholder.jpg'),
-                          fit: BoxFit.fill,
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: userImg,
+                            errorWidget: (context, url, error) =>
+                                Image.asset('images/placeholder.jpg'),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -69,8 +71,7 @@ class SearchPostResult extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color:
-                              Theme.of(context).textTheme.headlineSmall!.color,
+                          color: Constants.isDarkMode ? Colors.white : Colors.black,
                         ),
                       ),
                     ],
@@ -90,7 +91,7 @@ class SearchPostResult extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).textTheme.headlineSmall!.color,
+                        color: Constants.isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),

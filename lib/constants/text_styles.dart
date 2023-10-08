@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -6,8 +5,7 @@ import 'package:task_tech/constants/consts.dart';
 TextStyle titleStyle = GoogleFonts.poppins(
   fontSize: 22,
   fontWeight: FontWeight.w500,
-  color: AdaptiveTheme.of(Constants.navigatorKey.currentContext!).mode ==
-          AdaptiveThemeMode.dark
+  color: Constants.isDarkMode
       ? Colors.white
       : const Color(0xff165069),
 );

@@ -30,18 +30,29 @@ class UploadProfilePhotoController {
     });
     logWarning("formData ${formData.fields}");
     logWarning("formData ${formData.files.first.value.filename}");
-    //try {
-    Response res = await _dioClient.patch(
-      'api/v1/users/createprofile/uploadphoto/me',
-      token,
-      useFormData: true,
-      body: formData,
-    ) as Response;
-    if (res.statusCode == 200 || res.statusCode == 201) {
-      logSuccess('Profile photo uploaded successfully!');
-      return true;
+    try {
+      var res = await _dioClient.patch(
+        'api/v1/users/createprofile/uploadphoto/me',
+        token,
+        useFormData: true,
+        body: formData,
+      );
+      if (res.runtimeType == String) {
+        logError('error in uploadProfilePhotoFunc ${res.toString()}');
+        return false;
+      } else {
+        logSuccess('Profile photo uploaded successfully!');
+        return true;
+      }
+    } catch (e) {
+      logError('Error in uploading photo : $e');
+      return false;
     }
-    return false;
+    // if (res.statusCode == 200 || res.statusCode == 201) {
+    //   logSuccess('Profile photo uploaded successfully!');
+    //   return true;
+    // }
+    // return false;
     // } catch (e) {
     //   logError('error in uploadProfilePhotoFunc ${e.toString()}');
     // }

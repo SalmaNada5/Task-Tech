@@ -1,10 +1,15 @@
 import 'dart:io';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 mixin Constants {
   static final navigatorKey = GlobalKey<NavigatorState>();
+  static final isDarkMode =
+      AdaptiveTheme.of(navigatorKey.currentContext!).mode ==
+          AdaptiveThemeMode.dark;
+
   static final screenHeight =
       MediaQuery.sizeOf(navigatorKey.currentContext!).height;
   static final screenWidth =

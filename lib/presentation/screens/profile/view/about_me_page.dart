@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
+import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
 
 class AboutmePage extends StatelessWidget {
+  final bool isMe;
   const AboutmePage({
+    required this.isMe,
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Color textColor =
         Theme.of(context).textTheme.headlineSmall!.color ?? Colors.grey;
+    HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -20,13 +24,22 @@ class AboutmePage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text(
-              maxLines: 5,
-              CurrentUserInfoController.userInfoModel.data?.user.about ?? '',
-              style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: const Color.fromRGBO(124, 124, 124, 1)),
+            BlocBuilder<HomeCubit, HomeState>(
+              bloc: homeCubit,
+              buildWhen: (p, c) =>
+                  c is GetSpecificUserSucces || c is GetUserInfoSucces,
+              builder: (context, state) {
+                return Text(
+                  maxLines: 5,
+                  isMe
+                      ? state.userInfoModel?.data?.user.about ?? ''
+                      : homeCubit.userModel.data?.user.about ?? '',
+                  style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: const Color.fromRGBO(124, 124, 124, 1)),
+                );
+              },
             ),
             const SizedBox(
               height: 5,
@@ -56,14 +69,23 @@ class AboutmePage extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            Text(
-              CurrentUserInfoController.userInfoModel.data?.user.education ??
-                  '',
-              style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Color.fromRGBO(124, 124, 124, 1)),
+            BlocBuilder<HomeCubit, HomeState>(
+              bloc: homeCubit,
+              buildWhen: (p, c) =>
+                  c is GetSpecificUserSucces || c is GetUserInfoSucces,
+              builder: (context, state) {
+                return Text(
+                  isMe
+                      ? state.userInfoModel?.data?.user.education ?? ''
+                      : homeCubit.userModel.data?.user.education ?? '',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Color.fromRGBO(124, 124, 124, 1)),
+                );
+              },
             ),
+
             // Center(
             //   child: Container(
             //     height: 78,
@@ -162,24 +184,33 @@ class AboutmePage extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              child: SfRangeSlider(
-                inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
-                activeColor: Theme.of(context).primaryColor,
-                min: 10,
-                max: 1000,
-                enableTooltip: true,
-                shouldAlwaysShowTooltip: true,
-                values: SfRangeValues(
-                  CurrentUserInfoController.userInfoModel.data?.user.minimum ??
-                      100,
-                  CurrentUserInfoController.userInfoModel.data?.user.maximum ??
-                      500,
-                ),
-                minorTicksPerInterval: 10,
-                startThumbIcon: Image.asset('images/thumbIcon.png'),
-                endThumbIcon: Image.asset('images/thumbIcon.png'),
-                onChanged: (sFRange) {},
-                stepSize: 10,
+              child: BlocBuilder<HomeCubit, HomeState>(
+                bloc: homeCubit,
+                buildWhen: (p, c) =>
+                    c is GetSpecificUserSucces || c is GetUserInfoSucces,
+                builder: (context, state) {
+                  return SfRangeSlider(
+                    inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
+                    activeColor: Theme.of(context).primaryColor,
+                    min: 10,
+                    max: 1000,
+                    enableTooltip: true,
+                    shouldAlwaysShowTooltip: true,
+                    values: SfRangeValues(
+                      isMe
+                          ? state.userInfoModel?.data?.user.minimum ?? 100
+                          : homeCubit.userModel.data?.user.minimum ?? 100,
+                      isMe
+                          ? state.userInfoModel?.data?.user.maximum ?? 500
+                          : homeCubit.userModel.data?.user.maximum ?? 500,
+                    ),
+                    minorTicksPerInterval: 10,
+                    startThumbIcon: Image.asset('images/thumbIcon.png'),
+                    endThumbIcon: Image.asset('images/thumbIcon.png'),
+                    onChanged: (sFRange) {},
+                    stepSize: 10,
+                  );
+                },
               ),
             ),
             const SizedBox(
@@ -195,32 +226,36 @@ class AboutmePage extends StatelessWidget {
             ),
             SizedBox(
               height: 70,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: CurrentUserInfoController
-                        .userInfoModel.data?.user.skills!.length ??
-                    0,
-                itemBuilder: (context, i) => Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                  ),
-                  margin: const EdgeInsets.symmetric(horizontal: 3),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    // const Color.fromRGBO(206, 218, 223, 1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    CurrentUserInfoController
-                            .userInfoModel.data?.user.skills![i] ??
-                        '',
-                    style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: textColor,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
+              child: BlocBuilder<HomeCubit, HomeState>(
+                bloc: homeCubit,
+                buildWhen: (p, c) => c is GetSpecificUserSucces || c is GetUserInfoSucces,
+                builder: (context, state) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: isMe?
+                     state.userInfoModel?.data?.user.skills!.length ?? 0 : homeCubit.userModel.data?.user.skills?.length ?? 0,
+                    itemBuilder: (context, i) => Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      margin: const EdgeInsets.symmetric(horizontal: 3),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        // const Color.fromRGBO(206, 218, 223, 1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                       isMe?
+                     state.userInfoModel?.data?.user.skills![i] ?? '' : homeCubit.userModel.data?.user.skills?[i] ?? '',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: textColor,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],

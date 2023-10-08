@@ -1,6 +1,8 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/themes.dart';
 import 'package:task_tech/presentation/screens/auth/cubits/auth_cubit/auth_cubit.dart';
@@ -11,6 +13,9 @@ import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+  );
   runApp(MyApp(savedThemeMode: savedThemeMode));
 }
 
@@ -27,7 +32,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<HomeCubit>.value(
           value: HomeCubit(),
         ),
-         BlocProvider<CreateProfileCubit>.value(
+        BlocProvider<CreateProfileCubit>.value(
           value: CreateProfileCubit(),
         ),
       ],

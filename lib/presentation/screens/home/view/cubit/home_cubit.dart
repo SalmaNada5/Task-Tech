@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
@@ -13,14 +14,17 @@ import 'package:task_tech/presentation/screens/home/models/top_user_model.dart'
 
 part 'home_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+class HomeCubit extends Cubit<HomeState> with HydratedMixin {
+  HomeCubit() : super(const HomeInitial());
 
   final DioClient _dioClient = DioClient();
   initCubit() {
+    logWarning('${state.userInfoModel}');
+    if (state.userInfoModel == null) {
+      getUserInfoFunc();
+    }
     categoriesScrollControllerFunc();
     relatedPostsScrollControllerFunc();
-    getUserInfoFunc();
     getPopularCategoriesFunc();
     getRelatedPostsFunc();
     getTopUsersFunc();
@@ -34,13 +38,16 @@ class HomeCubit extends Cubit<HomeState> {
     return token;
   }
 
+  Future<void> onRefresh() async {
+    getUserInfoFunc();
+  }
 //? user info
 
-  UserInfoModel userInfoModel = UserInfoModel();
+  //UserInfoModel userInfoModel = UserInfoModel();
   bool userInfoEnableShimmer = false;
 
   getUserInfoFunc() async {
-    emit(HomeInitial());
+    emit(HomeInitial(userInfoModel: state.userInfoModel));
     userInfoEnableShimmer = true;
     try {
       String token = await getToken();
@@ -49,10 +56,10 @@ class HomeCubit extends Cubit<HomeState> {
         token,
         isLoading: false,
       ) as Response;
-      userInfoModel = UserInfoModel.fromJson(res.data);
-      logSuccess('User info returned successfully: $userInfoModel');
+      //userInfoModel = UserInfoModel.fromJson(res.data);
+      logSuccess('User info returned successfully: ${res.data}');
       userInfoEnableShimmer = false;
-      emit(GetUserInfoSucces());
+      emit(GetUserInfoSucces(userInfoModel: UserInfoModel.fromJson(res.data)));
     } catch (e) {
       emit(GetUserInfoError());
       logError('error in getUserInfoFunc: ${e.toString()}');
@@ -69,7 +76,7 @@ class HomeCubit extends Cubit<HomeState> {
   ScrollController categoriesScrollController = ScrollController();
 
   getPopularCategoriesFunc() async {
-    emit(HomeInitial());
+    emit(const HomeInitial());
     categoriesEnableShimmer = true;
     try {
       String token = await getToken();
@@ -125,8 +132,8 @@ class HomeCubit extends Cubit<HomeState> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
     id = prefs.getString("id");
-    emit(HomeInitial());
-    categoriesEnableShimmer = true;
+    emit(const HomeInitial());
+    relatedPostsEnableShimmer = true;
     try {
       Response res = await _dioClient.get(
         'api/v1/users/$id/relatedPosts?page=$relatedPostspage',
@@ -178,7 +185,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   getTopUsersFunc() async {
     topUsersEnableShimmer = true;
-    emit(HomeInitial());
+    emit(const HomeInitial());
     try {
       String token = await getToken();
 
@@ -224,7 +231,7 @@ class HomeCubit extends Cubit<HomeState> {
   UserModel userModel = UserModel();
 
   getUserByIdFunc(String userId) async {
-    emit(HomeInitial());
+    emit(const HomeInitial());
     try {
       String token = await getToken();
 
@@ -240,5 +247,15 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GetSpecificUserError());
       logError('error in getUserByIdFunc ${e.toString()}');
     }
+  }
+
+  @override
+  HomeState? fromJson(Map<String, dynamic> json) {
+    return HomeState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(HomeState state) {
+    return state.toJson();
   }
 }

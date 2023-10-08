@@ -60,10 +60,12 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
               children: [
                 CircleAvatar(
                   radius: 10,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.profileImgUrl,
-                    errorWidget: (context, url, error) =>
-                        Image.asset('images/default person.png'),
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.profileImgUrl,
+                      errorWidget: (context, url, error) =>
+                          Image.asset('images/default person.png'),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -112,7 +114,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
             Row(
               children: [
                 Text(
-                  'Starting at',
+                  'Starting at ',
                   style: GoogleFonts.poppins(
                     fontSize: 10,
                     fontWeight: FontWeight.w400,

@@ -1,7 +1,7 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/Lists.dart';
+import 'package:task_tech/constants/consts.dart';
 import 'package:task_tech/constants/text_styles.dart';
 
 class ReusablePostForm extends StatefulWidget {
@@ -39,7 +39,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
-    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+    Color fieldColor =Constants.isDarkMode
         ? const Color(0xff213440)
         : Colors.white;
     return Form(

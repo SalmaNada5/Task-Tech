@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -278,7 +277,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   contentPadding: const EdgeInsets.all(8),
                   filled: true,
                   fillColor:
-                      AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+                      Constants.isDarkMode
                           ? const Color(0xff213440)
                           : Colors.white,
                   enabledBorder: OutlineInputBorder(

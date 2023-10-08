@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/constants/consts.dart';
@@ -34,7 +33,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           fontWeight: FontWeight.w400,
           color: const Color(0xffC0C0C0),
         ),
-        fillColor: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+        fillColor: Constants.isDarkMode
             ? const Color(0xff213440)
             : Colors.white,
         filled: true,
@@ -93,9 +92,9 @@ class HomeSearchDelegate extends SearchDelegate {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
-              itemCount:
-                  SearchServiceController.searchServiceModel.services?.length ??
-                      0,
+              itemCount: SearchServiceController
+                      .searchServiceModel.services?.length ??
+                  0,
               itemBuilder: (BuildContext context, int i) => SearchPostResult(
                   onPressed: () => Constants.navigateTo(ServiceDetailsPage(
                         service: SearchServiceController

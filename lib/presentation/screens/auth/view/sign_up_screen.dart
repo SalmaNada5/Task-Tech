@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +23,7 @@ class SignUpScreen extends StatelessWidget {
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
     AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
-    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+    Color fieldColor =Constants.isDarkMode
         ? const Color(0xff213440)
         : const Color(0xffF5F5F5);
     return Scaffold(

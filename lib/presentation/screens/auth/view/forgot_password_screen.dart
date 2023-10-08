@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +10,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+    Color fieldColor = Constants.isDarkMode
         ? const Color(0xff213440)
         : Colors.white;
 

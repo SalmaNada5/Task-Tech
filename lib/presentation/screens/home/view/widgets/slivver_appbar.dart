@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +24,7 @@ class CustomSliverAppbar extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: BlocBuilder<HomeCubit, HomeState>(
             bloc: homeCubit,
+            buildWhen: (p, c) => c is HomeInitial || c is GetUserInfoSucces,
             builder: (context, state) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,8 +36,7 @@ class CustomSliverAppbar extends StatelessWidget {
                       child: ShimmerWidget(
                         enableShimmer: homeCubit.userInfoEnableShimmer,
                         child: CachedNetworkImage(
-                          imageUrl:
-                              homeCubit.userInfoModel.data?.user.photo ?? '',
+                          imageUrl: state.userInfoModel?.data?.user.photo ?? '',
                           fit: BoxFit.cover,
                           errorWidget: (context, url, error) {
                             return Image.asset(
@@ -62,7 +63,7 @@ class CustomSliverAppbar extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        homeCubit.userInfoModel.data?.user.name ?? '',
+                        state.userInfoModel?.data?.user.name ?? '',
                         style: titleStyle.copyWith(fontSize: 22),
                       ),
                     ],
@@ -74,7 +75,21 @@ class CustomSliverAppbar extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
-                      child: Image.asset('images/notifications.png'),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 36,
+                        width: 36,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border:
+                              Border.all(color: Colors.white.withOpacity(0.5)),
+                        ),
+                        child: Icon(
+                          CupertinoIcons.bell,
+                          size: 26,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ),
                   ),
                 ],

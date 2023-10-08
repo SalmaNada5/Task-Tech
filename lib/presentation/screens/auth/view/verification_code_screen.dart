@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -188,7 +187,7 @@ class CustomOneDigitField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xffF5F5F5))),
           border: InputBorder.none,
-          filled: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+          filled: Constants.isDarkMode
               ? false
               : true,
           fillColor: const Color(0xffF5F5F5),

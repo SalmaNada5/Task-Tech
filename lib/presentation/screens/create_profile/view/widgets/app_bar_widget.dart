@@ -1,4 +1,3 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
@@ -16,7 +15,7 @@ AppBar myAppbar({required double percent}) {
           child: IconButton(
               iconSize: 50,
               onPressed: () {},
-              icon: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+              icon:Constants.isDarkMode
                   ? Image.asset(
                       'icons/profile_dark.png',
                     )

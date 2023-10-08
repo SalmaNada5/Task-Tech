@@ -1,20 +1,83 @@
 part of 'home_cubit.dart';
 
-@immutable
-sealed class HomeState {}
-final class HomeInitial extends HomeState {}
+base class HomeState extends Equatable {
+  final UserInfoModel? userInfoModel;
 
-final class GetUserInfoSucces extends HomeState {}
+  const HomeState({this.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'userInfoModel': userInfoModel?.toJson(),
+    };
+  }
+
+  factory HomeState.fromJson(Map<String, dynamic> map) {
+    return HomeState(
+      userInfoModel: map['userInfoModel'] != null
+          ? UserInfoModel.fromJson(map['userModel'] as Map<String, dynamic>)
+          : null,
+    );
+  }
+}
+
+final class HomeInitial extends HomeState {
+  const HomeInitial({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
+
+final class GetUserInfoSucces extends HomeState {
+  const GetUserInfoSucces({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
+
 final class GetUserInfoError extends HomeState {}
 
-final class GetPopularCategoriesSucces extends HomeState {}
+final class GetPopularCategoriesSucces extends HomeState {
+  const GetPopularCategoriesSucces({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
+
 final class GetPopularCategoriesError extends HomeState {}
 
-final class GetRelatedPostsSucces extends HomeState {}
+final class GetRelatedPostsSucces extends HomeState {
+  const GetRelatedPostsSucces({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
+
 final class GetRelatedPostsError extends HomeState {}
 
-final class GetTopUsersSucces extends HomeState {}
+final class GetTopUsersSucces extends HomeState {
+  const GetTopUsersSucces({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
+
 final class GetTopUsersError extends HomeState {}
 
-final class GetSpecificUserSucces extends HomeState {}
+final class GetSpecificUserSucces extends HomeState {
+  const GetSpecificUserSucces({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}
+
 final class GetSpecificUserError extends HomeState {}
