@@ -1,19 +1,6 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/Lists.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/controller/upload_cv_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/cubit/create_profile_cubit.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
-import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
+import 'package:task_tech/utils/exports.dart';
 
-class EducationScreen extends StatefulWidget {
+class EducationScreen extends StatelessWidget {
   const EducationScreen({
     Key? key,
     this.job,
@@ -41,14 +28,6 @@ class EducationScreen extends StatefulWidget {
   final int? maximum;
   final String? currency;
   final String? frequency;
-
-  @override
-  EducationScreenState createState() => EducationScreenState();
-}
-
-class EducationScreenState extends State<EducationScreen> {
-  String? dropdownValue;
-  String education = '';
 
   @override
   Widget build(BuildContext context) {
@@ -90,60 +69,64 @@ class EducationScreenState extends State<EducationScreen> {
                 const SizedBox(
                   height: 34,
                 ),
-                CustomButtonWidget(
-                  width: Constants.screenWidth * 0.9,
-                  height: Constants.screenHeight * 0.075,
-                  color: const Color.fromRGBO(22, 80, 105, 0.21),
-                  childWidget: DropdownButton(
-                    padding: EdgeInsetsDirectional.only(
-                        start: MediaQuery.of(context).size.width * 0.09,
-                        end: MediaQuery.of(context).size.width * 0.09),
-                    value: dropdownValue,
-                    isExpanded: true,
-                    hint: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add_outlined,
-                          color: Theme.of(context).primaryColor,
-                          weight: 500,
-                          size: 30,
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                          'Add Education',
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
+                BlocBuilder<CreateProfileCubit, CreateProfileState>(
+                  bloc: createProfileCubit,
+                  // buildWhen: (previous, current) => current is OnEducationSelectedState || current is CreateProfileInitial,
+                  builder: (context, state) {
+                    return CustomButtonWidget(
+                      width: Constants.screenWidth * 0.9,
+                      height: Constants.screenHeight * 0.075,
+                      color: const Color.fromRGBO(22, 80, 105, 0.21),
+                      childWidget: DropdownButton(
+                        padding: EdgeInsetsDirectional.only(
+                            start: MediaQuery.of(context).size.width * 0.09,
+                            end: MediaQuery.of(context).size.width * 0.09),
+                        value: createProfileCubit.dropdownValue,
+                        isExpanded: true,
+                        hint: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_outlined,
                               color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                    underline: Container(),
-                    icon: Container(),
-                    items: educationList
-                        .map<DropdownMenuItem<String>>((String items) {
-                      return DropdownMenuItem<String>(
-                          value: items,
-                          child: Text(
-                            items,
-                            maxLines: 2,
-                            style: GoogleFonts.poppins(
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.04,
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w500),
-                          ));
-                    }).toList(),
-                    onChanged: (String? newvalue) {
-                      setState(() {
-                        education = newvalue!;
-                        dropdownValue = newvalue;
-                      });
-                    },
-                  ),
+                              weight: 500,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              'Add Education',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                        underline: Container(),
+                        icon: Container(),
+                        items:createProfileCubit.educationList
+                            .map<DropdownMenuItem<String>>((String items) {
+                          return DropdownMenuItem<String>(
+                              value: items,
+                              child: Text(
+                                items,
+                                maxLines: 2,
+                                style: GoogleFonts.poppins(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.04,
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w500),
+                              ));
+                        }).toList(),
+                        onChanged: (String? newvalue) {
+                          createProfileCubit.onEducationSelected(newvalue);
+                        },
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
@@ -188,7 +171,7 @@ class EducationScreenState extends State<EducationScreen> {
                               color: const Color.fromRGBO(124, 124, 124, 1),
                               fontSize: 18,
                               fontWeight: FontWeight.w400),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -202,24 +185,24 @@ class EducationScreenState extends State<EducationScreen> {
                       height: Constants.screenHeight * 0.075,
                       onpressed: () async {
                         logInfo(
-                            'Date sent => ${widget.gender}, ${widget.frequency}, ${widget.age}, ${widget.birthDate} , ${widget.currency}, , ${widget.description}, ${widget.job}, ${widget.location}');
+                            'Date sent => $gender, $frequency, $age, $birthDate , $currency, , $description, $job, $location}');
                         await UploadProfilePhotoController
                             .uploadProfilePhotoFunc();
                         await UploadCVController.uploadCVFunc();
                         createProfileCubit.createProfileCubit(
-                          about: widget.description ?? '',
-                          minimum: widget.minimum ?? 0,
-                          maximum: widget.maximum ?? 0,
-                          currency: widget.currency ?? '',
-                          frequency: widget.frequency ?? '',
-                          job: widget.job ?? '',
-                          phoneNumber: widget.phoneNumber ?? '',
-                          gender: widget.gender ?? '',
-                          age: widget.age ?? '',
-                          birthDate: widget.birthDate ?? '',
-                          location: widget.location ?? '',
-                          skills: widget.skills ?? [],
-                          education: education,
+                          about: description ?? '',
+                          minimum: minimum ?? 0,
+                          maximum: maximum ?? 0,
+                          currency: currency ?? '',
+                          frequency: frequency ?? '',
+                          job: job ?? '',
+                          phoneNumber: phoneNumber ?? '',
+                          gender: gender ?? '',
+                          age: age ?? '',
+                          birthDate: birthDate ?? '',
+                          location: location ?? '',
+                          skills: skills ?? [],
+                          education: createProfileCubit.education,
                         );
                         await CurrentUserInfoController.getUserInfoFunc();
                         Constants.navigateTo(const ProfileScreen(

@@ -1,13 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/education_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/salary_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
+import 'package:task_tech/utils/exports.dart';
 
-class BioScreen extends StatefulWidget {
+class BioScreen extends StatelessWidget {
   const BioScreen({
     Key? key,
     this.job,
@@ -25,14 +18,11 @@ class BioScreen extends StatefulWidget {
   final String? location;
   final String? phoneNumber;
   final List<String>? skills;
-  @override
-  BioScreenState createState() => BioScreenState();
-}
 
-class BioScreenState extends State<BioScreen> {
-  TextEditingController descController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    CreateProfileCubit createProfileCubit =
+        BlocProvider.of<CreateProfileCubit>(context);
     return Scaffold(
       appBar: myAppbar(percent: 60),
       body: Padding(
@@ -83,11 +73,14 @@ class BioScreenState extends State<BioScreen> {
                   width: Constants.screenWidth * 0.9,
                   height: Constants.screenWidth * 0.4,
                   child: TextFormField(
-                    controller: descController,
+                    controller: createProfileCubit.descriptionController,
                     onChanged: (value) {
-                      descController.text = value.toString();
-                      descController.selection = TextSelection.collapsed(
-                          offset: descController.text.length);
+                      createProfileCubit.descriptionController.text =
+                          value.toString();
+                      createProfileCubit.descriptionController.selection =
+                          TextSelection.collapsed(
+                              offset: createProfileCubit
+                                  .descriptionController.text.length);
                     },
                     maxLines: null,
                     expands: true,
@@ -134,16 +127,18 @@ class BioScreenState extends State<BioScreen> {
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
                     onpressed: () async {
-                      logWarning('desc: ${descController.text}');
+                      logWarning(
+                          'desc: ${createProfileCubit.descriptionController.text}');
                       Constants.navigateTo(SalaryScreen(
-                        age: widget.age,
-                        job: widget.job,
-                        birthDate: widget.birthDate,
-                        gender: widget.gender,
-                        location: widget.location,
-                        phoneNumber: widget.phoneNumber,
-                        skills: widget.skills,
-                        description: descController.text,
+                        age: age,
+                        job: job,
+                        birthDate: birthDate,
+                        gender: gender,
+                        location: location,
+                        phoneNumber: phoneNumber,
+                        skills: skills,
+                        description:
+                            createProfileCubit.descriptionController.text,
                       ));
                     },
                     childWidget: Text(
@@ -163,12 +158,12 @@ class BioScreenState extends State<BioScreen> {
                     borderColor: const Color.fromRGBO(22, 80, 105, 1),
                     onpressed: () {
                       Constants.navigateTo(EducationScreen(
-                        job: widget.job,
-                        birthDate: widget.birthDate,
-                        gender: widget.age,
-                        location: widget.location,
-                        phoneNumber: widget.phoneNumber,
-                        skills: widget.skills,
+                        job: job,
+                        birthDate: birthDate,
+                        gender: age,
+                        location: location,
+                        phoneNumber: phoneNumber,
+                        skills: skills,
                       ));
                     },
                     childWidget: Text(

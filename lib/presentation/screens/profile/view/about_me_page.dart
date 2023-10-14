@@ -22,9 +22,6 @@ class AboutmePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 10,
-            ),
             BlocBuilder<HomeCubit, HomeState>(
               bloc: homeCubit,
               buildWhen: (p, c) =>
@@ -86,84 +83,6 @@ class AboutmePage extends StatelessWidget {
                 );
               },
             ),
-
-            // Center(
-            //   child: Container(
-            //     height: 78,
-            //     width: 371,
-            //     decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(20),
-            //         color: const Color.fromRGBO(255, 255, 255, 1),
-            //         boxShadow: const [
-            //           BoxShadow(
-            //               color: Color.fromRGBO(224, 224, 224, 0.9),
-            //               spreadRadius: 3,
-            //               blurRadius: 7,
-            //               offset: Offset(0, 2))
-            //         ]),
-            //     child: Padding(
-            //       padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
-            //       child: Row(
-            //         children: [
-            //           const CircleAvatar(
-            //               radius: 23,
-            //               backgroundImage: AssetImage('images/suez canal.png')),
-            //           const SizedBox(
-            //             width: 14,
-            //           ),
-
-            //           // const Column(
-            //           //   crossAxisAlignment: CrossAxisAlignment.start,
-            //           //   mainAxisAlignment: MainAxisAlignment.center,
-            //           //   children: [
-            //           //     Text(
-            //           //       'Computer Science',
-            //           //       style: TextStyle(
-            //           //           fontWeight: FontWeight.w600,
-            //           //           fontSize: 14,
-            //           //           color: Color.fromRGBO(13, 13, 38, 1)),
-            //           //     ),
-            //           //     Text(
-            //           //       'Bachelor',
-            //           //       style: TextStyle(
-            //           //           fontWeight: FontWeight.w400,
-            //           //           fontSize: 13,
-            //           //           color: Color.fromRGBO(13, 13, 38, 1)),
-            //           //     )
-            //           //   ],
-            //           // ),
-
-            //           const SizedBox(
-            //             width: 36,
-            //           ),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             mainAxisAlignment: MainAxisAlignment.center,
-            //             children: [
-            //               Text(
-            //                 UserProfileController
-            //                         .userProfileModel.data?.user.education ??
-            //                     "",
-            //                 style: const TextStyle(
-            //                     fontWeight: FontWeight.w500,
-            //                     fontSize: 12,
-            //                     color: Color.fromRGBO(13, 13, 38, 1)),
-            //               ),
-            //               // Text(
-            //               //   '2019 - 2023',
-            //               //   style: TextStyle(
-            //               //       fontWeight: FontWeight.w400,
-            //               //       fontSize: 13,
-            //               //       color: Color.fromRGBO(13, 13, 38, 1)),
-            //               // )
-            //             ],
-            //           )
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             const SizedBox(
               height: 22,
             ),
@@ -187,8 +106,6 @@ class AboutmePage extends StatelessWidget {
               ),
               child: BlocBuilder<HomeCubit, HomeState>(
                 bloc: homeCubit,
-                buildWhen: (p, c) =>
-                    c is GetSpecificUserSucces || c is GetUserInfoSucces,
                 builder: (context, state) {
                   return SfRangeSlider(
                     inactiveColor: const Color.fromRGBO(217, 217, 217, 1),
@@ -245,7 +162,6 @@ class AboutmePage extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 3),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
-                        // const Color.fromRGBO(206, 218, 223, 1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(

@@ -2,7 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 
 class SearchPostResult extends StatelessWidget {
   final String serviceAttachFile;
@@ -20,9 +20,7 @@ class SearchPostResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode =
-      AdaptiveTheme.of(context).mode ==
-          AdaptiveThemeMode.dark;
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(

@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/add_post/view/post_service.dart';
-import 'package:task_tech/presentation/screens/add_post/view/post_task.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});

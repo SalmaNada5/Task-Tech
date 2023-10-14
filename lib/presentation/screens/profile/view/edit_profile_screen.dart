@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
 import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';

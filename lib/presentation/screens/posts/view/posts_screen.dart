@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
+
+import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/posts/view/reusable_post_widget.dart';
 
 class PostsScreen extends StatefulWidget {

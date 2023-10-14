@@ -1,37 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/auth/view/sign_up_screen.dart';
+import 'package:task_tech/utils/exports.dart';
 
-import '../../../widgets/onboarding.dart';
-
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
-}
-
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final PageController _pageController = PageController();
-  bool isLastPage = false;
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: PageView(
-        controller: _pageController,
+        controller: authCubit.onboardingPageController,
         onPageChanged: (value) {
-          setState(() {
-            isLastPage = value == 1;
-          });
+          authCubit.onPageChanged(value);
         },
         children: const [
           FirstOnBoarding(),
@@ -45,7 +25,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SmoothPageIndicator(
-              controller: _pageController,
+              controller: authCubit.onboardingPageController,
               count: 2,
               effect: ExpandingDotsEffect(
                 activeDotColor: Theme.of(context).primaryColor,
@@ -54,37 +34,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 dotWidth: 12,
               ),
             ),
-            ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Theme.of(context).primaryColor),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)))),
-                onPressed: isLastPage
-                    ? () => Constants.navigateTo(const SignUpScreen(),
-                        pushReplacment: true)
-                    : () => _pageController.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut),
-                child: isLastPage
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Get Started',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            )),
-                      )
-                    : const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 4,
-                        ),
-                        child: Icon(
-                          Icons.arrow_forward,
-                          size: 22,
-                        ),
-                      ))
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).primaryColor),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6)))),
+                    onPressed: authCubit.isLastPage
+                        ? () => Constants.navigateTo(const SignUpScreen(),
+                            pushReplacment: true)
+                        : () => authCubit.onboardingPageController.nextPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut),
+                    child: authCubit.isLastPage
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Get Started',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          )
+                        : const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 4,
+                            ),
+                            child: Icon(
+                              Icons.arrow_forward,
+                              size: 22,
+                            ),
+                          ));
+              },
+            )
           ],
         ),
       ),

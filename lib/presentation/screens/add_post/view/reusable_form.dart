@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/Lists.dart';
-import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class ReusablePostForm extends StatefulWidget {
   const ReusablePostForm({
@@ -276,7 +273,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                                 borderRadius: BorderRadius.circular(8.6),
                                 alignment: AlignmentDirectional.center,
                                 isExpanded: true,
-                                items: categories.map<DropdownMenuItem<String>>(
+                                items:CreateProfileCubit.categories.map<DropdownMenuItem<String>>(
                                     (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,

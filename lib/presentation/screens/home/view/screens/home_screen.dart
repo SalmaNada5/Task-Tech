@@ -1,17 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/shimmer_widget.dart';
-import 'package:task_tech/presentation/screens/home/view/screens/categories_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
-import 'package:task_tech/presentation/screens/home/view/widgets/slivver_appbar.dart';
-import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
-import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
-import 'package:task_tech/presentation/widgets/home_widgets/category_item.dart';
-import 'package:task_tech/presentation/widgets/home_widgets/highest_rated_freelancer.dart';
-import 'package:task_tech/presentation/widgets/home_widgets/home_search.dart';
-import 'package:task_tech/presentation/widgets/home_widgets/service_widget.dart';
+
+import 'package:task_tech/utils/exports.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -102,7 +90,8 @@ class HomeScreen extends StatelessWidget {
                                           ? const Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 4),
-                                              child: CircularProgressIndicator(),
+                                              child:
+                                                  CircularProgressIndicator(),
                                             )
                                           : const SizedBox.shrink(),
                                     ],
@@ -256,8 +245,9 @@ class HomeScreen extends StatelessWidget {
                                                       .toDouble(),
                                                   onPress: () async {
                                                     await homeCubit
-                                                        .getUserByIdFunc(homeCubit
-                                                            .users[i].id);
+                                                        .getUserByIdFunc(
+                                                            homeCubit
+                                                                .users[i].id);
                                                     Constants.navigateTo(
                                                         const ProfileScreen(
                                                             isMe: false));
@@ -269,7 +259,8 @@ class HomeScreen extends StatelessWidget {
                                           ? const Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 4),
-                                              child: CircularProgressIndicator(),
+                                              child:
+                                                  CircularProgressIndicator(),
                                             )
                                           : const SizedBox.shrink(),
                                     ],

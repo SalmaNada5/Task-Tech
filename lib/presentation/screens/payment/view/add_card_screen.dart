@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../../../../constants/text_styles.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class AddCardScreen extends StatelessWidget {
   const AddCardScreen({super.key});

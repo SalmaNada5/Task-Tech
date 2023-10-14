@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
@@ -289,6 +289,7 @@ class ProfileScreenState extends State<ProfileScreen>
                     height: 15,
                   ),
                   TabBar(
+                    padding: EdgeInsets.zero,
                     tabs: [
                       Text(
                         'About me',

@@ -1,10 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/payment/controller/payment_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';

@@ -1,6 +1,4 @@
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class EmptyChatScreen extends StatefulWidget {
   const EmptyChatScreen({super.key});
@@ -13,7 +11,6 @@ class _EmptyChatScreenState extends State<EmptyChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset('icons/bi_arrow-left-circle-fill.png'),
@@ -63,7 +60,6 @@ class _EmptyChatScreenState extends State<EmptyChatScreen> {
                 'and get the job done',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
-                
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(124, 124, 124, 1),
@@ -73,30 +69,30 @@ class _EmptyChatScreenState extends State<EmptyChatScreen> {
           ),
         ),
       ),
-    bottomNavigationBar: BottomNavigationBar(
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Image(image: AssetImage('icons/home.png')),
-          label: 'home'),
-          BottomNavigationBarItem(
-          icon:Icon(Icons.textsms_rounded,
-          color: Color.fromRGBO(177, 177, 177, 1),) ,
-          //Image(image: AssetImage('icons/chat.png')),
-          label: 'chat'),
-          BottomNavigationBarItem(
-          icon: Image(image: AssetImage('icons/add post.png')),
-          label: 'add post'),
-          BottomNavigationBarItem(
-          icon: Image(image: AssetImage('icons/post.png')),
-          label: 'posts'),
-          BottomNavigationBarItem(
-          icon: Image(image: AssetImage('icons/profile2.png')),
-          label: 'profile'),
-
-
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Image(image: AssetImage('icons/home.png')),
+                label: 'home'),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.textsms_rounded,
+                  color: Color.fromRGBO(177, 177, 177, 1),
+                ),
+                //Image(image: AssetImage('icons/chat.png')),
+                label: 'chat'),
+            BottomNavigationBarItem(
+                icon: Image(image: AssetImage('icons/add post.png')),
+                label: 'add post'),
+            BottomNavigationBarItem(
+                icon: Image(image: AssetImage('icons/post.png')),
+                label: 'posts'),
+            BottomNavigationBarItem(
+                icon: Image(image: AssetImage('icons/profile2.png')),
+                label: 'profile'),
+          ]),
     );
   }
 }

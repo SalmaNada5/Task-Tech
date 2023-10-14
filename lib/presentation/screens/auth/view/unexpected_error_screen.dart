@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-
+import 'package:task_tech/utils/exports.dart';
 
 class UnexpectedErrorScreen extends StatelessWidget {
   const UnexpectedErrorScreen({super.key, this.failedMessage});
@@ -46,7 +42,8 @@ class UnexpectedErrorScreen extends StatelessWidget {
                     horizontal: 0.35 * Constants.screenWidth,
                   ),
                 ),
-                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                backgroundColor:
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),

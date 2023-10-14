@@ -1,11 +1,4 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
+import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/posts/view/comment.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/comments_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
@@ -44,9 +37,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode =
-      AdaptiveTheme.of(context).mode ==
-          AdaptiveThemeMode.dark;
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -284,9 +275,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                   contentPadding: const EdgeInsets.all(8),
                   filled: true,
-                  fillColor: isDarkMode
-                      ? const Color(0xff213440)
-                      : Colors.white,
+                  fillColor:
+                      isDarkMode ? const Color(0xff213440) : Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color.fromRGBO(224, 224, 224, 0.9),

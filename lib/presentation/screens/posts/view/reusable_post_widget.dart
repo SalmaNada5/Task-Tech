@@ -1,12 +1,6 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
-import 'package:task_tech/presentation/screens/posts_details/view/task_details.dart';
 
 class ReusablePostWidget extends StatelessWidget {
   const ReusablePostWidget({
@@ -28,18 +22,14 @@ class ReusablePostWidget extends StatelessWidget {
   final String? serviceId;
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode =
-      AdaptiveTheme.of(context).mode ==
-          AdaptiveThemeMode.dark;
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Container(
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.only(right: 10, top: 4, left: 10),
       height: MediaQuery.of(context).size.height * 0.26,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-        color: isDarkMode
-            ? const Color(0xff213440)
-            : const Color(0xffF5F5F5),
+        color: isDarkMode ? const Color(0xff213440) : const Color(0xffF5F5F5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

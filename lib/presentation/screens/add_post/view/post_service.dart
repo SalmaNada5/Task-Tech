@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
-import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
-import 'package:task_tech/presentation/screens/home/view/screens/bottom_nav_bar_screen.dart';
-import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class PostService extends StatefulWidget {
   const PostService({super.key});

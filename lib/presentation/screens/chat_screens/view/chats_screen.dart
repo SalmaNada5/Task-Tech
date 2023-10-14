@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/chat_screens/model/message_static_model.dart';
-import 'package:task_tech/presentation/screens/chat_screens/widgets/conversation_list_widget.dart';
-import 'package:task_tech/presentation/screens/chat_screens/widgets/search_widget.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});

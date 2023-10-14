@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/home/controller/search_service_controller.dart';
 import 'package:task_tech/presentation/screens/home/view/screens/search_post_result.dart';
@@ -34,9 +34,6 @@ class _SearchWidgetState extends State<SearchWidget> {
           color: const Color(0xffC0C0C0),
         ),
         fillColor: Theme.of(context).scaffoldBackgroundColor,
-        //  Constants.isDarkMode
-        //     ? const Color(0xff213440)
-        //     : Colors.white,
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color(0xffB8B8B8)),
@@ -74,7 +71,10 @@ class HomeSearchDelegate extends SearchDelegate {
             query = '';
           }
         },
-        icon: const Icon(Icons.close),
+        icon: Icon(
+          Icons.close,
+          color: Theme.of(context).primaryColor,
+        ),
       ),
     ];
   }
@@ -83,7 +83,10 @@ class HomeSearchDelegate extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
         onPressed: () => close(context, null),
-        icon: const Icon(Icons.arrow_back));
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).primaryColor,
+        ));
   }
 
   @override

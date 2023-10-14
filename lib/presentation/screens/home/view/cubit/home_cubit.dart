@@ -23,11 +23,11 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
     if (state.userInfoModel == null) {
       getUserInfoFunc();
     }
-    // categoriesScrollControllerFunc();
-    // relatedPostsScrollControllerFunc();
-    // getPopularCategoriesFunc();
-    // getRelatedPostsFunc();
-    // getTopUsersFunc();
+    categoriesScrollControllerFunc();
+    relatedPostsScrollControllerFunc();
+    getPopularCategoriesFunc();
+    getRelatedPostsFunc();
+    getTopUsersFunc();
   }
 
   Future<String> getToken() async {
@@ -43,7 +43,6 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
   }
 //? user info
 
-  //UserInfoModel userInfoModel = UserInfoModel();
   bool userInfoEnableShimmer = false;
 
   getUserInfoFunc() async {
@@ -223,7 +222,6 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
     });
   }
 
-//! access user from top users in home (get data but not show info after navigating).
   UserModel userModel = UserModel();
 
   getUserByIdFunc(String userId) async {

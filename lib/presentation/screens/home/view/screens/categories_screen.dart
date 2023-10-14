@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
-import '../../../../../constants/text_styles.dart';
+import 'package:task_tech/utils/text_styles.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});

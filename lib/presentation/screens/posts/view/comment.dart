@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class ReusableCommentWidget extends StatefulWidget {
   const ReusableCommentWidget(

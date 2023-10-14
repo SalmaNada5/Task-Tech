@@ -17,3 +17,5 @@ final class SignUpConfirmPassVisible extends AuthState {}
 final class SignUpConfirmPassInVisible extends AuthState {}
 
 final class LoginSuccess extends AuthState{}
+final class OnboardingPageChanged extends AuthState{}
+
