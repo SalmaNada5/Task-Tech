@@ -44,7 +44,7 @@ class Data {
 }
 
 class User {
-  String about;
+  String? about;
   int maximum;
   int minimum;
   String education;
@@ -68,7 +68,7 @@ class User {
   String userId;
 
   User({
-    required this.about,
+    this.about,
     required this.minimum,
     required this.maximum,
     required this.education,
@@ -193,16 +193,16 @@ class Review {
 }
 
 class Reviewer {
-  String photo;
-  String id;
-  String name;
-  String reviewerId;
+  String? photo;
+  String? id;
+  String? name;
+  String? reviewerId;
 
   Reviewer({
-    required this.photo,
-    required this.id,
-    required this.name,
-    required this.reviewerId,
+     this.photo,
+     this.id,
+     this.name,
+     this.reviewerId,
   });
 
   factory Reviewer.fromJson(Map<String, dynamic> json) => Reviewer(

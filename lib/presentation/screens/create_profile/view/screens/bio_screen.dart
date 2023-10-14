@@ -1,23 +1,7 @@
 import 'package:task_tech/utils/exports.dart';
 
 class BioScreen extends StatelessWidget {
-  const BioScreen({
-    Key? key,
-    this.job,
-    this.birthDate,
-    this.gender,
-    this.age,
-    this.location,
-    this.phoneNumber,
-    this.skills,
-  }) : super(key: key);
-  final String? job;
-  final String? birthDate;
-  final String? gender;
-  final String? age;
-  final String? location;
-  final String? phoneNumber;
-  final List<String>? skills;
+  const BioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -129,17 +113,7 @@ class BioScreen extends StatelessWidget {
                     onpressed: () async {
                       logWarning(
                           'desc: ${createProfileCubit.descriptionController.text}');
-                      Constants.navigateTo(SalaryScreen(
-                        age: age,
-                        job: job,
-                        birthDate: birthDate,
-                        gender: gender,
-                        location: location,
-                        phoneNumber: phoneNumber,
-                        skills: skills,
-                        description:
-                            createProfileCubit.descriptionController.text,
-                      ));
+                      Constants.navigateTo(const SalaryScreen());
                     },
                     childWidget: Text(
                       'Next',
@@ -157,14 +131,7 @@ class BioScreen extends StatelessWidget {
                     color: Theme.of(context).scaffoldBackgroundColor,
                     borderColor: const Color.fromRGBO(22, 80, 105, 1),
                     onpressed: () {
-                      Constants.navigateTo(EducationScreen(
-                        job: job,
-                        birthDate: birthDate,
-                        gender: age,
-                        location: location,
-                        phoneNumber: phoneNumber,
-                        skills: skills,
-                      ));
+                      Constants.navigateTo(const EducationScreen());
                     },
                     childWidget: Text(
                       'Skip',

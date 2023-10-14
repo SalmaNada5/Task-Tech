@@ -2,27 +2,12 @@ import 'package:task_tech/presentation/screens/create_profile/view/screens/bio_s
 import 'package:task_tech/utils/exports.dart';
 
 class SkillsScreen extends StatelessWidget {
-  const SkillsScreen(
-      {Key? key,
-      this.job,
-      this.birthDate,
-      this.gender,
-      this.age,
-      this.location,
-      this.phoneNumber})
-      : super(key: key);
-  final String? job;
-  final String? birthDate;
-  final String? gender;
-  final String? age;
-  final String? location;
-  final String? phoneNumber;
+  const SkillsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     CreateProfileCubit createProfileCubit =
         BlocProvider.of<CreateProfileCubit>(context);
-    var skillController = TextEditingController();
     return Scaffold(
       appBar: myAppbar(percent: 40),
       body: Center(
@@ -59,9 +44,24 @@ class SkillsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 12,
                 ),
-                Wrap(
-                  spacing: 8,
-                  children: createProfileCubit.chipList,
+                BlocBuilder<CreateProfileCubit, CreateProfileState>(
+                  buildWhen: (p, c) =>
+                      c is CreateProfileInitial || c is AddNewSkillChipState,
+                  bloc: createProfileCubit,
+                  builder: (context, state) {
+                    return Wrap(
+                      spacing: 8,
+                      children: List.generate(
+                        createProfileCubit.skillsList.length,
+                        (i) => FilterChipWidget(
+                          chipName: createProfileCubit.skillsList[i].chipName,
+                          isSelected:
+                              createProfileCubit.skillsList[i].isSelected,
+                          index: i,
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -78,28 +78,10 @@ class SkillsScreen extends StatelessWidget {
                         color: const Color.fromRGBO(227, 227, 227, 1)),
                   ),
                   child: TextFormField(
-                    /*onFieldSubmitted: (value){
-                      setState(() {
-                        chiptext =skillController.text; 
-                        if (chiptext.isEmpty){
-                          addchip = false;
-                        } else addchip =true;
-                      });
-                    },
-                    onSaved: (newValue) {
-                      print('saved');
-                    },
-                    onEditingComplete: (){
-                      setState(() {
-                        chiptext =skillController.text;
-                        if (chiptext.isEmpty){
-                          addchip = false;
-                        } else addchip =true;
-                      });
-                    },*/
-                    controller: skillController,
+
+                    controller: createProfileCubit.skillController,
                     onChanged: (value) {
-                      //value = skillController.text;
+                      createProfileCubit.skillController.text = value;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -113,7 +95,7 @@ class SkillsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             color: const Color.fromRGBO(184, 184, 184, 1))),
                     onFieldSubmitted: (value) =>
-                        createProfileCubit.onSkillChipSelected(value),
+                        createProfileCubit.addNewSkillChip(value),
                     // if (value != '')
                     //   {
                     //       chipList.add(FilterChipWidget(
@@ -132,15 +114,10 @@ class SkillsScreen extends StatelessWidget {
                     width: Constants.screenWidth * 0.7,
                     height: Constants.screenHeight * 0.075,
                     onpressed: () {
-                      Constants.navigateTo(BioScreen(
-                        job: job,
-                        birthDate: birthDate,
-                        age: age,
-                        gender: gender,
-                        location: location,
-                        phoneNumber: phoneNumber,
-                        skills: const ['UI/UX', 'Programming'],
-                      ));
+                      // for (var element in createProfileCubit.skills) {
+                      //   logWarning(element);
+                      // }
+                      Constants.navigateTo(const BioScreen());
                     },
                     childWidget: Text(
                       'Next',
@@ -158,66 +135,47 @@ class SkillsScreen extends StatelessWidget {
   }
 }
 
-class FilterChipWidget extends StatefulWidget {
+class FilterChipWidget extends StatelessWidget {
   final String chipName;
   final bool isSelected;
-  final List<String>? skillList;
-  const FilterChipWidget(
-      {Key? key,
-      required this.chipName,
-      required this.isSelected,
-      this.skillList})
-      : super(key: key);
+  final int index;
+  const FilterChipWidget({
+    Key? key,
+    required this.chipName,
+    required this.isSelected,
+    required this.index,
+  }) : super(key: key);
 
-  @override
-  FilterChipWidgetState createState() =>
-      // ignore: no_logic_in_create_state
-      FilterChipWidgetState(isSelected: isSelected);
-}
-
-class FilterChipWidgetState extends State<FilterChipWidget> {
-  late Icon icon;
-  bool isSelected = false;
-  FilterChipWidgetState({required isSelected});
   @override
   Widget build(BuildContext context) {
+    CreateProfileCubit createProfileCubit =
+        BlocProvider.of<CreateProfileCubit>(context);
     return FilterChip(
-      padding:
-          const EdgeInsetsDirectional.only(top: 3, bottom: 3, start: 3, end: 3),
-      label: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(widget.chipName),
-          SizedBox(
-            width: Constants.screenWidth * 0.01,
-          ),
-          icon = isSelected
-              ? const Icon(Icons.check,
-                  color: Colors.white, size: 22, weight: 400)
-              : const Icon(Icons.add,
-                  color: Color.fromRGBO(166, 166, 166, 0.8),
-                  size: 22,
-                  weight: 400)
-        ],
+      padding: const EdgeInsetsDirectional.all(3),
+      label: BlocBuilder<CreateProfileCubit, CreateProfileState>(
+        builder: (context, state) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(chipName),
+              const SizedBox(
+                width: 10,
+              ),
+              isSelected
+                  ? const Icon(Icons.check,
+                      color: Colors.white, size: 22, weight: 400)
+                  : const Icon(Icons.add,
+                      color: Color.fromRGBO(166, 166, 166, 0.8),
+                      size: 22,
+                      weight: 400)
+            ],
+          );
+        },
       ),
       selected: isSelected,
       onSelected: (selected) async {
-        setState(() {
-          isSelected = selected;
-          //if (isSelected) widget.skillList!.add(widget.chipName);
-        });
-        if (isSelected) {
-          // CreateProfileModel? profileModel;
-          // profileModel = await ProfileController.createProfileFunc(
-          //     skills: widget.skillList);
-          // if (profileModel == null) {
-          //   return Constants.errorMessage(description: 'Invalid input data');
-          //}
-          //  else {
-          //   Constants.navigateTo(const SkillsScreen(),
-          //       pushAndRemoveUntil: true);
-          // }
-        }
+        //if (isSelected) widget.skillList!.add(widget.chipName);
+        createProfileCubit.onSkillChipSelected(selected, index);
       },
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       showCheckmark: false,

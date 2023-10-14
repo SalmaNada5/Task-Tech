@@ -118,3 +118,11 @@ final class GetSpecificUserError extends HomeState {
         if (userInfoModel != null) {userInfoModel},
       ];
 }
+
+final class NavBarIndexChangedState extends HomeState {
+  const NavBarIndexChangedState({super.userInfoModel});
+  @override
+  List<Object> get props => [
+        if (userInfoModel != null) {userInfoModel},
+      ];
+}

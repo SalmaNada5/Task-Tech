@@ -16,4 +16,6 @@ final class OnCurrencySelectedState extends CreateProfileState {}
 
 final class OnFrequencySelectedState extends CreateProfileState {}
 
+final class AddNewSkillChipState extends CreateProfileState {}
+
 final class OnSkillChipSelectedState extends CreateProfileState {}

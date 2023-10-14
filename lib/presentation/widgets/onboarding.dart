@@ -1,6 +1,4 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class OnboardingWidget extends StatelessWidget {
   const OnboardingWidget(

@@ -40,6 +40,7 @@ dependencies:
   shimmer: ^3.0.0
   hydrated_bloc: ^9.1.2
   equatable: ^2.0.5
+  get_it: ^7.6.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

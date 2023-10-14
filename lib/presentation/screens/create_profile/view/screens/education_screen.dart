@@ -3,31 +3,7 @@ import 'package:task_tech/utils/exports.dart';
 class EducationScreen extends StatelessWidget {
   const EducationScreen({
     Key? key,
-    this.job,
-    this.birthDate,
-    this.gender,
-    this.age,
-    this.location,
-    this.phoneNumber,
-    this.skills,
-    this.description,
-    this.minimum,
-    this.maximum,
-    this.currency,
-    this.frequency,
   }) : super(key: key);
-  final String? job;
-  final String? birthDate;
-  final String? gender;
-  final String? age;
-  final String? location;
-  final String? phoneNumber;
-  final List<String>? skills;
-  final String? description;
-  final int? minimum;
-  final int? maximum;
-  final String? currency;
-  final String? frequency;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +14,9 @@ class EducationScreen extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsetsDirectional.only(
-                start: Constants.screenWidth * 0.03,
-                end: Constants.screenWidth * 0.03,
-                bottom: Constants.screenHeight * 0.03,
-                top: Constants.screenHeight * 0.03),
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 24,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,12 +28,10 @@ class EducationScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
-                  height: 19,
+                  height: 20,
                 ),
                 Text(
-                  'if you don’t have a degree, adding any\n'
-                  'relevant education helps make your profile'
-                  ' visible.',
+                  'if you don’t have a degree, adding any relevant education helps make your profile visible.',
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -104,9 +76,9 @@ class EducationScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        underline: Container(),
-                        icon: Container(),
-                        items:createProfileCubit.educationList
+                        underline: const SizedBox.shrink(),
+                        icon: const SizedBox.shrink(),
+                        items: createProfileCubit.educationList
                             .map<DropdownMenuItem<String>>((String items) {
                           return DropdownMenuItem<String>(
                               value: items,
@@ -114,9 +86,7 @@ class EducationScreen extends StatelessWidget {
                                 items,
                                 maxLines: 2,
                                 style: GoogleFonts.poppins(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
+                                    fontSize: 18,
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w500),
                               ));
@@ -128,8 +98,8 @@ class EducationScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
+                const SizedBox(
+                  height: 30,
                 ),
                 Text(
                   'Upload cv/ resume .',
@@ -176,38 +146,19 @@ class EducationScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
+                const SizedBox(
+                  height: 30,
                 ),
                 Center(
                   child: CustomButtonWidget(
                       width: Constants.screenWidth * 0.7,
                       height: Constants.screenHeight * 0.075,
                       onpressed: () async {
-                        logInfo(
-                            'Date sent => $gender, $frequency, $age, $birthDate , $currency, , $description, $job, $location}');
-                        await UploadProfilePhotoController
-                            .uploadProfilePhotoFunc();
-                        await UploadCVController.uploadCVFunc();
-                        createProfileCubit.createProfileCubit(
-                          about: description ?? '',
-                          minimum: minimum ?? 0,
-                          maximum: maximum ?? 0,
-                          currency: currency ?? '',
-                          frequency: frequency ?? '',
-                          job: job ?? '',
-                          phoneNumber: phoneNumber ?? '',
-                          gender: gender ?? '',
-                          age: age ?? '',
-                          birthDate: birthDate ?? '',
-                          location: location ?? '',
-                          skills: skills ?? [],
-                          education: createProfileCubit.education,
-                        );
-                        await CurrentUserInfoController.getUserInfoFunc();
-                        Constants.navigateTo(const ProfileScreen(
-                          isMe: true,
-                        ));
+                        await createProfileCubit.addAllProfileData();
+                        // await CurrentUserInfoController.getUserInfoFunc();
+                        // Constants.navigateTo(const ProfileScreen(
+                        //   isMe: true,
+                        // ));
                       },
                       childWidget: Text(
                         'Save',

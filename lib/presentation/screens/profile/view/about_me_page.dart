@@ -1,27 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
-
+import 'package:task_tech/utils/exports.dart';
 class AboutmePage extends StatelessWidget {
   final bool isMe;
   const AboutmePage({
     required this.isMe,
-    Key? key,
+    Key? key
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Color textColor =
         Theme.of(context).textTheme.headlineSmall!.color ?? Colors.grey;
     HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
-
     return Center(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10,),
             BlocBuilder<HomeCubit, HomeState>(
               bloc: homeCubit,
               buildWhen: (p, c) =>

@@ -97,6 +97,7 @@ class SalaryScreen extends StatelessWidget {
                   //   ),
                   // ),
                   CustomTextFormField(
+                    keyboardType: TextInputType.number,
                     controller: createProfileCubit.minSalaryController,
                     fillColor: Theme.of(context).canvasColor,
                     borderColor: Theme.of(context).canvasColor,
@@ -173,7 +174,7 @@ class SalaryScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.6),
                           alignment: AlignmentDirectional.center,
                           isExpanded: true,
-                          items:createProfileCubit. currencyList
+                          items: createProfileCubit.currencyList
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -226,7 +227,7 @@ class SalaryScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.6),
                           alignment: AlignmentDirectional.center,
                           isExpanded: true,
-                          items:createProfileCubit. frequencyList
+                          items: createProfileCubit.frequencyList
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -254,22 +255,7 @@ class SalaryScreen extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                       onpressed: () {
                         logInfo('desc $description , job: $job');
-                        Constants.navigateTo(EducationScreen(
-                          age: age,
-                          job: job,
-                          birthDate: birthDate,
-                          gender: gender,
-                          location: location,
-                          phoneNumber: phoneNumber,
-                          skills: skills,
-                          description: description,
-                          minimum: int.parse(
-                              createProfileCubit.minSalaryController.text),
-                          maximum: int.parse(
-                              createProfileCubit.maxSalaryController.text),
-                          currency: createProfileCubit.currencyValue,
-                          frequency: createProfileCubit.frequencyValue,
-                        ));
+                        Constants.navigateTo(const EducationScreen());
                       },
                       childWidget: Text(
                         'Next',

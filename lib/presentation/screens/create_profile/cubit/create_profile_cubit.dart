@@ -1,20 +1,14 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/presentation/screens/create_profile/controller/create_profile_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/skills_screen.dart';
-
+import 'package:task_tech/presentation/screens/create_profile/model/filter_chip_skill_model.dart';
+import 'package:task_tech/utils/exports.dart';
 part 'create_profile_state.dart';
 
 class CreateProfileCubit extends Cubit<CreateProfileState> {
   CreateProfileCubit() : super(CreateProfileInitial());
 
-  Future<void> createProfileCubit(
+  Future<void> addProfileTextData(
       {String? about,
       required int minimum,
       required int maximum,
@@ -29,6 +23,7 @@ class CreateProfileCubit extends Cubit<CreateProfileState> {
       required List<String> skills,
       required String education}) async {
     bool? result = await CreateProfileController.createProfileFunc(
+        about: about,
         minimum: minimum,
         maximum: maximum,
         currency: currency,
@@ -42,10 +37,53 @@ class CreateProfileCubit extends Cubit<CreateProfileState> {
         skills: skills,
         education: education);
     if (result!) {
-      Constants.navigateTo(const CreateProfile(), pushAndRemoveUntil: true);
+      Constants.navigateTo(
+          const ProfileScreen(
+            isMe: true,
+          ),
+          pushAndRemoveUntil: true);
     } else {
       Constants.errorMessage(description: 'Invalid code');
     }
+  }
+
+  Future<void> uploadCvCubit() async {
+    bool result = await UploadCVController.uploadCVFunc();
+    if (result) {
+      logSuccess('CV uploaded successfully');
+    } else {
+      logError('CV not uploaded');
+    }
+  }
+
+  Future<void> uploadProfilePhotoCubit() async {
+    bool result = await UploadProfilePhotoController.uploadProfilePhotoFunc();
+    if (result) {
+      logSuccess('Profile photo uploaded successfully,');
+    } else {
+      logError(
+          'Profile photo doest upload successfully, in uploadProfilePhotoCubit');
+    }
+  }
+
+  Future<void> addAllProfileData() async {
+    await addProfileTextData(
+      minimum: int.parse(minSalaryController.text),
+      maximum: int.parse(maxSalaryController.text),
+      currency: currencyValue,
+      frequency: frequencyValue,
+      job: jobController.text,
+      phoneNumber: phoneController.text,
+      gender: gender,
+      age: ageController.text,
+      birthDate: dateController.text,
+      location: locationController.text,
+      skills: skills,
+      education: education,
+      about: descriptionController.text,
+    );
+    await uploadProfilePhotoCubit();
+    await uploadCvCubit();
   }
 
 //? Lists
@@ -132,38 +170,27 @@ class CreateProfileCubit extends Cubit<CreateProfileState> {
     'per week',
     'per month'
   ];
-  List<Widget> chipList = [
-    const FilterChipWidget(
+  List<FilterChipSkillModel> skillsList = [
+    FilterChipSkillModel(
       chipName: 'UI/UX',
-      isSelected: false,
     ),
-    const FilterChipWidget(
+    FilterChipSkillModel(
       chipName: 'Technology',
-      isSelected: false,
     ),
-    const FilterChipWidget(
-      chipName: 'Strategy',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
+    FilterChipSkillModel(
       chipName: 'Interfaces',
-      isSelected: false,
     ),
-    const FilterChipWidget(
+    FilterChipSkillModel(
       chipName: 'Programming',
-      isSelected: false,
     ),
-    const FilterChipWidget(
+    FilterChipSkillModel(
       chipName: 'Writing',
-      isSelected: false,
     ),
-    const FilterChipWidget(
+    FilterChipSkillModel(
       chipName: 'Web design',
-      isSelected: false,
     ),
-    const FilterChipWidget(
+    FilterChipSkillModel(
       chipName: 'Art & illustration',
-      isSelected: false,
     ),
   ];
 
@@ -216,28 +243,50 @@ class CreateProfileCubit extends Cubit<CreateProfileState> {
   TextEditingController minSalaryController = TextEditingController();
   TextEditingController maxSalaryController = TextEditingController();
 
-  String currencyValue = '';
+  String currencyValue = 'EUR';
   void onCurrencySelected(String? value) {
     emit(CreateProfileInitial());
     currencyValue = value!;
     emit(OnCurrencySelectedState());
   }
 
-  String frequencyValue = '';
+  String frequencyValue = 'per hour';
   void onFrequencySelected(String? val) {
     emit(CreateProfileInitial());
     frequencyValue = val!;
     emit(OnFrequencySelectedState());
   }
 
-  void onSkillChipSelected(String? val) {
+  //* skills screen logic
+  TextEditingController skillController = TextEditingController();
+
+  void addNewSkillChip(String? val) {
     emit(CreateProfileInitial());
     if (val != '') {
-      chipList.add(FilterChipWidget(
+      if (!skills.contains(val)) {
+        skills.add(val!);
+      }
+      skillsList.add(FilterChipSkillModel(
         chipName: val!,
         isSelected: true,
       ));
+      skillController.clear();
     }
-    emit(OnSkillChipSelectedState());
+    emit(AddNewSkillChipState());
   }
+
+  void onSkillChipSelected(bool selected, int index) {
+    emit(CreateProfileInitial());
+    skillsList[index].isSelected = selected;
+    if (skillsList[index].isSelected) {
+      skills.add(skillsList[index].chipName);
+    } else {
+      if (skills.contains(skillsList[index].chipName)) {
+        skills.remove(skillsList[index].chipName);
+      }
+    }
+    emit(AddNewSkillChipState());
+  }
+
+  List<String> skills = [];
 }

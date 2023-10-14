@@ -1,16 +1,5 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/utils/consts.dart';
-import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
-import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
-import 'package:task_tech/presentation/screens/profile/view/profile_cubit/profile_cubit.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -289,7 +278,7 @@ class EditProfileScreen extends StatelessWidget {
                 endIndent: 10,
               ),
               TextButton.icon(
-                onPressed: () => Constants.navigateTo(const CreateProfile()),
+                onPressed: () {},
                 icon: Icon(
                   Icons.edit_document,
                   color: Theme.of(context).textTheme.headlineSmall!.color,

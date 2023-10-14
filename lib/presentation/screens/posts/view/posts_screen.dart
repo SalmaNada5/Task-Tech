@@ -1,4 +1,3 @@
-
 import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/posts/view/reusable_post_widget.dart';
 
@@ -96,7 +95,8 @@ class _PostsScreenState extends State<PostsScreen> {
             children: [
               Text(
                 'Posts',
-                style: titleStyle,
+                style: titleStyle.copyWith(
+                    color: Theme.of(context).textTheme.headlineSmall!.color),
               ),
               const Spacer(),
               Text(

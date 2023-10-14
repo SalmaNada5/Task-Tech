@@ -9,4 +9,5 @@ sealed class ProfileState extends Equatable {
 
 final class ProfileInitial extends ProfileState {}
 final class ProfileModeSwitchedSuccess extends ProfileState {}
+final class FollowOrUnFollowButtonPressed extends ProfileState {}
 

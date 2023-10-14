@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/create_profile/controller/upload_cv_controller.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class PortfolioPage extends StatelessWidget {
   const PortfolioPage({Key? key, required this.isMe}) : super(key: key);

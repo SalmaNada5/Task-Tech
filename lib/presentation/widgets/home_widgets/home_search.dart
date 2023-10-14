@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/utils/consts.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/home/controller/search_service_controller.dart';
-import 'package:task_tech/presentation/screens/home/view/screens/search_post_result.dart';
-import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key});

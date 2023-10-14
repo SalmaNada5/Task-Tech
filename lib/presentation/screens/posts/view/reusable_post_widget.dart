@@ -1,6 +1,5 @@
 import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
-import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
 
 class ReusablePostWidget extends StatelessWidget {
   const ReusablePostWidget({

@@ -121,7 +121,7 @@ class User {
         gender: json["gender"],
         location: json["location"],
         phoneNumber: json["phoneNumber"],
-        about: json["about"],
+        about: json["about"] ?? '',
         catogery: json["catogery"],
         currency: json["currency"],
         ferquency: json["ferquency"],

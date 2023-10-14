@@ -1,4 +1,3 @@
-import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:task_tech/utils/exports.dart';
 
 class ReusableCommentWidget extends StatefulWidget {

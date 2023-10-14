@@ -1,4 +1,3 @@
-
 import 'package:task_tech/utils/exports.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -67,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                             child: Row(
                               children: homeCubit.categoriesEnableShimmer
                                   ? List.generate(
-                                      3,
+                                      6,
                                       (index) => const CategoryItem(
                                           imgUrl: '',
                                           catName: 'name',

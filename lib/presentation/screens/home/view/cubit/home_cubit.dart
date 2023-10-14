@@ -30,7 +30,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
     getTopUsersFunc();
   }
 
-  Future<String> getToken() async {
+  Future<String> get getToken async {
     String? token;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -74,7 +74,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
     emit(HomeInitial(userInfoModel: state.userInfoModel));
     categoriesEnableShimmer = true;
     try {
-      String token = await getToken();
+      String token = await getToken;
 
       Response res = await _dioClient.get(
         'api/v1/categorys/?type=popular&page=$categoriesPage',
@@ -182,7 +182,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
     topUsersEnableShimmer = true;
     emit(HomeInitial(userInfoModel: state.userInfoModel));
     try {
-      String token = await getToken();
+      String token = await getToken;
 
       Response res = await _dioClient.get(
         'api/v1/users/topuser?page=$highestRatedUsersPage',
@@ -227,7 +227,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
   getUserByIdFunc(String userId) async {
     emit(HomeInitial(userInfoModel: state.userInfoModel));
     try {
-      String token = await getToken();
+      String token = await getToken;
 
       Response res = await _dioClient.get(
         'api/v1/users/$userId',
@@ -241,6 +241,13 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
       emit(GetSpecificUserError(userInfoModel: state.userInfoModel));
       logError('error in getUserByIdFunc ${e.toString()}');
     }
+  }
+
+  int curentPageIndex = 0;
+  void changeNavbarIndex(int index) {
+    emit(HomeInitial(userInfoModel: state.userInfoModel));
+    curentPageIndex = index;
+    emit(NavBarIndexChangedState(userInfoModel: state.userInfoModel));
   }
 
   @override

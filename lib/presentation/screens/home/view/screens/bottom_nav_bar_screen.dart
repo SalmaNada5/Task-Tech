@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:task_tech/presentation/screens/add_post/view/create_post_screen.dart';
-import 'package:task_tech/presentation/screens/chat_screens/view/chats_screen.dart';
-import 'package:task_tech/presentation/screens/home/view/screens/home_screen.dart';
-import 'package:task_tech/presentation/screens/posts/view/posts_screen.dart';
-import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:task_tech/presentation/screens/profile/view/profile_screen.dart';
+
+import 'package:task_tech/utils/exports.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
@@ -15,7 +10,6 @@ class BottomNavBarScreen extends StatefulWidget {
 }
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
-  int _currentIndex = 0;
 
   List<Widget> screens = [
     const HomeScreen(),
@@ -29,8 +23,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
     return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: screens),
+      body: IndexedStack(index: homeCubit.curentPageIndex, children: screens),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           boxShadow: <BoxShadow>[
@@ -105,12 +100,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
               ),
             ),
           ],
-          currentIndex: _currentIndex,
+          currentIndex: homeCubit.curentPageIndex,
           onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+            homeCubit.changeNavbarIndex(index);
+          }
         ),
       ),
     );

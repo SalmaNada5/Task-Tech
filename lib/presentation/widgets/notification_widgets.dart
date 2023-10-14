@@ -1,16 +1,11 @@
-// ignore: duplicate_ignore
-// ignore_for_file: must_be_immutable
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:task_tech/utils/exports.dart';
 
 class RequestNotification extends StatefulWidget {
-  String name;
-  String imageURL;
-  String time;
-  String notificationMessage;
-  RequestNotification(
+  final String name;
+  final String imageURL;
+  final String time;
+  final String notificationMessage;
+  const RequestNotification(
       {super.key,
       required this.name,
       required this.imageURL,
@@ -64,7 +59,7 @@ class _RequestNotificationState extends State<RequestNotification> {
                           22, 80, 105, 1)), // default text style
                 ),
                 const Spacer(),
-               // SizedBox(width: MediaQuery.of(context).size.width * 0.25),
+                // SizedBox(width: MediaQuery.of(context).size.width * 0.25),
                 Text(
                   textScaleFactor: 0.9,
                   widget.time,
@@ -143,11 +138,11 @@ class _RequestNotificationState extends State<RequestNotification> {
 }
 
 class NormalNotification extends StatefulWidget {
-  String name;
-  String imageURL;
-  String time;
-  String notificationMessage;
-  NormalNotification(
+  final String name;
+  final String imageURL;
+  final String time;
+  final String notificationMessage;
+  const NormalNotification(
       {super.key,
       required this.name,
       required this.imageURL,
