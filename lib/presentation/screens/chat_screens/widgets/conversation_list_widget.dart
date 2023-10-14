@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../view/chat_detail_screen.dart';
-
+import 'package:task_tech/presentation/screens/chat_screens/view/chat_detail_screen.dart';
+import 'package:task_tech/utils/exports.dart';
 
 
 class ConversationList extends StatefulWidget {
@@ -62,7 +60,7 @@ class _ConversationListState extends State<ConversationList> {
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                            color: Theme.of(context).textTheme.headlineSmall!.color),
                       ),
                       const SizedBox(
                         height: 6,
@@ -74,7 +72,7 @@ class _ConversationListState extends State<ConversationList> {
                             fontWeight: FontWeight.w400,
                             color: widget.isRead
                                 ? const Color.fromRGBO(124, 124, 124, 0.81)
-                                : const Color.fromRGBO(39, 102, 207, 1)),
+                                : Theme.of(context).primaryColor),
                       )
                     ],
                   ),
@@ -97,7 +95,7 @@ class _ConversationListState extends State<ConversationList> {
                 (widget.unreadCount! > 0)
                     ? CircleAvatar(
                         radius: 9,
-                        backgroundColor: const Color.fromRGBO(39, 102, 207, 1),
+                        backgroundColor: Theme.of(context).primaryColor,
                         child: Text(
                           widget.unreadCount.toString(),
                           style: GoogleFonts.poppins(

@@ -1,20 +1,9 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
-import 'package:task_tech/presentation/widgets/text_form_field.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    Color fieldColor = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
-        ? const Color(0xff213440)
-        : Colors.white;
-
     final formKey = GlobalKey<FormState>();
     TextEditingController forgotPassEmailController = TextEditingController();
     return Scaffold(
@@ -64,8 +53,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: forgotPassEmailController,
                   obscure: false,
-                  fillColor: fieldColor,
-                  borderColor: fieldColor,
+                  fillColor: Theme.of(context).canvasColor,
+                  borderColor: Theme.of(context).canvasColor,
                   validator: (email) {
                     email = forgotPassEmailController.text.toString();
                     if (email.isEmpty) {

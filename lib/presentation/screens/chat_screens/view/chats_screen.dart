@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/chat_screens/model/message_static_model.dart';
-
-import '../widgets/conversation_list_widget.dart';
-import '../widgets/search_widget.dart';
-
+import 'package:task_tech/utils/exports.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -16,28 +10,30 @@ class ChatsScreen extends StatefulWidget {
 class _ChatsScreenState extends State<ChatsScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Image.asset(
-            'icons/bi_arrow-left-circle-fill.png',
-            width: 40,
-            height: 40,
+        leading: Container(
+          margin: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Theme.of(context).primaryColor,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 20,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         title: Text(
           'Messages',
           style: GoogleFonts.poppins(
             fontSize: 24,
             fontWeight: FontWeight.w500,
-            color: const Color.fromRGBO(22, 80, 105, 1),
+            color: Theme.of(context).primaryColor,
           ),
         ),
         centerTitle: true,
@@ -61,7 +57,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   controller: _searchController,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
-                    prefixIcon: Image.asset('images/search.png'),                   
+                    prefixIcon: Image.asset('images/search.png'),
                     suffixIcon: Image.asset('images/filter.png'),
                     hintText: 'Search message..',
                     hintStyle: GoogleFonts.poppins(
@@ -69,7 +65,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       fontWeight: FontWeight.w400,
                       color: const Color(0xffC0C0C0),
                     ),
-                    fillColor: const Color(0xffF5F5F5),
+                    fillColor: Theme.of(context).canvasColor,
                     filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: Color(0xffB8B8B8)),
@@ -81,9 +77,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
                     ),
                     border: InputBorder.none,
                   ),
-                  onTap: (){
-                    showSearch(context: context,
-                         delegate: CustomSearchDelegate());
+                  onTap: () {
+                    showSearch(
+                        context: context, delegate: CustomSearchDelegate());
                   },
                   onChanged: (value) {
                     _searchController.text = value.toString();
@@ -106,7 +102,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       isRead: chatsList[index].isRead,
                       unreadCount: chatsList[index].unreadCount,
                       isReceiveMess: chatsList[index].isReceiveMess,
-
                     );
                   })
             ],
@@ -116,4 +111,3 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 }
-

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
+import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/payment/controller/payment_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
 import 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';
@@ -27,7 +22,7 @@ class ServiceDetailsPage extends StatelessWidget {
         service ?? ServiceController.serviceDetailsModel.data?.service;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -35,7 +30,8 @@ class ServiceDetailsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -60,11 +56,13 @@ class ServiceDetailsPage extends StatelessWidget {
           children: [
             serviceItem == null
                 ? const SizedBox.shrink()
-                : Image.network(
-                    serviceItem.attachFile ?? "",
+                : CachedNetworkImage(
+                    imageUrl: serviceItem.attachFile ?? "",
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     fit: BoxFit.fill,
+                    errorWidget: (context, url, error) =>
+                        Image.asset('images/placeholder.jpg'),
                   ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -74,16 +72,27 @@ class ServiceDetailsPage extends StatelessWidget {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(serviceItem?.user?.photo ?? ""),
                           radius: 20,
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: serviceItem?.user?.photo ?? "",
+                              errorWidget: (context, url, error) =>
+                                  Image.asset('images/placeholder.jpg'),
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
                           serviceItem?.user?.name ?? "",
-                          style: headStyle.copyWith(fontSize: 15),
+                          style: headStyle.copyWith(
+                            fontSize: 15,
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .color,
+                          ),
                         ),
                       ],
                     ),
@@ -92,7 +101,9 @@ class ServiceDetailsPage extends StatelessWidget {
                     ),
                     Text(
                       serviceItem?.name ?? "",
-                      style: headStyle,
+                      style: headStyle.copyWith(
+                        color: Theme.of(context).textTheme.headlineSmall!.color,
+                      ),
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),
@@ -167,7 +178,8 @@ class ServiceDetailsPage extends StatelessWidget {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
-                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                backgroundColor:
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

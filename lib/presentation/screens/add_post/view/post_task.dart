@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
-import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
-import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class PostTask extends StatefulWidget {
   const PostTask({super.key});
@@ -38,24 +31,26 @@ class _PostTaskState extends State<PostTask> {
           Text(
             'Tell us about your Task',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
           ),
           TextFormField(
             controller: AddPostsController.taskeDescriptionController,
-            style: headStyle,
+            style: headStyle.copyWith(color: Theme.of(context).hintColor),
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: 15),
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
+                    borderSide: BorderSide(
+                      color: Theme.of(context).canvasColor,
+                      //Colors.white,
                     )),
                 filled: true,
-                fillColor: const Color(0xffF5F5F5),
+                fillColor: Theme.of(context).canvasColor,
                 hintText: 'Description',
                 hintStyle: GoogleFonts.poppins(
                   fontSize: 16,
@@ -81,7 +76,8 @@ class _PostTaskState extends State<PostTask> {
           Text(
             'Attach File',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
@@ -103,18 +99,18 @@ class _PostTaskState extends State<PostTask> {
               });
             },
             readOnly: true,
-            style: headStyle,
+            style: headStyle.copyWith(color: Theme.of(context).hintColor),
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(left: 15),
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
+                  borderSide: BorderSide(
+                    color: Theme.of(context).canvasColor,
                   ),
                 ),
                 filled: true,
-                fillColor: const Color(0xffF5F5F5),
+                fillColor: Theme.of(context).canvasColor,
                 prefixIcon: fileDisSelected
                     ? null
                     : fileName == null
@@ -144,6 +140,7 @@ class _PostTaskState extends State<PostTask> {
                                   icon: const Icon(
                                     Icons.clear,
                                     size: 16,
+                                    color: Colors.grey,
                                   ),
                                 ),
                               ],
@@ -152,6 +149,7 @@ class _PostTaskState extends State<PostTask> {
                 suffixIcon: const Icon(
                   Icons.attach_file,
                   size: 20,
+                  color: Colors.grey,
                 )),
             onChanged: (value) {
               //AddPostsController.attachFileController.text = value.toString();

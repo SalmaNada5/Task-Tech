@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/presentation/screens/auth/controller/auth_controller.dart';
 import 'package:task_tech/presentation/screens/auth/models/auth_model.dart';
+import 'package:task_tech/presentation/screens/auth/view/onboarding_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/reset_password_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 import 'package:task_tech/presentation/screens/auth/view/verification_code_screen.dart';
 import 'package:task_tech/presentation/screens/create_profile/view/screens/create_profile.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/bottom_nav_bar_screen.dart';
 
 part 'auth_state.dart';
 
@@ -23,6 +24,8 @@ class AuthCubit extends Cubit<AuthState> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString("token", authModel.token!);
       pref.setString("id", AuthController.authModel.data!.user!.id!);
+      pref.setString('cuurentUserName',
+          AuthController.authModel.data!.user!.name ?? 'no data');
       return Constants.navigateTo(const BottomNavBarScreen(),
           pushAndRemoveUntil: true);
     }
@@ -145,5 +148,34 @@ class AuthCubit extends Cubit<AuthState> {
           : signUpObsecureTextConfirmPass = true;
       emit(SignUpConfirmPassVisible());
     }
+  }
+
+//? splash screen logic
+  Future<void> navigateToHomeOrOnboardingScreen(bool mounted) async {
+    String? token;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString("token");
+    await Future.delayed(const Duration(seconds: 3));
+    if (!mounted) return;
+    Constants.navigateTo(
+      token == null ? const OnboardingScreen() : const BottomNavBarScreen(),
+      pushReplacment: true,
+    );
+  }
+
+  //? onBoarding logic
+  final PageController onboardingPageController = PageController();
+  bool isLastPage = false;
+
+  void onPageChanged(int val) {
+    emit(AuthInitial());
+    isLastPage = val == 1;
+    emit(OnboardingPageChanged());
+  }
+
+  @override
+  Future<void> close() {
+    onboardingPageController.dispose();
+    return super.close();
   }
 }

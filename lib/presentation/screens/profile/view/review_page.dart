@@ -1,64 +1,71 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
+import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
 
 class ReviewPage extends StatelessWidget {
+  final bool isMe;
   const ReviewPage({
     Key? key,
+    required this.isMe,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount:
-          CurrentUserInfoController.userInfoModel.data?.user.reviews.length ??
-              0,
-      itemBuilder: (context, i) => reviewCard(
-          name: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].reviewer?.name ??
-              '',
-          review: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].review ??
-              '',
-          rate: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].rating ??
-              0.0,
-          imgUrl: CurrentUserInfoController
-                  .userInfoModel.data?.user.reviews[i].reviewer?.photo ??
-              '',
-          textColor: Theme.of(context).textTheme.headlineSmall!.color!),
-      //   children: [
-      //   reviewCard(
-      //       name: 'Emily',
-      //       review: 'Nice work and user friendly communication.',
-      //       rate: 4.5),
-      //   reviewCard(
-      //       name: 'Emily',
-      //       review: 'very patient and awesome to work with!'
-      //           'asked the right question about the target'
-      //           'audience and made exactly what we '
-      //           'needed!',
-      //       rate: 4.5),
-      //   reviewCard(
-      //       name: 'Emily',
-      //       review: 'very patient and awesome to work with!'
-      //           'asked the right question about the target'
-      //           'audience and made exactly what we '
-      //           'needed!',
-      //       rate: 4.5)
-      // ]);
+    HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
+    return BlocBuilder<HomeCubit, HomeState>(
+      bloc: homeCubit,
+      buildWhen: (p, c) => c is GetUserInfoSucces || c is GetSpecificUserSucces,
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount: isMe
+              ? state.userInfoModel?.data?.user.reviews!.length ?? 0
+              : homeCubit.userModel.data?.user.reviews?.length ?? 0,
+          itemBuilder: (context, i) => ReviewCard(
+              name: isMe
+                  ? state.userInfoModel?.data?.user.reviews![i].reviewer!
+                          .name ??
+                      ''
+                  : homeCubit
+                          .userModel.data?.user.reviews?[i]?.reviewer!.name ??
+                      '',
+              review: isMe
+                  ? state.userInfoModel?.data?.user.reviews![i].review ?? ''
+                  : homeCubit.userModel.data?.user.reviews?[i]?.review ?? '',
+              rate: isMe
+                  ? state.userInfoModel?.data?.user.reviews![i].rating ?? 0.0
+                  : homeCubit.userModel.data?.user.reviews?[i]?.rating ?? 0.0,
+              imgUrl: isMe
+                  ? state.userInfoModel?.data?.user.reviews![i].reviewer!
+                          .photo ??
+                      ''
+                  : homeCubit
+                          .userModel.data?.user.reviews?[i]?.reviewer!.photo ??
+                      '',
+              textColor: Theme.of(context).textTheme.headlineSmall!.color!),
+        );
+      },
     );
   }
 }
 
-Widget reviewCard(
-    {required String name,
-    required String review,
-    required num rate,
-    required String imgUrl,
-    required Color textColor}) {
-  return ListTile(
+class ReviewCard extends StatelessWidget {
+  const ReviewCard(
+      {super.key,
+      required this. name,
+      required this. review,
+      required this. rate,
+      required this. imgUrl,
+      required this. textColor});
+  final String name;
+  final String review;
+  final num rate;
+  final String imgUrl;
+  final Color textColor;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
     leading: CircleAvatar(
       child: ClipOval(
         child: CachedNetworkImage(
@@ -108,4 +115,5 @@ Widget reviewCard(
       ),
     ),
   );
+  }
 }

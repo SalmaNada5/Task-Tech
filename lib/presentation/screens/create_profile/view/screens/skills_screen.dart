@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
+import 'package:task_tech/presentation/screens/create_profile/view/screens/bio_screen.dart';
+import 'package:task_tech/utils/exports.dart';
 
-import 'bio_screen.dart';
-
-class SkillsScreen extends StatefulWidget {
+class SkillsScreen extends StatelessWidget {
   const SkillsScreen(
       {Key? key,
       this.job,
@@ -22,49 +17,11 @@ class SkillsScreen extends StatefulWidget {
   final String? age;
   final String? location;
   final String? phoneNumber;
-  @override
-  SkillsScreenState createState() => SkillsScreenState();
-}
 
-class SkillsScreenState extends State<SkillsScreen> {
-  List<Widget> chipList = [
-    const FilterChipWidget(
-      chipName: 'UI/UX',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Technology',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Strategy',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Interfaces',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Programming',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Writing',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Web design',
-      isSelected: false,
-    ),
-    const FilterChipWidget(
-      chipName: 'Art & illustration',
-      isSelected: false,
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
-    //String chiptext ='';
-    //bool addchip = false;
+    CreateProfileCubit createProfileCubit =
+        BlocProvider.of<CreateProfileCubit>(context);
     var skillController = TextEditingController();
     return Scaffold(
       appBar: myAppbar(percent: 40),
@@ -104,7 +61,7 @@ class SkillsScreenState extends State<SkillsScreen> {
                 ),
                 Wrap(
                   spacing: 8,
-                  children: chipList,
+                  children: createProfileCubit.chipList,
                 ),
                 const SizedBox(
                   height: 20,
@@ -155,17 +112,16 @@ class SkillsScreenState extends State<SkillsScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                             color: const Color.fromRGBO(184, 184, 184, 1))),
-                    onFieldSubmitted: (value) => {
-                      if (value != '')
-                        {
-                          setState(() {
-                            chipList.add(FilterChipWidget(
-                              chipName: value,
-                              isSelected: true,
-                            ));
-                          }),
-                        }
-                    },
+                    onFieldSubmitted: (value) =>
+                        createProfileCubit.onSkillChipSelected(value),
+                    // if (value != '')
+                    //   {
+                    //       chipList.add(FilterChipWidget(
+                    //         chipName: value,
+                    //         isSelected: true,
+                    //       ));
+
+                    //   }
                   ),
                 ),
                 const SizedBox(
@@ -173,25 +129,26 @@ class SkillsScreenState extends State<SkillsScreen> {
                 ),
                 Center(
                   child: CustomButtonWidget(
-                      width: Constants.screenWidth * 0.7,
-                      height: Constants.screenHeight * 0.075,
-                      onpressed: () {
-                        Constants.navigateTo(BioScreen(
-                          job: widget.job,
-                          birthDate: widget.birthDate,
-                          age: widget.age,
-                          gender: widget.gender,
-                          location: widget.location,
-                          phoneNumber: widget.phoneNumber,
-                          skills: const ['UI/UX', 'Programming'],
-                        ));
-                      },
-                      childWidget: Text(
-                        'Next',
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, color: Colors.white),
-                      )),
-                )
+                    width: Constants.screenWidth * 0.7,
+                    height: Constants.screenHeight * 0.075,
+                    onpressed: () {
+                      Constants.navigateTo(BioScreen(
+                        job: job,
+                        birthDate: birthDate,
+                        age: age,
+                        gender: gender,
+                        location: location,
+                        phoneNumber: phoneNumber,
+                        skills: const ['UI/UX', 'Programming'],
+                      ));
+                    },
+                    childWidget: Text(
+                      'Next',
+                      style: GoogleFonts.poppins(
+                          fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

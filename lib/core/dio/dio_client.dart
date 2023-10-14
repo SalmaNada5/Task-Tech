@@ -1,8 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/core/dio/error_model.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/core/internet/internet_info.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class DioClient {
   final InternetInfo _internetInfo = InternetInfoImpl();

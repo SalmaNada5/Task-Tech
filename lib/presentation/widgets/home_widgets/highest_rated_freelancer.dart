@@ -1,6 +1,7 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class HighestRatedFreelancer extends StatelessWidget {
@@ -40,7 +41,7 @@ class HighestRatedFreelancer extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Colors.black,
+              color: Theme.of(context).textTheme.headlineSmall!.color,
             ),
           ),
           Text(
@@ -70,7 +71,7 @@ class HighestRatedFreelancer extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                 ),
               ),
             ],
@@ -79,11 +80,11 @@ class HighestRatedFreelancer extends StatelessWidget {
             height: 5,
           ),
           ElevatedButton(
-            
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                const Color(0xffCEDADF),
-              ),
+                  AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light
+                      ? const Color(0xffCEDADF)
+                      : const Color(0xff213440)),
               shadowColor: MaterialStateProperty.all(
                 const Color.fromRGBO(22, 80, 105, 0.5),
               ),
@@ -98,10 +99,12 @@ class HighestRatedFreelancer extends StatelessWidget {
             child: Text(
               'View profile',
               style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: const Color(0xff165069),
-              ),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color:
+                      AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light
+                          ? const Color(0xff165069)
+                          : Colors.white),
             ),
           ),
         ],

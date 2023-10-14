@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class RelatedPostItem extends StatefulWidget {
   const RelatedPostItem({
@@ -33,21 +31,24 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
       width: 0.5 * Constants.screenWidth,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.white),
-          elevation: MaterialStateProperty.all(8),
+          backgroundColor: MaterialStateProperty.all(
+              Theme.of(context).scaffoldBackgroundColor),
+          elevation: MaterialStateProperty.all(4),
+          shadowColor: MaterialStateProperty.all(Colors.white),
         ),
         onPressed: widget.onpressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 80,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(widget.serviceImgUrl))),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: CachedNetworkImage(
+                imageUrl: widget.serviceImgUrl,
+                height: 80,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -55,8 +56,14 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(widget.profileImgUrl),
                   radius: 10,
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.profileImgUrl,
+                      errorWidget: (context, url, error) =>
+                          Image.asset('images/default person.png'),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   width: 5,
@@ -66,7 +73,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                   ),
                 ),
               ],
@@ -86,7 +93,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                 ),
               ),
             ),
@@ -104,7 +111,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
             Row(
               children: [
                 Text(
-                  'Starting at',
+                  'Starting at ',
                   style: GoogleFonts.poppins(
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
@@ -116,7 +123,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.headlineSmall!.color,
                   ),
                 ),
                 const Spacer(),
@@ -130,8 +137,8 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                 ),
                 Text(
                   '${widget.rate}',
-                  style: const TextStyle(
-                      color: Colors.black,
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
                       fontSize: 12,
                       fontWeight: FontWeight.w500),
                 ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/home/controller/search_service_controller.dart';
-import 'package:task_tech/presentation/screens/home/view/search_post_result.dart';
+import 'package:task_tech/presentation/screens/home/view/screens/search_post_result.dart';
 import 'package:task_tech/presentation/screens/posts_details/view/service_details.dart';
 
 class SearchWidget extends StatefulWidget {
@@ -33,7 +33,7 @@ class _SearchWidgetState extends State<SearchWidget> {
           fontWeight: FontWeight.w400,
           color: const Color(0xffC0C0C0),
         ),
-        fillColor: const Color(0xffF5F5F5),
+        fillColor: Theme.of(context).scaffoldBackgroundColor,
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Color(0xffB8B8B8)),
@@ -50,6 +50,7 @@ class _SearchWidgetState extends State<SearchWidget> {
         _searchController.selection =
             TextSelection.collapsed(offset: _searchController.text.length);
       },
+      readOnly: true,
       onTap: () {
         showSearch(context: context, delegate: HomeSearchDelegate());
       },
@@ -70,7 +71,10 @@ class HomeSearchDelegate extends SearchDelegate {
             query = '';
           }
         },
-        icon: const Icon(Icons.close),
+        icon: Icon(
+          Icons.close,
+          color: Theme.of(context).primaryColor,
+        ),
       ),
     ];
   }
@@ -79,7 +83,10 @@ class HomeSearchDelegate extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
         onPressed: () => close(context, null),
-        icon: const Icon(Icons.arrow_back));
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).primaryColor,
+        ));
   }
 
   @override
@@ -117,7 +124,9 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+    );
   }
 
   Future<void> getSearchResult() async {
@@ -126,5 +135,21 @@ class HomeSearchDelegate extends SearchDelegate {
     } catch (e) {
       logError('error in getSearchResult: $e');
     }
+  }
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      appBarTheme: AppBarTheme(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        shadowColor: Colors.white,
+      ),
+      textTheme: TextTheme(
+          titleLarge: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontSize: 16)),
+      hintColor: Theme.of(context).textTheme.headlineSmall!.color,
+    );
   }
 }

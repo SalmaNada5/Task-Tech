@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/add_post/controller/add_post_controller.dart';
-import 'package:task_tech/presentation/screens/add_post/view/reusable_form.dart';
-import 'package:task_tech/presentation/screens/home/view/bottom_nav_bar_screen.dart';
-import 'package:task_tech/presentation/screens/posts/controller/post_controller.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class PostService extends StatefulWidget {
   const PostService({super.key});
@@ -39,24 +32,25 @@ class _PostServiceState extends State<PostService> {
           Text(
             'Description',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
           ),
           TextFormField(
             controller: AddPostsController.serviceDescriptionController,
-            style: headStyle,
+            style: headStyle.copyWith(color: Theme.of(context).hintColor),
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(left: 15),
               border: InputBorder.none,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
+                  borderSide: BorderSide(
+                    color: Theme.of(context).canvasColor,
                   )),
               filled: true,
-              fillColor: const Color(0xffF5F5F5),
+              fillColor: Theme.of(context).canvasColor,
             ),
             onChanged: (value) {
               AddPostsController.serviceDescriptionController.text =
@@ -82,7 +76,8 @@ class _PostServiceState extends State<PostService> {
           Text(
             'Attach File',
             textAlign: TextAlign.center,
-            style: headStyle,
+            style: headStyle.copyWith(
+                color: Theme.of(context).textTheme.headlineSmall!.color),
           ),
           const SizedBox(
             height: 10,
@@ -110,12 +105,12 @@ class _PostServiceState extends State<PostService> {
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
+                  borderSide: BorderSide(
+                    color: Theme.of(context).canvasColor,
                   ),
                 ),
                 filled: true,
-                fillColor: const Color(0xffF5F5F5),
+                fillColor: Theme.of(context).canvasColor,
                 prefixIcon: fileDisSelected
                     ? null
                     : fileName == null
@@ -153,6 +148,7 @@ class _PostServiceState extends State<PostService> {
                 suffixIcon: const Icon(
                   Icons.attach_file,
                   size: 20,
+                  color: Colors.grey,
                 )),
             maxLines: 1,
           ),

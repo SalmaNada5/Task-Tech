@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:task_tech/utils/exports.dart';
 
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-// ignore: library_prefixes
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
 
@@ -13,61 +10,87 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   bool isOnline = true;
-    TextEditingController? messageController ;
-    List<ChatMessage> messages = [
-      ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
-      ChatMessage(
-          messageContent: "How have you been?", messageType: "receiver"),
-      ChatMessage(
-          messageContent: "Hey Kriss, I am doing fine dude. wbu?",
-          messageType: "sender",messageIsRead :true),
-      ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
-      ChatMessage(
-          messageContent: "Hi Kristin! \n Yes, I just finished developing the \"Chat\" .", messageType: "sender",messageIsRead :false),
-    ];
+  TextEditingController messageController = TextEditingController();
+  List<ChatMessage> messages = [
+    ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
+    ChatMessage(messageContent: "How have you been?", messageType: "receiver"),
+    ChatMessage(
+        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
+        messageType: "sender",
+        messageIsRead: true),
+    ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
+    ChatMessage(
+        messageContent:
+            "Hi Kristin! \n Yes, I just finished developing the \"Chat\" .",
+        messageType: "sender",
+        messageIsRead: false),
+  ];
+  late io.Socket socket;
+  connectSocket() {
+    socket.onConnect((data) => debugPrint('connection established'));
+    socket.onConnectError((data) => debugPrint('connection error: $data'));
+    socket.onDisconnect((data) => debugPrint('Socket IO server disconnected'));
+    socket.on('message', (data) => debugPrint(data));
+  }
 
-late IO.Socket socket;
-List<String> msgs =[];
+  String? currentUserId;
 
-@override
+  getUserId() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    currentUserId = pref.getString('id');
+  }
+
+  sendMessages() {
+    socket.emit('message', {
+      'message': messageController.text,
+      'senderID': currentUserId,
+    });
+  }
+
+  List<String> msgs = [];
+
+  @override
   void initState() {
     messageController = TextEditingController();
-   initTheSocket();
+    socket = io.io(
+        'https://task-teck.onrender.com/',
+        io.OptionBuilder().setTransports(['websocket']).setQuery({
+          'id': currentUserId,
+        }).build());
+    connectSocket();
+    //initTheSocket();
     super.initState();
   }
 
+  // initTheSocket() {
+  //   socket = IO.io('https://task-teck.onrender.com/', {
+  //     'transports': ['websocket'],
+  //     'autoConnect': false
+  //   });
+  //   socket.connect();
+  //   // ignore: avoid_print
+  //   socket.onConnect((_) => print('connected with server'));
+  //   // ignore: avoid_print
+  //   print(socket.connected);
 
-  initTheSocket(){
- socket =  IO.io('https://task-teck.onrender.com/', {
-    'transports': ['websocket'],
-    'autoConnect': false
-  });
-    socket.connect();
-      // ignore: avoid_print
-      socket.onConnect((_) => print('connected with server'));
-      // ignore: avoid_print
-      print(socket.connected);
+  //   socket.onDisconnect((_) => debugPrint("disconnected with server"));
 
-      socket.onDisconnect((_) => debugPrint("disconnected with server"));
+  //   socket.on('res', (data) {
+  //     debugPrint(data);
+  //     setState(() {
+  //       msgs.add(data);
+  //     });
+  //   });
+  // }
 
-  socket.on('res', (data) {
-    debugPrint(data);
-    setState(() {
-          msgs.add(data);
-
-    });
-  });
-
-  }
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 85,
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           flexibleSpace: SafeArea(
             child: Column(
               children: [
@@ -88,8 +111,8 @@ List<String> msgs =[];
                           ),
                           CircleAvatar(
                             radius: 6,
-                            backgroundColor: isOnline?
-                             const Color.fromRGBO(76, 175, 80, 1)
+                            backgroundColor: isOnline
+                                ? const Color.fromRGBO(76, 175, 80, 1)
                                 : Colors.transparent,
                           )
                         ],
@@ -105,9 +128,10 @@ List<String> msgs =[];
                             Text(
                               'Kristin Waston',
                               style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color.fromRGBO(22, 80, 105, 1)),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                             SizedBox(
                               height:
@@ -155,24 +179,31 @@ List<String> msgs =[];
                       child: Column(
                         children: [
                           Align(
-                            alignment: /*(messages[index].messageType == 'receiver'
-                                ? Alignment.topLeft
-                                :*/ Alignment.topRight,
+                            alignment: Alignment.topRight,
                             child: Container(
-                              
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15),
-                                bottomLeft:messages[index].messageType == "receiver"?Radius.zero:Radius.circular(15) ,
-                                bottomRight: messages[index].messageType == "sender"?Radius.zero:Radius.circular(15)),
-                                color: (messages[index].messageType == "receiver"
-                                    ? Color.fromRGBO(22, 80, 105, 1)
-                                    : Colors.transparent),
-                                    border: Border.all(
-                                      color: messages[index].messageType == "receiver"?
-                                      Color.fromRGBO(22, 80, 105, 1)
-                                      :Color.fromRGBO(232, 233, 235, 1)
-                                    )
-                              ),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: const Radius.circular(15),
+                                      topRight: const Radius.circular(15),
+                                      bottomLeft: messages[index].messageType ==
+                                              "receiver"
+                                          ? Radius.zero
+                                          : const Radius.circular(15),
+                                      bottomRight:
+                                          messages[index].messageType ==
+                                                  "sender"
+                                              ? Radius.zero
+                                              : const Radius.circular(15)),
+                                  color:
+                                      (messages[index].messageType == "receiver"
+                                          ? const Color.fromRGBO(22, 80, 105, 1)
+                                          : Colors.transparent),
+                                  border: Border.all(
+                                      color: messages[index].messageType ==
+                                              "receiver"
+                                          ? const Color.fromRGBO(22, 80, 105, 1)
+                                          : const Color.fromRGBO(
+                                              232, 233, 235, 1))),
                               padding: const EdgeInsets.all(14),
                               child: Wrap(
                                 verticalDirection: VerticalDirection.down,
@@ -180,66 +211,78 @@ List<String> msgs =[];
                                 children: [
                                   Container(
                                     margin: EdgeInsets.zero,
-                                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height* 0.005),
-                                      constraints: BoxConstraints(
-                                        maxWidth: MediaQuery.of(context).size.width * 0.80,),
+                                    padding: EdgeInsets.only(
+                                        bottom:
+                                            MediaQuery.of(context).size.height *
+                                                0.005),
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.80,
+                                    ),
                                     child: Text(
                                       msgs[index],
-                                      style:  GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                            color:
-                            // messages[index].messageType == "receiver"?
-                           // Color.fromRGBO(255, 255, 255, 1):
-                            Color.fromRGBO(89, 95, 105, 1)
-                          ), 
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15,
+                                          color:
+                                              // messages[index].messageType == "receiver"?
+                                              // Color.fromRGBO(255, 255, 255, 1):
+                                              const Color.fromRGBO(
+                                                  89, 95, 105, 1)),
                                     ),
                                   ),
                                   //messages[index].messageType == "sender"?
-                                   Container(
-                                    alignment:AlignmentDirectional.bottomEnd,
-                                    width: MediaQuery.of(context).size.width * 0.03,
-                                    
-                                    margin: EdgeInsetsDirectional.only(top: MediaQuery.of(context).size.height * 0.01),
+                                  Container(
+                                    alignment: AlignmentDirectional.bottomEnd,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.03,
+                                    margin: EdgeInsetsDirectional.only(
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.01),
                                     child: Icon(
                                       //messages[index].messageIsRead==true?
-                                       Icons.done_all_rounded,
-                                       //: Icons.done,
-                                      size: MediaQuery.of(context).size.width * 0.04,
-                                      color: Color.fromRGBO(22, 80, 105, 1),
+                                      Icons.done_all_rounded,
+                                      //: Icons.done,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color:
+                                          const Color.fromRGBO(22, 80, 105, 1),
                                     ),
                                   )
                                   //:SizedBox(width: 0),
-                                
                                 ],
                               ),
                             ),
                           ),
-                            Align(
-                              alignment: 
-                              //(messages[index].messageType == 'receiver'?
-                               Alignment.topLeft,
-                               // : Alignment.topRight),
-                              child: Container(
-                                        padding: EdgeInsets.zero,
-                                        margin: EdgeInsets.only(
-                                                        top: MediaQuery.of(context).size.height * 0.006,
-                                                        left: MediaQuery.of(context).size.width * 0.015),
-                                        //alignment: Alignment.bottomRight,
-                                        constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context).size.width * 0.20,
-                                        ),
-                                        child: Text(
-                                          '11:11',
-                                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            color: Color.fromRGBO(138, 144, 153, 1)
-                          ), 
-                                        ),
-                                      ),
+                          Align(
+                            alignment:
+                                //(messages[index].messageType == 'receiver'?
+                                Alignment.topLeft,
+                            // : Alignment.topRight),
+                            child: Container(
+                              padding: EdgeInsets.zero,
+                              margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.006,
+                                  left: MediaQuery.of(context).size.width *
+                                      0.015),
+                              //alignment: Alignment.bottomRight,
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width * 0.20,
+                              ),
+                              child: Text(
+                                '11:11',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                    color:
+                                        const Color.fromRGBO(138, 144, 153, 1)),
+                              ),
                             ),
+                          ),
                         ],
                       ),
                     );
@@ -262,46 +305,50 @@ List<String> msgs =[];
                         height: 35,
                         width: double.infinity * 0.5,
                         child: TextField(
-                          controller:messageController ,
-                          
+                          controller: messageController,
                           style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Color.fromRGBO(15, 24, 40, 1)
-                          ),
-                          
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: const Color.fromRGBO(15, 24, 40, 1)),
                           decoration: InputDecoration(
-                           
-                            contentPadding: EdgeInsetsDirectional.all(10),
-                            labelStyle:  GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Color.fromRGBO(15, 24, 40, 1),
-                            
-                          ),
+                              contentPadding:
+                                  const EdgeInsetsDirectional.all(10),
+                              labelStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: const Color.fromRGBO(15, 24, 40, 1),
+                              ),
                               filled: true,
-                              focusColor: const Color.fromRGBO(247, 247, 252, 1),
-                              hoverColor: const Color.fromRGBO(247, 247, 252, 1),
+                              focusColor:
+                                  const Color.fromRGBO(247, 247, 252, 1),
+                              hoverColor:
+                                  const Color.fromRGBO(247, 247, 252, 1),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none),
-                              fillColor: const Color.fromRGBO(247, 247, 252, 1)),
-                              
+                              fillColor: Theme.of(context).canvasColor),
                         ),
                       )),
                       const SizedBox(
                         width: 10,
                       ),
                       IconButton(
-                          onPressed: () {
-                            socket.emit('msg',messageController!.text);
-                            messageController!.clear();
-
-                          },
-                          icon: const Icon(
-                            Icons.send,
-                            color: Color.fromRGBO(22, 80, 105, 1),
-                          ))
+                        onPressed: () {
+                          if (messageController.text.isNotEmpty) {
+                            sendMessages();
+                            debugPrint('senttt');
+                          }
+                          // setState(() {
+                          //   socket.emit('msg', messageController!.text);
+                          //   msgs.add(messageController!.text);
+                          //   messageController!.clear();
+                          // });
+                        },
+                        icon: Icon(
+                          Icons.send,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -310,20 +357,23 @@ List<String> msgs =[];
           ),
         ));
   }
-  void sendMessage(String text){
-  var messageJson = {"message":text,"sentByMe":socket.id};
-  socket.emit('message',messageJson);
-}
-void setUpSocketListner(){
-  socket.on('message-receive',(data){
-  });
-}
+
+  // void sendMessage(String text) {
+  //   var messageJson = {"message": text, "sentByMe": socket.id};
+  //   socket.emit('message', messageJson);
+  // }
+
+  // void setUpSocketListner() {
+  //   socket.on('message-receive', (data) {});
+  // }
 }
 
 class ChatMessage {
   String messageContent;
   String messageType;
   bool messageIsRead;
-  ChatMessage({required this.messageContent, required this.messageType,this.messageIsRead = true});
+  ChatMessage(
+      {required this.messageContent,
+      required this.messageType,
+      this.messageIsRead = true});
 }
-

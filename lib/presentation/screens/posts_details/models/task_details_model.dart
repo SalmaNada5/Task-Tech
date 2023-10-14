@@ -44,43 +44,47 @@ class Data {
 }
 
 class Post {
-  List<String> softwareTool;
-  List<dynamic> saved;
-  String id;
-  String name;
-  String description;
-  String delieveryDate;
-  int salary;
-  String catogery;
-  User user;
-  String attachFile;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
-  List<Comment> comments;
-  String postId;
+  List<String>? softwareTool;
+  List<dynamic>? saved;
+  String? id;
+  String? name;
+  String? description;
+  String? delieveryDate;
+  int? salary;
+  String? catogery;
+  User? user;
+  String? attachFile;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? v;
+  List<Comment>? comments;
+  String? postId;
 
   Post({
-    required this.softwareTool,
-    required this.saved,
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.delieveryDate,
-    required this.salary,
-    required this.catogery,
-    required this.user,
-    required this.attachFile,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
-    required this.comments,
-    required this.postId,
+    this.softwareTool,
+    this.saved,
+    this.id,
+    this.name,
+    this.description,
+    this.delieveryDate,
+    this.salary,
+    this.catogery,
+    this.user,
+    this.attachFile,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.comments,
+    this.postId,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
-        softwareTool: List<String>.from(json["softwareTool"].map((x) => x)),
-        saved: List<dynamic>.from(json["saved"].map((x) => x)),
+        softwareTool: json["softwareTool"] == null
+            ? []
+            : List<String>.from(json["softwareTool"].map((x) => x)),
+        saved: json["saved"] == null
+            ? []
+            : List<dynamic>.from(json["saved"].map((x) => x)),
         id: json["_id"],
         name: json["name"],
         description: json["description"],
@@ -98,43 +102,43 @@ class Post {
       );
 
   Map<String, dynamic> toJson() => {
-        "softwareTool": List<dynamic>.from(softwareTool.map((x) => x)),
-        "saved": List<dynamic>.from(saved.map((x) => x)),
+        "softwareTool": List<dynamic>.from(softwareTool!.map((x) => x)),
+        "saved": List<dynamic>.from(saved!.map((x) => x)),
         "_id": id,
         "name": name,
         "description": description,
         "delieveryDate": delieveryDate,
         "salary": salary,
         "catogery": catogery,
-        "user": user.toJson(),
+        "user": user?.toJson(),
         "attachFile": attachFile,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-        "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
+        "comments": List<dynamic>.from(comments!.map((x) => x.toJson())),
         "id": postId,
       };
 }
 
 class Comment {
-  String id;
-  String text;
-  User user;
-  String post;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
-  String commentId;
+  String? id;
+  String? text;
+  User? user;
+  String? post;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? v;
+  String? commentId;
 
   Comment({
-    required this.id,
-    required this.text,
-    required this.user,
-    required this.post,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
-    required this.commentId,
+    this.id,
+    this.text,
+    this.user,
+    this.post,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.commentId,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
@@ -151,31 +155,31 @@ class Comment {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "text": text,
-        "user": user.toJson(),
+        "user": user?.toJson(),
         "post": post,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
         "id": commentId,
       };
 }
 
 class User {
-  String photo;
-  num ratingsAverage;
-  bool isOnline;
-  String id;
-  String name;
-  String userId;
+  String? photo;
+  num? ratingsAverage;
+  bool? isOnline;
+  String? id;
+  String? name;
+  String? userId;
   int? ratingsQuantity;
 
   User({
-    required this.photo,
-    required this.ratingsAverage,
-    required this.isOnline,
-    required this.id,
-    required this.name,
-    required this.userId,
+    this.photo,
+    this.ratingsAverage,
+    this.isOnline,
+    this.id,
+    this.name,
+    this.userId,
     this.ratingsQuantity,
   });
 

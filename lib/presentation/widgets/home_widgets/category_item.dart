@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CategoryItem extends StatelessWidget{
+class CategoryItem extends StatelessWidget {
   const CategoryItem(
       {super.key,
       required this.imgUrl,
@@ -36,6 +36,7 @@ class CategoryItem extends StatelessWidget{
             style: GoogleFonts.poppins(
               fontSize: 14,
               fontWeight: FontWeight.w500,
+              color: Theme.of(context).textTheme.headlineSmall!.color,
             ),
           ),
           Text(

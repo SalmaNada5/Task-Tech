@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:task_tech/utils/exports.dart';
 
 class FilterChipWidget extends StatefulWidget {
   final String chipName;
@@ -17,23 +15,24 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-      padding: const EdgeInsetsDirectional.only(top:3,bottom: 3,start: 3,end: 3),
+      padding:
+          const EdgeInsetsDirectional.only(top: 3, bottom: 3, start: 3, end: 3),
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.chipName),
-           SizedBox(
-            width:MediaQuery.of(context).size.width * 0.01,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.01,
           ),
           icon = _isSelected
-              ? const Icon(Icons.check, color: Colors.white, size: 22, weight: 400)
+              ? const Icon(Icons.check,
+                  color: Colors.white, size: 22, weight: 400)
               : const Icon(Icons.add,
                   color: Color.fromRGBO(166, 166, 166, 0.8),
                   size: 22,
                   weight: 400)
         ],
       ),
-      
       selected: _isSelected,
       onSelected: (isSelected) {
         setState(() {
@@ -47,14 +46,14 @@ class FilterChipWidgetState extends State<FilterChipWidget> {
           width: 1,
           color: Color.fromRGBO(217, 217, 217, 1),
           style: BorderStyle.solid),
-     
-
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       selectedColor: Theme.of(context).primaryColor,
       labelStyle: GoogleFonts.poppins(
-        color: _isSelected ? Colors.white : const Color.fromRGBO(166, 166, 166, 0.8),
+        color: _isSelected
+            ? Colors.white
+            : const Color.fromRGBO(166, 166, 166, 0.8),
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),

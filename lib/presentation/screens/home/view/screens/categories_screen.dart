@@ -1,23 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/presentation/screens/home/controller/category_controller.dart';
-import '../../../../constants/text_styles.dart';
+import 'package:task_tech/presentation/screens/home/view/cubit/home_cubit.dart';
+import 'package:task_tech/utils/text_styles.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: true,
         title: Text(
           'Categories',
-          style: titleStyle,
+          style: titleStyle.copyWith(color: Theme.of(context).primaryColor),
         ),
         leading: Container(
           margin: const EdgeInsets.all(10),
@@ -49,10 +51,10 @@ class CategoriesScreen extends StatelessWidget {
                   childAspectRatio: 1.3,
                   shrinkWrap: true,
                   children: List.generate(
-                    CategoryController.categories.length,
+                    homeCubit.categories.length,
                     (index) => ReusableCategoryItem(
-                      url: CategoryController.categories[index].photo,
-                      categoryName: CategoryController.categories[index].name,
+                      url: homeCubit.categories[index].photo,
+                      categoryName: homeCubit.categories[index].name,
                     ),
                   ),
                 ),
@@ -75,7 +77,7 @@ class ReusableCategoryItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: const Color(0xffFAFAFD),
+        color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade300,
@@ -106,7 +108,7 @@ class ReusableCategoryItem extends StatelessWidget {
           Text(
             categoryName,
             style: GoogleFonts.poppins(
-              color: Colors.black,
+              color: Theme.of(context).textTheme.headlineSmall!.color,
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),

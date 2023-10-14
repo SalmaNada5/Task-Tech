@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/auth/controller/cur_user_controller.dart';
+import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/posts/view/comment.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/comments_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
@@ -11,7 +6,6 @@ import 'package:task_tech/presentation/screens/posts_details/controller/task_det
 class TaskDetailsPage extends StatefulWidget {
   const TaskDetailsPage({
     super.key,
-  
     required this.postId,
   });
 
@@ -43,9 +37,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -53,7 +48,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -78,15 +74,15 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 children: [
                   CircleAvatar(
                     radius: 16,
-                    backgroundImage: NetworkImage(
-                        TaskController.taskDetailsModel.data?.post.user.photo ??
-                            ""),
+                    backgroundImage: NetworkImage(TaskController
+                            .taskDetailsModel.data?.post.user?.photo ??
+                        ""),
                   ),
                   const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    TaskController.taskDetailsModel.data?.post.user.name ?? "",
+                    TaskController.taskDetailsModel.data?.post.user?.name ?? "",
                     style: labelTextFormStyle,
                   ),
                   const Spacer(),
@@ -132,7 +128,9 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               Text(
                 'Delivery Time',
-                style: headStyle,
+                style: headStyle.copyWith(
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
               ),
               Text(
                 '${TaskController.taskDetailsModel.data?.post.delieveryDate} Days',
@@ -147,14 +145,16 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               ),
               Text(
                 'Comments',
-                style: headStyle,
+                style: headStyle.copyWith(
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
+                ),
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.4,
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   boxShadow: const [
                     BoxShadow(
                       color: Color.fromRGBO(224, 224, 224, 0.9),
@@ -173,13 +173,15 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                   itemBuilder: (BuildContext context, int i) {
                     return ReusableCommentWidget(
-                      userName: CommentsController.comments[i].user.name,
-                      rate: CommentsController.comments[i].user.ratingsAverage,
+                      userName: CommentsController.comments[i].user?.name ?? '',
+                      rate:
+                          CommentsController.comments[i].user?.ratingsAverage ??
+                              0,
                       date: Constants.convertToTimeAgo(
                               CommentsController.comments[i].createdAt)
                           .toString(),
-                      imgUrl: CommentsController.comments[i].user.photo,
-                      text: CommentsController.comments[i].text,
+                      imgUrl: CommentsController.comments[i].user?.photo ?? '',
+                      text: CommentsController.comments[i].text ?? '',
                     );
                   },
                 ),
@@ -233,17 +235,25 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       ),
       bottomSheet: Container(
         padding: const EdgeInsets.all(8.0),
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(
-                  CurrentUserInfoController.userInfoModel.data?.user.photo ??
-                      ''),
-              radius: 18,
-            ),
+                radius: 18,
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: CurrentUserInfoController
+                            .userInfoModel.data?.user.photo ??
+                        '',
+                    fit: BoxFit.fill,
+                    errorWidget: (context, url, error) => Image.asset(
+                      'images/default person.png',
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                )),
             const SizedBox(
               width: 10,
             ),
@@ -255,7 +265,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 controller: _commentController,
                 style: GoogleFonts.poppins(
                   fontSize: 12,
-                  color: Colors.black,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Add your comment',
@@ -265,7 +275,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                   contentPadding: const EdgeInsets.all(8),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor:
+                      isDarkMode ? const Color(0xff213440) : Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color.fromRGBO(224, 224, 224, 0.9),

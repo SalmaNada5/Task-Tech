@@ -1,48 +1,18 @@
 import 'dart:core';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/core/errors/logger.dart';
-import 'package:task_tech/presentation/screens/create_profile/controller/upload_profile_photo_controller.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/screens/skills_screen.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/app_bar_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/button_widget.dart';
-import 'package:task_tech/presentation/screens/create_profile/view/widgets/default_form_field.dart';
+import 'package:task_tech/utils/exports.dart';
 
-class CreateProfile extends StatefulWidget {
+class CreateProfile extends StatelessWidget {
   const CreateProfile({super.key});
 
   @override
-  State<CreateProfile> createState() => _CreateProfileState();
-}
-
-class _CreateProfileState extends State<CreateProfile> {
-  TextEditingController jobController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  List<String> list = <String>['male', 'female'];
-  String? gender;
-  String? age;
-  String imagepath = "";
-  File? imagefile;
-  late AnimationController controller;
-  TextStyle? labelTextTheme = Theme.of(Constants.navigatorKey.currentContext!)
-      .textTheme
-      .headlineSmall!
-      .copyWith(fontSize: 18);
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    CreateProfileCubit createProfileCubit =
+        BlocProvider.of<CreateProfileCubit>(context);
+    TextStyle? labelTextTheme = GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Theme.of(context).textTheme.headlineSmall!.color);
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppbar(percent: 20),
@@ -63,19 +33,28 @@ class _CreateProfileState extends State<CreateProfile> {
                   child: CircleAvatar(
                       radius: Constants.screenWidth * 0.12,
                       backgroundColor: Colors.grey[600],
-                      child: ClipOval(
-                        child: imagefile != null
-                            ? Image.file(
-                                imagefile!,
-                                scale: 0.5,
-                                fit: BoxFit.cover,
-                                width: Constants.screenWidth * 0.5,
-                                height: Constants.screenWidth * 0.5,
-                              )
-                            : Image.asset(
-                                'images/default person.png',
-                                fit: BoxFit.cover,
-                              ),
+                      child:
+                          BlocBuilder<CreateProfileCubit, CreateProfileState>(
+                        bloc: createProfileCubit,
+                        // buildWhen: (previous, current) =>
+                        //     current is UploadProfilePhotoPressedState ||
+                        //     current is CreateProfileInitial,
+                        builder: (context, state) {
+                          return ClipOval(
+                            child: createProfileCubit.imagefile != null
+                                ? Image.file(
+                                    createProfileCubit.imagefile!,
+                                    scale: 0.5,
+                                    fit: BoxFit.cover,
+                                    width: Constants.screenWidth * 0.5,
+                                    height: Constants.screenWidth * 0.5,
+                                  )
+                                : Image.asset(
+                                    'images/default person.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                          );
+                        },
                       )),
                 ),
                 const SizedBox(
@@ -85,14 +64,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   height: 50,
                   width: Constants.screenWidth * 0.9,
                   color: const Color.fromRGBO(22, 80, 105, 0.21),
-                  onpressed: () async {
-                    final result =
-                        await UploadProfilePhotoController.attachPhoto();
-                    if (result != null) {
-                      setState(() {
-                        imagefile = File(result.files.single.path!);
-                      });
-                    }
+                  onpressed: () {
+                    createProfileCubit.onUploadProfilePhotoPressed();
                   },
                   childWidget: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +93,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   height: 10,
                 ),
                 Form(
-                    key: formKey,
+                    key: createProfileCubit.formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,10 +106,10 @@ class _CreateProfileState extends State<CreateProfile> {
                           height: 10,
                         ),
                         DefaultFormField(
-                            controller: jobController,
+                            controller: createProfileCubit.jobController,
                             type: TextInputType.text,
                             validate: (value) {
-                              value = jobController.text;
+                              value = createProfileCubit.jobController.text;
                               if (value.isEmpty) {
                                 return 'Name must not be empty';
                               } else {
@@ -153,29 +126,41 @@ class _CreateProfileState extends State<CreateProfile> {
                         const SizedBox(
                           height: 10,
                         ),
-                        DefaultFormField(
-                          controller: dateController,
-                          type: TextInputType.datetime,
-                          suffix: IconButton(
-                              onPressed: () {
-                                showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1900),
-                                        lastDate: DateTime.parse('2030-12-12'))
-                                    .then((value) {
-                                  dateController.text =
-                                      DateFormat.yMMMd().format(value!);
-                                });
+                        BlocBuilder<CreateProfileCubit, CreateProfileState>(
+                          builder: (context, state) {
+                            return BlocBuilder<CreateProfileCubit,
+                                CreateProfileState>(
+                              builder: (context, state) {
+                                return DefaultFormField(
+                                  controller: createProfileCubit.dateController,
+                                  type: TextInputType.datetime,
+                                  suffix: IconButton(
+                                      onPressed: () {
+                                        showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(1900),
+                                                lastDate: DateTime.parse(
+                                                    '2030-12-12'))
+                                            .then((value) {
+                                          createProfileCubit
+                                              .onDateSelected(value);
+                                        });
+                                      },
+                                      icon: const Icon(
+                                          Icons.calendar_today_outlined)),
+                                  validate: (value) {
+                                    value =
+                                        createProfileCubit.dateController.text;
+                                    if (value.isEmpty) {
+                                      return 'Birth date must not be empty';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                );
                               },
-                              icon: const Icon(Icons.calendar_today_outlined)),
-                          validate: (value) {
-                            value = dateController.text;
-                            if (value.isEmpty) {
-                              return 'Birth date must not be empty';
-                            } else {
-                              return null;
-                            }
+                            );
                           },
                         ),
                         const SizedBox(
@@ -208,41 +193,48 @@ class _CreateProfileState extends State<CreateProfile> {
                                               227, 227, 227, 1),
                                           style: BorderStyle.solid),
                                     ),
-                                    child: DropdownButton<String>(
-                                        dropdownColor:
-                                            Theme.of(context).primaryColor,
-                                        underline:
-                                            Container(), //remove underline
-                                        borderRadius:
-                                            BorderRadius.circular(8.6),
-                                        alignment: AlignmentDirectional.center,
-                                        isExpanded: true,
-                                        icon: const Icon(
-                                          Icons.keyboard_arrow_down_outlined,
-                                          size: 20,
-                                          color:
-                                              Color.fromRGBO(197, 197, 197, 1),
-                                        ),
-                                        items: list
-                                            .map<DropdownMenuItem<String>>(
-                                                (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headlineSmall!
-                                                  .copyWith(fontSize: 16),
+                                    child: BlocBuilder<CreateProfileCubit,
+                                        CreateProfileState>(
+                                      builder: (context, state) {
+                                        return DropdownButton<String>(
+                                            dropdownColor:
+                                                Theme.of(context).primaryColor,
+                                            underline:
+                                                Container(), //remove underline
+                                            borderRadius:
+                                                BorderRadius.circular(8.6),
+                                            alignment:
+                                                AlignmentDirectional.center,
+                                            isExpanded: true,
+                                            icon: const Icon(
+                                              Icons
+                                                  .keyboard_arrow_down_outlined,
+                                              size: 20,
+                                              color: Color.fromRGBO(
+                                                  197, 197, 197, 1),
                                             ),
-                                          );
-                                        }).toList(),
-                                        value: gender,
-                                        onChanged: (String? value) {
-                                          setState(() {
-                                            gender = value;
-                                          });
-                                        }),
+                                            items: createProfileCubit
+                                                .gendersList
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineSmall!
+                                                      .copyWith(fontSize: 16),
+                                                ),
+                                              );
+                                            }).toList(),
+                                            value: createProfileCubit.gender,
+                                            onChanged: (String? value) {
+                                              createProfileCubit
+                                                  .onGenderSelected(value!);
+                                            });
+                                      },
+                                    ),
                                   )
                                 ],
                               ),
@@ -263,11 +255,13 @@ class _CreateProfileState extends State<CreateProfile> {
                                     height: 10,
                                   ),
                                   DefaultFormField(
-                                    controller: ageController,
+                                    controller:
+                                        createProfileCubit.ageController,
                                     type: const TextInputType.numberWithOptions(
                                         decimal: false, signed: false),
                                     validate: (value) {
-                                      value = ageController.text;
+                                      value =
+                                          createProfileCubit.ageController.text;
                                       if (value.isEmpty) {
                                         return 'Age must not be empty';
                                       } else {
@@ -291,13 +285,14 @@ class _CreateProfileState extends State<CreateProfile> {
                           height: 10,
                         ),
                         DefaultFormField(
-                            controller: locationController,
+                            controller: createProfileCubit.locationController,
                             type: TextInputType.text,
                             suffix: IconButton(
                                 onPressed: () {},
                                 icon: const Icon(Icons.location_on_outlined)),
                             validate: (value) {
-                              value = locationController.text;
+                              value =
+                                  createProfileCubit.locationController.text;
 
                               if (value.isEmpty) {
                                 return 'Location must not be empty';
@@ -316,10 +311,10 @@ class _CreateProfileState extends State<CreateProfile> {
                           height: 10,
                         ),
                         DefaultFormField(
-                            controller: phoneController,
+                            controller: createProfileCubit.phoneController,
                             type: TextInputType.phone,
                             validate: (value) {
-                              value = phoneController.text;
+                              value = createProfileCubit.phoneController.text;
                               if (value.isEmpty || value.length < 11) {
                                 return 'Phone is too short ';
                               } else {
@@ -345,35 +340,25 @@ class _CreateProfileState extends State<CreateProfile> {
                                 //   Constants.errorMessage(description: 'Please try to Upload a photo again!');
                                 // }
 
-                                if (formKey.currentState!.validate()) {
-                                  logInfo('job: ${jobController.text}');
+                                if (createProfileCubit.formKey.currentState!
+                                    .validate()) {
+                                  logInfo(
+                                      'job: ${createProfileCubit.jobController.text}');
                                   Constants.navigateTo(
                                       SkillsScreen(
-                                          job: jobController.text,
-                                          birthDate: dateController.text,
-                                          gender: gender,
-                                          age: ageController.text,
-                                          location: locationController.text,
-                                          phoneNumber: phoneController.text),
+                                          job: createProfileCubit
+                                              .jobController.text,
+                                          birthDate: createProfileCubit
+                                              .dateController.text,
+                                          gender: createProfileCubit.gender,
+                                          age: createProfileCubit
+                                              .ageController.text,
+                                          location: createProfileCubit
+                                              .locationController.text,
+                                          phoneNumber: createProfileCubit
+                                              .phoneController.text),
                                       pushAndRemoveUntil: true);
                                 }
-                                /*CreateProfileModel? profileModel;
-                                  profileModel =
-                                      await ProfileController.createProfileFunc(
-                                          birthDate: dateController.text,
-                                          age: ageController.text,
-                                          gender: gender,
-                                          location: locationController.text,
-                                          phoneNumber: phoneController.text);
-                                  if (profileModel == null) {
-                                    return Constants.errorMessage(
-                                        description: 'Invalid input data');
-                                  } else {
-                                    SharedPreferences pref =
-                                    await SharedPreferences.getInstance();
-                                    pref.setString('token',profileModel.status!);
-                                    pref.setString("id", ProfileController.profileModel.data!.data.id);*/
-                                // }
                               },
                               childWidget: Text(
                                 'Next',

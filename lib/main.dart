@@ -1,14 +1,12 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/themes.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
-import 'package:task_tech/presentation/screens/auth/view/sign_in_screen.dart';
 
+import 'package:task_tech/utils/exports.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+    
+  );
   runApp(MyApp(savedThemeMode: savedThemeMode));
 }
 
@@ -22,6 +20,15 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthCubit>.value(
           value: AuthCubit(),
         ),
+        BlocProvider<HomeCubit>.value(
+          value: HomeCubit(),
+        ),
+        BlocProvider<CreateProfileCubit>.value(
+          value: CreateProfileCubit(),
+        ),
+        BlocProvider<ProfileCubit>.value(
+          value: ProfileCubit(),
+        ),
       ],
       child: AdaptiveTheme(
         light: AppThemes.lightTheme,
@@ -33,7 +40,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: theme,
               darkTheme: darkTheme,
-              home: const SignInScreen());
+              home: const SplashScreen());
         },
       ),
     );

@@ -14,6 +14,9 @@ class OnboardingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenH = MediaQuery.of(context).size.height;
+    bool isDarkMode =
+      AdaptiveTheme.of(context).mode ==
+          AdaptiveThemeMode.dark;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,7 +27,7 @@ class OnboardingWidget extends StatelessWidget {
         Text(
           title!,
           style: GoogleFonts.poppins(
-              color: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
+              color: isDarkMode
                   ? Colors.white
                   : Colors.black,
               fontSize: 24,

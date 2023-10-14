@@ -45,7 +45,7 @@ class Data {
 
 class Service {
   List<String> softwareTool;
-  String id;
+  String? id;
   String name;
   String description;
   String delieveryDate;
@@ -61,7 +61,7 @@ class Service {
 
   Service({
     required this.softwareTool,
-    required this.id,
+    this.id,
     required this.name,
     required this.description,
     required this.delieveryDate,
@@ -90,7 +90,7 @@ class Service {
         updatedAt: DateTime.parse(json["updatedAt"]),
         slug: json["slug"],
         v: json["__v"],
-        serviceId: json["id"],
+        serviceId: json["id"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

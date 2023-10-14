@@ -1,8 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:task_tech/constants/text_styles.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class OrderReviewScreen extends StatefulWidget {
   const OrderReviewScreen(
@@ -30,7 +27,7 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -38,16 +35,17 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
               ),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               size: 30,
             ),
           ),
@@ -68,21 +66,20 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    width: 160,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0xffE0E0E0),
-                          blurRadius: 6,
-                          offset: Offset(2, 2),
-                        )
-                      ],
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(widget.imgUrl),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.imgUrl,
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: 160,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xffE0E0E0),
+                            blurRadius: 6,
+                            offset: Offset(2, 2),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -223,7 +220,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         'Total',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                       const Spacer(),
@@ -231,7 +229,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         '${widget.price}',
                         style: GoogleFonts.poppins(
                           fontSize: 15,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                     ],
@@ -253,7 +252,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                         widget.deliveryDate,
                         style: GoogleFonts.poppins(
                           fontSize: 15,
-                          color: Colors.black,
+                          color:
+                              Theme.of(context).textTheme.headlineSmall!.color,
                         ),
                       ),
                     ],
@@ -274,7 +274,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
             style: ButtonStyle(
               padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 20)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -327,7 +328,7 @@ class CheckBoxlistTile extends StatelessWidget {
             Text(
               text,
               style: GoogleFonts.poppins(
-                color: Colors.black,
+                color: Theme.of(context).textTheme.headlineSmall!.color,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),

@@ -1,15 +1,4 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
-import 'package:task_tech/presentation/screens/auth/view/forgot_password_screen.dart';
-import 'package:task_tech/presentation/screens/auth/view/sign_up_screen.dart';
-import 'package:task_tech/presentation/widgets/sign_with.dart';
-import 'package:task_tech/presentation/widgets/text_form_field.dart';
-import 'package:task_tech/presentation/widgets/unfocus.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -21,24 +10,21 @@ class SignInScreen extends StatelessWidget {
     TextEditingController passController = TextEditingController();
     double screenH = MediaQuery.of(context).size.height;
     double screenW = MediaQuery.of(context).size.width;
+    AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
+    bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
           child: SingleChildScrollView(
             child: BlocBuilder<AuthCubit, AuthState>(
-              bloc: BlocProvider.of<AuthCubit>(context),
+              bloc: authCubit,
               buildWhen: (prevState, currState) =>
                   currState is LoginObsecureOff ||
                   currState is LoginObsecureOn ||
                   currState is RememberMeOn ||
                   currState is RememberMeOff,
               builder: (context, state) {
-                Color fieldColor =
-                    AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
-                        ? const Color(0xff213440)
-                        : Colors.white;
-
                 return Column(
                   children: [
                     const SizedBox(
@@ -46,7 +32,10 @@ class SignInScreen extends StatelessWidget {
                     ),
                     Text(
                       'Welcome back,',
-                      style: titleStyle,
+                      style: titleStyle.copyWith(
+                        color:
+                            isDarkMode ? Colors.white : const Color(0xff165069),
+                      ),
                     ),
                     Text(
                       'Sign in your account',
@@ -74,8 +63,8 @@ class SignInScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: emailController,
                             obscure: false,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             hintText: 'Enter your mail',
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
@@ -99,8 +88,8 @@ class SignInScreen extends StatelessWidget {
                           ),
                           CustomTextFormField(
                             controller: passController,
-                            fillColor: fieldColor,
-                            borderColor: fieldColor,
+                            fillColor: Theme.of(context).canvasColor,
+                            borderColor: Theme.of(context).canvasColor,
                             validator: (value) {
                               value = passController.text;
                               if (value.isEmpty) {
@@ -110,18 +99,16 @@ class SignInScreen extends StatelessWidget {
                             },
                             icon: IconButton(
                               icon: Icon(
-                                BlocProvider.of<AuthCubit>(context).obsecureText
+                                authCubit.obsecureText
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                                 size: 20,
                               ),
                               onPressed: () {
-                                BlocProvider.of<AuthCubit>(context)
-                                    .obsecureLogic();
+                                authCubit.obsecureLogic();
                               },
                             ),
-                            obscure: BlocProvider.of<AuthCubit>(context)
-                                .obsecureText,
+                            obscure: authCubit.obsecureText,
                           ),
                           const SizedBox(
                             height: 10,
@@ -132,16 +119,14 @@ class SignInScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Checkbox(
-                                    value: BlocProvider.of<AuthCubit>(context)
-                                        .rememberMe,
+                                    value: authCubit.rememberMe,
                                     checkColor: Theme.of(context).primaryColor,
                                     fillColor:
                                         MaterialStateProperty.all(Colors.white),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     onChanged: (value) {
-                                      BlocProvider.of<AuthCubit>(context)
-                                          .rememberMeLogic();
+                                      authCubit.rememberMeLogic();
                                     },
                                     side: const BorderSide(
                                         color: Color(0xffB1B1B1)),
@@ -178,9 +163,9 @@ class SignInScreen extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  await BlocProvider.of<AuthCubit>(context)
-                                      .loginCubit(emailController.text,
-                                          passController.text);
+                                  await authCubit.loginCubit(
+                                      emailController.text,
+                                      passController.text);
                                 }
                               },
                               style: ButtonStyle(

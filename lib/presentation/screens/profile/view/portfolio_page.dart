@@ -11,43 +11,45 @@ class PortfolioPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            isMe? Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.06,
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(22, 80, 105, 0.21),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: MaterialButton(
-                  onPressed: () async => await UploadCVController.attachCV(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_outlined,
-                        color: Theme.of(context).primaryColor,
-                        weight: 500,
-                        size: 30,
+            isMe
+                ? Center(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      height: 54,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(22, 80, 105, 0.21),
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      const SizedBox(
-                        width: 15,
+                      child: MaterialButton(
+                        onPressed: () async =>
+                            await UploadCVController.attachCV(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_outlined,
+                              color: Theme.of(context).primaryColor,
+                              weight: 500,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              'Upload CV',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
                       ),
-                      Text(
-                        'Upload CV',
-                        style: GoogleFonts.poppins(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ): const SizedBox.shrink(),
-            const SizedBox(height: 5),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             const SizedBox(
-              height: 10,
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

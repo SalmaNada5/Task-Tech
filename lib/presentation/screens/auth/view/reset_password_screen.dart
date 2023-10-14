@@ -1,11 +1,4 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
-import 'package:task_tech/constants/text_styles.dart';
-import 'package:task_tech/presentation/screens/auth/cubits/cubit/auth_cubit.dart';
-import 'package:task_tech/presentation/widgets/text_form_field.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
@@ -51,11 +44,6 @@ class ResetPassword extends StatelessWidget {
                 cur is SignUpConfirmPassInVisible ||
                 cur is SignUpConfirmPassVisible,
             builder: (context, state) {
-              Color fieldColor =
-                  AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark
-                      ? const Color(0xff213440)
-                      : Colors.white;
-
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -76,8 +64,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     controller: emailController,
-                    fillColor: fieldColor,
-                    borderColor: fieldColor,
+                    fillColor: Theme.of(context).canvasColor,
+                    borderColor: Theme.of(context).canvasColor,
                     obscure: false,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
@@ -95,8 +83,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     hintText: 'New password',
-                    fillColor: fieldColor,
-                    borderColor: fieldColor,
+                    fillColor: Theme.of(context).canvasColor,
+                    borderColor: Theme.of(context).canvasColor,
                     icon: IconButton(
                       icon: Icon(
                         authCubit.obsecureTextForResetPass
@@ -124,8 +112,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     hintText: 'Confirm password',
-                    fillColor: fieldColor,
-                    borderColor: fieldColor,
+                    fillColor: Theme.of(context).canvasColor,
+                    borderColor: Theme.of(context).canvasColor,
                     icon: IconButton(
                       icon: Icon(
                         authCubit.obsecureTextForResetConfirmPass

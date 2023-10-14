@@ -1,15 +1,10 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task_tech/constants/consts.dart';
+import 'package:task_tech/utils/consts.dart';
 
 TextStyle titleStyle = GoogleFonts.poppins(
   fontSize: 22,
   fontWeight: FontWeight.w500,
-  color: AdaptiveTheme.of(Constants.navigatorKey.currentContext!).mode ==
-          AdaptiveThemeMode.dark
-      ? Colors.white
-      : const Color(0xff165069),
 );
 
 TextStyle labelTextFormStyle = GoogleFonts.poppins(
@@ -24,13 +19,12 @@ TextStyle labelTextFormStyle = GoogleFonts.poppins(
 TextStyle headStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
-  color: Colors.black,
 );
 
 TextStyle postNameStyle = GoogleFonts.poppins(
   fontSize: 18,
   fontWeight: FontWeight.w500,
-  color: const Color(0xff165069),
+  color: Theme.of(Constants.navigatorKey.currentContext!).primaryColor,
 );
 TextStyle postDescriptionStyle = GoogleFonts.poppins(
   fontSize: 14,
