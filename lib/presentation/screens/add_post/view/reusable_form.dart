@@ -1,6 +1,6 @@
 import 'package:task_tech/utils/exports.dart';
 
-class ReusablePostForm extends StatefulWidget {
+class ReusablePostForm extends StatelessWidget {
   const ReusablePostForm({
     super.key,
     required this.postNameController,
@@ -24,20 +24,11 @@ class ReusablePostForm extends StatefulWidget {
   final void Function()? onPressed;
 
   @override
-  State<ReusablePostForm> createState() => _ReusablePostFormState();
-}
-
-class _ReusablePostFormState extends State<ReusablePostForm> {
-  final _formKey = GlobalKey<FormState>();
-  // DateTime _curDate = DateTime.now();
-  String selectedCategory = 'Web Design';
-
-  @override
   Widget build(BuildContext context) {
-    double screenW = MediaQuery.of(context).size.width;
+    AddPostCubit addPostCubit = BlocProvider.of<AddPostCubit>(context);
 
     return Form(
-      key: _formKey,
+      key: addPostCubit.formKey,
       child: Padding(
         padding: const EdgeInsets.only(
           left: 15.0,
@@ -49,7 +40,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.firstLabel,
+                firstLabel,
                 textAlign: TextAlign.center,
                 style: headStyle.copyWith(
                     color: Theme.of(context).textTheme.headlineSmall!.color),
@@ -58,7 +49,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                 height: 10,
               ),
               TextFormField(
-                controller: widget.postNameController,
+                controller: postNameController,
                 style: headStyle.copyWith(color: Theme.of(context).hintColor),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 15),
@@ -71,13 +62,12 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   fillColor: Theme.of(context).canvasColor,
                 ),
                 onChanged: (value) {
-                  widget.postNameController.text = value.toString();
-                  widget.postNameController.selection =
-                      TextSelection.fromPosition(TextPosition(
-                          offset: widget.postNameController.text.length));
+                  postNameController.text = value.toString();
+                  postNameController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: postNameController.text.length));
                 },
                 validator: (value) {
-                  value = widget.postNameController.text;
+                  value = postNameController.text;
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
@@ -89,7 +79,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
               const SizedBox(
                 height: 10,
               ),
-              widget.difFields,
+              difFields,
               const SizedBox(
                 height: 10,
               ),
@@ -103,7 +93,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                 height: 10,
               ),
               TextFormField(
-                controller: widget.deliveryDaysController,
+                controller: deliveryDaysController,
                 //readOnly: true,
                 style: headStyle.copyWith(color: Theme.of(context).hintColor),
 
@@ -118,46 +108,14 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                   ),
                   filled: true,
                   fillColor: Theme.of(context).canvasColor,
-                  // suffixIcon: IconButton(
-                  //   onPressed: () async {
-                  //     DateTime? selectedDate = await showDatePicker(
-                  //       context: context,
-                  //       initialDate: _curDate,
-                  //       firstDate: DateTime(DateTime.now().year),
-                  //       lastDate: DateTime(DateTime.now().year + 20),
-                  //     );
-
-                  //     setState(() {
-                  //       if (selectedDate != null) {
-                  //         _curDate = selectedDate;
-                  //         Constants.unFocusFunc();
-                  //       } else {
-                  //         debugPrint('no date selected');
-                  //         Constants.unFocusFunc();
-                  //       }
-                  //     });
-                  //   },
-                  //   icon: const Icon(
-                  //     Icons.calendar_today_outlined,
-                  //     color: Colors.grey,
-                  //     size: 18,
-                  //   ),
-                  // ),
-
-                  //hintText: DateFormat.yMd().format(_curDate),
-                  // hintStyle: GoogleFonts.poppins(
-                  //   fontSize: 16,
-                  //   color: const Color.fromARGB(255, 15, 14, 14),
-                  // ),
                 ),
                 onChanged: (value) {
-                  widget.deliveryDaysController.text = value.toString();
-                  widget.deliveryDaysController.selection =
-                      TextSelection.fromPosition(TextPosition(
-                          offset: widget.deliveryDaysController.text.length));
+                  deliveryDaysController.text = value.toString();
+                  deliveryDaysController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: deliveryDaysController.text.length));
                 },
                 validator: (value) {
-                  value = widget.deliveryDaysController.text;
+                  value = deliveryDaysController.text;
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
@@ -187,9 +145,9 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                         height: 10,
                       ),
                       SizedBox(
-                        width: 0.4 * screenW,
+                        width: 0.4 * Constants.screenWidth,
                         child: TextFormField(
-                          controller: widget.salaryController,
+                          controller: salaryController,
                           style: headStyle.copyWith(
                               color: Theme.of(context).hintColor),
                           decoration: InputDecoration(
@@ -207,14 +165,13 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                                 color: const Color(0xffC0C0C0),
                               )),
                           onChanged: (value) {
-                            widget.salaryController.text = value.toString();
-                            widget.salaryController.selection =
+                            salaryController.text = value.toString();
+                            salaryController.selection =
                                 TextSelection.fromPosition(TextPosition(
-                                    offset:
-                                        widget.salaryController.text.length));
+                                    offset: salaryController.text.length));
                           },
                           validator: (value) {
-                            value = widget.salaryController.text;
+                            value = salaryController.text;
                             if (value.isEmpty) {
                               return 'Please fill this field';
                             } else {
@@ -243,13 +200,12 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                         height: 10,
                       ),
                       SizedBox(
-                        width: 0.4 * screenW,
+                        width: 0.4 * Constants.screenWidth,
                         child: TextFormField(
-                          controller: widget.categoryController,
+                          controller: categoryController,
                           readOnly: true,
                           style: headStyle.copyWith(
                               color: Theme.of(context).hintColor),
-
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(left: 15),
                             border: InputBorder.none,
@@ -268,24 +224,22 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                                   size: 25,
                                   color: Color.fromRGBO(124, 124, 124, 1),
                                 ),
-                                value: selectedCategory,
+                                value: addPostCubit.selectedCategory,
                                 underline: const SizedBox(),
                                 borderRadius: BorderRadius.circular(8.6),
                                 alignment: AlignmentDirectional.center,
                                 isExpanded: true,
-                                items:CreateProfileCubit.categories.map<DropdownMenuItem<String>>(
-                                    (String value) {
+                                items: CreateProfileCubit.categories
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(value),
                                   );
                                 }).toList(),
                                 onChanged: (String? value) {
-                                  setState(() {
-                                    selectedCategory = value ?? '';
-                                    widget.categoryController.text =
-                                        value ?? '';
-                                  });
+                                  addPostCubit.selectCategoryFunction(
+                                      value ?? '', categoryController.text);
                                 },
                                 style: GoogleFonts.poppins(
                                     fontSize: 16,
@@ -295,15 +249,6 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                               ),
                             ),
                           ),
-                          // onChanged: (value) {
-                          //   widget.categoryController.text = value.toString();
-                          //   logWarning(
-                          //       'caatttt ${widget.categoryController.text}');
-                          //   widget.categoryController.selection =
-                          //       TextSelection.fromPosition(TextPosition(
-                          //           offset:
-                          //               widget.categoryController.text.length));
-                          // },
                           maxLines: 1,
                         ),
                       ),
@@ -324,7 +269,7 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                 height: 10,
               ),
               TextFormField(
-                controller: widget.stController,
+                controller: stController,
                 style: headStyle.copyWith(color: Theme.of(context).hintColor),
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(left: 15),
@@ -341,12 +286,12 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                       color: const Color(0xffC0C0C0),
                     )),
                 onChanged: (value) {
-                  widget.stController.text = value.toString();
-                  widget.stController.selection = TextSelection.fromPosition(
-                      TextPosition(offset: widget.stController.text.length));
+                  stController.text = value.toString();
+                  stController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: stController.text.length));
                 },
                 validator: (value) {
-                  value = widget.stController.text;
+                  value = stController.text;
                   if (value.isEmpty) {
                     return 'Please fill this field';
                   } else {
@@ -361,8 +306,8 @@ class _ReusablePostFormState extends State<ReusablePostForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     debugPrint('correct');
-                    if (widget.onPressed != null) {
-                      widget.onPressed!();
+                    if (onPressed != null) {
+                      onPressed!();
                     }
                   },
                   style: ButtonStyle(

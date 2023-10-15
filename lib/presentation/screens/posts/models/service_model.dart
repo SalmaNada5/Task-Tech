@@ -22,7 +22,7 @@ class ServiceModel {
         status: json["status"],
         results: json["results"],
         paginationResult: PaginationResult.fromJson(json["paginationResult"]),
-        data: Data.fromJson(json["data"]),
+        data:json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,19 +34,19 @@ class ServiceModel {
 }
 
 class Data {
-  List<Service> services;
+  List<Service>? services;
 
   Data({
-    required this.services,
+    this.services,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        services: List<Service>.from(
+        services:json["services"] == null ? []: List<Service>.from(
             json["services"].map((x) => Service.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "services": List<dynamic>.from(services.map((x) => x.toJson())),
+        "services": List<dynamic>.from(services!.map((x) => x.toJson())),
       };
 }
 

@@ -70,7 +70,7 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
   int categoriesPage = 1;
   ScrollController categoriesScrollController = ScrollController();
 
-  getPopularCategoriesFunc() async {
+  void getPopularCategoriesFunc() async {
     emit(HomeInitial(userInfoModel: state.userInfoModel));
     categoriesEnableShimmer = true;
     try {

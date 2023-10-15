@@ -1,7 +1,6 @@
 import 'package:task_tech/utils/exports.dart';
 import 'package:task_tech/presentation/screens/payment/controller/payment_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/service_details_controller.dart';
-import 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';
 import '../../home/models/search_service_model.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
@@ -14,7 +13,7 @@ class ServiceDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logInfo(
-        "Service ID ${ServiceController.serviceDetailsModel.data?.service.id}");
+        "Service ID ${ServiceController.serviceDetailsModel.data?.service?.id}");
     SharedPreferences.getInstance().then((value) {
       logWarning("Token : ${value.getString('token')}");
     });

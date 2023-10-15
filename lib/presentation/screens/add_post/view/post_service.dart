@@ -1,17 +1,11 @@
 import 'package:task_tech/utils/exports.dart';
 
-class PostService extends StatefulWidget {
+class PostService extends StatelessWidget {
   const PostService({super.key});
 
   @override
-  State<PostService> createState() => _PostServiceState();
-}
-
-class _PostServiceState extends State<PostService> {
-  String? fileName;
-  bool fileDisSelected = false;
-  @override
   Widget build(BuildContext context) {
+    AddPostCubit addPostCubit = BlocProvider.of<AddPostCubit>(context);
     return ReusablePostForm(
       onPressed: () async {
         logWarning(AddPostsController.serviceDeliveryDaysController.text);
@@ -82,75 +76,75 @@ class _PostServiceState extends State<PostService> {
           const SizedBox(
             height: 10,
           ),
-          TextFormField(
-            onTap: () async {
-              AddPostsController.serviceSelectedFiles =
-                  await AddPostsController.attachNewFiles();
-              String fileN = '';
-              if (AddPostsController.serviceSelectedFiles != null) {
-                for (var element
-                    in AddPostsController.serviceSelectedFiles!.files) {
-                  fileN += '${element.path!.split('/').last}, ';
-                }
-              }
-              setState(() {
-                fileName = fileN;
-                fileDisSelected = false;
-              });
-            },
-            readOnly: true,
-            style: headStyle,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(left: 15),
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).canvasColor,
-                  ),
-                ),
-                filled: true,
-                fillColor: Theme.of(context).canvasColor,
-                prefixIcon: fileDisSelected
-                    ? null
-                    : fileName == null
+          BlocBuilder<AddPostCubit, AddPostState>(
+            bloc: addPostCubit,
+            builder: (context, state) {
+              return TextFormField(
+                onTap: () async {
+                  AddPostsController.serviceSelectedFiles =
+                      await AddPostsController.attachNewFiles();
+                  String fileN = '';
+                  if (AddPostsController.serviceSelectedFiles != null) {
+                    for (var element
+                        in AddPostsController.serviceSelectedFiles!.files) {
+                      fileN += '${element.path!.split('/').last}, ';
+                    }
+                  }
+                  addPostCubit.serviceAttachFileFunction(fileN);
+                },
+                readOnly: true,
+                style: headStyle,
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(left: 15),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).canvasColor,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).canvasColor,
+                    prefixIcon: addPostCubit.serviceFileDisSelected
                         ? null
-                        : Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: Colors.grey,
-                                )),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  fileName ?? '',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                  ),
+                        : addPostCubit.serviceFileName == null
+                            ? null
+                            : Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      addPostCubit.serviceFileName ?? '',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        addPostCubit.serviceFileDisSelectedFunction();
+                                      },
+                                      icon: const Icon(
+                                        Icons.clear,
+                                        size: 16,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      fileDisSelected = true;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.clear,
-                                    size: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                suffixIcon: const Icon(
-                  Icons.attach_file,
-                  size: 20,
-                  color: Colors.grey,
-                )),
-            maxLines: 1,
+                              ),
+                    suffixIcon: const Icon(
+                      Icons.attach_file,
+                      size: 20,
+                      color: Colors.grey,
+                    )),
+                maxLines: 1,
+              );
+            },
           ),
           const SizedBox(
             height: 10,

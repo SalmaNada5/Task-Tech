@@ -1,8 +1,5 @@
-import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_tech/core/dio/dio_client.dart';
-import 'package:task_tech/core/errors/logger.dart';
 import 'package:task_tech/presentation/screens/posts_details/models/comments_model.dart';
+import 'package:task_tech/utils/exports.dart';
 
 class CommentsController {
   static final DioClient _dioClient = DioClient();
@@ -10,7 +7,6 @@ class CommentsController {
   static List<Comment> comments = [];
   static Future<List<Comment>?> getAllComments(String postId) async {
     try {
-     
       String? token;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString("token");

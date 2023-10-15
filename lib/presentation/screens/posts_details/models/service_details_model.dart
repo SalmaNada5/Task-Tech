@@ -28,18 +28,18 @@ class ServiceDetailsModel {
 }
 
 class Data {
-  Service service;
+  Service? service;
 
   Data({
-    required this.service,
+   this.service,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        service: Service.fromJson(json["service"]),
+        service: json["service"] == null ? null : Service.fromJson(json["service"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "service": service.toJson(),
+        "service": service?.toJson(),
       };
 }
 

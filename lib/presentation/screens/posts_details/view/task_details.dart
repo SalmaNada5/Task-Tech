@@ -3,41 +3,18 @@ import 'package:task_tech/presentation/screens/posts/view/comment.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/comments_controller.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
 
-class TaskDetailsPage extends StatefulWidget {
+class TaskDetailsPage extends StatelessWidget {
   const TaskDetailsPage({
     super.key,
     required this.postId,
   });
-
   final String postId;
-  @override
-  State<TaskDetailsPage> createState() => _TaskDetailsPageState();
-}
-
-TextEditingController _commentController = TextEditingController();
-
-class _TaskDetailsPageState extends State<TaskDetailsPage> {
-  @override
-  void initState() {
-    getAllComments();
-    super.initState();
-  }
-
-  void getAllComments() async {
-    try {
-      await CommentsController.getAllComments(widget.postId);
-      await TaskController.getTaskFunc(widget.postId);
-      setState(() {});
-    } catch (e) {
-      logError('$e in getAllTasks');
-    }
-  }
-
-  bool showIcon = false;
 
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
+    PostDetailsCubit postDetailsCubit =
+        BlocProvider.of<PostDetailsCubit>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -186,49 +163,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   },
                 ),
               ),
-              // Row(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     const CircleAvatar(
-              //       backgroundImage: NetworkImage(
-              //         'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-              //       ),
-              //       radius: 20,
-              //     ),
-              //     const SizedBox(
-              //       width: 10,
-              //     ),
-              //     SizedBox(
-              //       width: MediaQuery.of(context).size.width * 0.8,
-              //       child: TextFormField(
-              //         minLines: 2,
-              //         maxLines: 5,
-              //         controller: _commentController,
-              //         decoration: InputDecoration(
-              //           hintText: 'Add your comment',
-              //           hintStyle: GoogleFonts.poppins(
-              //             fontSize: 12,
-              //             color: const Color(0xff7C7C7C),
-              //           ),
-              //           filled: true,
-              //           fillColor: Colors.white,
-              //           contentPadding: const EdgeInsets.all(10),
-              //           enabledBorder: const OutlineInputBorder(
-              //             borderSide: BorderSide(color: Color(0xff37474F)),
-              //           ),
-              //           focusedBorder: const OutlineInputBorder(
-              //             borderSide: BorderSide(color: Color(0xff37474F)),
-              //           ),
-              //         ),
-              //         onChanged: (value) {
-              //           _commentController.text = value.toString();
-              //           _commentController.selection = TextSelection.collapsed(
-              //               offset: _commentController.text.length);
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
@@ -241,19 +175,20 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-                radius: 18,
-                child: ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: CurrentUserInfoController
-                            .userInfoModel.data?.user.photo ??
-                        '',
+              radius: 18,
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: CurrentUserInfoController
+                          .userInfoModel.data?.user.photo ??
+                      '',
+                  fit: BoxFit.fill,
+                  errorWidget: (context, url, error) => Image.asset(
+                    'images/default person.png',
                     fit: BoxFit.fill,
-                    errorWidget: (context, url, error) => Image.asset(
-                      'images/default person.png',
-                      fit: BoxFit.fill,
-                    ),
                   ),
-                )),
+                ),
+              ),
+            ),
             const SizedBox(
               width: 10,
             ),
@@ -262,7 +197,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               child: TextFormField(
                 minLines: 1,
                 maxLines: 5,
-                controller: _commentController,
+                controller: postDetailsCubit.commentController,
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: Theme.of(context).textTheme.headlineSmall!.color,
@@ -289,49 +224,34 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     ),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  // suffixIcon: showIcon
-                  //     ? IconButton(
-                  //         onPressed: () {},
-                  //         icon: Icon(
-                  //           Icons.keyboard_arrow_right,
-                  //           color: primaryLightColor,
-                  //           size: 30,
-                  //         ),
-                  //       )
-                  //     : null,
                 ),
                 onChanged: (value) {
-                  _commentController.text = value.toString();
-                  _commentController.selection = TextSelection.collapsed(
-                      offset: _commentController.text.length);
-
-                  setState(() {
-                    value.isNotEmpty ? showIcon = true : showIcon = false;
-                  });
+                  postDetailsCubit.onCommentTextFieldValueChanged(value);
                 },
               ),
             ),
             const SizedBox(
               width: 10,
             ),
-            showIcon
-                ? GestureDetector(
-                    onTap: () async {
-                      await CommentsController.addComment(
-                          widget.postId, _commentController.text);
-                      await CommentsController.getAllComments(widget.postId);
-                      _commentController.text = '';
-                    },
-                    child: Text(
-                      'Post',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+            BlocBuilder<PostDetailsCubit, PostDetailsState>(
+              builder: (context, state) {
+                return postDetailsCubit.showIcon
+                    ? GestureDetector(
+                        onTap: () async {
+                          await postDetailsCubit.addCommentFunction(postId);
+                        },
+                        child: Text(
+                          'Post',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink();
+              },
+            )
           ],
         ),
       ),

@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:task_tech/utils/consts.dart';
 import 'package:task_tech/presentation/screens/auth/view/unexpected_error_screen.dart';
 import 'package:task_tech/presentation/screens/payment/view/success_payment_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:task_tech/utils/exports.dart';
 class WebViewPage extends StatelessWidget {
   const WebViewPage({
     super.key,
@@ -12,7 +10,7 @@ class WebViewPage extends StatelessWidget {
   final String url;
   @override
   Widget build(BuildContext context) {
-    WebViewController controller = WebViewController()
+    WebViewController webViewController = WebViewController()
       ..loadRequest(Uri.parse(url))
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(NavigationDelegate(
@@ -48,7 +46,7 @@ class WebViewPage extends StatelessWidget {
       ));
     return Center(
       child: WebViewWidget(
-        controller: controller,
+        controller: webViewController,
       ),
     );
   }

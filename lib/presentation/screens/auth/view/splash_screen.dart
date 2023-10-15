@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('images/Logo.png'),
+            Image.asset('images/logo.png'),
             Text(
               'TASK-TECH',
               style: GoogleFonts.redRose(

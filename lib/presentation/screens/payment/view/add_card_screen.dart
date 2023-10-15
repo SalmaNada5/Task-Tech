@@ -4,11 +4,8 @@ class AddCardScreen extends StatelessWidget {
   const AddCardScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    TextEditingController cardNumberController = TextEditingController();
-    TextEditingController cardHolderNameController = TextEditingController();
-    TextEditingController cvvController = TextEditingController();
-    TextEditingController expirationDateController = TextEditingController();
-
+    PaymentCubit paymentCubit =
+        BlocProvider.of<PaymentCubit>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -19,7 +16,8 @@ class AddCardScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -47,14 +45,14 @@ class AddCardScreen extends StatelessWidget {
               height: 40,
             ),
             ReusableFormField(
-              controller: cardNumberController,
+              controller: paymentCubit.cardNumberController,
               hint: 'Card Number',
             ),
             const SizedBox(
               height: 20,
             ),
             ReusableFormField(
-              controller: cardHolderNameController,
+              controller: paymentCubit.cardHolderNameController,
               hint: 'Card Holder Name',
             ),
             const SizedBox(
@@ -75,7 +73,7 @@ class AddCardScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.45,
                       child: ReusableFormField(
-                          controller: expirationDateController, hint: 'MM/YY'),
+                          controller: paymentCubit.expirationDateController, hint: 'MM/YY'),
                     ),
                   ],
                 ),
@@ -95,7 +93,7 @@ class AddCardScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.45,
                       child: ReusableFormField(
-                        controller: cvvController,
+                        controller: paymentCubit.cvvController,
                       ),
                     ),
                   ],
@@ -110,7 +108,8 @@ class AddCardScreen extends StatelessWidget {
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 80, vertical: 20)),
-                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                backgroundColor:
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

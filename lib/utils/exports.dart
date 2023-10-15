@@ -25,7 +25,7 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:adaptive_theme/adaptive_theme.dart';
 export 'package:hydrated_bloc/hydrated_bloc.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:task_tech/presentation/screens/auth/cubits/auth_cubit/auth_cubit.dart';
+export 'package:task_tech/presentation/screens/auth/view/auth_cubit/auth_cubit.dart';
 export 'package:task_tech/presentation/screens/auth/view/splash_screen.dart';
 export 'package:task_tech/presentation/screens/create_profile/cubit/create_profile_cubit.dart';
 export 'package:task_tech/presentation/screens/profile/view/profile_cubit/profile_cubit.dart';
@@ -76,3 +76,8 @@ export 'package:task_tech/presentation/screens/chat_screens/view/chats_screen.da
 export 'package:task_tech/presentation/screens/home/view/screens/home_screen.dart';
 export 'package:task_tech/presentation/screens/posts/view/posts_screen.dart';
 export 'package:custom_navigation_bar/custom_navigation_bar.dart';
+export 'package:task_tech/presentation/screens/add_post/view/cubit/add_post_cubit.dart';
+export 'package:task_tech/presentation/screens/posts/view/cubit/posts_cubit.dart';
+export 'package:task_tech/presentation/screens/payment/view/payment_web_view.dart';
+export 'package:task_tech/presentation/screens/payment/view/cubit/payment_cubit.dart';
+export 'package:task_tech/presentation/screens/posts_details/view/cubit/post_details_cubit.dart';

@@ -30,6 +30,18 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProfileCubit>.value(
           value: di.sl(),
         ),
+        BlocProvider<AddPostCubit>.value(
+          value: di.sl(),
+        ),
+        BlocProvider<PostsCubit>.value(
+          value: di.sl(),
+        ),
+        BlocProvider<PostDetailsCubit>.value(
+          value: di.sl(),
+        ),
+        BlocProvider<PaymentCubit>.value(
+          value: di.sl(),
+        ),
       ],
       child: AdaptiveTheme(
         light: AppThemes.lightTheme,
@@ -41,7 +53,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: theme,
               darkTheme: darkTheme,
-              home: const SkillsScreen());
+              home: const SplashScreen());
         },
       ),
     );

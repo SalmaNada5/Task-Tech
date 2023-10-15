@@ -1,6 +1,6 @@
 import 'package:task_tech/utils/exports.dart';
 
-class ReusableCommentWidget extends StatefulWidget {
+class ReusableCommentWidget extends StatelessWidget {
   const ReusableCommentWidget(
       {super.key,
       required this.userName,
@@ -13,12 +13,6 @@ class ReusableCommentWidget extends StatefulWidget {
   final String imgUrl;
   final String date;
   final String text;
-
-  @override
-  State<ReusableCommentWidget> createState() => _ReusableCommentWidgetState();
-}
-
-class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +22,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
         Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(widget.imgUrl),
+              backgroundImage: NetworkImage(imgUrl),
               radius: 20,
             ),
             const SizedBox(
@@ -39,14 +33,14 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.userName,
+                 userName,
                   style: headStyle.copyWith(
                     fontSize: 16,
                     color: Theme.of(context).textTheme.headlineSmall!.color,
                   ),
                 ),
                 SmoothStarRating(
-                  rating: widget.rate.toDouble(),
+                  rating: rate.toDouble(),
                   size: 15,
                   filledIconData: Icons.star,
                   defaultIconData: Icons.star_border,
@@ -60,7 +54,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
             ),
             const Spacer(),
             Text(
-              widget.date,
+              date,
               style: GoogleFonts.poppins(
                 fontSize: 13,
                 fontWeight: FontWeight.w300,
@@ -73,7 +67,7 @@ class _ReusableCommentWidgetState extends State<ReusableCommentWidget> {
           height: 20,
         ),
         Text(
-          widget.text,
+         text,
           softWrap: true,
           textAlign: TextAlign.left,
           overflow: TextOverflow.visible,

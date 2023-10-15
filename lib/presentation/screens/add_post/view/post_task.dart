@@ -1,17 +1,11 @@
 import 'package:task_tech/utils/exports.dart';
 
-class PostTask extends StatefulWidget {
+class PostTask extends StatelessWidget {
   const PostTask({super.key});
 
   @override
-  State<PostTask> createState() => _PostTaskState();
-}
-
-class _PostTaskState extends State<PostTask> {
-  String? fileName;
-  bool fileDisSelected = false;
-  @override
   Widget build(BuildContext context) {
+    AddPostCubit addPostCubit = BlocProvider.of<AddPostCubit>(context);
     return ReusablePostForm(
       onPressed: () async {
         await AddPostsController.uploadTaskFunc();
@@ -82,83 +76,84 @@ class _PostTaskState extends State<PostTask> {
           const SizedBox(
             height: 10,
           ),
-          TextFormField(
-            onTap: () async {
-              AddPostsController.taskSelectedFiles =
-                  await AddPostsController.attachNewFilesInAddTask();
-              String fileN = '';
-              if (AddPostsController.taskSelectedFiles != null) {
-                for (var element
-                    in AddPostsController.taskSelectedFiles!.files) {
-                  fileN += '${element.path!.split('/').last}, ';
-                }
-              }
-              setState(() {
-                fileName = fileN;
-                fileDisSelected = false;
-              });
-            },
-            readOnly: true,
-            style: headStyle.copyWith(color: Theme.of(context).hintColor),
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.only(left: 15),
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).canvasColor,
-                  ),
-                ),
-                filled: true,
-                fillColor: Theme.of(context).canvasColor,
-                prefixIcon: fileDisSelected
-                    ? null
-                    : fileName == null
+          BlocBuilder<AddPostCubit, AddPostState>(
+            bloc: addPostCubit,
+            builder: (context, state) {
+              return TextFormField(
+                onTap: () async {
+                  AddPostsController.taskSelectedFiles =
+                      await AddPostsController.attachNewFilesInAddTask();
+                  String fileN = '';
+                  if (AddPostsController.taskSelectedFiles != null) {
+                    for (var element
+                        in AddPostsController.taskSelectedFiles!.files) {
+                      fileN += '${element.path!.split('/').last}, ';
+                    }
+                  }
+                  addPostCubit.taskAttachFileFunction(fileN);
+                },
+                readOnly: true,
+                style: headStyle.copyWith(color: Theme.of(context).hintColor),
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(left: 15),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).canvasColor,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).canvasColor,
+                    prefixIcon: addPostCubit.taskFileDisSelected
                         ? null
-                        : Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: Colors.grey,
-                                )),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  fileName ?? '',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                  ),
+                        : addPostCubit.taskFileName == null
+                            ? null
+                            : Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                    )),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      addPostCubit.taskFileName ?? '',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        addPostCubit
+                                            .taskFileDisSelectedFunction();
+                                      },
+                                      icon: const Icon(
+                                        Icons.clear,
+                                        size: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      fileDisSelected = true;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.clear,
-                                    size: 16,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                suffixIcon: const Icon(
-                  Icons.attach_file,
-                  size: 20,
-                  color: Colors.grey,
-                )),
-            onChanged: (value) {
-              //AddPostsController.attachFileController.text = value.toString();
-              // AddPostsController.attachFileController.selection =
-              //     TextSelection.fromPosition(TextPosition(
-              //         offset:
-              //             AddPostsController.attachFileController.text.length));
+                              ),
+                    suffixIcon: const Icon(
+                      Icons.attach_file,
+                      size: 20,
+                      color: Colors.grey,
+                    )),
+                onChanged: (value) {
+                  //AddPostsController.attachFileController.text = value.toString();
+                  // AddPostsController.attachFileController.selection =
+                  //     TextSelection.fromPosition(TextPosition(
+                  //         offset:
+                  //             AddPostsController.attachFileController.text.length));
+                },
+                maxLines: 1,
+              );
             },
-            maxLines: 1,
           ),
         ],
       ),

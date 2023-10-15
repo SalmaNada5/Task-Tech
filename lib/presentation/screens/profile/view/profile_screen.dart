@@ -237,9 +237,6 @@ class ProfileScreenState extends State<ProfileScreen>
                                     : UserController.unFollowUser(UserController
                                             .userModel.data?.user.id ??
                                         '');
-                                // setState(() {
-                                //   isFollowed = !isFollowed;
-                                // });
                                 profileCubit.followOrUnfollowFunction();
                               },
                               child: BlocBuilder<ProfileCubit, ProfileState>(
