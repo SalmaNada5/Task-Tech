@@ -8,15 +8,15 @@ class ServiceController {
     String? token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
-   // try {
+    try {
       Response res =
           await _dioClient.get('api/v1/services/$id', token) as Response;
       serviceDetailsModel = ServiceDetailsModel.fromJson(res.data);
       logSuccess('Sercice Details: $serviceDetailsModel');
       return serviceDetailsModel;
-    // } catch (e) {
-    //   logError('error in getServiceFunc $e');
-    // }
-   // return null;
+    } catch (e) {
+      logError('error in getServiceFunc $e');
+    }
+    return null;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_tech/core/dio/dio_client.dart';
 import 'package:task_tech/core/errors/logger.dart';
@@ -15,7 +14,6 @@ class PostController {
 
   static int taskPage = 1;
   static int servicePage = 1;
-  static ScrollController scrollController = ScrollController();
   static Future<List<Post>?> getTaskPosts(
       {bool dioLoading = true, int? page}) async {
     String? token;

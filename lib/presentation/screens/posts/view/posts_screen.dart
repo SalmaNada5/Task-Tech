@@ -10,29 +10,28 @@ class PostsScreen extends StatelessWidget {
     postsCubit.getAllPosts();
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
-      child: Column(
-        children: [
-          Row(
+      child: BlocBuilder<PostsCubit, PostsState>(
+        bloc: postsCubit,
+        builder: (context, state) {
+          return Column(
             children: [
-              Text(
-                'Posts',
-                style: titleStyle.copyWith(
-                    color: Theme.of(context).textTheme.headlineSmall!.color),
-              ),
-              const Spacer(),
-              Text(
-                'Sort by ',
-                style: headStyle.copyWith(
-                  fontWeight: FontWeight.w100,
-                  color: Theme.of(context).textTheme.headlineSmall!.color,
-                ),
-              ),
-              BlocBuilder<PostsCubit, PostsState>(
-                bloc: postsCubit,
-                buildWhen: (p, c) =>
-                    c is PostsInitial || c is DropDownItemSelectedState,
-                builder: (context, state) {
-                  return DropdownButton<String>(
+              Row(
+                children: [
+                  Text(
+                    'Posts',
+                    style: titleStyle.copyWith(
+                        color:
+                            Theme.of(context).textTheme.headlineSmall!.color),
+                  ),
+                  const Spacer(),
+                  Text(
+                    'Sort by ',
+                    style: headStyle.copyWith(
+                      fontWeight: FontWeight.w100,
+                      color: Theme.of(context).textTheme.headlineSmall!.color,
+                    ),
+                  ),
+                  DropdownButton<String>(
                     value: postsCubit.dropDownItem,
                     elevation: 0,
                     underline: const SizedBox(),
@@ -48,43 +47,22 @@ class PostsScreen extends StatelessWidget {
                     onChanged: (selectedVal) {
                       postsCubit.onDropDownItemSelected(selectedVal ?? '');
                     },
-                  );
-                },
+                  ),
+                ],
               ),
-            ],
-          ),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: postsCubit.onRefresh,
-              child: BlocBuilder<PostDetailsCubit, PostDetailsState>(
-                builder: (context, state) {
-                  return SingleChildScrollView(
-                    controller: PostController.scrollController,
-                    scrollDirection: Axis.vertical,
-                    child: postsCubit.dropDownItem == 'Tasks'
-                        ? Column(
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: postsCubit.onRefresh,
+                  child: postsCubit.dropDownItem == 'Tasks'
+                      ? SingleChildScrollView(
+                          controller: postsCubit.tasksScrollController,
+                          child: Column(
                             children: [
-                              // ListView.builder(
-                              //   scrollDirection: Axis.vertical,
-                              //   physics: const NeverScrollableScrollPhysics(),
-                              //   shrinkWrap: true,
-                              //   itemBuilder: (context, i) => ReusablePostWidget(
-                              //     taskId: PostController.tasks[i].id,
-                              //     dropDownVal: postsCubit.dropDownItem,
-                              //     profileImgUrl:
-                              //         PostController.tasks[i].user?.photo ?? '',
-                              //     accountName:
-                              //         PostController.tasks[i].user?.name ?? '',
-                              //     postDescription:
-                              //         PostController.tasks[i].description ?? '',
-                              //     postTime: Constants.convertToTimeAgo(
-                              //         PostController.tasks[i].createdAt),
-                              //   ),
-                              //   itemCount: PostController.tasks.length,
-                              // ),
-                              ...List.generate(
-                                PostController.tasks.length,
-                                (i) => ReusablePostWidget(
+                              ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, i) => ReusablePostWidget(
                                   taskId: PostController.tasks[i].id,
                                   dropDownVal: postsCubit.dropDownItem,
                                   profileImgUrl:
@@ -96,7 +74,23 @@ class PostsScreen extends StatelessWidget {
                                   postTime: Constants.convertToTimeAgo(
                                       PostController.tasks[i].createdAt),
                                 ),
+                                itemCount: PostController.tasks.length,
                               ),
+                              // ...List.generate(
+                              //   PostController.tasks.length,
+                              //   (i) => ReusablePostWidget(
+                              //     taskId: PostController.tasks[i].id,
+                              //     dropDownVal: postsCubit.dropDownItem,
+                              //     profileImgUrl:
+                              //         PostController.tasks[i].user?.photo ?? '',
+                              //     accountName:
+                              //         PostController.tasks[i].user?.name ?? '',
+                              //     postDescription:
+                              //         PostController.tasks[i].description ?? '',
+                              //     postTime: Constants.convertToTimeAgo(
+                              //         PostController.tasks[i].createdAt),
+                              //   ),
+                              // ),
                               postsCubit.taskPostsLoading
                                   ? const Padding(
                                       padding:
@@ -105,30 +99,16 @@ class PostsScreen extends StatelessWidget {
                                     )
                                   : const SizedBox.shrink(),
                             ],
-                          )
-                        : Column(
+                          ))
+                      : SingleChildScrollView(
+                          controller: postsCubit.servicesScollController,
+                          child: Column(
                             children: [
-                              // ListView.builder(
-                              //   scrollDirection: Axis.vertical,
-                              //   physics: const NeverScrollableScrollPhysics(),
-                              //   shrinkWrap: true,
-                              //   itemBuilder: (context, i) => ReusablePostWidget(
-                              //     serviceId: PostController.services[i].id,
-                              //     dropDownVal: postsCubit.dropDownItem,
-                              //     profileImgUrl:
-                              //         PostController.services[i].user?.photo ?? '',
-                              //     accountName:
-                              //         PostController.services[i].user?.name ?? '',
-                              //     postDescription:
-                              //         PostController.services[i].description ?? '',
-                              //     postTime: Constants.convertToTimeAgo(
-                              //         PostController.services[i].createdAt),
-                              //   ),
-                              //   itemCount: PostController.services.length,
-                              // ),
-                              ...List.generate(
-                                PostController.services.length,
-                                (i) => ReusablePostWidget(
+                              ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, i) => ReusablePostWidget(
                                   serviceId: PostController.services[i].id,
                                   dropDownVal: postsCubit.dropDownItem,
                                   profileImgUrl:
@@ -143,7 +123,26 @@ class PostsScreen extends StatelessWidget {
                                   postTime: Constants.convertToTimeAgo(
                                       PostController.services[i].createdAt),
                                 ),
+                                itemCount: PostController.services.length,
                               ),
+                              // ...List.generate(
+                              //   PostController.services.length,
+                              //   (i) => ReusablePostWidget(
+                              //     serviceId: PostController.services[i].id,
+                              //     dropDownVal: postsCubit.dropDownItem,
+                              //     profileImgUrl:
+                              //         PostController.services[i].user?.photo ??
+                              //             '',
+                              //     accountName:
+                              //         PostController.services[i].user?.name ??
+                              //             '',
+                              //     postDescription:
+                              //         PostController.services[i].description ??
+                              //             '',
+                              //     postTime: Constants.convertToTimeAgo(
+                              //         PostController.services[i].createdAt),
+                              //   ),
+                              // ),
                               postsCubit.servicePageLoading
                                   ? const Padding(
                                       padding:
@@ -153,12 +152,12 @@ class PostsScreen extends StatelessWidget {
                                   : const SizedBox.shrink(),
                             ],
                           ),
-                  );
-                },
+                        ),
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

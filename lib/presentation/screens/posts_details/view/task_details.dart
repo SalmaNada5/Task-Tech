@@ -15,6 +15,7 @@ class TaskDetailsPage extends StatelessWidget {
     bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     PostDetailsCubit postDetailsCubit =
         BlocProvider.of<PostDetailsCubit>(context);
+    postDetailsCubit.getTaskDetailsFunction(postId);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -49,11 +50,17 @@ class TaskDetailsPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 16,
-                    backgroundImage: NetworkImage(TaskController
-                            .taskDetailsModel.data?.post.user?.photo ??
-                        ""),
+                  ClipOval(
+                    child: CircleAvatar(
+                      radius: 16,
+                      child: CachedNetworkImage(
+                        imageUrl: TaskController
+                                .taskDetailsModel.data?.post.user?.photo ??
+                            "",
+                        errorWidget: (context, url, error) =>
+                            Image.asset('images/placeholder.jpg'),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     width: 8,

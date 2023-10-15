@@ -17,10 +17,10 @@ class PostsCubit extends Cubit<PostsState> {
 
   Future<void> onRefresh() async {
     if (dropDownItem == 'Tasks') {
-      getAllTasksFunction(page: 1);
+      await PostController.getTaskPosts(dioLoading: false, page: 1);
       return;
     }
-    getAllServicesFunction(page: 1);
+    await PostController.getServicePosts(dioLoading: false, page: 1);
   }
 
   void getAllPosts() {
@@ -32,11 +32,13 @@ class PostsCubit extends Cubit<PostsState> {
 //* tasks posts logic
 
   bool enableTasksShimmer = false;
-  void getAllTasksFunction({int? page}) async {
+  void getAllTasksFunction() async {
     emit(PostsInitial());
     enableTasksShimmer = true;
     try {
-      await PostController.getTaskPosts(dioLoading: false, page: page);
+      await PostController.getTaskPosts(
+        dioLoading: false,
+      );
       enableTasksShimmer = false;
       emit(TaskPostsReturnedSuccessfully());
     } catch (e) {
@@ -46,11 +48,13 @@ class PostsCubit extends Cubit<PostsState> {
     }
   }
 
+  ScrollController tasksScrollController = ScrollController();
+
   bool taskPostsLoading = false;
-  void taskPageScrollController() async {
-    PostController.scrollController.addListener(() async {
-      if (PostController.scrollController.position.atEdge &&
-          PostController.scrollController.position.pixels != 0) {
+  void taskPageScrollController() {
+    tasksScrollController.addListener(() {
+      if (tasksScrollController.position.atEdge &&
+          tasksScrollController.position.pixels != 0) {
         if (PostController.taskPage >
             (PostController.postModel.paginationResult?.numberOfPages ?? 1)) {
           return;
@@ -68,11 +72,11 @@ class PostsCubit extends Cubit<PostsState> {
   //* services posts logic
   bool enableServicesShimmer = false;
 
-  void getAllServicesFunction({int? page}) async {
+  void getAllServicesFunction() async {
     enableServicesShimmer = true;
     try {
       emit(PostsInitial());
-      await PostController.getServicePosts(dioLoading: false, page: page);
+      await PostController.getServicePosts(dioLoading: false);
       enableServicesShimmer = false;
       emit(ServicePostsReturnedSuccessfully());
     } catch (e) {
@@ -83,10 +87,11 @@ class PostsCubit extends Cubit<PostsState> {
   }
 
   bool servicePageLoading = false;
+  ScrollController servicesScollController = ScrollController();
   void servicePageScrollController() async {
-    PostController.scrollController.addListener(() async {
-      if (PostController.scrollController.position.atEdge &&
-          PostController.scrollController.position.pixels != 0) {
+    servicesScollController.addListener(() async {
+      if (servicesScollController.position.atEdge &&
+          servicesScollController.position.pixels != 0) {
         if (PostController.servicePage >
             (PostController.serviceModel.paginationResult?.numberOfPages ??
                 1)) {

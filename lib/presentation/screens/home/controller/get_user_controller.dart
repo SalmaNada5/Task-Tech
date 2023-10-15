@@ -9,21 +9,22 @@ class UserController {
   static UserModel userModel = UserModel();
 
   static Future<UserModel?> getUserByIdFunc(String userId) async {
-    // try {
-    String token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token") ?? '';
-    Response res = await _dioClient.get(
-      'api/v1/users/$userId',
-      token,
-    ) as Response;
-    userModel = UserModel.fromJson(res.data);
-    logSuccess('Specific User info returned successfully: ${userModel.status}');
-    return userModel;
-    // } catch (e) {
-    //   logError('error in getUserByIdFunc ${e.toString()}');
-    // }
-    //return null;
+    try {
+      String token;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString("token") ?? '';
+      Response res = await _dioClient.get(
+        'api/v1/users/$userId',
+        token,
+      ) as Response;
+      userModel = UserModel.fromJson(res.data);
+      logSuccess(
+          'Specific User info returned successfully: ${userModel.status}');
+      return userModel;
+    } catch (e) {
+      logError('error in getUserByIdFunc ${e.toString()}');
+    }
+    return null;
   }
 
   static Future<bool?> followUser(String id) async {

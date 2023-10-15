@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:task_tech/presentation/screens/posts_details/controller/comments_controller.dart';
+import 'package:task_tech/presentation/screens/posts_details/controller/task_details_controller.dart';
 import 'package:task_tech/utils/exports.dart';
 
 part 'post_details_state.dart';
@@ -9,7 +10,11 @@ class PostDetailsCubit extends Cubit<PostDetailsState> {
 
 //* task details logic
   TextEditingController commentController = TextEditingController();
-    bool showIcon = false;
+  bool showIcon = false;
+  Future<void> getTaskDetailsFunction(String postId) async {
+    getAllCommentsFunction(postId);
+    await TaskController.getTaskFunc(postId);
+  }
 
   void onCommentTextFieldValueChanged(String value) {
     emit(PostDetailsInitial());
@@ -34,7 +39,7 @@ class PostDetailsCubit extends Cubit<PostDetailsState> {
     try {
       emit(PostDetailsInitial());
       await CommentsController.getAllComments(postId);
-      // await TaskController.getTaskFunc(postId);
+
       emit(AllCommentsReturnedSuccessfully());
       enableCommentsShimmer = false;
     } catch (e) {
@@ -42,5 +47,4 @@ class PostDetailsCubit extends Cubit<PostDetailsState> {
       logError('$e in getAllCommentsFunction');
     }
   }
-
 }

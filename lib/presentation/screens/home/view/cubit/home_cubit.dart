@@ -100,13 +100,14 @@ class HomeCubit extends Cubit<HomeState> with HydratedMixin {
 
   bool categoriesLoading = false;
   categoriesScrollControllerFunc() {
-    categoriesScrollController.addListener(() async {
+    categoriesScrollController.addListener(() {
       if (categoriesScrollController.position.atEdge &&
           categoriesScrollController.position.pixels != 0) {
         if (categoriesPage >
             (categoryModel.paginationResult?.numberOfPages ?? 1)) {
           return;
         }
+
         categoriesLoading = true;
         getPopularCategoriesFunc();
         categoriesLoading = false;
