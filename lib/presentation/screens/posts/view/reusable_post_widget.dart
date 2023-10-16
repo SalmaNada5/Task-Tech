@@ -22,6 +22,8 @@ class ReusablePostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
+    PostDetailsCubit postDetailsCubit =
+        BlocProvider.of<PostDetailsCubit>(context, listen: false);
     return Container(
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.only(right: 10, top: 4, left: 10),
@@ -85,11 +87,12 @@ class ReusablePostWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   if (dropDownVal == 'Tasks') {
+                    await postDetailsCubit.getTaskDetailsFunction(taskId ?? '');
                     Constants.navigateTo(TaskDetailsPage(
                       postId: taskId!,
                     ));
                   } else {
-                    await ServiceController.getServiceFunc(serviceId ?? "");
+                    await ServiceController.getServiceFunc(serviceId ?? '');
                     Constants.navigateTo(const ServiceDetailsPage());
                   }
                 },

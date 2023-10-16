@@ -6,6 +6,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeCubit homeCubit = BlocProvider.of<HomeCubit>(context);
+    PostDetailsCubit postDetailsCubit =
+        BlocProvider.of<PostDetailsCubit>(context, listen: false);
     homeCubit.initCubit();
     return RefreshIndicator(
       onRefresh: () => homeCubit.onRefresh(),
@@ -152,7 +154,11 @@ class HomeScreen extends StatelessWidget {
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: RelatedPostItem(
-                                                  onpressed: () {
+                                                  onpressed: () async {
+                                                    await postDetailsCubit
+                                                        .getTaskDetailsFunction(
+                                                            homeCubit
+                                                                .posts[i].id);
                                                     Constants.navigateTo(
                                                         TaskDetailsPage(
                                                             postId: homeCubit

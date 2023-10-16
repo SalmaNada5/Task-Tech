@@ -25,7 +25,7 @@ class HighestRatedFreelancer extends StatelessWidget {
               child: CachedNetworkImage(
                   imageUrl: userImgUrl,
                   errorWidget: (context, url, error) {
-                    return Image.asset('images/default person.png');
+                    return Image.asset('images/person.png');
                   }),
             ),
           ),

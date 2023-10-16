@@ -50,7 +50,7 @@ class CreateProfile extends StatelessWidget {
                                     height: Constants.screenWidth * 0.5,
                                   )
                                 : Image.asset(
-                                    'images/default person.png',
+                                    'images/person.png',
                                     fit: BoxFit.cover,
                                   ),
                           );

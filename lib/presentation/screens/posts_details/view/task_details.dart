@@ -190,7 +190,7 @@ class TaskDetailsPage extends StatelessWidget {
                       '',
                   fit: BoxFit.fill,
                   errorWidget: (context, url, error) => Image.asset(
-                    'images/default person.png',
+                    'images/person.png',
                     fit: BoxFit.fill,
                   ),
                 ),

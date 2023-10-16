@@ -61,7 +61,7 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
                     child: CachedNetworkImage(
                       imageUrl: widget.profileImgUrl,
                       errorWidget: (context, url, error) =>
-                          Image.asset('images/default person.png'),
+                          Image.asset('images/person.png'),
                     ),
                   ),
                 ),
