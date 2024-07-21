@@ -50,7 +50,7 @@ class _RequestNotificationState extends State<RequestNotification> {
                   width: MediaQuery.of(context).size.width * 0.05,
                 ),
                 Text(
-                  textScaleFactor: 0.9,
+                 textScaleFactor: 0.8,
                   widget.name,
                   style: GoogleFonts.poppins(
                       fontSize: MediaQuery.of(context).size.width * 0.045,

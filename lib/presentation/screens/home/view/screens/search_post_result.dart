@@ -29,9 +29,9 @@ class SearchPostResult extends StatelessWidget {
           style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(
                   isDarkMode ? const Color(0xff213440) : Colors.white),
-              elevation: WidgetStatePropertyAll(8),
-              shadowColor: WidgetStatePropertyAll(Colors.white),
-              padding: WidgetStatePropertyAll(const EdgeInsets.all(10))),
+              elevation: const WidgetStatePropertyAll(8),
+              shadowColor: const WidgetStatePropertyAll(Colors.white),
+              padding: const WidgetStatePropertyAll(EdgeInsets.all(10))),
           onPressed: onPressed,
           child: Row(
             children: [

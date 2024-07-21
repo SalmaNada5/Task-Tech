@@ -81,10 +81,10 @@ class HighestRatedFreelancer extends StatelessWidget {
                   AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light
                       ? const Color(0xffCEDADF)
                       : const Color(0xff213440)),
-              shadowColor: WidgetStatePropertyAll(
-                const Color.fromRGBO(22, 80, 105, 0.5),
+              shadowColor: const WidgetStatePropertyAll(
+                Color.fromRGBO(22, 80, 105, 0.5),
               ),
-              elevation: WidgetStatePropertyAll(10),
+              elevation: const WidgetStatePropertyAll(10),
               shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),

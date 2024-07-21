@@ -28,7 +28,7 @@ class ServiceDetailsPage extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
-              padding: WidgetStatePropertyAll(const EdgeInsets.all(4)),
+              padding: const WidgetStatePropertyAll(EdgeInsets.all(4)),
               backgroundColor:
                   WidgetStatePropertyAll(Theme.of(context).primaryColor),
               shape: WidgetStatePropertyAll(
@@ -175,8 +175,8 @@ class ServiceDetailsPage extends StatelessWidget {
                 ));
               },
               style: ButtonStyle(
-                padding: WidgetStatePropertyAll(
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
+                padding: const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(horizontal: 80, vertical: 14)),
                 backgroundColor:
                     WidgetStatePropertyAll(Theme.of(context).primaryColor),
                 shape: WidgetStatePropertyAll(

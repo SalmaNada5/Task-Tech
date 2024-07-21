@@ -122,7 +122,7 @@ class SignInScreen extends StatelessWidget {
                                     value: authCubit.rememberMe,
                                     checkColor: Theme.of(context).primaryColor,
                                     fillColor:
-                                        WidgetStatePropertyAll(Colors.white),
+                                        const WidgetStatePropertyAll(Colors.white),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     onChanged: (value) {
@@ -169,8 +169,8 @@ class SignInScreen extends StatelessWidget {
                                 }
                               },
                               style: ButtonStyle(
-                                padding: WidgetStatePropertyAll(
-                                    const EdgeInsets.symmetric(vertical: 15)),
+                                padding: const WidgetStatePropertyAll(
+                                    EdgeInsets.symmetric(vertical: 15)),
                                 backgroundColor: WidgetStatePropertyAll(
                                     Theme.of(context).primaryColor),
                                 shape: WidgetStatePropertyAll(

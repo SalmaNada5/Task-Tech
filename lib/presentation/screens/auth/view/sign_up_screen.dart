@@ -175,8 +175,8 @@ class SignUpScreen extends StatelessWidget {
                                 }
                               },
                               style: ButtonStyle(
-                                padding: WidgetStatePropertyAll(
-                                    const EdgeInsets.symmetric(vertical: 15)),
+                                padding: const WidgetStatePropertyAll(
+                                    EdgeInsets.symmetric(vertical: 15)),
                                 backgroundColor: WidgetStatePropertyAll(
                                     Theme.of(context).primaryColor),
                                 shape: WidgetStatePropertyAll(

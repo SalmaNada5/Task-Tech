@@ -18,7 +18,7 @@ class CongratesScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
-              padding: WidgetStatePropertyAll(const EdgeInsets.all(4)),
+              padding: const WidgetStatePropertyAll(EdgeInsets.all(4)),
               backgroundColor:
                   WidgetStatePropertyAll(Theme.of(context).primaryColor),
               shape: WidgetStatePropertyAll(
@@ -184,8 +184,8 @@ class BottomSheetWidget extends StatelessWidget {
                                       const BottomNavBarScreen());
                                 },
                                 style: ButtonStyle(
-                                  padding: WidgetStatePropertyAll(
-                                      const EdgeInsets.symmetric(
+                                  padding: const WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(
                                           horizontal: 60, vertical: 15)),
                                   backgroundColor: WidgetStatePropertyAll(
                                       Theme.of(context).primaryColor),
@@ -210,8 +210,8 @@ class BottomSheetWidget extends StatelessWidget {
                     });
               },
               style: ButtonStyle(
-                padding: WidgetStatePropertyAll(
-                    const EdgeInsets.symmetric(vertical: 20)),
+                padding: const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(vertical: 20)),
                 backgroundColor:
                     WidgetStatePropertyAll(Theme.of(context).primaryColor),
                 shape: WidgetStatePropertyAll(
@@ -242,9 +242,9 @@ class BottomSheetWidget extends StatelessWidget {
                 side: WidgetStatePropertyAll(BorderSide(
                   color: Theme.of(context).primaryColor,
                 )),
-                padding: WidgetStatePropertyAll(
-                    const EdgeInsets.symmetric(vertical: 20)),
-                backgroundColor: WidgetStatePropertyAll(Colors.white),
+                padding: const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(vertical: 20)),
+                backgroundColor: const WidgetStatePropertyAll(Colors.white),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

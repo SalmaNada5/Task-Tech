@@ -33,8 +33,8 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(
               Theme.of(context).scaffoldBackgroundColor),
-          elevation: WidgetStatePropertyAll(4),
-          shadowColor: WidgetStatePropertyAll(Colors.white),
+          elevation: const WidgetStatePropertyAll(4),
+          shadowColor: const WidgetStatePropertyAll(Colors.white),
         ),
         onPressed: widget.onpressed,
         child: Column(

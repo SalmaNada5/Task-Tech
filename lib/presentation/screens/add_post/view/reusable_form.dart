@@ -311,8 +311,8 @@ class ReusablePostForm extends StatelessWidget {
                     }
                   },
                   style: ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                      const EdgeInsets.symmetric(
+                    padding: const WidgetStatePropertyAll(
+                      EdgeInsets.symmetric(
                         horizontal: 80,
                         vertical: 8,
                       ),
