@@ -311,15 +311,15 @@ class ReusablePostForm extends StatelessWidget {
                     }
                   },
                   style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
+                    padding: WidgetStatePropertyAll(
                       const EdgeInsets.symmetric(
                         horizontal: 80,
                         vertical: 8,
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStatePropertyAll(
                         Theme.of(context).primaryColor),
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

@@ -27,11 +27,11 @@ class SearchPostResult extends StatelessWidget {
         height: 0.2 * Constants.screenHeight,
         child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
+              backgroundColor: WidgetStatePropertyAll(
                   isDarkMode ? const Color(0xff213440) : Colors.white),
-              elevation: MaterialStateProperty.all(8),
-              shadowColor: MaterialStateProperty.all(Colors.white),
-              padding: MaterialStateProperty.all(const EdgeInsets.all(10))),
+              elevation: WidgetStatePropertyAll(8),
+              shadowColor: WidgetStatePropertyAll(Colors.white),
+              padding: WidgetStatePropertyAll(const EdgeInsets.all(10))),
           onPressed: onPressed,
           child: Row(
             children: [

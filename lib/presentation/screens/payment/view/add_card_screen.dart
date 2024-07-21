@@ -15,10 +15,10 @@ class AddCardScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
-              padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
+              padding: const WidgetStatePropertyAll(EdgeInsets.all(4)),
               backgroundColor:
-                  MaterialStateProperty.all(Theme.of(context).primaryColor),
-              shape: MaterialStateProperty.all(
+                  WidgetStatePropertyAll(Theme.of(context).primaryColor),
+              shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
@@ -106,11 +106,11 @@ class AddCardScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ButtonStyle(
-                padding: MaterialStateProperty.all(
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 20)),
+                padding:const WidgetStatePropertyAll(
+                     EdgeInsets.symmetric(horizontal: 80, vertical: 20)),
                 backgroundColor:
-                    MaterialStateProperty.all(Theme.of(context).primaryColor),
-                shape: MaterialStateProperty.all(
+                    WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

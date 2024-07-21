@@ -77,15 +77,15 @@ class HighestRatedFreelancer extends StatelessWidget {
           ),
           ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
+              backgroundColor: WidgetStatePropertyAll(
                   AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light
                       ? const Color(0xffCEDADF)
                       : const Color(0xff213440)),
-              shadowColor: MaterialStateProperty.all(
+              shadowColor: WidgetStatePropertyAll(
                 const Color.fromRGBO(22, 80, 105, 0.5),
               ),
-              elevation: MaterialStateProperty.all(10),
-              shape: MaterialStateProperty.all(
+              elevation: WidgetStatePropertyAll(10),
+              shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),

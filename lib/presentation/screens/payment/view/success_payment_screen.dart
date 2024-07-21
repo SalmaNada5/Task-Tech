@@ -18,10 +18,10 @@ class CongratesScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ButtonStyle(
-              padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
+              padding: WidgetStatePropertyAll(const EdgeInsets.all(4)),
               backgroundColor:
-                  MaterialStateProperty.all(Theme.of(context).primaryColor),
-              shape: MaterialStateProperty.all(
+                  WidgetStatePropertyAll(Theme.of(context).primaryColor),
+              shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
@@ -184,12 +184,12 @@ class BottomSheetWidget extends StatelessWidget {
                                       const BottomNavBarScreen());
                                 },
                                 style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
+                                  padding: WidgetStatePropertyAll(
                                       const EdgeInsets.symmetric(
                                           horizontal: 60, vertical: 15)),
-                                  backgroundColor: MaterialStateProperty.all(
+                                  backgroundColor: WidgetStatePropertyAll(
                                       Theme.of(context).primaryColor),
-                                  shape: MaterialStateProperty.all(
+                                  shape: WidgetStatePropertyAll(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -210,11 +210,11 @@ class BottomSheetWidget extends StatelessWidget {
                     });
               },
               style: ButtonStyle(
-                padding: MaterialStateProperty.all(
+                padding: WidgetStatePropertyAll(
                     const EdgeInsets.symmetric(vertical: 20)),
                 backgroundColor:
-                    MaterialStateProperty.all(Theme.of(context).primaryColor),
-                shape: MaterialStateProperty.all(
+                    WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -239,13 +239,13 @@ class BottomSheetWidget extends StatelessWidget {
                     pushReplacment: true);
               },
               style: ButtonStyle(
-                side: MaterialStateProperty.all(BorderSide(
+                side: WidgetStatePropertyAll(BorderSide(
                   color: Theme.of(context).primaryColor,
                 )),
-                padding: MaterialStateProperty.all(
+                padding: WidgetStatePropertyAll(
                     const EdgeInsets.symmetric(vertical: 20)),
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
+                backgroundColor: WidgetStatePropertyAll(Colors.white),
+                shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

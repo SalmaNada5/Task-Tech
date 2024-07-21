@@ -31,10 +31,10 @@ class _RelatedPostItemState extends State<RelatedPostItem> {
       width: 0.5 * Constants.screenWidth,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
+          backgroundColor: WidgetStatePropertyAll(
               Theme.of(context).scaffoldBackgroundColor),
-          elevation: MaterialStateProperty.all(4),
-          shadowColor: MaterialStateProperty.all(Colors.white),
+          elevation: WidgetStatePropertyAll(4),
+          shadowColor: WidgetStatePropertyAll(Colors.white),
         ),
         onPressed: widget.onpressed,
         child: Column(

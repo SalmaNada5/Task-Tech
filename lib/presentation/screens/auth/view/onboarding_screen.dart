@@ -38,9 +38,9 @@ class OnboardingScreen extends StatelessWidget {
               builder: (context, state) {
                 return ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStatePropertyAll(
                             Theme.of(context).primaryColor),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6)))),
                     onPressed: authCubit.isLastPage
                         ? () => Constants.navigateTo(const SignUpScreen(),

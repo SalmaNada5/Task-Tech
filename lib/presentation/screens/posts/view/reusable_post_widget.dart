@@ -97,9 +97,9 @@ class ReusablePostWidget extends StatelessWidget {
                   }
                 },
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStatePropertyAll(
                         Theme.of(context).primaryColor),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)))),
                 child: Padding(
                   padding: const EdgeInsets.all(6.0),

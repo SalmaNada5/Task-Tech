@@ -35,10 +35,10 @@
 //           child: ElevatedButton(
 //             onPressed: () => Navigator.pop(context),
 //             style: ButtonStyle(
-//               padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
+//               padding: WidgetStatePropertyAll(const EdgeInsets.all(4)),
 //               backgroundColor:
-//                   MaterialStateProperty.all(Theme.of(context).primaryColor),
-//               shape: MaterialStateProperty.all(
+//                   WidgetStatePropertyAll(Theme.of(context).primaryColor),
+//               shape: WidgetStatePropertyAll(
 //                 RoundedRectangleBorder(
 //                   borderRadius: BorderRadius.circular(24),
 //                 ),
@@ -273,11 +273,11 @@
 //               }
 //             },
 //             style: ButtonStyle(
-//               padding: MaterialStateProperty.all(
+//               padding: WidgetStatePropertyAll(
 //                   const EdgeInsets.symmetric(horizontal: 30, vertical: 20)),
 //               backgroundColor:
-//                   MaterialStateProperty.all(Theme.of(context).primaryColor),
-//               shape: MaterialStateProperty.all(
+//                   WidgetStatePropertyAll(Theme.of(context).primaryColor),
+//               shape: WidgetStatePropertyAll(
 //                 RoundedRectangleBorder(
 //                   borderRadius: BorderRadius.circular(8),
 //                 ),

@@ -77,15 +77,15 @@ class ForgotPasswordScreen extends StatelessWidget {
                     }
                   },
                   style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
+                    padding: WidgetStatePropertyAll(
                       EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 0.2 * Constants.screenWidth,
                       ),
                     ),
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStatePropertyAll(
                         Theme.of(context).primaryColor),
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),

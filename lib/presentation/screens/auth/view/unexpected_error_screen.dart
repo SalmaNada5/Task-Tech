@@ -36,15 +36,15 @@ class UnexpectedErrorScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
               style: ButtonStyle(
-                padding: MaterialStateProperty.all(
+                padding: WidgetStatePropertyAll(
                   EdgeInsets.symmetric(
                     vertical: 10,
                     horizontal: 0.35 * Constants.screenWidth,
                   ),
                 ),
                 backgroundColor:
-                    MaterialStateProperty.all(Theme.of(context).primaryColor),
-                shape: MaterialStateProperty.all(
+                    WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
